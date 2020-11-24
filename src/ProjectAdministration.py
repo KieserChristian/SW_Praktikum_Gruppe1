@@ -41,7 +41,7 @@ class ProjectAdministration():
         """Der Person eine Rolle zuteilen"""
         with PersonMapper() as mapper:
     
-    # Was macht remove genau? Unterschied zu delete?
+
     def remove_role_from_person(self, role, person):
         """Die Rollenzuteilung einer Person entfernen"""
         with PersonMapper() as mapper:
@@ -151,13 +151,14 @@ class ProjectAdministration():
     """
     Automat-Methoden
     """
-# !!! Kann Automat erstellt werden?!!!
+
     def create_automat(self):
         """Einen Automaten anlegen"""
         automat = Automat()
+        automat.set_auto_state(get_state())
 
         with AutomatMapper() as mapper:
-    
+   
     def save_automat(self, automat):
         """Einen Automaten speichern"""
         with AutomatMapper() as mapper:
@@ -173,6 +174,7 @@ class ProjectAdministration():
     def get_all_automats(self):
         """Alle Automaten ausgeben"""
         with AutomatMapper() as mapper:
+
     
     """
     Participation-Methoden
@@ -300,54 +302,42 @@ class ProjectAdministration():
         """Ein Semester von einem Projekt entfernen"""
         with ProjectMapper() as mapper:
     
-    #Macht das Sinn?
-    """
-    def add_module_to_project(self):
-        """Ein Modul einem Projekt hinzufügen"""
-        with ProjectMapper() as mapper:
-    
-    def remove_module_from_project(self):
-        """Ein Modul von einem Projekt entfernen"""
-        with ProjectMapper() as mapper:
-    
-    """
-    
-    def add_projecttype_to_project(self, project_type, project):
+    def add_project_type_to_project(self, project_type, project):
         """Ein Projekttyp einem Projekt hinzufügen"""
         with ProjectMapper() as mapper:
     
-    def remove_projecttype_from_project(self, project_type, project):
+    def remove_project_type_from_project(self, project_type, project):
         """Ein Projekttyp von einem Projekt entfernen"""
         with ProjectMapper() as mapper:
     
     """
     ProjectType-Methoden
     """
-# !!! Bei ProjectType aufpassen (2x t), Abgleich mit Datenbank
-    def create_projecttype(self):
+
+    def create_project_type(self):
         """Einen Projekttyp anlegen"""
 
-        projecttype = Projecttype()
+        project_type = ProjectType()
 
         with ProjectTypeMapper() as mapper:
     
-    def save_projecttype(self, project_type):
+    def save_project_type(self, project_type):
         """Einen Projekttyp speichern"""
         with ProjectTypeMapper() as mapper:
     
-    def delete_projecttype(self, project_type):
+    def delete_project_type(self, project_type):
         """Einen Projekttyp löschen"""
         with ProjectTypeMapper() as mapper:
     
-    def get_projecttype_by_id(self,project_type_id):
+    def get_project_type_by_id(self,project_type_id):
         """Einen Projekttyp anhand seiner ID auslesen"""
         with ProjectTypeMapper() as mapper:
     
-    def get_all_projecttypes(self):
+    def get_all_project_types(self):
         """Alle Projekttypen ausgeben"""
         with ProjectTypeMapper() as mapper:
     
-    def get_projecttype_by_name(self name):
+    def get_project_type_by_name(self name):
         """Einen Projekttyp anhand seines Namen auslesen"""
         with ProjectTypeMapper() as mapper:
     
