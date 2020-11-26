@@ -1,6 +1,6 @@
 from abc import ABC
 from datetime import datetime
-from bo.BusinessObjects import BusinessObject
+from BusinessObjects import BusinessObject
 
 
 

@@ -1,6 +1,6 @@
 from datetime import datetime
 from abc import ABC
-from bo.BusinessObjects import BusinessObject
+from BusinessObjects import BusinessObject
 
 
 class Participation(BusinessObject):
