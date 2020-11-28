@@ -127,7 +127,7 @@ class PersonOperations(Resource):
         adm = ProjectAdministration()
         pers = adm.get_person_by_id(id)
         adm.delete_person(pers)
-        return '', 200
+        return 'gelöscht', 200
 
     @projectTool.marshal_with(person)
     @projectTool.expect(person, validate=True)
@@ -155,4 +155,198 @@ class PersonListOperations(Resource):
         person_list = adm.get_all_persons()
         return person_list
 
-    @projectTool.marshal_with
+    @projectTool.marshal_with(person, code=200)
+    @projectTool.expect(person) 
+    """Hier wird ein Personen-Objekt von Client-Seite erwartet"""
+    @secured
+    def post(self):
+        """Anlegen eines neuen Personen-Objekts"""
+        adm = ProjectAdministration()
+        proposal = Person.from_dict(api.payload)
+
+        if proposal is not None:
+            """Wir verwenden Name und person_id des Proposals für die Erzeugung eines Personen-Objektes."""
+            pers = adm.create_person(proposal.get_name(), proposal.get_person_id())
+
+            return pers, 200
+        
+        else:
+                return '', 500
+    
+@projectTool.route('/student')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('student_id', 'Dies ist die ID von Student')
+class StudentOperations(Resource):
+    @projectTool.marshal_with(student)
+    @secured
+    def get(self, student_id):
+        """Auslesen eines bestimmten Student-Objektes, welches durch die student_id in dem URI bestimmt wird."""
+
+        adm = ProjectAdministration()
+        stud = adm.get_student_by_id(student_id)
+        return stud
+        
+    @secured
+    def delete(self, student_id):
+        """Löschen eines bestimmten Student-Objektes, welches durch die student_id in dem URI bestimmt wird."""
+
+        adm = ProjectAdministration()
+        stud = adm.get_student_by_id(student_id)
+        adm.delete_student(stud)
+        return 'gelöscht', 200
+
+    @projectTool.marshal_with(student)
+    @projectTool.expect(student, validate=True)
+    @secured
+    def put(self, student_id):
+
+        adm = ProjectAdministration()
+        stud = Student.from_dict(api.payload)
+
+        if stud is not None:
+            stud.set_id(student_id)
+            adm.save_student(stud)
+            return '', 200
+        else:
+            return '', 500
+
+@projectTool.route('/student')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class StudentListOperations(Resource):
+    @projectTool.marshal_list_with(student)
+    @secured
+    def get(self):
+        """Auslesen aller Student-Objekte"""
+        adm = ProjectAdministration()
+        student_list = adm.get_all_students()
+        return student_list
+
+    @projectTool.marshal_with(student, code=200)
+    @projectTool.expect(student) 
+    """Hier wird ein Student-Objekt von Client-Seite erwartet"""
+    @secured
+    def post(self):
+        """Anlegen eines neuen Student-Objekts"""
+        adm = ProjectAdministration()
+        proposal = Student.from_dict(api.payload)
+
+        if proposal is not None:
+            """Wir verwenden student_id und matriculation_number des Proposals für die Erzeugung eines Studenten-Objektes."""
+            stud = adm.create_student(proposal.get_student_id(), proposal.get_matriculation_number())
+
+            return stud, 200
+        
+        else:
+                return '', 500 
+
+@projectTool.route('/student-by-matriculation-number')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('matriculation_number', 'Die Matrikelnummer des Studenten')
+class StudentByMatriculationNumberOperations(Resource):
+    @projectTool.marshal_with(student)
+    @secured
+    def get(self, matriculation_number):
+        """Auslesen von Student-Objekten, die durch die Matrikelnummer bestimmt werden.
+        Die auszulesenden Objekte werden durch 'matriculation_number' in dem URI bestimmt.
+        """
+        adm = ProjectAdministration()
+        stud = adm.get_student_by_matriculation_number(matriculation_number)
+        return stud
+
+
+
+@projectTool.route('/student-by-name')    
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('name', 'Der Name des Studenten')
+class StudentByNameOperations(Resource):
+    @projectTool.marshal_with(student)
+    @secured
+    def get(self, name):
+        """Auslesen von Student-Objekten, die durch den Namen bestimmt werden.
+        Die auszulesenden Objekte werden durch 'name' in dem URI bestimmt.
+        """
+        adm = ProjectAdministration()
+        stud = adm.get_student_by_name(name)
+        return stud
+
+@projectTool.route('/state')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('state_id', 'Dies ist die ID von State')
+class StateOperations(Resource):
+    @projectTool.marshal_with(state)
+    @secured
+    def get(self, state_id):
+        """Auslesen eines bestimmten State-Objektes, welches durch die state_id in dem URI bestimmt wird."""
+
+        adm = ProjectAdministration()
+        stat = adm.get_state_by_id(state_id)
+        return stat
+
+@projectTool.route('/semester')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('semester', 'Dies ist die ID von Semester')
+class SemesterOperations(Resource):
+    @projectTool.marshal_with(semester)
+    @secured
+    def get(self, semester_id):
+        """Auslesen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        sem = adm.get_semester_by_id(semester_id)
+        return sem
+
+    @secured
+    def delete(self, semester_id):
+        """Löschen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        sem = adm.get_semester_by_id(semester_id)
+        if sem is not None:
+            adm.delete_semester(sem)
+            return 'gelöscht', 200
+        else:
+            return '', 500
+    
+    @projectTool.marshal_with(semester)
+    @projectTool.expect(semeser, validate=True)
+    @secured
+    def put(self, semester_id):
+        """Update eines bestimmten Semester-Objektes."""
+        adm = ProjectAdministration()
+        sem = Semester.from_dict(api.payload)
+
+        if sem is not None:
+            sem.set_id(semester_id)
+            adm.save_semester(sem)
+            return '', 200
+        else:
+            return '', 500
+
+@projectTool.route('/role')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('role', 'Dies ist die ID von Role')
+class RoleOperations(Resource):
+    @projectTool.marshal_with(role)
+    @secured
+    def get(self, role_id):
+        """Auslesen eines bestimmten Role-Objektes, welches durch die role_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        rol = adm.get_role_by_id(role_id)
+        return rol
+    
+    @projectTool.marshal_with(role)
+    @projectTool.expect(role, validate=True)
+    @secured
+    def put(self, role_id)
+    """Update eines bestimmten Role-Objekts."""
+    adm = ProjectAdministration()
+    rol = Role.from_dict(api.payload)
+
+    if rol is not None:
+        rol.set_id(role_id)
+        adm.save_role(rol)
+        return '', 200
+    else:
+        return '', 500
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
