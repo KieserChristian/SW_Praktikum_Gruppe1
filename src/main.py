@@ -169,7 +169,6 @@ class PersonListOperations(Resource):
             pers = adm.create_person(proposal.get_name(), proposal.get_person_id())
 
             return pers, 200
-        
         else:
                 return '', 500
     
@@ -234,14 +233,13 @@ class StudentListOperations(Resource):
             """Wir verwenden student_id und matriculation_number des Proposals für die Erzeugung eines Studenten-Objektes."""
             stud = adm.create_student(proposal.get_student_id(), proposal.get_matriculation_number())
 
-            return stud, 200
-        
+            return stud, 200       
         else:
-                return '', 500 
+            return '', 500 
 
 @projectTool.route('/student-by-matriculation-number')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('matriculation_number', 'Die Matrikelnummer des Studenten')
+@projectTool.param('matriculation_number_id', 'Die Matrikelnummer des Studenten')
 class StudentByMatriculationNumberOperations(Resource):
     @projectTool.marshal_with(student)
     @secured
@@ -284,7 +282,7 @@ class StateOperations(Resource):
 
 @projectTool.route('/semester')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('semester', 'Dies ist die ID von Semester')
+@projectTool.param('semester_id', 'Dies ist die ID von Semester')
 class SemesterOperations(Resource):
     @projectTool.marshal_with(semester)
     @secured
@@ -322,7 +320,7 @@ class SemesterOperations(Resource):
 
 @projectTool.route('/role')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('role', 'Dies ist die ID von Role')
+@projectTool.param('role_id', 'Dies ist die ID von Role')
 class RoleOperations(Resource):
     @projectTool.marshal_with(role)
     @secured
@@ -347,6 +345,292 @@ class RoleOperations(Resource):
     else:
         return '', 500
 
+@projectTool.route('/grading')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('grading_id', 'Dies ist die ID von Grading')
+class GradingOperations(Resource):
+    @projectTool.marshal_with(grading)
+    @secured
+    def get(self, grading_id):
+        """Auslesen eines bestimmten Grading-Objektes, welches durch die grading_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        grad = adm.get_role_by_id(grading_id)
+        return grad
+    
+    @secured
+    def delete(self, grading_id):
+        """Löschen eines bestimmten Grading-Objektes, welches durch die grading_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        grad = adm.get_grading_by_id(grading_id)
+        if grad is not None:
+            adm.delete_grading(grad)
+            return 'gelöscht', 200
+        else:
+            return '', 500
+    
+    @projectTool.marshal_with(grading)
+    @projectTool.expect(grading, validate=True)
+    @secured
+    def put(self, grading_id):
+        """Update eines bestimmten Grading-Objekts."""
+        adm = ProjectAdministration()
+        grad = Grading.from_dict(api.payload)
+
+        if grad is not None:
+            grad.set_id(grading_id)
+            adm.save_grading(grad)
+            return '', 200
+        else:
+            return '', 500
+
+@projectTool.route('/project')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('project_id', 'Dies ist die ID von Project')
+class ProjectOperations(Resource):
+    @projectTool.marshal_with(project)
+    @secured
+    def get(self, project_id):
+        """Auslesen eines bestimmten Project-Objektes, welches durch die project_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        proj = adm.get_project_by_id(project_id)
+        return proj
+    
+    @secured
+    def delete(self, project_id):
+        """Löschen eines bestimmten Project-Objektes, welches durch die project_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        proj = adm.get_project_by_id(project_id)
+        if proj is not None:
+            adm.delete_project(proj)
+            return 'gelöscht', 200
+        else:
+            return '', 500
+    
+    @projectTool.marshal_with(project)
+    @projectTool.expect(project, validate=True)
+    @secured
+    def put(self, project_id):
+        """Update eines bestimmten Project-Objekts."""
+        adm = ProjectAdministration()
+        proj = Project.from_dict(api.payload)
+
+        if proj is not None:
+            proj.set_id(project_id)
+            adm.save_project(proj)
+            return '', 200
+        else:
+            return '', 500
+
+@projectTool.route('/project-type')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('project_type_id', 'Dies ist die ID von ProjectType')
+class ProjectTypeOperations(Resource):
+    @projectTool.marshal_with(project_type)
+    @secured
+    def get(self, project_type_id):
+        """Auslesen eines bestimmten ProjectType-Objektes, welches durch die project_type_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        projtyp = adm.get_project_type_by_id(project_type_id)
+        return projtyp
+    
+    @secured
+    def delete(self, project_type_id):
+        """Löschen eines bestimmten ProjectType-Objektes, welches durch die project_type_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        projtyp = adm.get_project_type_by_id(project_type_id)
+        if projtyp is not None:
+            adm.delete_project_type(projtyp)
+            return 'gelöscht', 200
+        else:
+            return '', 500
+    
+    @projectTool.marshal_with(project_type)
+    @projectTool.expect(project_type, validate=True)
+    @secured
+    def put(self, project_type_id):
+        """Update eines bestimmten ProjectType-Objekts."""
+        adm = ProjectAdministration()
+        projtyp = ProjectType.from_dict(api.payload)
+
+        if projtyp is not None:
+            projtyp.set_id(project_type_id)
+            adm.save_project_type(projtyp)
+            return '', 200
+        else:
+            return '', 500
+
+@projectTool.route('/project-type')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectTypeListOperations(Resource):
+    @projectTool.marshal_list_with(project_type)
+    @secured
+    def get(self):
+        """Auslesen aller ProjectType-Objekte"""
+        adm = ProjectAdministration()
+        project_type_list = adm.get_all_project_types()
+        return project_type_list
+
+    @projectTool.marshal_with(project_type, code=200)
+    @projectTool.expect(project_type) 
+    """Hier wird ein ProjectType-Objekt von Client-Seite erwartet"""
+    @secured
+    def post(self):
+        """Anlegen eines neuen ProjectType-Objekts"""
+        adm = ProjectAdministration()
+        proposal = ProjectType.from_dict(api.payload)
+
+        if proposal is not None:
+            """Wir verwenden Name und project_type_id des Proposals für die Erzeugung eines ProjectType-Objektes."""
+            projtyp = adm.create_project_type(proposal.get_name(), proposal.get_project_type_id())
+
+            return projtyp, 200
+        else:
+                return '', 500
+
+@projectTool.route('/automat')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('automat_id', 'Dies ist die ID von Automat')
+class AutomatOperations(Resource):
+    @projectTool.marshal_with(automat)
+    @secured
+    def get(self, automat_id):
+        """Auslesen eines bestimmten Automat-Objektes, welches durch die automat_id in dem URI bestimmt wird."""
+
+        adm = ProjectAdministration()
+        aut = adm.get_automat_by_id(automat_id)
+        return aut
+        
+@projectTool.route('/module')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('module_id', 'Dies ist die ID von Module')
+class ModuleOperations(Resource):
+    @projectTool.marshal_with(module)
+    @secured
+    def get(self, module_id):
+        """Auslesen eines bestimmten Module-Objektes, welches durch die module_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        mod = adm.get_module_by_id(module_id)
+        return mod
+    
+    @secured
+    def delete(self, module_id):
+        """Löschen eines bestimmten Module-Objektes, welches durch die module_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        mod = adm.get_module_by_id(module_id)
+        if mod is not None:
+            adm.delete_module(mod)
+            return 'gelöscht', 200
+        else:
+            return '', 500
+    
+    @projectTool.marshal_with(module)
+    @projectTool.expect(module, validate=True)
+    @secured
+    def put(self, module_id):
+        """Update eines bestimmten Module-Objekts."""
+        adm = ProjectAdministration()
+        mod = Module.from_dict(api.payload)
+
+        if mod is not None:
+            mod.set_id(module_id)
+            adm.save_module(mod)
+            return '', 200
+        else:
+            return '', 500
+
+@projectTool.route('/module')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ModuleListOperations(Resource):
+    @projectTool.marshal_list_with(module)
+    @secured
+    def get(self):
+        """Auslesen aller Module-Objekte"""
+        adm = ProjectAdministration()
+        module_list = adm.get_all_modules()
+        return module_list
+
+    @projectTool.marshal_with(module, code=200)
+    @projectTool.expect(module) 
+    """Hier wird ein Module-Objekt von Client-Seite erwartet"""
+    @secured
+    def post(self):
+        """Anlegen eines neuen Module-Objekts"""
+        adm = ProjectAdministration()
+        proposal = Module.from_dict(api.payload)
+
+        if proposal is not None:
+            """Wir verwenden module_id und edv_number des Proposals für die Erzeugung eines Module-Objektes."""
+            mod = adm.create_module(proposal.get_module_id(), proposal.get_edv_number())
+
+            return mod, 200       
+        else:
+            return '', 500 
+
+@projectTool.route('/participation')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('participation_id', 'Dies ist die ID von Participation')
+class ParticipationOperations(Resource):
+    @projectTool.marshal_with(participation)
+    @secured
+    def get(self, participation_id):
+        """Auslesen eines bestimmten Participation-Objektes, welches durch die participation_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        part = adm.get_participation_by_id(participation_id)
+        return part
+    
+    @secured
+    def delete(self, participation_id):
+        """Löschen eines bestimmten Participation-Objektes, welches durch die participation_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        part = adm.get_participation_by_id(participation_id)
+        if part is not None:
+            adm.delete_participation(part)
+            return 'gelöscht', 200
+        else:
+            return '', 500
+    
+    @projectTool.marshal_with(participation)
+    @projectTool.expect(participation, validate=True)
+    @secured
+    def put(self, participation_id):
+        """Update eines bestimmten Participation-Objekts."""
+        adm = ProjectAdministration()
+        part = Participation.from_dict(api.payload)
+
+        if part is not None:
+            part.set_id(participation_id)
+            adm.save_participation(part)
+            return '', 200
+        else:
+            return '', 500
+
+@projectTool.route('/participation')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ParticipationListOperations(Resource):
+    @projectTool.marshal_list_with(participation)
+    @secured
+    def get(self):
+        """Auslesen aller Participation-Objekte"""
+        adm = ProjectAdministration()
+        participation_list = adm.get_all_participations()
+        return participation_list
+
+    @projectTool.marshal_with(participation, code=200)
+    @projectTool.expect(participation) 
+    """Hier wird ein Participation-Objekt von Client-Seite erwartet"""
+    @secured
+    def post(self):
+        """Anlegen eines neuen Participation-Objekts"""
+        adm = ProjectAdministration()
+        proposal = Participation.from_dict(api.payload)
+
+        if proposal is not None:
+            """Wir verwenden die participation_id des Proposals für die Erzeugung eines Participation-Objektes."""
+            part = adm.create_participation(proposal.get_participation_id())
+
+            return part, 200       
+        else:
+            return '', 500 
 
 if __name__ == '__main__':
     app.run(debug=True)
