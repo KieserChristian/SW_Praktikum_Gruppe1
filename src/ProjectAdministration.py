@@ -6,10 +6,12 @@ class ProjectAdministration():
     """
     Person-Methoden
     """
-    # Attribute bei allen create nochmals betrachten
-    def create_person(self, name:str):
+    def create_person(self, name:str, google_person_id:int):
         """Eine Person anlegen"""
         person = Person()
+        person.set_name(name)
+        person.set_person_id(google_person_id)
+        person.set_id(1)
 
         with PersonMapper() as mapper:
             return mapper.insert(person)
@@ -27,386 +29,501 @@ class ProjectAdministration():
     def get_person_by_id(self, person_id):
         """Die Person mit ihrer gegebenen ID auslesen"""
         with PersonMapper() as mapper:
-            return mapper.find_by_id(id)
+            return mapper.find_by_id(person_id)
 
     def get_all_persons(self):
         """Alle Personen ausgeben"""
         with PersonMapper() as mapper:
+            return mapper.find_all()
 
     def get_person_by_name(self, name):
         """Die Person mit ihrem Namen auslesen"""
         with PersonMapper() as mapper:
+            return mapper.find_by_name(name)
     
-    def add_role_to_person(self, role, person):
-        """Der Person eine Rolle zuteilen"""
+    def get_person_by_google_id (self, google_person_id)
+        """Die Person mit ihrer Google-ID ausgeben"""
         with PersonMapper() as mapper:
-    
+            return mapper.find_by_id(google_person_id)
 
-    def remove_role_from_person(self, role, person):
-        """Die Rollenzuteilung einer Person entfernen"""
-        with PersonMapper() as mapper:
-    
     """
     Student-Methoden
     """
 
-    def create_student(self):
+    def create_student(self, name:str, course_abbreviation:str, matriculation_number:int):
         """Einen Studenten anlegen"""
         student = Student()
+        student.set_name(name)
+        student.set_student_id(matriculation_number)
+        student.set_course_abbreviation(course_abbreviation)
+        student.set_id(1)
 
         with StudentMapper() as mapper:
+            return mapper.insert(student)
     
     def save_student(self, student):
         """Einen Studenten speichern"""
         with StudentMapper() as mapper:
+            mapper.update(student)
     
     def delete_student(self, student):
         """Den gewählten Studenten löschen"""
         with StudentMapper() as mapper:
+            mapper.delete(student)
     
     def get_student_by_id(self, student_id):
         """Den Studenten mit seiner gegebenen ID auslesen"""
         with StudentMapper() as mapper:
+            return mapper.find_by_id(student_id)
     
     def get_all_students(self):
         """Alle Studenten ausgeben"""
         with StudentMapper() as mapper:
+            return mapper.find_all()
 
     def get_student_by_name(self, name):
         """Den Student mit seinem Namen auslesen"""
         with StudentMapper() as mapper:
+            return mapper.find_by_name(name)
 
     def get_student_by_matriculation_number(self, matriculation_number):
         """Den Student mit seiner Matrikelnummer auslesen"""
         with StudentMapper() as mapper:
+            return mapper.find_by_number(matriculation_number)
     
     def get_student_by_course_abbreviation(self, course_abbreviation):
         """Den Student mit seinem Studiengangskürzel auslesen"""
         with StudentMapper() as mapper:
-    
+            return mapper.find_by_course(course_abbreviation)
+
     """
     Semester-Methoden
     """
 
-    def create_semester(self):
+    def create_semester(self, name:str):
         """Ein Semester anlegen"""
         semester = Semester()
+        semester.set_name(name)
+        semester.set_id(1)
 
         with SemesterMapper() as mapper:
+            return mapper.insert(semester)
 
     def save_semester(self, semester):
         """Ein Semester speichern"""
         with SemesterMapper() as mapper:
+            mapper.update(semester)
 
     def delete_semester(self, semester):
         """Ein Semester löschen"""
         with SemesterMapper() as mapper:
+            mapper.delete(semester)
 
     def get_semester_by_id(self, semester_id):
         """Ein Semester mit seiner gegebenen ID auslesen"""
         with SemesterMapper() as mapper:
+            return mapper.find_by_id(semester_id)
 
     def get_all_semesters(self):
         """Alle Semester ausgeben"""
         with SemesterMapper() as mapper:
+            return mapper.find_all()
 
     def get_semester_by_name(self, name):
         """Alle Semester mit ihren Namen ausgeben"""
         with SemesterMapper() as mapper:
+            return mapper.find_by_name(name)
 
     def add_project_to_semester(self, project, semester):
         """Ein Projekt einem Semester hinzufügen"""
         with SemesterMapper() as mapper:
+            mapper.add_project_to_semester(project, semester)
 
     def remove_project_from_semester(self, project, semester):
         """Ein Projekt von einem Semester entfernen"""
         with SemesterMapper() as mapper:
-    
+            mapper.remove_project_from_semester(project, semester)
+
     """
     Role-Methoden
     """
 
-    def create_role(self):
+    def create_role_for_person(self, static_attribute:str):
         """Eine Rolle anlegen"""
-        role = Role()
-
         with RoleMapper() as mapper:
+            if person is not None:
+                role = Role()
+                role.set_static_attribute(static_attribute)
+                role.set_role(person.get_id())
+                role.id(1)
+                return mapper.insert(role)
+            else:
+                return None
     
     def save_role(self, role)
         """Eine Rolle speichern"""
         with RoleMapper() as mapper:
+            mapper.update(role)
 
     def delete_role(self, role):
         """Eine Rolle löschen"""
         with RoleMapper() as mapper:
+            mapper.delete(role)
     
     def get_role_by_id(self, role_id):
         """Eine Rolle anhand ihrer ID auslesen"""
         with RoleMapper() as mapper:
+            return mapper.find_by_id(role_id)
         
     def get_all_roles(self):
         """Alle Rollen ausgeben"""
         with RoleMapper() as mapper:
+            return mapper.find_all()
 
     """
     Automat-Methoden
     """
 
-    def create_automat(self):
+    def create_automat(self, state):
         """Einen Automaten anlegen"""
         automat = Automat()
-        automat.set_auto_state(get_state())
+        automat.set_automat(state.get_current_state())
+        automat.set_id(1)
 
         with AutomatMapper() as mapper:
+            return mapper.insert(automat)
    
     def save_automat(self, automat):
         """Einen Automaten speichern"""
         with AutomatMapper() as mapper:
+            mapper.update(automat)
 
     def delete_automat(self, automat):
         """Einen Automaten löschen"""
         with AutomatMapper() as mapper:
+            mapper.delete(automat)
     
     def get_automat_by_id(self, automat_id):
         """Einen Automaten anhand seiner ID auslesen"""
         with AutomatMapper() as mapper:
+            return mapper.find_by_id(automat_id)
     
     def get_all_automats(self):
         """Alle Automaten ausgeben"""
         with AutomatMapper() as mapper:
-
+            return mapper.find_all()
     
     """
     Participation-Methoden
     """
 
-    def create_participation(self):
+    def create_participation(self, name:str):
         """Eine Teilnahme anlegen"""
 
         participation = Participation()
+        participation.set_name(name)
+        participation.set_id(1)
 
         with ParticipationMapper() as mapper:
+            return mapper.insert(participation)
     
     def save_participation(self, participation):
         """Eine Teilnahme speichern"""
         with ParticipationMapper() as mapper:
+            mapper.update(participation)
 
     def delete_participation(self, participation):
         """Eine Teilnahme löschen"""
         with ParticipationMapper() as mapper:
+            mapper.delete(participation)
 
     def get_participation_by_id(self, participation_id):
         """Eine Teilnahme anhand ihrer ID auslesen"""
         with ParticipationMapper() as mapper:
+            return mapper.find_by_id(participation_id)
     
     def get_all_participations(self):
         """Alle Teilnahmen ausgeben"""
         with ParticipationMapper() as mapper:
+            return mapper.find_all()
     
     def add_student_to_participation(self, student, participation):
         """Ein Student einer Teilnahme hinzufügen"""
         with ParticipationMapper() as mapper:
+            mapper.add_student_to_participation(student, participation)
     
     def remove_student_from_participation(self, student, participation):
         """Ein Student von einer Teilnahme entfernen"""
         with ParticipationMapper() as mapper:
+            mapper.remove_student_from_participation(student, participation)
     
     def add_grading_to_participation(self, grading, participation):
         """Eine Bewertung einer Teilnahme hinzufügen"""
         with ParticipationMapper() as mapper:
+            mapper.add_grading_to_participation(grading, participation)
 
     def remove_grading_from_participation(self, grading, participation):
         """Eine Bewertung von einer Teilnahme entfernen"""
         with ParticipationMapper() as mapper:
-    
+            mapper.remove_grading_from_participation(grading, participation)
+
     """
     Grading-Methoden
     """
 
-    def create_grading(self):
+    def create_grading_for_participation(self, participation_id:int):
         """Eine Bewertung anlegen"""
 
         grading = Grading()
+        grading.set_grading_id(participation.get_id)
+        grading.set_id(1)
 
         with GradingMapper() as mapper:
+            return mapper.insert(grading)
     
     def save_grading(self, grading):
         """Eine Bewertung speichern"""
         with GradingMapper() as mapper:
+            mapper.update(grading)
 
     def delete_grading(self, grading):
         """Eine Bewertung löschen"""
         with GradingMapper() as mapper:
+            mapper.delete(grading)
     
     def get_grading_by_id(self, grading_id):
         """Eine Bewertung anhand ihrer ID auslesen"""
         with GradingMapper() as mapper:
+            return mapper.find_by_id(grading_id)
 
     def get_all_gradings(self):
         """Alle Bewertungen ausgeben"""
         with GradingMapper() as mapper:
+            return mapper.find_all()
 
     """
     Project-Methoden
     """
 
-    def create_project(self):
+    def create_project(self, name:str, external_partners:str, capacity:int, short_description:str, special_room:str):
         """Ein Projekt anlegen"""
 
         project = Project()
+        project.set_name(name)
+        project.set_id(1)
+        project.set_external_partners(external_partners)
+        project.set_capacity(capacity)
+        project.set_weekly_flag(false)
+        project.set_bd_preferred_in_lecture_period(0)
+        project.set_bd_in_lecture_period(0)
+        project.set_bd_in_exam_period(0)
+        project.set_bd_before_lecture_period(0)
+        project.set_short_description(short_description)
+        project.set_special_room(special_room)
 
         with ProjectMapper() as mapper:
+            return mapper.insert(project)
     
     def save_project(self, project):
         """Ein Projekt speichern"""
         with ProjectMapper() as mapper:
+            mapper.update(project)
     
     def delete_project(self, project):
         """Ein Projekt löschen"""
         with ProjectMapper() as mapper:
+            mapper.delete(project)
     
     def get_project_by_id(self, project_id):
         """Ein Projekt anhand seiner ID auslesen"""
         with ProjectMapper() as mapper:
+            return mapper.find_by_id(project_id)
     
     def get_all_projects(self):
         """Alle Projekte ausgeben"""
         with ProjectMapper() as mapper:
+            return mapper.find_all()
     
     def get_project_by_name(self, name):
         """Ein Projekt anhand seines Namens auslesen"""
         with ProjectMapper() as mapper:
+            return mapper.find_by_name(name)
     
     # Student oder Person?
     def add_person_to_project(self, person, project):
         """Eine Person einem Projekt hinzufügen"""
         with ProjectMapper() as mapper:
+            mapper.add_person_to_project(person, project)
     
     def remove_person_from_project(self, person, project):
         """Eine Person von einem Projekt entfernen"""
         with ProjectMapper() as mapper:
+            mapper.remove_person_from_project(person, project)
     
     def add_participation_to_project(self, participation, project):
         """Eine Teilnahme einem Projekt hinzufügen"""
         with ProjectMapper() as mapper:
+            mapper.add_participation_to_project(participation, project)
+    
+    def add_participation_list_to_project(self, participation, project)
+        """Eine Teilnehmerliste einem Projekt hinzufügen"""
+        with ProjectMapper() as mapper:
+            mapper.add_participation_list_to_project(participation, project)
     
     def remove_participation_from_project(self, participation, project):
         """Eine Teilnahme von einem Projekt entfernen"""
         with ProjectMapper() as mapper:
+            mapper.remove_participation_from_project(participation, project)
+
+    def remove_participation_list_from_project(self, participation, project)
+        """Eine Teilnehmerliste von einem Projekt entfernen"""
+        with ProjectMapper() as mapper:
+            mapper.remove_participation_list_from_project(participation, project)
     
     def add_semester_to_project(self, semester, project):
         """Ein Semester einem Projekt hinzufügen"""
-        with ProjectMapper() as mapper:    
+        with ProjectMapper() as mapper:
+            mapper.add_semester_to_project(semester, project)
     
     def remove_semester_from_project(self, semester, project):
         """Ein Semester von einem Projekt entfernen"""
         with ProjectMapper() as mapper:
+            mapper.remove_semester_from_project(semester, project)
     
-    def add_project_type_to_project(self, project_type, project):
-        """Ein Projekttyp einem Projekt hinzufügen"""
-        with ProjectMapper() as mapper:
+    def approve_project(self, project)
+        """Ein Projekt genehmigen"""
+        with ProjectMapper() as mapper:    
     
-    def remove_project_type_from_project(self, project_type, project):
-        """Ein Projekttyp von einem Projekt entfernen"""
+    def reject_project(self, project)
+        """Ein Project ablehnen"""
         with ProjectMapper() as mapper:
     
     """
     ProjectType-Methoden
     """
 
-    def create_project_type(self):
+    def create_project_type(self, name:str, number_ects:int, number_sws:int):
         """Einen Projekttyp anlegen"""
 
         project_type = ProjectType()
+        project_type.set_name(name)
+        project_type.set_number_ects(number_ects)
+        project_type.set_number_sws(number_sws)
+        project_type.set_id(1)
 
         with ProjectTypeMapper() as mapper:
+            return mapper.insert(project_type)
     
     def save_project_type(self, project_type):
         """Einen Projekttyp speichern"""
         with ProjectTypeMapper() as mapper:
+            mapper.update(project_type)
     
     def delete_project_type(self, project_type):
         """Einen Projekttyp löschen"""
         with ProjectTypeMapper() as mapper:
+            mapper.delete(project_type)
     
     def get_project_type_by_id(self,project_type_id):
         """Einen Projekttyp anhand seiner ID auslesen"""
         with ProjectTypeMapper() as mapper:
+            return mapper.find_by_id(project_type_id)
     
     def get_all_project_types(self):
         """Alle Projekttypen ausgeben"""
         with ProjectTypeMapper() as mapper:
+            return mapper.find_all()
     
     def get_project_type_by_name(self name):
         """Einen Projekttyp anhand seines Namen auslesen"""
         with ProjectTypeMapper() as mapper:
+            return mapper.find_by_name(name)
     
     """
     State-Methoden
     """
 
-    def create_state(self):
+    def create_state(self, state_name:str):
         """Einen Status anlegen"""
 
         state = State()
+        state.set_state_name(state_name)
+        state.set_id(1)
 
         with StateTypeMapper() as mapper:
+            return mapper.insert(state)
     
     def save_state(self, state):
         """Einen Status speichern"""
         with StateTypeMapper() as mapper:
+            mapper.update(state)
     
     def delete_state(self, state):
         """Einen Status löschen"""
         with StateTypeMapper() as mapper:
+            mapper.delete(state)
 
-    def get_state_by_id(self, self_id):
+    def get_state_by_id(self, state_id):
         """Einen Status anhand seiner ID auslesen"""
         with StateTypeMapper() as mapper:
+            return mapper.find_by_id(state_id)
     
     def get_all_states(self):
         """Alle Status ausgeben"""
         with StateTypeMapper() as mapper:
+            return mapper.find_all()
     
     """
     Module-Methoden
     """
 
-    def create_module(self):
+    def create_module(self, name:str, edv_number:str):
         """Ein Modul anlegen"""
 
         module = Module()
+        module.set_name(name)
+        module.set_module_id(edv_number)
+        module.set_id(1)
 
         with ModuleMapper() as mapper:
+            return mapper.insert(module)
     
     def save_module(self, module):
         """Ein Modul speichern"""
         with ModuleMapper() as mapper:
+            mapper.update(module)
 
      def delete_module(self, module):
          """Ein Modul löschen"""
         with ModuleMapper() as mapper:
+            mapper.delete(module)
     
      def get_module_by_id(self, module_id):
          """Ein Modul anhand seiner ID auslesen"""
         with ModuleMapper() as mapper:
+            return mapper.find_by_id(module_id)
     
      def get_all_modules(self):
          """Alle Module ausgeben"""
         with ModuleMapper() as mapper:
+            return mapper.find_all()
     
      def get_module_by_name(self, name):
          """Ein Modul anhand seines Namen auslesen"""
         with ModuleMapper() as mapper:
+            return mapper.find_by_name(name)
     
      def get_module_by_edv_number(self, edv_number):
          """Ein Modul anhand seiner EDV-Nummer ausgeben"""
         with ModuleMapper() as mapper:
+            return mapper.find_by_number(edv_number)
     
      def add_project_to_module(self, project, module):
          """Ein Projekt einem Modul hinzufügen"""
         with ModuleMapper() as mapper:
-    
+            mapper.add_project_to_module(project, module)
+            
      def remove_project_from_module(self, project, module):
          """Ein Projekt von einem Modul entfernen"""
         with ModuleMapper() as mapper:
+            mapper.remove_project_from_module(project, module)
