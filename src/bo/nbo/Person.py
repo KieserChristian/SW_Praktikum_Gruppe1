@@ -1,15 +1,17 @@
-from ..Role import Role
+from Role import Role
 
-class Person ():
+class Person (Role):
 
      student = Role ("Student")
      dozent = Role  ("Dozent")
      admin = Role ("Admin")
 
-     def __init__ (self, name):
+    def __init__ (self, name, berechtigung):
+
+        super().__init__:
 
          self.__name = name
-         self.__berechtigung = rolle
+         self.__berechtigung = None
 
     def set_berechtigung (self, rolle):
         """Berechtigung setzen"""
