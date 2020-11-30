@@ -6,11 +6,11 @@ class Automat:
     """Unveränderliche oder statische Variablen für die Zustände, die nach dem anlegen eines Automats(Projekts) diesem zugeordnet werden können."""
     """Die statischen Variablen initiert ein Objekt der Klasse ProjectState"""
 
-    ps_new = ProjectState("Neu")
-    ps_accepted =  ProjectState ("genehmigt")
-    ps_declined = ProjectState ("Abgelehnt")
-    ps_inReview = ProjectState ("In Bewertung")
-    ps_reviewCompleted = ProjectState ("Bewertung abgeschlossen")
+    state_new = ProjectState("Neu")
+    state_accepted =  ProjectState ("genehmigt")
+    state_declined = ProjectState ("Abgelehnt")
+    state_inReview = ProjectState ("In Bewertung")
+    state_reviewCompleted = ProjectState ("Bewertung abgeschlossen")
 
 
     def __init__(self):

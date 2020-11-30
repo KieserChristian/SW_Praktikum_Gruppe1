@@ -10,7 +10,7 @@ class Grading(BusinessObject):
         
 
     def __init__(self):   
-        super().__init__()
+        super().__init__(self):
         self.__grading = 0.0
         self.__id = 0
         self.__creation_date = datetime.datetime.now()
@@ -25,7 +25,7 @@ class Grading(BusinessObject):
 
     def set___grading (self, value):
         """Setzen der Note"""
-        self.__grading = value
+        self.__grading = 0.0
 
     def to_dict (self):
         """Umwandeln Grading() in ein Python dictionary dict ()"""

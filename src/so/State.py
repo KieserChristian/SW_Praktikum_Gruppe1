@@ -4,21 +4,23 @@
 from Automat import Automat
 
 
-class ProjectState(Automat):
+class State(Automat):
     def __init__(self):
-        self.state_name = None
+        self.state_name = ""
 
-    def __init__(self, ):
-        pass
+   
+    def get_state_name(self):
 
-    def get_state_name(self, ):
-        pass
+        """State auslesen"""
+        return state_name        
 
-    def set_state_name(self, ):
-        pass
+    def set_state_name(self, state_name):
+        
+        self._state_name
 
-    def from_dict(self, dictionary):
-        pass
+   def __str__(self):
+       return self.state_name
+
 
 if __name__== "__main__":
 
