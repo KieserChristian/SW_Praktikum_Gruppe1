@@ -7,7 +7,7 @@ class Person (Role):
      dozent = Role  ("Dozent")
      admin = Role ("Admin")
 
-def __init__ (self,person_id, id, creation_date, email, google_id, authorization, name):
+def __init__ (self, id, creation_date, email, google_id, authorization, name):
 
         super().__init__()
         self.__creation_date = datetime.datetime.now()
@@ -58,7 +58,7 @@ def __init__ (self,person_id, id, creation_date, email, google_id, authorization
 
 @staticmethod
     def from_tuples (tuples-list()):
-        
+        """Umwandeln eines DB tuples in ein Python Objekt (Person())"""
         result = []
         for (person_id, id, creation_date, email, google_id, authorization, name ) in tuples:
             person = Person()
@@ -73,7 +73,16 @@ def __init__ (self,person_id, id, creation_date, email, google_id, authorization
 
 
 @staticmethod
-
+    def from_dict(dictionary=dict()):
+        """Umwandeln eines Python dict () """
+        person = Person()
+        person.set__id(dictionary["id"])
+        person.set__creation_date(dictionary["creation_date"])
+        person.set_email(dictionary["email"])
+        person.set_google_id(dictionary["google_id"])
+        person.set_authorization(dictionary["authorization"])
+        person.set_name(dictionary["name"])
+    return person
 
 if __name__ == "__main__":
 
