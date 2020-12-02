@@ -1,6 +1,7 @@
 from NamedBusinessObjects import NamedBusinessObjects
 from Automat import Argument
 from ProjectType import ProjectType
+from datetime import datetime
 
 class Project(NamedBusinessObjects, Automat):
 
@@ -10,7 +11,7 @@ class Project(NamedBusinessObjects, Automat):
 
     def __init__(self):
         super().__init__()
-         self.__name = name
+         self.__name = ""
          self.__capacity = 0
          self.__external_partners = ""
          self.__short_description = ""
@@ -19,6 +20,8 @@ class Project(NamedBusinessObjects, Automat):
          self.__bd_in_exam_period = 0
          self.__bd_preferred_in_lecture_period = 0
          self.__special_room = ""
+         self.__id = 0
+         self.__creation_date =datetime.datetime.now()
 
     def get_name(self):
         """Name auslesen"""
@@ -37,23 +40,23 @@ class Project(NamedBusinessObjects, Automat):
         return self.__short_description
 
     def get_weekly_flag(self):
-        """Flag auslesen"""
+        """wöchentliches Flag auslesen"""
         return self.__weekly_flag
 
     def get_bd_before_lecture_period(self):
-        """Werktage vor Vorlesungszeit auslesen"""
+        """Blocktage vor Vorlesungszeit auslesen"""
         return self.__bd_before_lecture_period
 
     def get_bd_in_exam_period(self):
-        """Werktage in Prüfungszeit auslesen"""
+        """Blocktage in Prüfungszeit auslesen"""
         return self.__bd_in_exam_period
 
     def get_bd_in_lecture_period(self):
-        """Werktage in Vorlesungszeit auslesen"""
+        """Blocktage in Vorlesungszeit auslesen"""
         return self.__bd_in_lecture_period
 
     def get_bd_preferred_in_lecture_period(self):
-        """präferierte Werktage in Vorlesungszeit auslesen"""
+        """präferierte Blocktage in Vorlesungszeit auslesen"""
         return self.__bd_preferred_in_lecture_period
 
     def get_special_room(self):
@@ -77,35 +80,51 @@ class Project(NamedBusinessObjects, Automat):
         self.__short_descripton = short_descripton
 
     def set_weekly_flag(self, weekly_flag):
-        """Flag setzen"""
+        """wöchentliches Flag setzen"""
         self.__weekly_flag = weekly_flag
 
     def set_bd_before_lecture_period(self, bd_before_lecture_period):
-        """Werktage vor Vorlesungszeit setzen"""
+        """Blocktage vor Vorlesungszeit setzen"""
         self.__bd_before_lecture_period = bd_before_lecture_period
     
     def set_bd_in_exam_period(self, bd_in_exam_period):
-        """Werktage in Prüfungszeit setzen"""
+        """Blocktage in Prüfungszeit setzen"""
         self.__bd_in_exam_period = bd_in_exam_period  
 
     def set_bd_in_lecture_period(self, bd_in_lecture_period):
-        """Werktage in Vorlesungszeit setzen"""
+        """Blocktage in Vorlesungszeit setzen"""
         self.__bd_in_lecture_period = bd_in_lecture_period  
 
     def set_bd_preferred_in_lecture_period(self, bd_preferred_in_lecture_period):
-        """präferierte Werktage in Vorlesungszeit setzen"""
+        """präferierte Blocktage in Vorlesungszeit setzen"""
         self.__bd_preferred_in_lecture_period = bd_preferred_in_lecture_period  
 
     def set_special_room(self, special_room):
         """Spezieller Raum setzen"""
         self.__special_room = special_room
 
+    def get_id (self):
+        """Auslesen der ID"""
+        return self.__id
+
+    def get_creation_date(self):
+        """Auslesen des Erstelldatums"""
+        return self.__creation_date
+
+    def set_id (self, value):
+        """ID setzen"""
+        self.__id = value 
+
+    def set_creation_date (self, creation_date):
+        """Erstellungsdatum setzen"""
+        self.__creation_date = creation_date
+
 @staticmethod
 def from_dict(dictionary=dict()):
     """Umwandeln eines Python dict () """
     project = Project()
-    project.set__id(dictionary["id"])
-    project.set__creation_date(dictionary["creation_date"])
+    project.set_id(dictionary["id"])
+    project.set_creation_date(dictionary["creation_date"])
     project.set_name(dictionary["name"])
     project.set_capacity(dictionary["capacity"])
     project.set_external_partners(dictionary["external_partners"])
