@@ -1,10 +1,8 @@
-"""
-
-from server.bo.Person import Person
+from server.bo.State import State
 from server.db.Mapper import Mapper
 
-class PersonMapper (Mapper):
-    """Mapper-Klasse, die Person-Objekte auf eine relationale
+class StateMapper (Mapper):
+    """Mapper-Klasse, die State-Objekte auf eine relationale
     Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
     gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
     gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
@@ -18,19 +16,19 @@ class PersonMapper (Mapper):
     def find_all(self):
         """Auslesen aller Konten.
 
-        :return Eine Sammlung mit Person-Objekten, die sämtliche Konten
+        :return Eine Sammlung mit State-Objekten, die sämtliche Konten
                 repräsentieren.
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT id, owner from persons")
+        cursor.execute("SELECT id, owner from state")
         tuples = cursor.fetchall()
 
         for (id, owner) in tuples:
-            person = Person()
-            person.set_id(id)
-            person.set_owner(owner)
-            result.append(person)
+            state = State()
+            state.set_id(id)
+            state.set_owner(owner)
+            result.append(state)
 
         self._cnx.commit()
         cursor.close()
@@ -39,85 +37,83 @@ class PersonMapper (Mapper):
 
 """find by id """
 
-    def find_by_id(self, person_id):
-        """Auslesen aller Konten eines durch Fremdschlüssel gegebenen Person.
+    def find_by_id(self, state_id):
+        """Auslesen aller Konten eines durch Fremdschlüssel gegebenen States.
 
-        :param person_id Schlüssel des zugehörigen Kunden.
-        :return Eine Sammlung mit Person-Objekten, die sämtliche Konten der
+        :param state_id Schlüssel des zugehörigen Kunden.
+        :return Eine Sammlung mit State-Objekten, die sämtliche Konten der
                 betreffenden Person repräsentieren.
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, owner FROM persons WHERE owner={} ORDER BY id".format(person_id)
+        command = "SELECT id, owner FROM states WHERE owner={} ORDER BY id".format(state_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         for (id, owner) in tuples:
-            person = Person()
-            person.set_id(id)
-            person.set_owner(owner)
-            result.append(person)
+            state = State()
+            state.set_id(id)
+            state.set_owner(owner)
+            result.append(state)
 
         self._cnx.commit()
         cursor.close()
 
         return result
 
-"""insert person"""
+"""insert state"""
 
-    def insert(self, person):
-        """Einfügen eines Person-Objekts in die Datenbank.
+    def insert(self, state):
+        """Einfügen eines State-Objekts in die Datenbank.
         
         Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
         berichtigt.
 
-        :param person das zu speichernde Objekt
+        :param state das zu speichernde Objekt
         :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
         """
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(id) AS maxid FROM accounts ")
+        cursor.execute("SELECT MAX(id) AS maxid FROM state ")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            person.set_id(maxid[0]+1)
+            state.set_id(maxid[0]+1)
 
-        command = "INSERT INTO persons (id, owner) VALUES (%s,%s)"
-        data = (person.get_id(), person.get_owner())
+        command = "INSERT INTO state (id, owner) VALUES (%s,%s)"
+        data = (state.get_id(), state.get_owner())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
-        return person
+        return state
 
-"""update person"""
+"""update state"""
 
-    def update(self, person):
+    def update(self, state):
         """Wiederholtes Schreiben eines Objekts in die Datenbank.
 
-        :param person das Objekt, das in die DB geschrieben werden soll
+        :param state das Objekt, das in die DB geschrieben werden soll
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE person " + "SET owner=%s WHERE id=%s"
-        data = (person.get_owner(), person.get_id())
+        command = "UPDATE state " + "SET owner=%s WHERE id=%s"
+        data = (state.get_owner(), state.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
 
-"""delete person""" 
+"""delete state""" 
 
-    def delete(self, person):
-        """Löschen der Daten eines Person-Objekts aus der Datenbank.
+    def delete(self, state):
+        """Löschen der Daten eines State-Objekts aus der Datenbank.
 
-        :param person das aus der DB zu löschende "Objekt"
+        :param state das aus der DB zu löschende "Objekt"
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM persons WHERE id={}".format(person.get_id())
+        command = "DELETE FROM states WHERE id={}".format(state.get_id())
         cursor.execute(command)
 
         self._cnx.commit()
         cursor.close()
-
-"""

@@ -1,4 +1,3 @@
-
 from server.bo.Semester import Semester
 from server.db.Mapper import Mapper
 
@@ -73,78 +72,75 @@ class SemesterMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, firstName, lastName FROM customers WHERE lastName LIKE '{}' ORDER BY lastName".format(name)
+        command = "SELECT id, firstName, lastName FROM semesters WHERE lastName LIKE '{}' ORDER BY lastName".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         for (id, firstName, lastName) in tuples:
             semester = Semester()
-            person.set_id(id)
-            person.set_first_name(firstName)
-            person.set_last_name(lastName)
-            result.append(person)
+            semester.set_id(id)
+            semester.set_first_name(firstName)
+            semester.set_last_name(lastName)
+            result.append(semester)
 
         self._cnx.commit()
         cursor.close()
 
         return result
 
-"""insert person"""
+"""insert semester"""
 
-    def insert(self, person):
-        """Einfügen eines Person-Objekts in die Datenbank.
+    def insert(self, semester):
+        """Einfügen eines Semester-Objekts in die Datenbank.
         
         Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
         berichtigt.
 
-        :param person das zu speichernde Objekt
+        :param semester das zu speichernde Objekt
         :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
         """
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(id) AS maxid FROM accounts ")
+        cursor.execute("SELECT MAX(id) AS maxid FROM semester ")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            person.set_id(maxid[0]+1)
+            semester.set_id(maxid[0]+1)
 
-        command = "INSERT INTO persons (id, owner) VALUES (%s,%s)"
-        data = (person.get_id(), person.get_owner())
+        command = "INSERT INTO semester (id, owner) VALUES (%s,%s)"
+        data = (semester.get_id(), semester.get_owner())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
-        return person
+        return semester
 
-"""update person"""
+"""update semester"""
 
-    def update(self, person):
+    def update(self, semester):
         """Wiederholtes Schreiben eines Objekts in die Datenbank.
 
-        :param person das Objekt, das in die DB geschrieben werden soll
+        :param semester das Objekt, das in die DB geschrieben werden soll
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE person " + "SET owner=%s WHERE id=%s"
-        data = (person.get_owner(), person.get_id())
+        command = "UPDATE semester " + "SET owner=%s WHERE id=%s"
+        data = (semester.get_owner(), semester.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
 
-"""delete person""" 
+"""delete semester""" 
 
-    def delete(self, person):
-        """Löschen der Daten eines Person-Objekts aus der Datenbank.
+    def delete(self, semester):
+        """Löschen der Daten eines Semester-Objekts aus der Datenbank.
 
-        :param person das aus der DB zu löschende "Objekt"
+        :param semester das aus der DB zu löschende "Objekt"
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM persons WHERE id={}".format(person.get_id())
+        command = "DELETE FROM semester WHERE id={}".format(semester.get_id())
         cursor.execute(command)
 
         self._cnx.commit()
         cursor.close()
-
-
-"""
