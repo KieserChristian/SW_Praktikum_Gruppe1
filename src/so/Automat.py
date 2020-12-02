@@ -1,5 +1,5 @@
-from ProjectState import ProjectState
-
+from State import State
+from datetime import datetime
 
 class Automat:
 
@@ -18,6 +18,10 @@ class Automat:
         """Beim erzeugen des Objekts (Projekt) wird der Zustand automatisch auf neu gesetzt"""
         
         self.current_state = Automat.s_new
+        super().__init__()
+            self.__id = 0
+            self.__creation_date = datetime.datetime.now()
+        
 
     def set_state(self, zustand):
         self.current_state = zustand
@@ -26,8 +30,8 @@ class Automat:
         return self.current_state
 
     def is_in_state (self, zustand):
-        """Überprüfung , ob dre momentane Zustand mit den übertragenen Attribut übereinstimmt, ja gibt er true aus, sonst False"""
+        """Überprüfung , ob der momentane Zustand mit den übertragenen Attribut übereinstimmt, ja gibt er true aus, sonst False"""
         return zustand == self.current_state
 
-
+   
 

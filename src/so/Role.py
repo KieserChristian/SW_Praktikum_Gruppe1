@@ -1,11 +1,14 @@
-
+ from datetime import datetime
+ 
+  """Basisklasse, für die Zuweisung der Berechtigungen der Personen"""
 class Role():
 
     def __init__(self, name):
 
-            name == 
-
-        """Basisklasse, für die Zuweisung der Berechtigungen der Personen"""
+           
+            super().__init__()
+            self.__id = 0
+            self.__creation_date = datetime.datetime.now()
         
 
         def set_name (self, name):
@@ -18,3 +21,19 @@ class Role():
 
         def __str__ (self):
             return self._name
+
+        def get_id (self):
+                """Auslesen der ID"""
+            return self.__id
+
+        def get_creation_date(self):
+            """Auslesen des Erstelldatums"""
+            return self.__creation_date
+
+        def set_id (self, value):
+            """ID setzen"""
+            self.__id = value 
+
+        def set_creation_date (self, creation_date):
+                """Erstellungsdatum setzen"""
+            self.__creation_date = creation_date

@@ -6,20 +6,37 @@ class Person (Role):
      dozent = Role  ("Dozent")
      admin = Role ("Admin")
 
-    def __init__ (self, name, berechtigung):
+    def __init__ (self, name,authorization):
 
-        super().__init__:
-
+        super().__init__(self):
+        
          self.__name = name
-         self.__berechtigung = None
+         self.__authorization = None
 
-    def set_berechtigung (self, rolle):
+    def set_authorization(self, rolle):
+            
         """Berechtigung setzen"""
-        self.__berechtigung = rolle
+        self.__authorization = rolle
 
-    def get_berechtigung (self, rolle):
+    def get_authorization (self, rolle):
         """Berechtigung auslesen"""
-        return self.__berechtigung
+        return self.__authorization
+    
+    def get_id (self):
+        """Auslesen der ID"""
+        return self.__id
+
+    def get_creation_date(self):
+        """Auslesen des Erstelldatums"""
+        return self.__creation_date
+
+    def set_id (self, value):
+        """ID setzen"""
+        self.__id = value 
+
+    def set_creation_date (self, creation_date):
+        """Erstellungsdatum setzen"""
+        self.__creation_date = creation_date
 
 
 if __name__ == "__main__":
@@ -27,5 +44,5 @@ if __name__ == "__main__":
     """Person wird testhalber eine Berechtigung zugewiesen"""
 
     Mensch1 = Person ("Dani")
-    Mensch1.set_berechtigung(Person.student)
-    print (Mensch1.get_berechtigung())
+    Mensch1.set_authorization(Person.student)
+    print (Mensch1.get_authorization())

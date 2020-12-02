@@ -4,7 +4,7 @@ from NamedBusinessObjects import NamedBusinessObject
 class Module(NamedBusinessObject):
     
     def __init__(self):
-        super.__init__(self)
+        super().__init__()
         self.__edv_number = 0
         self.__name = name
 
