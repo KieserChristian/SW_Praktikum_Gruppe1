@@ -1,3 +1,27 @@
+from bo.Grading import Grading
+from bo.Participation import Participation
+from bo.nbo.Module import Module
+from bo.nbo.Person import Person
+from bo.nbo.ProjectType import ProjectType
+from bo.nbo.Project import Project
+from bo.nbo.Semester import Semester
+from bo.nbo.Student import Student
+from so.Automat import Automat
+from so.State import State
+from so.Role import Role
+
+from db.GradingMapper import GradingMapper
+from db.ParicipationMapper import ParticipationMapper
+from db.ModuleMapper import ModuleMapper
+from db.PersonMapper import PersonMapper
+from db.ProjectTypeMapper import ProjectTypeMapper
+from db.ProjectMapper import ProjectMapper
+from db.SemesterMapper import SemesterMapper
+from db.StudentMapper import StudentMapper
+from db.AutomatMapper import AutomatMapper
+from db.StateMapper import StateMapper
+from db.RoleMapper import RoleMapper
+
 class ProjectAdministration():
 
     def __init__(self):
@@ -46,6 +70,11 @@ class ProjectAdministration():
         with PersonMapper() as mapper:
             return mapper.find_by_id(google_person_id)
 
+    def get_persons_by_role_id(self, role)
+        """Alle Personen mit einer bestimmten Rolle ausgeben"""
+        with PersonMapper() as mapper:
+            return mapper.find_by_id(role.get_id())
+
     """
     Student-Methoden
     """
@@ -68,7 +97,14 @@ class ProjectAdministration():
     
     def delete_student(self, student):
         """Den gewählten Studenten löschen"""
+        """Und die zugehörigen Teilnahmen löschen"""
         with StudentMapper() as mapper:
+            participations = self.get_participations_of_student(student)
+
+            if not (participations is None):
+                for p in participations:
+                    self.delete_participation(p)
+
             mapper.delete(student)
     
     def get_student_by_id(self, student_id):
@@ -234,7 +270,14 @@ class ProjectAdministration():
 
     def delete_participation(self, participation):
         """Eine Teilnahme löschen"""
+        """Und die zugehörige Bewertung löschen"""
         with ParticipationMapper() as mapper:
+            gradings = self.get_grading_of_participation(participation)
+            
+            if not (gradings is None):
+                for g in gradings:
+                    self.delete(g)
+
             mapper.delete(participation)
 
     def get_participation_by_id(self, participation_id):
@@ -247,6 +290,16 @@ class ProjectAdministration():
         with ParticipationMapper() as mapper:
             return mapper.find_all()
     
+    def get_participations_of_student(self, student)
+        """Alle Teilnahmen des Studenten auslesen"""
+        with ParticipationMapper() as mapper:
+            return mapper.find_by_id(student.get_id())
+    
+    def get_participations_by_project_id(self, project)
+        """Die Teilnehmerliste eines bestimmten Projekts ausgeben"""
+        with ParticipationMapper() as mapper:
+            return mapper.find_by_id(project.get_id())
+
     def add_student_to_participation(self, student, participation):
         """Ein Student einer Teilnahme hinzufügen"""
         with ParticipationMapper() as mapper:
@@ -300,6 +353,11 @@ class ProjectAdministration():
         """Alle Bewertungen ausgeben"""
         with GradingMapper() as mapper:
             return mapper.find_all()
+    
+    def get_grading_by_participation_id(self, participation)
+        """Die Bewertung von einer Teilnahme auslesen"""
+        with GradingMapper() as mapper:
+            return mapper.find_by_id(participation.get_id())
 
     """
     Project-Methoden
@@ -349,7 +407,11 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             return mapper.find_by_name(name)
     
-    # Student oder Person?
+    def get_projects_by_state_id(self)
+        """Alle Projekte, die sich in einem bestimmten Zustand befinden, ausgeben"""
+        with ProjectMapper() as mapper:
+            return mapper.find_by_id(state.get_id())
+    
     def add_person_to_project(self, person, project):
         """Eine Person einem Projekt hinzufügen"""
         with ProjectMapper() as mapper:
