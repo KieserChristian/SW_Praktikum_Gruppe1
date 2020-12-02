@@ -1,12 +1,17 @@
+<<<<<<< HEAD
 from ..Role import Role
 from datetime import datetime
+=======
+from Role import Role
+>>>>>>> c77b1448049ac6ecb636a0593c19a15236a78d3b
 
-class Person ():
+class Person (Role):
 
      student = Role ("Student")
      dozent = Role  ("Dozent")
      admin = Role ("Admin")
 
+<<<<<<< HEAD
      def __init__ (self, name):
         super.__init__()
         self.__name = ""
@@ -15,6 +20,16 @@ class Person ():
         self.__creation_date =datetime.datetime.now()
 
     def set_berechtigung (self, role):
+=======
+    def __init__ (self, name, berechtigung):
+
+        super().__init__:
+
+         self.__name = name
+         self.__berechtigung = None
+
+    def set_berechtigung (self, rolle):
+>>>>>>> c77b1448049ac6ecb636a0593c19a15236a78d3b
         """Berechtigung setzen"""
         self.__berechtigung = role
 

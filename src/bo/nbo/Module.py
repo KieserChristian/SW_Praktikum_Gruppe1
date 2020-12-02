@@ -1,4 +1,4 @@
-from BusinessOn
+from BusinessObject import BusinessObject
 from NamedBusinessObjects import NamedBusinessObject
 from datetime import datetime
 
