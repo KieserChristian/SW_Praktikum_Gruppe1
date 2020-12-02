@@ -23,15 +23,15 @@ class Automat:
             self.__creation_date = datetime.datetime.now()
         
 
-    def set_state(self, zustand):
-        self.current_state = zustand
+    def set_state(self, state):
+        self.current_state = state
 
     def get_state (self):
         return self.current_state
 
-    def is_in_state (self, zustand):
+    def is_in_state (self, state):
         """Überprüfung , ob der momentane Zustand mit den übertragenen Attribut übereinstimmt, ja gibt er true aus, sonst False"""
-        return zustand == self.current_state
+        return state == self.current_state
 
    
 
