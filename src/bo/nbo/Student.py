@@ -27,8 +27,8 @@ class Student(Person):
 def from_dict(dictionary=dict()):
     """Umwandeln eines Python dict () """
     student = Student()
-    student.set__id(dictionary["id"])
-    student.set__creation_date(dictionary["creation_date"])
+    student.set_id(dictionary["id"])
+    student.set_creation_date(dictionary["creation_date"])
     student.set_matriculation_number(dictionary["matriculation_number"])
     student.set_course_abbreviation(dictionary["course_abbreviation"])
     return student
