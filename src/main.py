@@ -107,7 +107,6 @@ semester = api.inherit('Semester', bo, nbo, {
 person = api.inherit('Person', bo, nbo, {
     'person_id': fields.Integer(attribute='_person_id',
                                 description='Person-ID'),
-I                                description='Google-ID der Person'),
 })
 
 student = api.inherit('student', bo, nbo, {
@@ -169,8 +168,8 @@ class PersonListOperations(Resource):
 
     @projectTool.marshal_with(person, code=200)
     @projectTool.expect(person) 
-    """Hier wird ein Personen-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Personen-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Personen-Objekts"""
         adm = ProjectAdministration()
@@ -234,8 +233,8 @@ class StudentListOperations(Resource):
 
     @projectTool.marshal_with(student, code=200)
     @projectTool.expect(student) 
-    """Hier wird ein Student-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Student-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Student-Objekts"""
         adm = ProjectAdministration()
@@ -254,8 +253,8 @@ class StudentListOperations(Resource):
 class StudentRegisterOperations(Resource):
     @projectTool.marshal_with(student, code=200)
     @projectTool.expect(student)
-    """Hier wird ein Student-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Student-Objekt von Client-Seite erwartet
     def post(self):
         """Resgistrierung eines Studenten (Anlegen eines neuen Student-Objekts"""
         adm = ProjectAdministration()
@@ -398,17 +397,17 @@ class RoleOperations(Resource):
     @projectTool.marshal_with(role)
     @projectTool.expect(role, validate=True)
     @secured
-    def put(self, role_id)
-    """Update eines bestimmten Role-Objekts."""
-    adm = ProjectAdministration()
-    rol = Role.from_dict(api.payload)
+    def put(self, role_id):
+        #Update eines bestimmten Role-Objekts.
+        adm = ProjectAdministration()
+        rol = Role.from_dict(api.payload)
 
-    if rol is not None:
-        rol.set_id(role_id)
-        adm.save_role(rol)
-        return '', 200
-    else:
-        return '', 500
+        if rol is not None:
+            rol.set_id(role_id)
+            adm.save_role(rol)
+            return '', 200
+        else:
+            return '', 500
 
 @projectTool.route('/role')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -423,8 +422,8 @@ class RoleListOperations(Resource):
     
     @projectTool.marshal_with(role, code=200)
     @projectTool.expect(role)
-    """Hier wird ein Role-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Role-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Role-Objekts"""
         adm = ProjectAdministration()
@@ -615,8 +614,8 @@ class ProjectTypeListOperations(Resource):
 
     @projectTool.marshal_with(project_type, code=200)
     @projectTool.expect(project_type) 
-    """Hier wird ein ProjectType-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein ProjectType-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen ProjectType-Objekts"""
         adm = ProjectAdministration()
@@ -694,8 +693,8 @@ class ModuleListOperations(Resource):
 
     @projectTool.marshal_with(module, code=200)
     @projectTool.expect(module) 
-    """Hier wird ein Module-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Module-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Module-Objekts"""
         adm = ProjectAdministration()
@@ -760,8 +759,8 @@ class ParticipationListOperations(Resource):
 
     @projectTool.marshal_with(participation, code=200)
     @projectTool.expect(participation) 
-    """Hier wird ein Participation-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Participation-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Participation-Objekts"""
         adm = ProjectAdministration()
