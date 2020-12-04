@@ -1,0 +1,146 @@
+from server.bo.Semester import Semester
+from server.db.Mapper import Mapper
+
+class SemesterMapper (Mapper):
+    """Mapper-Klasse, die Semester-Objekte auf eine relationale
+    Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+    gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
+    gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+    in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
+    """
+    def __init__(self):
+        super().__init__()
+
+"""find all """
+
+    def find_all(self):
+        """Auslesen aller Konten.
+
+        :return Eine Sammlung mit Semester-Objekten, die sämtliche Konten
+                repräsentieren.
+        """
+        result = []
+        cursor = self._cnx.cursor()
+        cursor.execute("SELECT id, owner from semester")
+        tuples = cursor.fetchall()
+
+        for (id, owner) in tuples:
+            semester = Semester()
+            semester.set_id(id)
+            semester.set_owner(owner)
+            result.append(semester)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+"""find by id """
+
+    def find_by_id(self, semester_id):
+        """Auslesen aller Konten eines durch Fremdschlüssel gegebenen Semester.
+
+        :param semester_id Schlüssel des zugehörigen Kunden.
+        :return Eine Sammlung mit Semester-Objekten, die sämtliche Konten der
+                betreffenden Semester repräsentieren.
+        """
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT id, owner FROM semester WHERE owner={} ORDER BY id".format(semester_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        for (id, owner) in tuples:
+            semester = Semester()
+            semester.set_id(id)
+            semester.set_owner(owner)
+            result.append(semester)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+"""find by name"""
+
+    def find_by_name(self, name):
+        """Auslesen aller Semester anhand des Namen.
+
+        :param name Name des zugehörigen Semesters.
+        :return Eine Sammlung mit Semester-Objekten, die sämtliche Semester
+            mit dem gewünschten Namen enthält.
+        """
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT id, firstName, lastName FROM semesters WHERE lastName LIKE '{}' ORDER BY lastName".format(name)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        for (id, firstName, lastName) in tuples:
+            semester = Semester()
+            semester.set_id(id)
+            semester.set_first_name(firstName)
+            semester.set_last_name(lastName)
+            result.append(semester)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+"""insert semester"""
+
+    def insert(self, semester):
+        """Einfügen eines Semester-Objekts in die Datenbank.
+        
+        Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
+        berichtigt.
+
+        :param semester das zu speichernde Objekt
+        :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
+        """
+        cursor = self._cnx.cursor()
+        cursor.execute("SELECT MAX(id) AS maxid FROM semester ")
+        tuples = cursor.fetchall()
+
+        for (maxid) in tuples:
+            semester.set_id(maxid[0]+1)
+
+        command = "INSERT INTO semester (id, owner) VALUES (%s,%s)"
+        data = (semester.get_id(), semester.get_owner())
+        cursor.execute(command, data)
+
+        self._cnx.commit()
+        cursor.close()
+        return semester
+
+"""update semester"""
+
+    def update(self, semester):
+        """Wiederholtes Schreiben eines Objekts in die Datenbank.
+
+        :param semester das Objekt, das in die DB geschrieben werden soll
+        """
+        cursor = self._cnx.cursor()
+
+        command = "UPDATE semester " + "SET owner=%s WHERE id=%s"
+        data = (semester.get_owner(), semester.get_id())
+        cursor.execute(command, data)
+
+        self._cnx.commit()
+        cursor.close()
+
+"""delete semester""" 
+
+    def delete(self, semester):
+        """Löschen der Daten eines Semester-Objekts aus der Datenbank.
+
+        :param semester das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM semester WHERE id={}".format(semester.get_id())
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()

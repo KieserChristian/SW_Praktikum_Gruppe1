@@ -4,7 +4,7 @@ from flask_restx import Api, Resource, fields
 
 from ProjectAdministration import ProjectAdministration
 #restliche bo imports fehlen
-#from bo.Participation import participation
+#from bo.Participation import Participation
 #from bo.Grading import Grading
 #from bo.nbo.Module import Module
 #from bo.nbo.Project import Project
@@ -107,7 +107,6 @@ semester = api.inherit('Semester', bo, nbo, {
 person = api.inherit('Person', bo, nbo, {
     'person_id': fields.Integer(attribute='_person_id',
                                 description='Person-ID'),
-I                                description='Google-ID der Person'),
 })
 
 student = api.inherit('student', bo, nbo, {
@@ -129,7 +128,7 @@ class PersonOperations(Resource):
         """Auslesen eines bestimmten Personen-Objekts, welches durch die person_id in dem URI bestimmt wird."""
 
         adm = ProjectAdministration()
-        pers = adm.get_person_by_id(id)
+        pers = adm.get_person_by_id(person_id)
         return pers
         
     @secured
@@ -137,7 +136,7 @@ class PersonOperations(Resource):
         """Löschen eines bestimmten Personen-Objekts, welches durch die person_id in dem URI bestimmt wird."""
 
         adm = ProjectAdministration()
-        pers = adm.get_person_by_id(id)
+        pers = adm.get_person_by_id(person_id)
         adm.delete_person(pers)
         return 'gelöscht', 200
 
@@ -169,8 +168,8 @@ class PersonListOperations(Resource):
 
     @projectTool.marshal_with(person, code=200)
     @projectTool.expect(person) 
-    """Hier wird ein Personen-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Personen-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Personen-Objekts"""
         adm = ProjectAdministration()
@@ -182,7 +181,7 @@ class PersonListOperations(Resource):
 
             return pers, 200
         else:
-                return '', 500
+            return '', 500
     
 @projectTool.route('/student')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -234,8 +233,8 @@ class StudentListOperations(Resource):
 
     @projectTool.marshal_with(student, code=200)
     @projectTool.expect(student) 
-    """Hier wird ein Student-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Student-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Student-Objekts"""
         adm = ProjectAdministration()
@@ -248,6 +247,25 @@ class StudentListOperations(Resource):
             return stud, 200       
         else:
             return '', 500 
+
+@projectTool.route('/student')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class StudentRegisterOperations(Resource):
+    @projectTool.marshal_with(student, code=200)
+    @projectTool.expect(student)
+    @secured
+        #Hier wird ein Student-Objekt von Client-Seite erwartet
+    def post(self):
+        """Resgistrierung eines Studenten (Anlegen eines neuen Student-Objekts"""
+        adm = ProjectAdministration()
+        proposal = Student.from_dict(api.payload)
+
+        if proposal is not None:
+            """Wir verwenden student_id des Proposals für die Erzeugung eines neuen Student Objektes"""
+            stud = adm.create_student(proposal.get_student_id())
+            return stud, 200
+        else:
+            return '', 500
 
 @projectTool.route('/student-by-matriculation-number')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -262,8 +280,6 @@ class StudentByMatriculationNumberOperations(Resource):
         adm = ProjectAdministration()
         stud = adm.get_student_by_matriculation_number(matriculation_number)
         return stud
-
-
 
 @projectTool.route('/student-by-name')    
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -291,6 +307,24 @@ class StateOperations(Resource):
         adm = ProjectAdministration()
         stat = adm.get_state_by_id(state_id)
         return stat
+
+@projectTool.route('/state/project')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('state_id', 'Dies ist die ID von Project')
+class StateRelatedProjectOperations(Resource):
+    @projectTool.marshal_with(project)
+    @secured
+    def get(self, state_id):
+        """Auslesen aller Project-Objekte bezüglich eines bestimmten State-Objekts"""
+        adm = ProjectAdministration()
+        """Zunächst wird die ID des State benötigt"""
+        stat = adm.get_state_by_id(state_id)
+
+        if stat is not None:
+            project_list = adm.get_projects_by_state_id(state.get_id())
+            return project_list
+        else:
+            return 'State not found', 500
 
 @projectTool.route('/semester')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -330,6 +364,24 @@ class SemesterOperations(Resource):
         else:
             return '', 500
 
+@projectTool.route('/semester/project')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('semester_id', 'Dies ist die ID von Semester')
+class SemesterRelatedProjectOperations(Resource):
+    @projectTool.marshal_with(project)
+    @secured
+    def get(self, semester_id):
+        """Auslesen aller Project-Objekte bezüglich eines bestimmten Semester-Objekts"""
+        adm = ProjectAdministration()
+        """Zunächst wird die ID des Semesters benötigt"""
+        sem = adm.get_semester_by_id(semester_id)
+
+        if sem is not None:
+            project_list = adm.get_projects_by_semester_id(semester.get_id())
+            return project_list
+        else:
+            return 'Semester not found', 500
+
 @projectTool.route('/role')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('role_id', 'Dies ist die ID von Role')
@@ -345,17 +397,63 @@ class RoleOperations(Resource):
     @projectTool.marshal_with(role)
     @projectTool.expect(role, validate=True)
     @secured
-    def put(self, role_id)
-    """Update eines bestimmten Role-Objekts."""
-    adm = ProjectAdministration()
-    rol = Role.from_dict(api.payload)
+    def put(self, role_id):
+        #Update eines bestimmten Role-Objekts.
+        adm = ProjectAdministration()
+        rol = Role.from_dict(api.payload)
 
-    if rol is not None:
-        rol.set_id(role_id)
-        adm.save_role(rol)
-        return '', 200
-    else:
-        return '', 500
+        if rol is not None:
+            rol.set_id(role_id)
+            adm.save_role(rol)
+            return '', 200
+        else:
+            return '', 500
+
+@projectTool.route('/role')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class RoleListOperations(Resource):
+    @projectTool.marshal_list_with(role)
+    @secured
+    def get(self):
+        """Auslesen aller Role-Objekte"""
+        adm = ProjectAdministration()
+        role_list = admn.get_all_roles()
+        return role_list
+    
+    @projectTool.marshal_with(role, code=200)
+    @projectTool.expect(role)
+    @secured
+        #Hier wird ein Role-Objekt von Client-Seite erwartet
+    def post(self):
+        """Anlegen eines neuen Role-Objekts"""
+        adm = ProjectAdministration()
+        proposal = Role.from_dict(api.payload)
+
+        if proposal is not None:
+            """Wir verwenden role_id des Proposals für die Erzeugung eines Role-Objektes."""
+            rol = adm.create_role(proposal.get_role_id())
+
+            return rol, 200
+        else:
+            return '', 500
+
+@projectTool.route('/role/person')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('role_id', 'Dies ist die ID von Role')
+class RoleRelatedPersonOperations(Resource):
+    @projectTool.marshal_with(person)
+    @secured
+    def get(self, role_id):
+        """Auslesen aller Personen-Objekte bezüglich eines bestimmten Role-Objekts"""
+        adm = ProjectAdministration()
+        """Zunächst wird die ID der Role benötigt"""
+        rol = adm.get_role_by_id(role_id)
+
+        if rol is not None:
+            person_list = adm.get_persons_by_role_id(role.get_id())
+            return person_list
+        else:
+            return 'Role not found', 500
 
 @projectTool.route('/grading')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -395,6 +493,20 @@ class GradingOperations(Resource):
         else:
             return '', 500
 
+@projectTool.route('/grading-by-participation')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('participation_id', 'Die ID der Teilnahme')
+class GradingByParticipationOperations(Resource):
+    @projectTool.marshal_with(grading)
+    @secured
+    def get(self, participation_id):
+        """Auslesen eines Grading-Objektes, welches durch die Participation-ID bestimmt wird.
+        Das auszulesende Objekt wird durch 'participation_id' in dem URI bestimmt.
+        """
+        adm = ProjectAdministration()
+        grad = adm.get_grading_by_participation_id(participation_id)
+        return grad
+
 @projectTool.route('/project')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('project_id', 'Dies ist die ID von Project')
@@ -432,6 +544,24 @@ class ProjectOperations(Resource):
             return '', 200
         else:
             return '', 500
+
+@projectTool.route('/project/participation')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('project_id', 'Dies ist die ID von Project')
+class ProjectRelatedParticipationOperations(Resource):
+    @projectTool.marshal_with(participation)
+    @secured
+    def get(self, project_id):
+        """Auslesen aller Participation-Objekte bezüglich eines bestimmten Project-Objekts"""
+        adm = ProjectAdministration()
+        """Zunächst wird die ID des Project benötigt"""
+        proj = adm.get_project_by_id(project_id)
+
+        if proj is not None:
+            participation_list = adm.get_participations_by_project_id(project.get_id())
+            return participation_list
+        else:
+            return 'Project not found', 500
 
 @projectTool.route('/project-type')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -484,8 +614,8 @@ class ProjectTypeListOperations(Resource):
 
     @projectTool.marshal_with(project_type, code=200)
     @projectTool.expect(project_type) 
-    """Hier wird ein ProjectType-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein ProjectType-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen ProjectType-Objekts"""
         adm = ProjectAdministration()
@@ -563,8 +693,8 @@ class ModuleListOperations(Resource):
 
     @projectTool.marshal_with(module, code=200)
     @projectTool.expect(module) 
-    """Hier wird ein Module-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Module-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Module-Objekts"""
         adm = ProjectAdministration()
@@ -629,8 +759,8 @@ class ParticipationListOperations(Resource):
 
     @projectTool.marshal_with(participation, code=200)
     @projectTool.expect(participation) 
-    """Hier wird ein Participation-Objekt von Client-Seite erwartet"""
     @secured
+        #Hier wird ein Participation-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Participation-Objekts"""
         adm = ProjectAdministration()
