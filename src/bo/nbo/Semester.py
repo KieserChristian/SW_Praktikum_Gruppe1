@@ -10,6 +10,7 @@ class Semester(BusinessObject, NamedBusinessObject):
         """ Realisierung der Semesterklasse
     Bestehend aus einer ID und einem Erstellungsdatum"""
         super().__init__(self)
+        self.__name = ""
         self.__id = 0
         self.__creation_date =datetime.datetime.now()
 
@@ -31,6 +32,12 @@ class Semester(BusinessObject, NamedBusinessObject):
         """Auslesen des Erstelldatums"""
         return self.__creation_date
 
+    def get_name (self):
+        return self.__name
+
+    def set_name (self,name):
+        self.__name = ""
+
     def set_id (self, value):
         """ID setzen"""
         self.__id = value 
@@ -45,4 +52,5 @@ def from_dict(dictionary=dict()):
     semester = Semester()
     semester.set__id(dictionary["id"])
     semester.set__creation_date(dictionary["creation_date"])
+    semeser.set__name(dictionary["name"])
     return semester

@@ -2,8 +2,6 @@ from BusinessObjects import BusinessObject
 from abc import ABC
 from datetime import datetime
 
-
-
 class NamedBusinessObject(BusinessObject,ABC):
     
     """Basisklasse, die in jede Klasse übernommen wird, die einen Namen als Attribut hat"""
@@ -20,8 +18,7 @@ class NamedBusinessObject(BusinessObject,ABC):
         """Auslesen des Namens"""
         return self.__name
 
-    def set_name(self, name ):
-
+    def set_name(self, name):
         """Setzen des Namens"""
         self.__name = name
 

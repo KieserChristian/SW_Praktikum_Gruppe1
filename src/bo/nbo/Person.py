@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-from Role import Role
-=======
 from ..Role import Role
->>>>>>> master
 from datetime import datetime
 
 class Person (Role):
@@ -11,53 +7,27 @@ class Person (Role):
      dozent = Role  ("Dozent")
      admin = Role ("Admin")
 
-<<<<<<< HEAD
-def __init__ (self, id, creation_date, email, google_id, authorization, name):
-
-        super().__init__()
-        self.__creation_date = datetime.datetime.now()
-        self.__id = 0
-        self.__name == {1:student, 2:dozent, 3:admin}   
-        self.__authorization = None   
-        self.__google_id = 0 
-        self.__email = ""
-
-    
-
-    def set_authorization(self, name):
-            
-        """Berechtigung setzen"""
-        self.__authorization = name
-
-    def get_authorization (self, name):
-=======
-     def __init__ (self, name):
-            super.__init__()
+     def __init__ (self,id,creation_date,email, google_id,authorization, name):
+        super.__init__()
         self.__name = ""
-        self.__berechtigung = role
+        self.__authorization = role
         self.__id = 0
         self.__creation_date =datetime.datetime.now()
+        self.__google_id = 0
+        self.__email = ""
 
-    def set_berechtigung (self, role):
+    def set_authorization (self, name):
         """Berechtigung setzen"""
-        self.__berechtigung = role
+        self.__berechtigung = name
 
-    def get_berechtigung (self, role):
->>>>>>> master
+    def get_authorization (self):
         """Berechtigung auslesen"""
         return self.__authorization
-    
+
     def get_id (self):
         """Auslesen der ID"""
         return self.__id
 
-<<<<<<< HEAD
-=======
-    def get_id (self):
-        """Auslesen der ID"""
-        return self.__id
-
->>>>>>> master
     def get_creation_date(self):
         """Auslesen des Erstelldatums"""
         return self.__creation_date
@@ -70,8 +40,7 @@ def __init__ (self, id, creation_date, email, google_id, authorization, name):
         """Erstellungsdatum setzen"""
         self.__creation_date = creation_date
 
-<<<<<<< HEAD
-    def get_google_id (self):
+     def get_google_id (self):
         """Auslesen der Google Id"""
         return self.__google_id
 
@@ -82,6 +51,9 @@ def __init__ (self, id, creation_date, email, google_id, authorization, name):
     def set_google_id(self, value):
         """Google Id setzen"""
         self.__google_id == 0
+
+
+
 
 @staticmethod
     def from_tuples (tuples-list()):
@@ -98,20 +70,16 @@ def __init__ (self, id, creation_date, email, google_id, authorization, name):
             result.append(person)
         return result
 
-
 @staticmethod
-    def from_dict(dictionary=dict()):
-        """Umwandeln eines Python dict () """
-        person = Person()
-        person.set__id(dictionary["id"])
-        person.set__creation_date(dictionary["creation_date"])
-        person.set_email(dictionary["email"])
-        person.set_google_id(dictionary["google_id"])
-        person.set_authorization(dictionary["authorization"])
-        person.set_name(dictionary["name"])
+def from_dict(dictionary=dict()):
+    """Umwandel eines Python dict () """
+    person = Person()
+    person.set__id(dictionary["id"])
+    person.set__creation_date(dictionary["creation_date"])
+    person.set__name(dictionary["Name"])
+    person.set__authorization(dictionary["authorization"])
     return person
-=======
->>>>>>> master
+
 
 if __name__ == "__main__":
 

@@ -9,7 +9,7 @@ class ProjectType(NamedBusinessObject):
         self.__number_sws = 0
         self.__name = ""
         self.__id = 0
-        self.__creation_date =datetime.datetime.now()
+        self.__creation_date =datetime.now()
 
 
     def get_number_ects(self):
@@ -24,7 +24,7 @@ class ProjectType(NamedBusinessObject):
         """semester wochenstunden auslesen"""
         return self.__number_sws
 
-    def set_number_sws(self, value):
+    def set_number_sws(self,number_sws):
         """semester wochenstunden setzen"""
         self.__number_sws = value
 
@@ -36,7 +36,7 @@ class ProjectType(NamedBusinessObject):
         """Auslesen des Erstelldatums"""
         return self.__creation_date
 
-    def set_id (self, value):
+    def set_id (self, id):
         """ID setzen"""
         self.__id = value 
 

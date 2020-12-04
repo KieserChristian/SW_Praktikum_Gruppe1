@@ -3,13 +3,12 @@
   """Basisklasse, für die Zuweisung der Berechtigungen der Personen"""
 class Role():
 
-    def __init__(self, name):
+    def __init__(self):
 
-           
             super().__init__()
             self.__id = 0
             self.__creation_date = datetime.datetime.now()
-        
+            self.__name = name
 
         def set_name (self, name):
             """Setzen eines Rollenname"""

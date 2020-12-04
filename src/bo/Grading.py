@@ -39,8 +39,8 @@ class Grading(BusinessObject):
 @staticmethod
 def from_dict(dictionary=dict()):
     """Umwandel eines Python dict () in eine Note/Bewertung"""
-    grading = Grading()
-    grading.set__id(dictionary["id"])
-    grading.set__grade(dictionary["grade"])
-    grading.set__creation_date(dictionary["creation_date"])
-    return grading
+    grad = Grad()
+    grad.set__id(dictionary["id"])
+    grad.set__grade(dictionary["grade"])
+    grad.set__creation_date(dictionary["creation_date"])
+    return grad

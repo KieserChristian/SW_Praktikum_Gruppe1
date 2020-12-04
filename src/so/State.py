@@ -5,8 +5,9 @@ class State(Automat):
     def __init__():
         self.state_name = ""
         super().__init__()
-            self.__id = 0
-            self.__creation_date = datetime.datetime.now()
+        self.__name = ""
+        self.__id = 0
+        self.__creation_date = datetime.datetime.now()
         
 
    
@@ -15,7 +16,7 @@ class State(Automat):
         """State auslesen"""
         return state_name        
 
-    def set_state_name(self, ""):
+    def set_state_name(self,name ):
         
         self._state_name = ""
 

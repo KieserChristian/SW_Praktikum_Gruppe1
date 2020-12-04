@@ -22,7 +22,7 @@ class Student(Person):
         """Kurs-Kürzel auslesen"""
         return self.__edv_number
 
-    def set_coure_abbreviation(self, value):
+    def set_coure_abbreviation(self, abbreviation):
         """Kurs-Kürzel setzen"""
         self.__course_abbreviation = value
 
@@ -34,7 +34,7 @@ class Student(Person):
         """Auslesen des Erstelldatums"""
         return self.__creation_date
 
-    def set_id (self, value):
+    def set_id (self, id):
         """ID setzen"""
         self.__id = value 
 
