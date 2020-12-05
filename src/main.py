@@ -4,18 +4,18 @@ from flask_restx import Api, Resource, fields
 
 from ProjectAdministration import ProjectAdministration
 #restliche bo imports fehlen
-#from bo.Participation import Participation
-#from bo.Grading import Grading
-#from bo.nbo.Module import Module
-#from bo.nbo.Project import Project
-#from bo.nbo.ProjectType import ProjectType
-#from bo.nbo.Semester import Semester
-#from bo.nbo.Person import Person
-#from bo.nbo.Student import Student
-#from so.Automat import Automat
-#from so.State import State
-#from so.Role import Role
-#from SecurityDecorator import secured
+from bo.Participation import Participation
+from bo.Grading import Grading
+from bo.nbo.Module import Module
+from bo.nbo.Project import Project
+from bo.nbo.ProjectType import ProjectType
+from bo.nbo.Semester import Semester
+from bo.nbo.Person import Person
+from bo.nbo.Student import Student
+from so.Automat import Automat
+from so.State import State
+from so.Role import Role
+from SecurityDecorator import secured
 
 """Flask instanzieren"""
 app = Flask(__name__)

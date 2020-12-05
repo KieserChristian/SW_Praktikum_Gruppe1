@@ -11,113 +11,120 @@ class Project(NamedBusinessObject, Automat):
 
     def __init__(self):
         super().__init__()
-         self.__name = ""
-         self.__capacity = 0
-         self.__external_partners = ""
-         self.__short_description = ""
-         self.__weekly_flag = False
-         self.__bd_before_lecture_period = 0
-         self.__bd_in_exam_period = 0
-         self.__bd_preferred_in_lecture_period = 0
-         self.__special_room = ""
-         self.__id = 0
-         self.__creation_date = datetime.datetime.now()
+         self._capacity = 0
+         self._external_partners = ""
+         self._short_description = ""
+         self._weekly_flag = False
+         self._bd_before_lecture_period = 0
+         self._bd_in_exam_period = 0
+         self._bd_preferred_in_lecture_period = 0
+         self._special_room = ""
+        
+    def __str__(self):
+        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projektinstanz"""
+        return "Projekt:{}, Name: {}, Anzahl Plätze: {}, Externe Partner: {}, Kurzbeschreibung: {}, " \
+                "Wöchentliche: {}, Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Prüfungszeit: {}, " \
+                " Präferierte Blocktage in der Vorlesungszeit: {}, " \
+                "Besonderer Raum erforderlich: {} ".format(self.get_id(), self.get_name(), self._capacity(),
+                                                          self._external_partners(), self._short_description(),
+                                                          self._weekly_flag(), self._bd_before_lecture_period(),
+                                                          self._bd_in_exam_period(), self._bd_preferred_in_lecture_period(), self._special_room())
 
     def get_name(self):
         """Name auslesen"""
-        return self.__name
+        return self._name
 
     def get_capacity(self):
         """Kapazität auslesen"""
-        return self.__capacity
+        return self._capacity
 
     def get_external_partners(self):
         """externe Partner auslesen"""
-        return self.__external_partners
+        return self._external_partners
 
     def get_short_description(self):
         """Kurzbeschreibung auslesen"""
-        return self.__short_description
+        return self._short_description
 
     def get_weekly_flag(self):
         """wöchentliches Flag auslesen"""
-        return self.__weekly_flag
+        return self._weekly_flag
 
     def get_bd_before_lecture_period(self):
         """Blocktage vor Vorlesungszeit auslesen"""
-        return self.__bd_before_lecture_period
+        return self._bd_before_lecture_period
 
     def get_bd_in_exam_period(self):
         """Blocktage in Prüfungszeit auslesen"""
-        return self.__bd_in_exam_period
+        return self._bd_in_exam_period
 
     def get_bd_in_lecture_period(self):
         """Blocktage in Vorlesungszeit auslesen"""
-        return self.__bd_in_lecture_period
+        return self._bd_in_lecture_period
 
     def get_bd_preferred_in_lecture_period(self):
         """präferierte Blocktage in Vorlesungszeit auslesen"""
-        return self.__bd_preferred_in_lecture_period
+        return self._bd_preferred_in_lecture_period
 
     def get_special_room(self):
         """Spezieller Raum auslesen"""
-        return self.__special_room
+        return self._special_room
 
     def set_name(self, name):
         """Name setzen"""
-        self.__name = name
+        self._name = name
 
     def set_capacity(self, capacity):
         """Kapazität setzen"""
-        self.__capacity = capacity
+        self._capacity = capacity
 
     def set_external_partners(self, external_partners):
         """Externe Partner setzen"""
-        self.__external_partners = external_partners
+        self._external_partners = external_partners
 
-    def set_short_descripton(self, short_descripton):
+    def set_short_description(self, short_description):
         """Kurzbeschreibung setzen"""
-        self.__short_descripton = short_descripton
+        self._short_description = short_description
 
     def set_weekly_flag(self, weekly_flag):
         """wöchentliches Flag setzen"""
-        self.__weekly_flag = weekly_flag
+        self._weekly_flag = weekly_flag
 
     def set_bd_before_lecture_period(self, bd_before_lecture_period):
         """Blocktage vor Vorlesungszeit setzen"""
-        self.__bd_before_lecture_period = bd_before_lecture_period
+        self._bd_before_lecture_period = bd_before_lecture_period
     
     def set_bd_in_exam_period(self, bd_in_exam_period):
         """Blocktage in Prüfungszeit setzen"""
-        self.__bd_in_exam_period = bd_in_exam_period  
+        self._bd_in_exam_period = bd_in_exam_period  
 
     def set_bd_in_lecture_period(self, bd_in_lecture_period):
         """Blocktage in Vorlesungszeit setzen"""
-        self.__bd_in_lecture_period = bd_in_lecture_period  
+        self._bd_in_lecture_period = bd_in_lecture_period  
 
     def set_bd_preferred_in_lecture_period(self, bd_preferred_in_lecture_period):
         """präferierte Blocktage in Vorlesungszeit setzen"""
-        self.__bd_preferred_in_lecture_period = bd_preferred_in_lecture_period  
+        self._bd_preferred_in_lecture_period = bd_preferred_in_lecture_period  
 
     def set_special_room(self, special_room):
         """Spezieller Raum setzen"""
-        self.__special_room = special_room
+        self._special_room = special_room
 
     def get_id (self):
         """Auslesen der ID"""
-        return self.__id
+        return self._id
 
     def get_creation_date(self):
         """Auslesen des Erstelldatums"""
-        return self.__creation_date
+        return self._creation_date
 
     def set_id (self, value):
         """ID setzen"""
-        self.__id = value 
+        self._id = value 
 
     def set_creation_date (self, creation_date):
         """Erstellungsdatum setzen"""
-        self.__creation_date = creation_date
+        self._creation_date = creation_date
 
 @staticmethod
 def from_dict(dictionary=dict()):

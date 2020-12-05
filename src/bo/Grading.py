@@ -8,31 +8,27 @@ class Grading(BusinessObject):
     """ Realisierung der Benotungsklasse
     Bestehend aus einer Note und Noten-ID und einem Erstellungsdatum"""
         
-
     def __init__(self):   
         super().__init__()
-        self.__grade = 0.0
-        self.__id = 0
-        self.__creation_date = datetime.datetime.now()
+        self._grade = 0.0
 
     def __str__(self):
-        return "Grading list: {}, Grading_id: {}, view of creation_date {}".format (self.get__grade(),self.get__id(),self.get__creation_date())
+        return "Grading list: {}, Grading_id: {}, view of creation_date {}".format(self.get_grade(), self.get_id(), self.get_creation_date())
 
-
-    def get__grade (self):
+    def get_grade (self):
         """Auslesen der Note"""
-        return self.__grade
+        return self._grade
 
-    def set___grade (self, value):
+    def set_grade (self, value):
         """Setzen der Note"""
-        self.__grade = value
+        self._grade = value
 
     def to_dict (self):
         """Umwandeln Grading() in ein Python dictionary dict ()"""
         result = {
-            "id": self.get__id (),
-            "grading": self.get__grade(),
-            "creation_Date": self.get__creation_date()
+            "id": self.get_id (),
+            "grading": self.get_grade(),
+            "creation_Date": self.get_creation_date()
         }
         return result
 
@@ -40,7 +36,7 @@ class Grading(BusinessObject):
 def from_dict(dictionary=dict()):
     """Umwandel eines Python dict () in eine Note/Bewertung"""
     grad = Grad()
-    grad.set__id(dictionary["id"])
-    grad.set__grade(dictionary["grade"])
-    grad.set__creation_date(dictionary["creation_date"])
+    grad.set_id(dictionary["id"])
+    grad.set_grade(dictionary["grade"])
+    grad.set_creation_date(dictionary["creation_date"])
     return grad

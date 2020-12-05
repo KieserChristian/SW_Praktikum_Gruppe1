@@ -1,7 +1,7 @@
 from State import State
 from datetime import datetime
 
-class Automat ():
+class Automat():
 
     """Unveränderliche oder statische Variablen für die Zustände, die nach dem anlegen eines Automats(Projekts) diesem zugeordnet werden können."""
     """Die statischen Variablen initiert ein Objekt der Klasse State"""
@@ -19,8 +19,8 @@ class Automat ():
         
         self.current_state = Automat.state_new
         super().__init__()
-            self.__id = 0
-            self.__creation_date = datetime.datetime.now()
+            self._id = 0
+            self._creation_date = datetime.datetime.now()
         
 
     def set_current_state(self, current_state):

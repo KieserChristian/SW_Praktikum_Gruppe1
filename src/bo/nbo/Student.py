@@ -5,42 +5,44 @@ class Student(Person):
 
     def __init__(self):
         super.__init__()
-        self.__matriculation_number = 0
-        self.__course_abbreviation = 0
-        self.__id = 0
-        self.__creation_date =datetime.datetime.now()
+        self._matriculation_number = 0
+        self._course_abbreviation = ""
+    
+    def __str__ (self): 
+        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Studenteninstanz"""
+        return "Student: {}, Matrikelnummer: {}, Studiengangskürzel: {} ".format(self.get_id(), self.get_matriculation_number(), self.get_course_abbreviation())
 
     def get_matriculation_number(self):
         """Immatrikulationsnummer auslesen"""
-        return self.__matriculation_number
+        return self._matriculation_number
 
     def set_matriculation_number(self, value):
         """Immatrikulationsnummer setzen"""
-        self.__matriculation_number = value
+        self._matriculation_number = value
 
     def get_course_abbreviation(self):
         """Kurs-Kürzel auslesen"""
-        return self.__edv_number
+        return self._edv_number
 
     def set_course_abbreviation(self, abbreviation):
         """Kurs-Kürzel setzen"""
-        self.__course_abbreviation = value
+        self._course_abbreviation = value
 
     def get_id (self):
         """Auslesen der ID"""
-        return self.__id
+        return self._id
 
     def get_creation_date(self):
         """Auslesen des Erstelldatums"""
-        return self.__creation_date
+        return self._creation_date
 
     def set_id (self, id):
         """ID setzen"""
-        self.__id = value 
+        self._id = value 
 
     def set_creation_date (self, creation_date):
         """Erstellungsdatum setzen"""
-        self.__creation_date = creation_date
+        self._creation_date = creation_date
 
 @staticmethod
 def from_dict(dictionary=dict()):

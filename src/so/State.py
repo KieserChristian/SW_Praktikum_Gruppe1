@@ -6,8 +6,8 @@ class State(Automat):
     def __init__():
         self.state_name = ""
         super().__init__()
-        self.__id = 0
-        self.__creation_date = datetime.datetime.now()
+        self._id = 0
+        self._creation_date = datetime.datetime.now()
    
     def get_state_name(self):
         """State auslesen"""
@@ -50,16 +50,16 @@ if __name__== "__main__":
 
         def get_id (self):
             """Auslesen der ID"""
-            return self.__id
+            return self._id
 
         def get_creation_date(self):
         """Auslesen des Erstelldatums"""
-            return self.__creation_date
+            return self._creation_date
 
         def set_id (self, value):
         """ID setzen"""
-            self.__id = value 
+            self._id = value 
 
         def set_creation_date (self, creation_date):
         """Erstellungsdatum setzen"""
-            self.__creation_date = creation_date
+            self._creation_date = creation_date

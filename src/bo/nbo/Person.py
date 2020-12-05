@@ -6,57 +6,56 @@ class Person (NamedBusinessObject):
 
      def __init__ (self, id, creation_date, email, google_id, authorization, name):
         super.__init__()
-        self.__name = ""
-        self.__authorization = role
-        self.__id = 0
-        self.__creation_date = datetime.datetime.now()
-        self.__google_id = ""
-        self.__email = ""
+        self._authorization = role
+        self._google_id = ""
+        self._email = ""
+
+    def __str__(self):
+        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Personeninstanz"""
+        return "Person: {}, Rolle: {}, Google-ID: {}, E-Mail: {} ".format(self.get_id(), self.get_authorization(),
+                                                                        self.get_google_id(), self.get_email())
 
     def set_authorization (self, name):
         """Berechtigung setzen"""
-        self.__authorization = name
+        self._authorization = name
 
     def get_authorization (self):
         """Berechtigung auslesen"""
-        return self.__authorization
+        return self._authorization
 
     def get_id (self):
         """Auslesen der ID"""
-        return self.__id
+        return self._id
 
     def get_creation_date(self):
         """Auslesen des Erstelldatums"""
-        return self.__creation_date
+        return self._creation_date
 
     def set_id (self, value):
         """ID setzen"""
-        self.__id = value 
+        self._id = value 
 
     def set_creation_date (self, creation_date):
         """Erstellungsdatum setzen"""
-        self.__creation_date = creation_date
+        self._creation_date = creation_date
 
      def get_google_id (self):
         """Auslesen der Google Id"""
-        return self.__google_id
+        return self._google_id
 
     def get_email (self):
         """Auslesen der Mail"""
-        return self.__email
+        return self._email
 
     def set_google_id(self, google_id):
         """Google Id setzen"""
-        self.__google_id = google_id
-
-
-
+        self._google_id = google_id
 
 @staticmethod
     def from_tuples (tuples-list()):
         """Umwandeln eines DB tuples in ein Python Objekt (Person())"""
         result = []
-        for (person_id, id, creation_date, email, google_id, authorization, name ) in tuples:
+        for (person_id, id, creation_date, email, google_id, authorization, name) in tuples:
             person = Person()
             person.set_id (person_id)
             person.set_creation_date (creation_date)
@@ -69,14 +68,13 @@ class Person (NamedBusinessObject):
 
 @staticmethod
 def from_dict(dictionary=dict()):
-    """Umwandel eines Python dict () """
+    """Umwandeln eines Python dict () """
     person = Person()
-    person.set__id(dictionary["id"])
-    person.set__creation_date(dictionary["creation_date"])
-    person.set__name(dictionary["name"])
-    person.set__authorization(dictionary["authorization"])
+    person.set_id(dictionary["id"])
+    person.set_creation_date(dictionary["creation_date"])
+    person.set_name(dictionary["name"])
+    person.set_authorization(dictionary["authorization"])
     return person
-
 
 if __name__ == "__main__":
 

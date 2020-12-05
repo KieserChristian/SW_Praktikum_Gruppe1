@@ -6,33 +6,30 @@ from BusinessObject import BusinessObject
 class Participation(BusinessObject):
     def __init__(self):
     
-        """ Realisierung der Teilnahmeklasse
-    Bestehend aus einer ID und einem Erstellungsdatum"""
+        """ Realisierung der Teilnahmeklasse Bestehend aus einer ID und einem Erstellungsdatum"""
         super().__init__()
-        self.__id = 0
-        self.__creation_date = datetime.now()
 
     def __str__(self):
-        return "view of creation_date {}, participation_id {}".format (self.get__id(),self.get__creation_date())
+        return "view of creation_date {}, participation_id {}".format(self.get_id(), self.get_creation_date())
 
-    def get__creation_date (self):
+    def get_creation_date (self):
         """Auslesen des Erstellungsdatums"""
-        return self.__creation_date
+        return self._creation_date
 
-    def get__id (self):
+    def get_id (self):
         """Auslesen der ID"""
         return self.__id
               
-    def set__creation_date (self):
+    def set_creation_date (self):
         self.__creation_date =
 
-    def set__id (self, creation_date):
-        self.__id = creation_date   
+    def set_id (self, creation_date):
+        self._id = creation_date   
 
 @staticmethod
 def from_dict(dictionary=dict()):
     """Umwandel eines Python dict () """
     participation = Participation()
-    participation.set__id(dictionary["id"])
-    participation.set__creation_date(dictionary["creation_date"])
+    participation.set_id(dictionary["id"])
+    participation.set_creation_date(dictionary["creation_date"])
     return participation
