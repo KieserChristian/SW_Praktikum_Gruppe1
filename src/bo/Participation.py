@@ -10,7 +10,7 @@ class Participation(BusinessObject):
     Bestehend aus einer ID und einem Erstellungsdatum"""
         super().__init__()
         self.__id = 0
-        self.__creation_date =datetime.now()
+        self.__creation_date = datetime.now()
 
     def __str__(self):
         return "view of creation_date {}, participation_id {}".format (self.get__id(),self.get__creation_date())

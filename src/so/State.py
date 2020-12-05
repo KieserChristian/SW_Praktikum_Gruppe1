@@ -2,23 +2,20 @@ from Automat import Automat
 from datetime import datetime
 
 class State(Automat):
+
     def __init__():
         self.state_name = ""
         super().__init__()
-        self.__name = ""
         self.__id = 0
         self.__creation_date = datetime.datetime.now()
-        
-
    
     def get_state_name(self):
-
         """State auslesen"""
         return state_name        
 
-    def set_state_name(self, name):
-        
-        self._state_name = ""
+    def set_state_name(self, state_name):
+        """State setzen"""
+        self._state_name = state_name
 
    def __str__(self, name):
         return self.state_name

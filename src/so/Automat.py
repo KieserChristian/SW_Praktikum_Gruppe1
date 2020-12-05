@@ -23,10 +23,10 @@ class Automat ():
             self.__creation_date = datetime.datetime.now()
         
 
-    def set_state(self, state):
-        self.current_state = state
+    def set_current_state(self, current_state):
+        self.current_state = current_state
 
-    def get_state (self):
+    def get_current_state (self):
         return self.current_state
 
     def is_in_state (self, state):

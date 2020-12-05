@@ -21,7 +21,7 @@ class Project(NamedBusinessObject, Automat):
          self.__bd_preferred_in_lecture_period = 0
          self.__special_room = ""
          self.__id = 0
-         self.__creation_date =datetime.datetime.now()
+         self.__creation_date = datetime.datetime.now()
 
     def get_name(self):
         """Name auslesen"""

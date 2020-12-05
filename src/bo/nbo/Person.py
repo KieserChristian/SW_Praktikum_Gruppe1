@@ -1,19 +1,16 @@
 from ..Role import Role
 from datetime import datetime
+from NamedBusinessObject import NamedBusinessObject
 
-class Person (Role):
+class Person (NamedBusinessObject):
 
-     student = Role ("Student")
-     dozent = Role  ("Dozent")
-     admin = Role ("Admin")
-
-     def __init__ (self,id,creation_date,email, google_id,authorization, name):
+     def __init__ (self, id, creation_date, email, google_id, authorization, name):
         super.__init__()
         self.__name = ""
         self.__authorization = role
         self.__id = 0
-        self.__creation_date =datetime.datetime.now()
-        self.__google_id = 0
+        self.__creation_date = datetime.datetime.now()
+        self.__google_id = ""
         self.__email = ""
 
     def set_authorization (self, name):
@@ -48,9 +45,9 @@ class Person (Role):
         """Auslesen der Mail"""
         return self.__email
 
-    def set_google_id(self, value):
+    def set_google_id(self, google_id):
         """Google Id setzen"""
-        self.__google_id == 0
+        self.__google_id = google_id
 
 
 

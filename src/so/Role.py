@@ -1,26 +1,34 @@
  from datetime import datetime
  from Automat import Automat
+ from Person import Person
  
 """Basisklasse, für die Zuweisung der Berechtigungen der Personen"""
-class Role():
+class Role(Person):
+
+    student = Role ("Student")
+    dozent = Role  ("Dozent")
+    admin = Role ("Admin")
 
     def __init__(self):
 
             super().__init__()
             self.__id = 0
             self.__creation_date = datetime.datetime.now()
-            self.__name = ""
+            self.__static_attribute = ""
 
-        def set_name (self, name):
-            """Setzen eines Rollenname"""
-            self._name = name 
+        def set_static_attribute (self, static_attribute):
+            """Setzen eines statischen Attributs"""
+            self.__static_attribute = static_attribute
 
-        def get_name (self):
-            """Auslesen des Rollennamen"""
-            return self._name
-
-        def __str__ (self):
-            return self._name
+        def get_static_attribute (self, static_attribute):
+            """Auslesen eines statischen Attributs"""
+            return self.__static_attribute
+        
+        #def set_role (self, person_id):
+            """Setzen einer Rolle""" 
+            
+        #def get_role (self, person_id):
+            """Auslesen einer Rolle"""
 
         def get_id (self):
             """Auslesen der ID"""

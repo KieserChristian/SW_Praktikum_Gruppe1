@@ -30,11 +30,11 @@ class ProjectAdministration():
     """
     Person-Methoden
     """
-    def create_person(self, name:str, google_person_id:int):
+    def create_person(self, name:str, google_id:int):
         """Eine Person anlegen"""
         person = Person()
         person.set_name(name)
-        person.set_person_id(google_person_id)
+        person.set_person_id(google_id)
         person.set_id(1)
 
         with PersonMapper() as mapper:
@@ -65,12 +65,12 @@ class ProjectAdministration():
         with PersonMapper() as mapper:
             return mapper.find_by_name(name)
     
-    def get_person_by_google_id (self, google_person_id)
+    def get_person_by_google_id (self, google_id):
         """Die Person mit ihrer Google-ID ausgeben"""
         with PersonMapper() as mapper:
-            return mapper.find_by_id(google_person_id)
+            return mapper.find_by_id(google_id)
 
-    def get_persons_by_role_id(self, role)
+    def get_persons_by_role_id(self, role):
         """Alle Personen mit einer bestimmten Rolle ausgeben"""
         with PersonMapper() as mapper:
             return mapper.find_by_id(role.get_id())
@@ -184,7 +184,7 @@ class ProjectAdministration():
     Role-Methoden
     """
 
-    def create_role_for_person(self, static_attribute:str):
+    def create_role_for_person(self, static_attribute:str, person):
         """Eine Rolle anlegen"""
         with RoleMapper() as mapper:
             if person is not None:
@@ -196,7 +196,7 @@ class ProjectAdministration():
             else:
                 return None
     
-    def save_role(self, role)
+    def save_role(self, role):
         """Eine Rolle speichern"""
         with RoleMapper() as mapper:
             mapper.update(role)
@@ -290,12 +290,12 @@ class ProjectAdministration():
         with ParticipationMapper() as mapper:
             return mapper.find_all()
     
-    def get_participations_of_student(self, student)
+    def get_participations_of_student(self, student):
         """Alle Teilnahmen des Studenten auslesen"""
         with ParticipationMapper() as mapper:
             return mapper.find_by_id(student.get_id())
     
-    def get_participations_by_project_id(self, project)
+    def get_participations_by_project_id(self, project):
         """Die Teilnehmerliste eines bestimmten Projekts ausgeben"""
         with ParticipationMapper() as mapper:
             return mapper.find_by_id(project.get_id())
@@ -324,7 +324,7 @@ class ProjectAdministration():
     Grading-Methoden
     """
 
-    def create_grading_for_participation(self, participation_id:int):
+    def create_grading_for_participation(self, participation):
         """Eine Bewertung anlegen"""
 
         grading = Grading()
@@ -354,7 +354,7 @@ class ProjectAdministration():
         with GradingMapper() as mapper:
             return mapper.find_all()
     
-    def get_grading_by_participation_id(self, participation)
+    def get_grading_by_participation_id(self, participation):
         """Die Bewertung von einer Teilnahme auslesen"""
         with GradingMapper() as mapper:
             return mapper.find_by_id(participation.get_id())
@@ -371,7 +371,7 @@ class ProjectAdministration():
         project.set_id(1)
         project.set_external_partners(external_partners)
         project.set_capacity(capacity)
-        project.set_weekly_flag(false)
+        project.set_weekly_flag(False)
         project.set_bd_preferred_in_lecture_period(0)
         project.set_bd_in_lecture_period(0)
         project.set_bd_in_exam_period(0)
@@ -407,7 +407,7 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             return mapper.find_by_name(name)
     
-    def get_projects_by_state_id(self)
+    def get_projects_by_state_id(self):
         """Alle Projekte, die sich in einem bestimmten Zustand befinden, ausgeben"""
         with ProjectMapper() as mapper:
             return mapper.find_by_id(state.get_id())
@@ -427,7 +427,7 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             mapper.add_participation_to_project(participation, project)
     
-    def add_participation_list_to_project(self, participation, project)
+    def add_participation_list_to_project(self, participation, project):
         """Eine Teilnehmerliste einem Projekt hinzufügen"""
         with ProjectMapper() as mapper:
             mapper.add_participation_list_to_project(participation, project)
@@ -437,7 +437,7 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             mapper.remove_participation_from_project(participation, project)
 
-    def remove_participation_list_from_project(self, participation, project)
+    def remove_participation_list_from_project(self, participation, project):
         """Eine Teilnehmerliste von einem Projekt entfernen"""
         with ProjectMapper() as mapper:
             mapper.remove_participation_list_from_project(participation, project)
@@ -452,13 +452,15 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             mapper.remove_semester_from_project(semester, project)
     
-    def approve_project(self, project)
+    def approve_project(self, project):
         """Ein Projekt genehmigen"""
-        with ProjectMapper() as mapper:    
+        with ProjectMapper() as mapper:
+            mapper.approve_project(project)    
     
-    def reject_project(self, project)
+    def reject_project(self, project):
         """Ein Project ablehnen"""
         with ProjectMapper() as mapper:
+            mapper.reject_project(project)
     
     """
     ProjectType-Methoden
@@ -496,7 +498,7 @@ class ProjectAdministration():
         with ProjectTypeMapper() as mapper:
             return mapper.find_all()
     
-    def get_project_type_by_name(self name):
+    def get_project_type_by_name(self, name):
         """Einen Projekttyp anhand seines Namen auslesen"""
         with ProjectTypeMapper() as mapper:
             return mapper.find_by_name(name)
@@ -512,27 +514,27 @@ class ProjectAdministration():
         state.set_state_name(state_name)
         state.set_id(1)
 
-        with StateTypeMapper() as mapper:
+        with StateMapper() as mapper:
             return mapper.insert(state)
     
     def save_state(self, state):
         """Einen Status speichern"""
-        with StateTypeMapper() as mapper:
+        with StateMapper() as mapper:
             mapper.update(state)
     
     def delete_state(self, state):
         """Einen Status löschen"""
-        with StateTypeMapper() as mapper:
+        with StateMapper() as mapper:
             mapper.delete(state)
 
     def get_state_by_id(self, state_id):
         """Einen Status anhand seiner ID auslesen"""
-        with StateTypeMapper() as mapper:
+        with StateMapper() as mapper:
             return mapper.find_by_id(state_id)
     
     def get_all_states(self):
         """Alle Status ausgeben"""
-        with StateTypeMapper() as mapper:
+        with StateMapper() as mapper:
             return mapper.find_all()
     
     """
@@ -555,37 +557,37 @@ class ProjectAdministration():
         with ModuleMapper() as mapper:
             mapper.update(module)
 
-     def delete_module(self, module):
-         """Ein Modul löschen"""
+    def delete_module(self, module):
+        """Ein Modul löschen"""
         with ModuleMapper() as mapper:
             mapper.delete(module)
     
-     def get_module_by_id(self, module_id):
-         """Ein Modul anhand seiner ID auslesen"""
+    def get_module_by_id(self, module_id):
+        """Ein Modul anhand seiner ID auslesen"""
         with ModuleMapper() as mapper:
             return mapper.find_by_id(module_id)
     
-     def get_all_modules(self):
-         """Alle Module ausgeben"""
+    def get_all_modules(self):
+        """Alle Module ausgeben"""
         with ModuleMapper() as mapper:
             return mapper.find_all()
     
-     def get_module_by_name(self, name):
-         """Ein Modul anhand seines Namen auslesen"""
+    def get_module_by_name(self, name):
+        """Ein Modul anhand seines Namen auslesen"""
         with ModuleMapper() as mapper:
             return mapper.find_by_name(name)
     
-     def get_module_by_edv_number(self, edv_number):
-         """Ein Modul anhand seiner EDV-Nummer ausgeben"""
+    def get_module_by_edv_number(self, edv_number):
+        """Ein Modul anhand seiner EDV-Nummer ausgeben"""
         with ModuleMapper() as mapper:
             return mapper.find_by_number(edv_number)
     
-     def add_project_to_module(self, project, module):
-         """Ein Projekt einem Modul hinzufügen"""
+    def add_project_to_module(self, project, module):
+        """Ein Projekt einem Modul hinzufügen"""
         with ModuleMapper() as mapper:
             mapper.add_project_to_module(project, module)
             
-     def remove_project_from_module(self, project, module):
-         """Ein Projekt von einem Modul entfernen"""
+    def remove_project_from_module(self, project, module):
+        """Ein Projekt von einem Modul entfernen"""
         with ModuleMapper() as mapper:
             mapper.remove_project_from_module(project, module)
