@@ -1,5 +1,5 @@
-from server.bo.Grading import Grading
-from server.db.Mapper import Mapper
+from src.bo.Grading import Grading
+from src.db.Mapper import Mapper
 
 
 class GradingMapper (Mapper):

@@ -15,12 +15,12 @@ class Mapper (AbstractContextManager, ABC):
             
             self._cnx = connector.connect(user='root', password='',
                                           #unix_socket(Anbindung muss noch ergänzt werden)
-                                          database='IT_projekt')
+                                          database='it_projekt')
         else:
 
             self._cnx = connector.connect(user='root', password='',
                                   host='127.0.0.1',
-                                  database='IT_projekt')
+                                  database='it_projekt')
 
         return self
 

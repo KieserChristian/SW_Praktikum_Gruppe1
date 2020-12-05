@@ -1,5 +1,5 @@
-from server.so.Role import Role
-from server.db.Mapper import Mapper
+from src.so.Role import Role
+from src.db.Mapper import Mapper
 
 class RoleMapper (Mapper):
 
