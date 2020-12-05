@@ -1,5 +1,5 @@
-from server.nbo.ProjectType import ProjectType
-from server.db.Mapper import Mapper
+from src.bo.nbo.ProjectType import ProjectType
+from src.db.Mapper import Mapper
 
 class ProjectTypeMapper (Mapper):
 
@@ -84,8 +84,8 @@ class ProjectTypeMapper (Mapper):
         for (maxid) in tuples:
             project_type.set_id(maxid[0]+1)
 
-        #command = "INSERT INTO accounts (id, owner) VALUES (%s,%s)"
-        #data = (account.get_id(), account.get_owner())
+        command = "INSERT INTO project_type (project_type_id, name, number_ects, number_sws) VALUES (%s,%s,%s,%s)"
+        data = (project_type.get_project_type_id(), project_type.get_name(), project_type.get_number_ects, project_type.get_number_sws)
         cursor.execute(command, data)
 
         self._cnx.commit()

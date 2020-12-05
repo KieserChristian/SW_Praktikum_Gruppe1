@@ -1,5 +1,5 @@
-from server.nbo.Module import Module
-from server.db.Mapper import Mapper
+from src.bo.nbo.Module import Module
+from src.db.Mapper import Mapper
 
 class ModuleMapper (Mapper):
 
@@ -94,8 +94,8 @@ class ModuleMapper (Mapper):
        
         cursor = self._cnx.cursor()
 
-        #command = "UPDATE module " + "SET owner=%s WHERE id=%s"
-        #data = (module.get_owner(), module.get_id())
+        command = "UPDATE module " + "SET name=%s WHERE module_id=%s"
+        data = (module.get_name(), module.get_module_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
