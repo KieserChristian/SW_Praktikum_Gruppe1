@@ -7,7 +7,7 @@ class Automat ():
     """Die statischen Variablen initiert ein Objekt der Klasse State"""
 
     state_new = State("Neu")
-    state_accepted =  State ("genehmigt")
+    state_accepted =  State ("Genehmigt")
     state_declined = State ("Abgelehnt")
     state_inReview = State ("In Bewertung")
     state_reviewCompleted = State ("Bewertung abgeschlossen")

@@ -18,7 +18,7 @@ class Person (Role):
 
     def set_authorization (self, name):
         """Berechtigung setzen"""
-        self.__berechtigung = name
+        self.__authorization = name
 
     def get_authorization (self):
         """Berechtigung auslesen"""
@@ -62,12 +62,12 @@ class Person (Role):
         for (person_id, id, creation_date, email, google_id, authorization, name ) in tuples:
             person = Person()
             person.set_id (person_id)
-            person.set_creation_date(creation_date)
+            person.set_creation_date (creation_date)
             person.set_email (email)
             person.set_google_id (google_id)
-            person.set_authorization(authorization)
-            person.set_name(name)
-            result.append(person)
+            person.set_authorization (authorization)
+            person.set_name (name)
+            result.append (person)
         return result
 
 @staticmethod
@@ -76,7 +76,7 @@ def from_dict(dictionary=dict()):
     person = Person()
     person.set__id(dictionary["id"])
     person.set__creation_date(dictionary["creation_date"])
-    person.set__name(dictionary["Name"])
+    person.set__name(dictionary["name"])
     person.set__authorization(dictionary["authorization"])
     return person
 

@@ -1,5 +1,5 @@
-from BusinessObject import BusinessObject
-from NamedBusinessObjects import NamedBusinessObject
+#from BusinessObject import BusinessObject
+from NamedBusinessObject import NamedBusinessObject
 from datetime import datetime
 
 class Module(NamedBusinessObject):

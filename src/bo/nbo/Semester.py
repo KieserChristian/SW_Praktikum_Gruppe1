@@ -9,7 +9,7 @@ class Semester(BusinessObject, NamedBusinessObject):
         
         """ Realisierung der Semesterklasse
     Bestehend aus einer ID und einem Erstellungsdatum"""
-        super().__init__(self)
+        super().__init__()
         self.__name = ""
         self.__id = 0
         self.__creation_date =datetime.datetime.now()
