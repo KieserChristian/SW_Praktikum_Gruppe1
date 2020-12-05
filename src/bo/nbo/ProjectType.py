@@ -1,10 +1,10 @@
-from NamedBusinessObjects import NamedBusinessObject
+from NamedBusinessObject import NamedBusinessObject
 from datetime import datetime
 
 class ProjectType(NamedBusinessObject):
 
     def __init__(self):
-        super.__init__(self)
+        super.__init__()
         self.__number_ects = 0
         self.__number_sws = 0
         self.__name = ""

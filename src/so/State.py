@@ -16,39 +16,39 @@ class State(Automat):
         """State auslesen"""
         return state_name        
 
-    def set_state_name(self,name ):
+    def set_state_name(self, name):
         
         self._state_name = ""
 
    def __str__(self, name):
-       return self.state_name
+        return self.state_name
 
 
 if __name__== "__main__":
 
-    a = Automat(Automat.s_new)
+    a = Automat(Automat.state_new)
 
-    if a.is_in_state(Automat.s_new):
+    if a.is_in_state(Automat.state_new):
         print ("Zustand des Projekts: Neu")
 
-    a.set_state(Automat.s_approved)
+    a.set_state(Automat.state_approved)
 
-    if a.is_in_state(Automat.s_approved):
+    if a.is_in_state(Automat.state_approved):
         print ("Zustand des Projekts: Genehmigt")
 
-    a.set_state(Automat.s_declined)
+    a.set_state(Automat.state_declined)
 
-    if a.is_in_state(Automat.s_declined):
+    if a.is_in_state(Automat.state_declined):
         print ("Zustand des Projekts: Abgelehnt")
 
-    a.set_state(Automat.s_inReview)
+    a.set_state(Automat.state_inReview)
 
-    if a.is_in_state(Automat.s_inReview):
+    if a.is_in_state(Automat.state_inReview):
         print ("Zustand des Projekts: In Bewertung")
 
-    a.set_state(Automat.s_reviewCompleted)
+    a.set_state(Automat.state_reviewCompleted)
 
-    if a.is_in_state(Automat.s_reviewCompleted):
+    if a.is_in_state(Automat.state_reviewCompleted):
         print ("Zustand des Projekts: Bewertung abgeschlossen")
 
         def get_id (self):

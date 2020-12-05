@@ -1,9 +1,9 @@
-from NamedBusinessObjects import NamedBusinessObjects
-from Automat import Argument
+from NamedBusinessObject import NamedBusinessObject
+from Automat import Automat
 from ProjectType import ProjectType
 from datetime import datetime
 
-class Project(NamedBusinessObjects, Automat):
+class Project(NamedBusinessObject, Automat):
 
     transdisziplinaer = ProjectType("Transdiziplinäres Projekt", l0, 20) 
     interdisziplinaer = ProjectType( "Interdisziplinäres Projekt", 5, 10)

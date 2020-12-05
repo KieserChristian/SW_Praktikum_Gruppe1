@@ -22,7 +22,7 @@ class Student(Person):
         """Kurs-Kürzel auslesen"""
         return self.__edv_number
 
-    def set_coure_abbreviation(self, abbreviation):
+    def set_course_abbreviation(self, abbreviation):
         """Kurs-Kürzel setzen"""
         self.__course_abbreviation = value
 
