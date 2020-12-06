@@ -1,10 +1,10 @@
-from ..Role import Role
+from so.Role import Role
 from datetime import datetime
-from NamedBusinessObject import NamedBusinessObject
+from bo.nbo.NamedBusinessObject import NamedBusinessObject
 
-class Person (NamedBusinessObject):
+class Person(NamedBusinessObject):
 
-     def __init__ (self, id, creation_date, email, google_id, authorization, name):
+    def __init__(self):
         super.__init__()
         self._authorization = role
         self._google_id = ""
@@ -15,15 +15,15 @@ class Person (NamedBusinessObject):
         return "Person: {}, Rolle: {}, Google-ID: {}, E-Mail: {} ".format(self.get_id(), self.get_authorization(),
                                                                         self.get_google_id(), self.get_email())
 
-    def set_authorization (self, name):
+    def set_authorization(self, name):
         """Berechtigung setzen"""
         self._authorization = name
 
-    def get_authorization (self):
+    def get_authorization(self):
         """Berechtigung auslesen"""
         return self._authorization
 
-    def get_id (self):
+    def get_id(self):
         """Auslesen der ID"""
         return self._id
 
@@ -39,7 +39,7 @@ class Person (NamedBusinessObject):
         """Erstellungsdatum setzen"""
         self._creation_date = creation_date
 
-     def get_google_id (self):
+    def get_google_id (self):
         """Auslesen der Google Id"""
         return self._google_id
 
@@ -51,8 +51,8 @@ class Person (NamedBusinessObject):
         """Google Id setzen"""
         self._google_id = google_id
 
-@staticmethod
-    def from_tuples (tuples-list()):
+    @staticmethod
+    def from_tuples (tuples=list()):
         """Umwandeln eines DB tuples in ein Python Objekt (Person())"""
         result = []
         for (person_id, id, creation_date, email, google_id, authorization, name) in tuples:
@@ -66,15 +66,15 @@ class Person (NamedBusinessObject):
             result.append (person)
         return result
 
-@staticmethod
-def from_dict(dictionary=dict()):
-    """Umwandeln eines Python dict () """
-    person = Person()
-    person.set_id(dictionary["id"])
-    person.set_creation_date(dictionary["creation_date"])
-    person.set_name(dictionary["name"])
-    person.set_authorization(dictionary["authorization"])
-    return person
+    @staticmethod
+    def from_dict(dictionary=dict()):
+        """Umwandeln eines Python dict () """
+        person = Person()
+        person.set_id(dictionary["id"])
+        person.set_creation_date(dictionary["creation_date"])
+        person.set_name(dictionary["name"])
+        person.set_authorization(dictionary["authorization"])
+        return person
 
 if __name__ == "__main__":
 

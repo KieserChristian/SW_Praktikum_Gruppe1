@@ -1,5 +1,5 @@
 #from BusinessObject import BusinessObject
-from NamedBusinessObject import NamedBusinessObject
+from bo.nbo.NamedBusinessObject import NamedBusinessObject
 from datetime import datetime
 
 class Module(NamedBusinessObject):
@@ -10,7 +10,7 @@ class Module(NamedBusinessObject):
 
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Modulinstanz"""
-        return "Modul: {}, mit der EDV-Nummer {} ".format(self.get_id(), self._edv_number)
+        return "Modul: {}, mit der EDV-Nummer {} ".format(self.get_id(), self._edv_number())
 
     def get_edv_number(self):
         return self._edv_number
@@ -18,10 +18,10 @@ class Module(NamedBusinessObject):
     def set_edv_number(self, edv_number):
         self._edv_number = value
 
-    def get_name (self,name);
+    def get_name (self):
         return self._name
 
-    def set_name (self):
+    def set_name (self, name):
         self._name = ""
 
     def get_id (self):
@@ -40,11 +40,11 @@ class Module(NamedBusinessObject):
         """Erstellungsdatum setzen"""
         self._creation_date = creation_date
 
-@staticmethod
-def from_dict(dictionary=dict()):
-    """Umwandel eines Python dict () """
-    module = Module()
-    module.set_id(dictionary["id"])
-    module.set_creation_date(dictionary["creation_date"])
-    module.set_name(dictionary["Name"])
-    return module
+    @staticmethod
+    def from_dict(dictionary=dict()):
+        """Umwandel eines Python dict () """
+        module = Module()
+        module.set_id(dictionary["id"])
+        module.set_creation_date(dictionary["creation_date"])
+        module.set_name(dictionary["Name"])
+        return module

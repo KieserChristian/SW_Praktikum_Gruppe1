@@ -2,8 +2,8 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 
+
 from ProjectAdministration import ProjectAdministration
-#restliche bo imports fehlen
 from bo.Participation import Participation
 from bo.Grading import Grading
 from bo.nbo.Module import Module
@@ -15,7 +15,7 @@ from bo.nbo.Student import Student
 from so.Automat import Automat
 from so.State import State
 from so.Role import Role
-from SecurityDecorator import secured
+#from SecurityDecorator import secured
 
 """Flask instanzieren"""
 app = Flask(__name__)

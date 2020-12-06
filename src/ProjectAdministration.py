@@ -30,7 +30,7 @@ class ProjectAdministration():
     """
     Person-Methoden
     """
-    def create_person(self, name:str, google_id:int):
+    def create_person(self, name: str, google_id: int):
         """Eine Person anlegen"""
         person = Person()
         person.set_name(name)

@@ -1,4 +1,4 @@
-from BusinessObject import BusinessObject
+from bo.BusinessObject import BusinessObject
 from abc import ABC
 from datetime import datetime
 

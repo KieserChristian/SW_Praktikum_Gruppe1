@@ -1,24 +1,24 @@
-from NamedBusinessObject import NamedBusinessObject
-from Automat import Automat
+from bo.nbo.NamedBusinessObject import NamedBusinessObject
+from so.Automat import Automat
 from ProjectType import ProjectType
 from datetime import datetime
 
 class Project(NamedBusinessObject, Automat):
 
-    transdisziplinaer = ProjectType("Transdiziplinäres Projekt", l0, 20) 
+    transdisziplinaer = ProjectType("Transdiziplinäres Projekt", 10, 20)
     interdisziplinaer = ProjectType( "Interdisziplinäres Projekt", 5, 10)
     fachspezifisch = ProjectType("Fachspezifisches Projekt", 3, 5)
 
     def __init__(self):
         super().__init__()
-         self._capacity = 0
-         self._external_partners = ""
-         self._short_description = ""
-         self._weekly_flag = False
-         self._bd_before_lecture_period = 0
-         self._bd_in_exam_period = 0
-         self._bd_preferred_in_lecture_period = 0
-         self._special_room = ""
+        self._capacity = 0
+        self._external_partners = ""
+        self._short_description = ""
+        self._weekly_flag = False
+        self._bd_before_lecture_period = 0
+        self._bd_in_exam_period = 0
+        self._bd_preferred_in_lecture_period = 0
+        self._special_room = ""
         
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projektinstanz"""
@@ -110,7 +110,7 @@ class Project(NamedBusinessObject, Automat):
         """Spezieller Raum setzen"""
         self._special_room = special_room
 
-    def get_id (self):
+    def get_id(self):
         """Auslesen der ID"""
         return self._id
 
@@ -118,28 +118,28 @@ class Project(NamedBusinessObject, Automat):
         """Auslesen des Erstelldatums"""
         return self._creation_date
 
-    def set_id (self, value):
+    def set_id(self, value):
         """ID setzen"""
         self._id = value 
 
-    def set_creation_date (self, creation_date):
+    def set_creation_date(self, creation_date):
         """Erstellungsdatum setzen"""
         self._creation_date = creation_date
 
-@staticmethod
-def from_dict(dictionary=dict()):
-    """Umwandeln eines Python dict () """
-    project = Project()
-    project.set_id(dictionary["id"])
-    project.set_creation_date(dictionary["creation_date"])
-    project.set_name(dictionary["name"])
-    project.set_capacity(dictionary["capacity"])
-    project.set_external_partners(dictionary["external_partners"])
-    project.set_short_description(dictionary["short_description"])
-    project.set_weekly_flag(dictionary["weekly_flag"])
-    project.set_bd_before_lecture_period(dictionary["bd_before_lecture_period"])
-    project.set_bd_in_exam_period(dictionary["bd_in_exam_period"])
-    project.set_bd_in_lecture_period(dictionary["bd_in_lecture_period"])
-    project.set_bd_preferred_in_lecture_period(dictionary["bd_preferred_in_lecture_period"])
-    project.set_special_room(dictionary["special_room"])
-    return project
+    @staticmethod
+    def from_dict(dictionary=dict()):
+        """Umwandeln eines Python dict () """
+        project = Project()
+        project.set_id(dictionary["id"])
+        project.set_creation_date(dictionary["creation_date"])
+        project.set_name(dictionary["name"])
+        project.set_capacity(dictionary["capacity"])
+        project.set_external_partners(dictionary["external_partners"])
+        project.set_short_description(dictionary["short_description"])
+        project.set_weekly_flag(dictionary["weekly_flag"])
+        project.set_bd_before_lecture_period(dictionary["bd_before_lecture_period"])
+        project.set_bd_in_exam_period(dictionary["bd_in_exam_period"])
+        project.set_bd_in_lecture_period(dictionary["bd_in_lecture_period"])
+        project.set_bd_preferred_in_lecture_period(dictionary["bd_preferred_in_lecture_period"])
+        project.set_special_room(dictionary["special_room"])
+        return project

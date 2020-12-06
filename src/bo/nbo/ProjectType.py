@@ -1,4 +1,4 @@
-from NamedBusinessObject import NamedBusinessObject
+from bo.nbo.NamedBusinessObject import NamedBusinessObject
 from datetime import datetime
 
 class ProjectType(NamedBusinessObject):
@@ -28,7 +28,7 @@ class ProjectType(NamedBusinessObject):
         """semester wochenstunden setzen"""
         self._number_sws = value
 
-    def get_id (self):
+    def get_id(self):
         """Auslesen der ID"""
         return self._id
 
@@ -36,20 +36,20 @@ class ProjectType(NamedBusinessObject):
         """Auslesen des Erstelldatums"""
         return self._creation_date
 
-    def set_id (self, id):
+    def set_id(self, id):
         """ID setzen"""
         self._id = value 
 
-    def set_creation_date (self, creation_date):
+    def set_creation_date(self, creation_date):
         """Erstellungsdatum setzen"""
         self._creation_date = creation_date
 
-@staticmethod
-def from_dict(dictionary=dict()):
-    """Umwandeln eines Python dict () """
-    projecttype = ProjectType()
-    projecttype.set_id(dictionary["id"])
-    projecttype.set_creation_date(dictionary["creation_date"])
-    projecttype.set_number_ects(dictionary["number_ects"])
-    projecttype.set_number_sws(dictionary["number_sws"])
-    return projecttype
+    @staticmethod
+    def from_dict(dictionary=dict()):
+        """Umwandeln eines Python dict () """
+        projecttype = ProjectType()
+        projecttype.set_id(dictionary["id"])
+        projecttype.set_creation_date(dictionary["creation_date"])
+        projecttype.set_number_ects(dictionary["number_ects"])
+        projecttype.set_number_sws(dictionary["number_sws"])
+        return projecttype

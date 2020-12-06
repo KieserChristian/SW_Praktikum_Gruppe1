@@ -1,8 +1,6 @@
 from abc import ABC
 from datetime import datetime
-from BusinessObject import BusinessObject
-
-
+from bo.BusinessObject import BusinessObject
 
 class Grading(BusinessObject):
     """ Realisierung der Benotungsklasse
@@ -15,15 +13,15 @@ class Grading(BusinessObject):
     def __str__(self):
         return "Grading list: {}, Grading_id: {}, view of creation_date {}".format(self.get_grade(), self.get_id(), self.get_creation_date())
 
-    def get_grade (self):
+    def get_grade(self):
         """Auslesen der Note"""
         return self._grade
 
-    def set_grade (self, value):
+    def set_grade(self, value):
         """Setzen der Note"""
         self._grade = value
 
-    def to_dict (self):
+    def to_dict(self):
         """Umwandeln Grading() in ein Python dictionary dict ()"""
         result = {
             "id": self.get_id (),
@@ -32,11 +30,11 @@ class Grading(BusinessObject):
         }
         return result
 
-@staticmethod
-def from_dict(dictionary=dict()):
-    """Umwandel eines Python dict () in eine Note/Bewertung"""
-    grad = Grad()
-    grad.set_id(dictionary["id"])
-    grad.set_grade(dictionary["grade"])
-    grad.set_creation_date(dictionary["creation_date"])
-    return grad
+    @staticmethod
+    def from_dict(dictionary=dict()):
+        """Umwandel eines Python dict () in eine Note/Bewertung"""
+        grad = Grad()
+        grad.set_id(dictionary["id"])
+        grad.set_grade(dictionary["grade"])
+        grad.set_creation_date(dictionary["creation_date"])
+        return grad
