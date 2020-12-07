@@ -28,22 +28,6 @@ class ProjectType(NamedBusinessObject):
         """semester wochenstunden setzen"""
         self._number_sws = value
 
-    def get_id(self):
-        """Auslesen der ID"""
-        return self._id
-
-    def get_creation_date(self):
-        """Auslesen des Erstelldatums"""
-        return self._creation_date
-
-    def set_id(self, id):
-        """ID setzen"""
-        self._id = value 
-
-    def set_creation_date(self, creation_date):
-        """Erstellungsdatum setzen"""
-        self._creation_date = creation_date
-
     @staticmethod
     def from_dict(dictionary=dict()):
         """Umwandeln eines Python dict () """

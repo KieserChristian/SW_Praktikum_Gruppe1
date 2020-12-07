@@ -30,10 +30,6 @@ class Project(NamedBusinessObject, Automat):
                                                           self._weekly_flag(), self._bd_before_lecture_period(),
                                                           self._bd_in_exam_period(), self._bd_preferred_in_lecture_period(), self._special_room())
 
-    def get_name(self):
-        """Name auslesen"""
-        return self._name
-
     def get_capacity(self):
         """Kapazität auslesen"""
         return self._capacity
@@ -70,10 +66,6 @@ class Project(NamedBusinessObject, Automat):
         """Spezieller Raum auslesen"""
         return self._special_room
 
-    def set_name(self, name):
-        """Name setzen"""
-        self._name = name
-
     def set_capacity(self, capacity):
         """Kapazität setzen"""
         self._capacity = capacity
@@ -109,22 +101,6 @@ class Project(NamedBusinessObject, Automat):
     def set_special_room(self, special_room):
         """Spezieller Raum setzen"""
         self._special_room = special_room
-
-    def get_id(self):
-        """Auslesen der ID"""
-        return self._id
-
-    def get_creation_date(self):
-        """Auslesen des Erstelldatums"""
-        return self._creation_date
-
-    def set_id(self, value):
-        """ID setzen"""
-        self._id = value 
-
-    def set_creation_date(self, creation_date):
-        """Erstellungsdatum setzen"""
-        self._creation_date = creation_date
 
     @staticmethod
     def from_dict(dictionary=dict()):

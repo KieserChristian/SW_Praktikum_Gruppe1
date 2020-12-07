@@ -23,22 +23,6 @@ class Person(NamedBusinessObject):
         """Berechtigung auslesen"""
         return self._authorization
 
-    def get_id(self):
-        """Auslesen der ID"""
-        return self._id
-
-    def get_creation_date(self):
-        """Auslesen des Erstelldatums"""
-        return self._creation_date
-
-    def set_id (self, value):
-        """ID setzen"""
-        self._id = value 
-
-    def set_creation_date (self, creation_date):
-        """Erstellungsdatum setzen"""
-        self._creation_date = creation_date
-
     def get_google_id (self):
         """Auslesen der Google Id"""
         return self._google_id

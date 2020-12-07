@@ -18,28 +18,6 @@ class Module(NamedBusinessObject):
     def set_edv_number(self, edv_number):
         self._edv_number = value
 
-    def get_name (self):
-        return self._name
-
-    def set_name (self, name):
-        self._name = ""
-
-    def get_id (self):
-        """Auslesen der ID"""
-        return self._id
-
-    def get_creation_date(self):
-        """Auslesen des Erstelldatums"""
-        return self._creation_date
-
-    def set_id (self, id):
-        """ID setzen"""
-        self._id = value 
-
-    def set_creation_date (self, creation_date):
-        """Erstellungsdatum setzen"""
-        self._creation_date = creation_date
-
     @staticmethod
     def from_dict(dictionary=dict()):
         """Umwandel eines Python dict () """
