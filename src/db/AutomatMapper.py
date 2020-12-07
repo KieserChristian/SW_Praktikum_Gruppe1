@@ -1,4 +1,4 @@
-from bo.so.Automat import Automat
+from so.Automat import Automat
 from db.Mapper import Mapper
 
 class AutomatMapper (Mapper):

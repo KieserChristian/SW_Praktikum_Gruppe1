@@ -24,12 +24,12 @@ class ProjectTypeMapper (Mapper):
             result.append(project_type)
 
         self._cnx.commit()
-            cursor.close()
+        cursor.close()
 
-            return result
+        return result
 
     
-    def find_by_project_type_id(self, project_type_id)
+    def find_by_project_type_id(self, project_type_id):
 
         result = []
         cursor = self._cnx.cursor()

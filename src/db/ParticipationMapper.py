@@ -21,12 +21,12 @@ class ParticipationMapper (Mapper):
             result.append(participation)
 
         self._cnx.commit()
-            cursor.close()
+        cursor.close()
 
-            return result
+        return result
 
     
-    def find_by_participation_id(self, participation_id)
+    def find_by_participation_id(self, participation_id):
 
         result = []
         cursor = self._cnx.cursor()

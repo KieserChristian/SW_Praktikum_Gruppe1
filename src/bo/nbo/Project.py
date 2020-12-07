@@ -1,13 +1,13 @@
 from bo.nbo.NamedBusinessObject import NamedBusinessObject
 from so.Automat import Automat
-from ProjectType import ProjectType
+from bo.nbo.ProjectType import ProjectType
 from datetime import datetime
 
-class Project(NamedBusinessObject, Automat):
+class Project(NamedBusinessObject):
 
-    transdisziplinaer = ProjectType("Transdiziplinäres Projekt", 10, 20)
+    """transdisziplinaer = ProjectType("Transdiziplinäres Projekt", 10, 20)
     interdisziplinaer = ProjectType( "Interdisziplinäres Projekt", 5, 10)
-    fachspezifisch = ProjectType("Fachspezifisches Projekt", 3, 5)
+    fachspezifisch = ProjectType("Fachspezifisches Projekt", 3, 5)"""
 
     def __init__(self):
         super().__init__()

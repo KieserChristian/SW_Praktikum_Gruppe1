@@ -24,12 +24,12 @@ class StudentMapper (Mapper):
             result.append(student)
 
         self._cnx.commit()
-            cursor.close()
+        cursor.close()
 
-            return result
+        return result
 
     
-    def find_by_student_id(self, student_id)
+    def find_by_student_id(self, student_id):
 
         result = []
         cursor = self._cnx.cursor()

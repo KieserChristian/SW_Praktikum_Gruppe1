@@ -11,7 +11,7 @@ from so.State import State
 from so.Role import Role
 
 from db.GradingMapper import GradingMapper
-from db.ParicipationMapper import ParticipationMapper
+from db.ParticipationMapper import ParticipationMapper
 from db.ModuleMapper import ModuleMapper
 from db.PersonMapper import PersonMapper
 from db.ProjectTypeMapper import ProjectTypeMapper

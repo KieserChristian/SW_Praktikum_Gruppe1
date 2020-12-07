@@ -23,12 +23,12 @@ class ModuleMapper (Mapper):
             result.append(module)
 
         self._cnx.commit()
-            cursor.close()
+        cursor.close()
 
-            return result
+        return result
 
 
-    def find_by_module_id(self, module_id)
+    def find_by_module_id(self, module_id):
 
         result = []
         cursor = self._cnx.cursor()

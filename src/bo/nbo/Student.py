@@ -1,5 +1,5 @@
 from bo.nbo.NamedBusinessObject import NamedBusinessObject
-from Person import Person
+from bo.nbo.Person import Person
 from datetime import datetime
 
 class Student(Person, NamedBusinessObject):

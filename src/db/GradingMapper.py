@@ -23,11 +23,11 @@ class GradingMapper (Mapper):
             result.append(grading)
 
         self._cnx.commit()
-            cursor.close()
+        cursor.close()
 
-            return result
+        return result
 
-    def find_by_grading_id(self, grading_id)
+    def find_by_grading_id(self, grading_id):
 
         result = []
         cursor = self._cnx.cursor()

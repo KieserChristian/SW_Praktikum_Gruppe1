@@ -3,7 +3,7 @@ from abc import ABC
 from datetime import datetime
 
 
-class Semester(BusinessObject, NamedBusinessObject):
+class Semester(NamedBusinessObject):
     
     def __init__(self):
         

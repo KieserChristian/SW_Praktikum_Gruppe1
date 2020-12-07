@@ -1,20 +1,20 @@
 from datetime import datetime
 from so.Automat import Automat
-from bo.nbo.Person import Person
+#from bo.nbo.Person import Person
  
 """Basisklasse, für die Zuweisung der Berechtigungen der Personen"""
 
-class Role(Person, Automat):
+class Role():
 
-    student = Role ("Student")
+    """student = Role ("Student")
     dozent = Role  ("Dozent")
-    admin = Role ("Admin")
+    admin = Role ("Admin")"""
 
     def __init__(self):
 
             super().__init__()
             self._id = 0
-            self._creation_date = datetime.datetime.now()
+            self._creation_date = datetime.now()
             self._static_attribute = ""
 
     def set_static_attribute(self, static_attribute):
