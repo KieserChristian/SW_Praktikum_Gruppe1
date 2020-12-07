@@ -1,5 +1,5 @@
-from src.bo.Participation import Participation
-from src.db.Mapper import Mapper
+from bo.Participation import Participation
+from db.Mapper import Mapper
 
 class ParticipationMapper (Mapper):
 

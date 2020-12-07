@@ -1,5 +1,5 @@
-from src.bo.nbo.ProjectType import ProjectType
-from src.db.Mapper import Mapper
+from bo.nbo.ProjectType import ProjectType
+from db.Mapper import Mapper
 
 class ProjectTypeMapper (Mapper):
 

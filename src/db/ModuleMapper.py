@@ -1,5 +1,5 @@
-from src.bo.nbo.Module import Module
-from src.db.Mapper import Mapper
+from bo.nbo.Module import Module
+from db.Mapper import Mapper
 
 class ModuleMapper (Mapper):
 

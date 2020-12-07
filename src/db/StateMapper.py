@@ -1,5 +1,5 @@
-from src.so.State import State
-from src.db.Mapper import Mapper
+from so.State import State
+from db.Mapper import Mapper
 
 class StateMapper (Mapper):
     """Mapper-Klasse, die State-Objekte auf eine relationale

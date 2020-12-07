@@ -1,5 +1,5 @@
-from src.bo.nbo.Student import Student
-from src.db.Mapper import Mapper
+from bo.nbo.Student import Student
+from db.Mapper import Mapper
 
 class StudentMapper (Mapper):
 

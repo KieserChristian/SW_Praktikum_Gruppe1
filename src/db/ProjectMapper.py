@@ -1,5 +1,5 @@
-from src.bo.nbo.Project import Project
-from src.db.Mapper import Mapper
+from bo.nbo.Project import Project
+from db.Mapper import Mapper
 
 class ProjectMapper (Mapper):
     """Mapper-Klasse, die Project-Objekte auf eine relationale
@@ -135,7 +135,7 @@ class ProjectMapper (Mapper):
         tuples = cursor.fetchall()
 
         try:
-            (project_id, edv_number, name, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) in tuples:
+            (project_id, edv_number, name, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) = tuples [0]
             project = Project()
             project.set_id(project_id)
             project.set_edv_number(edv_number)

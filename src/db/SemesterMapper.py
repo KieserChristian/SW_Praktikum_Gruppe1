@@ -1,5 +1,5 @@
-from src.bo.nbo.Semester import Semester
-from src.db.Mapper import Mapper
+from bo.nbo.Semester import Semester
+from db.Mapper import Mapper
 
 class SemesterMapper (Mapper):
     """Mapper-Klasse, die Semester-Objekte auf eine relationale

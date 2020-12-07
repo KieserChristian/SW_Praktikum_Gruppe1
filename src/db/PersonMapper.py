@@ -1,5 +1,5 @@
-from src.bo.nbo.Person import Person
-from src.db.Mapper import Mapper
+from bo.nbo.Person import Person
+from db.Mapper import Mapper
 
 class PersonMapper (Mapper):
     """Mapper-Klasse, die Person-Objekte auf eine relationale

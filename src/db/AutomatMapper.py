@@ -1,5 +1,5 @@
-from src.bo.so.Automat import Automat
-from src.db.Mapper import Mapper
+from bo.so.Automat import Automat
+from db.Mapper import Mapper
 
 class AutomatMapper (Mapper):
     """Mapper-Klasse, die Automat-Objekte auf eine relationale

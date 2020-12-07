@@ -1,5 +1,5 @@
-from src.bo.Grading import Grading
-from src.db.Mapper import Mapper
+from bo.Grading import Grading
+from db.Mapper import Mapper
 
 
 class GradingMapper (Mapper):
