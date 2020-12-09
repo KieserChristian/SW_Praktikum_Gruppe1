@@ -28,11 +28,11 @@ class ModuleMapper (Mapper):
         return result
 
 
-    def find_by_module_id(self, module_id):
+    def find_by_id(self, id):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT module_id, name, edv_number FROM module WHERE edv_number={} ORDER BY module_id".format(module_id)
+        command = "SELECT module_id, creation_date, name, edv_number FROM module WHERE edv_number={} ORDER BY module_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -54,7 +54,7 @@ class ModuleMapper (Mapper):
       
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT module_id, name, edv_number FROM module WHERE name={} ORDER BY module_id".format(module_id)
+        command = "SELECT module_id, creation_date, name, edv_number FROM module WHERE name={} ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -82,7 +82,7 @@ class ModuleMapper (Mapper):
             module.set_id(maxid[0]+1)
 
         command = "INSERT INTO module (module_id, name, edv_number) VALUES (%s,%s,%s)"
-        data = (module.get_module_id(), module.get_name(), module.get_edv_number)
+        data = (module.get_id(), module.get_name(), module.get_edv_number)
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -95,7 +95,7 @@ class ModuleMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE module " + "SET name=%s WHERE module_id=%s"
-        data = (module.get_name(), module.get_module_id())
+        data = (module.get_name(), module.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()

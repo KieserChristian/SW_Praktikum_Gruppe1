@@ -29,11 +29,11 @@ class StudentMapper (Mapper):
         return result
 
     
-    def find_by_student_id(self, student_id):
+    def find_by_id(self, id):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, name, matriculation_number, course_abbreviation FROM student WHERE name={} ORDER BY student_id".format(student_id)
+        command = "SELECT student_id, creation_date, name, matriculation_number, course_abbreviation FROM student WHERE name={} ORDER BY student_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -131,7 +131,7 @@ class StudentMapper (Mapper):
             student.set_id(maxid[0]+1)
 
         command = "INSERT INTO student (student_id, name, matriculation_number, course_abbreviation) VALUES (%s,%s,%s,%s)"
-        data = (account.get_student_id(), account.get_name(), account.get_matriculation_number, account.get_course_abbreviation)
+        data = (student.get_id(), student.get_name(), student.get_matriculation_number, student.get_course_abbreviation)
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -144,7 +144,7 @@ class StudentMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE student " + "SET name=%s WHERE student_id=%s"
-        data = (account.get_student_id(), account.get_name(), account.get_matriculation_number, account.get_course_abbreviation)
+        data = (student.get_id(), student.get_name(), student.get_matriculation_number, student.get_course_abbreviation)
         cursor.execute(command, data)
 
         self._cnx.commit()

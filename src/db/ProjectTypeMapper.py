@@ -29,11 +29,11 @@ class ProjectTypeMapper (Mapper):
         return result
 
     
-    def find_by_project_type_id(self, project_type_id):
+    def find_by_id(self, id):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT project_type_id, name, number_ects, number_sws FROM project_type WHERE name={} ORDER BY project_type_id".format(project_type_id)
+        command = "SELECT project_type_id, creation_date, name, number_ects, number_sws FROM project_type WHERE name={} ORDER BY project_type_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -56,7 +56,7 @@ class ProjectTypeMapper (Mapper):
       
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT project_type_id, name, number_ects, number_sws FROM project_type WHERE name={} ORDER BY name".format(name)
+        command = "SELECT project_type_id, creation_date, name, number_ects, number_sws FROM project_type WHERE name={} ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -85,7 +85,7 @@ class ProjectTypeMapper (Mapper):
             project_type.set_id(maxid[0]+1)
 
         command = "INSERT INTO project_type (project_type_id, name, number_ects, number_sws) VALUES (%s,%s,%s,%s)"
-        data = (project_type.get_project_type_id(), project_type.get_name(), project_type.get_number_ects, project_type.get_number_sws)
+        data = (project_type.get_id(), project_type.get_name(), project_type.get_number_ects, project_type.get_number_sws)
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -98,7 +98,7 @@ class ProjectTypeMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE project_type " + "SET name=%s WHERE project_type_id=%s"
-        data = (account.get_name(), account.get_project_type_id())
+        data = (account.get_name(), account.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()

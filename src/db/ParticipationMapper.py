@@ -26,11 +26,11 @@ class ParticipationMapper (Mapper):
         return result
 
     
-    def find_by_participation_id(self, participation_id):
+    def find_by_id(self, id):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT psrticipstion_id FROM participation WHERE participation_id={} ORDER BY participation_id".format(participation_id)
+        command = "SELECT participation_id, creation_date FROM participation WHERE participation_id={} ORDER BY participation_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -56,7 +56,7 @@ class ParticipationMapper (Mapper):
             participation.set_id(maxid[0]+1)
 
         command = "INSERT INTO participation (participation_id) VALUES (%s)"
-        data = (participation.get_participation_id())
+        data = (participation.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -69,7 +69,7 @@ class ParticipationMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE participation " + "SET participation_id=%s WHERE participation_id=%s"
-        data = (participation.get_participation_id())
+        data = (participation.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()

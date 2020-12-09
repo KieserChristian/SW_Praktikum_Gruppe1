@@ -27,11 +27,11 @@ class GradingMapper (Mapper):
 
         return result
 
-    def find_by_grading_id(self, grading_id):
+    def find_by_id(self, id):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT grading_id, grade FROM grading WHERE grade={} ORDER BY grading_id".format(grading_id)
+        command = "SELECT grading_id, creation date, grade FROM grading WHERE grade={} ORDER BY grading_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -58,7 +58,7 @@ class GradingMapper (Mapper):
             grading.set_id(maxid[0]+1)
 
         command = "INSERT INTO grading (grading_id, grade) VALUES (%s,%s)"
-        data = (grading.get_grading_id(), grading.get_grade())
+        data = (grading.get_id(), grading.get_grade())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -70,8 +70,8 @@ class GradingMapper (Mapper):
        
         cursor = self._cnx.cursor()
 
-        command = "UPDATE grading " + "SET grade=%s WHERE id=%s"
-        data = (grading.get_grading_id(), grading.get_grade())
+        command = "UPDATE grading " + "SET grade=%s WHERE grading_id=%s"
+        data = (grading.get_id(), grading.get_grade())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -82,7 +82,7 @@ class GradingMapper (Mapper):
         
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM grading WHERE id={}".format(grading.get_id())
+        command = "DELETE FROM grading WHERE grading_id={}".format(grading.get_id())
         cursor.execute(command)
 
         self._cnx.commit()

@@ -27,11 +27,11 @@ class RoleMapper (Mapper):
         return result
 
 
-    def find_by_role_id(self, role_id):
+    def find_by_id(self, id):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT role_id, name FROM role WHERE name={} ORDER BY role_id".format(role_id)
+        command = "SELECT role_id, creation_date, name FROM role WHERE name={} ORDER BY role_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -58,7 +58,7 @@ class RoleMapper (Mapper):
             role.set_id(maxid[0]+1)
 
         command = "INSERT INTO role (role_id, name) VALUES (%s,%s)"
-        data = (account.get_role_id(), account.get_name())
+        data = (role.get_id(), role.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -71,7 +71,7 @@ class RoleMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE role " + "SET name=%s WHERE role_id=%s"
-        data = (account.get_name(), account.get_role_id())
+        data = (role.get_name(), role.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
