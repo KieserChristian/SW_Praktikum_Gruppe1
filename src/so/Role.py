@@ -1,13 +1,13 @@
 from datetime import datetime
-from so.Automat import Automat
+#from so.Automat import Automat
  
 """Basisklasse, für die Zuweisung der Berechtigungen der Personen"""
 
 class Role():
 
-    student = Role ("Student")
+    """ student = Role ("Student")
     dozent = Role  ("Dozent")
-    admin = Role ("Admin")
+    admin = Role ("Admin") """
 
     def __init__(self):
         #Vererbung noch einmal überarbeiten

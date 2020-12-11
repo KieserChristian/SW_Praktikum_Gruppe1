@@ -119,7 +119,7 @@ class Project(NamedBusinessObject, Automat):
         project.set_special_room(dictionary["special_room"])
         return project
 
-    p = Project("IT-Project")
+    """ p = Project("IT-Project")
 
     if p.is_in_state(State.state_new):
         print(p, "in New")
@@ -127,4 +127,4 @@ class Project(NamedBusinessObject, Automat):
     p.set_state(State.state_approved)
 
     if p.is_in_state(State.state_approved):
-        print(p, "in Approved")
+        print(p, "in Approved") """

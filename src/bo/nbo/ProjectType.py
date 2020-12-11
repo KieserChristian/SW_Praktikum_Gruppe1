@@ -3,9 +3,9 @@ from datetime import datetime
 
 class ProjectType(NamedBusinessObject):
 
-    transdisciplinary = ProjectType("Transdiziplinäres Projekt", 10, 20)
+    """ transdisciplinary = ProjectType("Transdiziplinäres Projekt", 10, 20)
     interdisciplinary = ProjectType("Interdisziplinäres Projekt", 5, 10)
-    subject-specific = ProjectType("Fachspezifisches Projekt", 3, 5)
+    subject-specific = ProjectType("Fachspezifisches Projekt", 3, 5) """
 
     def __init__(self):
         super.__init__()
