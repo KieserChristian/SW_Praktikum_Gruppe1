@@ -1,10 +1,19 @@
 from datetime import datetime
 
 class State():
+    """Unveränderliche oder statische Variablen für die Zustände, die nach dem anlegen eines Automats(Projekts) diesem zugeordnet werden können."""
+    """Die statischen Variablen initiert ein Objekt der Klasse State"""
 
-    def __init__(self, state_name):
-        self._state_name = state_name
-        super().__init__()
+    """ state_new = State("Neu")
+    state_accepted = State("Genehmigt")
+    state_declined = State("Abgelehnt")
+    state_inReview = State("In Bewertung")
+    state_reviewCompleted = State("Bewertung abgeschlossen") """
+
+    #Vererbung noch einmal überarbeiten
+    def __init__(self):
+        self._state_name = ""
+        #super().__init__()
         self._id = 0
         self._creation_date = datetime.now()
 

@@ -6,7 +6,7 @@ class Person(NamedBusinessObject):
 
     def __init__(self):
         super.__init__()
-        self._authorization = role
+        #self._authorization = role
         self._google_id = ""
         self._email = ""
 
@@ -15,13 +15,13 @@ class Person(NamedBusinessObject):
         return "Person: {}, Rolle: {}, Google-ID: {}, E-Mail: {} ".format(self.get_id(), self.get_authorization(),
                                                                         self.get_google_id(), self.get_email())
 
-    def set_authorization(self, name):
-        """Berechtigung setzen"""
+    """ def set_authorization(self, name):
+        Berechtigung setzen
         self._authorization = name
 
     def get_authorization(self):
-        """Berechtigung auslesen"""
-        return self._authorization
+        Berechtigung auslesen
+        return self._authorization """
 
     def get_google_id (self):
         """Auslesen der Google Id"""
@@ -60,13 +60,13 @@ class Person(NamedBusinessObject):
         person.set_authorization(dictionary["authorization"])
         return person
 
-if __name__ == "__main__":
+""" if __name__ == "__main__":
 
-    """Person wird testhalber eine Berechtigung zugewiesen"""
+    Person wird testhalber eine Berechtigung zugewiesen
 
     Mensch1 = Person ()
     Mensch1.set_authorization(Person.student)
     Mensch1.set_name ("Dani")
     Mensch1.set_id (1)
-    print(Mensch1)
+    print(Mensch1) """
 

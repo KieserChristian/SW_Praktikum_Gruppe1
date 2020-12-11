@@ -34,7 +34,7 @@ class ProjectAdministration():
         """Eine Person anlegen"""
         person = Person()
         person.set_name(name)
-        person.set_person_id(google_id)
+        person.set_id(google_id)
         person.set_id(1)
 
         with PersonMapper() as mapper:
@@ -50,10 +50,10 @@ class ProjectAdministration():
         with PersonMapper() as mapper:
             mapper.delete(person)
 
-    def get_person_by_id(self, person_id):
+    def get_person_by_id(self, id):
         """Die Person mit ihrer gegebenen ID auslesen"""
         with PersonMapper() as mapper:
-            return mapper.find_by_id(person_id)
+            return mapper.find_by_id(id)
 
     def get_all_persons(self):
         """Alle Personen ausgeben"""
@@ -83,8 +83,8 @@ class ProjectAdministration():
         """Einen Studenten anlegen"""
         student = Student()
         student.set_name(name)
-        student.set_student_id(matriculation_number)
         student.set_course_abbreviation(course_abbreviation)
+        student.set_id(matriculation_number)
         student.set_id(1)
 
         with StudentMapper() as mapper:
@@ -107,10 +107,10 @@ class ProjectAdministration():
 
             mapper.delete(student)
     
-    def get_student_by_id(self, student_id):
+    def get_student_by_id(self, id):
         """Den Studenten mit seiner gegebenen ID auslesen"""
         with StudentMapper() as mapper:
-            return mapper.find_by_id(student_id)
+            return mapper.find_by_id(id)
     
     def get_all_students(self):
         """Alle Studenten ausgeben"""
@@ -155,10 +155,10 @@ class ProjectAdministration():
         with SemesterMapper() as mapper:
             mapper.delete(semester)
 
-    def get_semester_by_id(self, semester_id):
+    def get_semester_by_id(self, id):
         """Ein Semester mit seiner gegebenen ID auslesen"""
         with SemesterMapper() as mapper:
-            return mapper.find_by_id(semester_id)
+            return mapper.find_by_id(id)
 
     def get_all_semesters(self):
         """Alle Semester ausgeben"""
@@ -206,10 +206,10 @@ class ProjectAdministration():
         with RoleMapper() as mapper:
             mapper.delete(role)
     
-    def get_role_by_id(self, role_id):
+    def get_role_by_id(self, id):
         """Eine Rolle anhand ihrer ID auslesen"""
         with RoleMapper() as mapper:
-            return mapper.find_by_id(role_id)
+            return mapper.find_by_id(id)
         
     def get_all_roles(self):
         """Alle Rollen ausgeben"""
@@ -239,10 +239,10 @@ class ProjectAdministration():
         with AutomatMapper() as mapper:
             mapper.delete(automat)
     
-    def get_automat_by_id(self, automat_id):
+    def get_automat_by_id(self, id):
         """Einen Automaten anhand seiner ID auslesen"""
         with AutomatMapper() as mapper:
-            return mapper.find_by_id(automat_id)
+            return mapper.find_by_id(id)
     
     def get_all_automats(self):
         """Alle Automaten ausgeben"""
@@ -280,10 +280,10 @@ class ProjectAdministration():
 
             mapper.delete(participation)
 
-    def get_participation_by_id(self, participation_id):
+    def get_participation_by_id(self, id):
         """Eine Teilnahme anhand ihrer ID auslesen"""
         with ParticipationMapper() as mapper:
-            return mapper.find_by_id(participation_id)
+            return mapper.find_by_id(id)
     
     def get_all_participations(self):
         """Alle Teilnahmen ausgeben"""
@@ -328,7 +328,7 @@ class ProjectAdministration():
         """Eine Bewertung anlegen"""
 
         grading = Grading()
-        grading.set_grading_id(participation.get_id)
+        grading.set_id(participation.get_id)
         grading.set_id(1)
 
         with GradingMapper() as mapper:
@@ -344,10 +344,10 @@ class ProjectAdministration():
         with GradingMapper() as mapper:
             mapper.delete(grading)
     
-    def get_grading_by_id(self, grading_id):
+    def get_grading_by_id(self, id):
         """Eine Bewertung anhand ihrer ID auslesen"""
         with GradingMapper() as mapper:
-            return mapper.find_by_id(grading_id)
+            return mapper.find_by_id(id)
 
     def get_all_gradings(self):
         """Alle Bewertungen ausgeben"""
@@ -392,10 +392,10 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             mapper.delete(project)
     
-    def get_project_by_id(self, project_id):
+    def get_project_by_id(self, id):
         """Ein Projekt anhand seiner ID auslesen"""
         with ProjectMapper() as mapper:
-            return mapper.find_by_id(project_id)
+            return mapper.find_by_id(id)
     
     def get_all_projects(self):
         """Alle Projekte ausgeben"""
@@ -488,10 +488,10 @@ class ProjectAdministration():
         with ProjectTypeMapper() as mapper:
             mapper.delete(project_type)
     
-    def get_project_type_by_id(self,project_type_id):
+    def get_project_type_by_id(self,id):
         """Einen Projekttyp anhand seiner ID auslesen"""
         with ProjectTypeMapper() as mapper:
-            return mapper.find_by_id(project_type_id)
+            return mapper.find_by_id(id)
     
     def get_all_project_types(self):
         """Alle Projekttypen ausgeben"""
@@ -527,10 +527,10 @@ class ProjectAdministration():
         with StateMapper() as mapper:
             mapper.delete(state)
 
-    def get_state_by_id(self, state_id):
+    def get_state_by_id(self, id):
         """Einen Status anhand seiner ID auslesen"""
         with StateMapper() as mapper:
-            return mapper.find_by_id(state_id)
+            return mapper.find_by_id(id)
     
     def get_all_states(self):
         """Alle Status ausgeben"""
@@ -546,7 +546,7 @@ class ProjectAdministration():
 
         module = Module()
         module.set_name(name)
-        module.set_module_id(edv_number)
+        module.set_id(edv_number)
         module.set_id(1)
 
         with ModuleMapper() as mapper:
@@ -562,10 +562,10 @@ class ProjectAdministration():
         with ModuleMapper() as mapper:
             mapper.delete(module)
     
-    def get_module_by_id(self, module_id):
+    def get_module_by_id(self, id):
         """Ein Modul anhand seiner ID auslesen"""
         with ModuleMapper() as mapper:
-            return mapper.find_by_id(module_id)
+            return mapper.find_by_id(id)
     
     def get_all_modules(self):
         """Alle Module ausgeben"""
