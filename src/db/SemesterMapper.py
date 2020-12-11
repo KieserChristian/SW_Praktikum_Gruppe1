@@ -24,9 +24,9 @@ class SemesterMapper (Mapper):
         cursor.execute("SELECT * from semester")
         tuples = cursor.fetchall()
 
-        for (semester_id, creation_date, name) in tuples:
+        for (id, creation_date, name) in tuples:
             semester = Semester()
-            semester.set_semester_id(semester_id)
+            semester.set_id(id)
             semester.set_creation_date(creation_date)
             semester.set_name(name)
             result.append(semester)
@@ -38,7 +38,7 @@ class SemesterMapper (Mapper):
 
     """find by id """
 
-    def find_by_id(self, semester_id):
+    def find_by_id(self, id):
         """Auslesen aller Konten eines durch Fremdschlüssel gegebenen Semester.
 
         :param semester_id Schlüssel des zugehörigen Kunden.
@@ -47,13 +47,13 @@ class SemesterMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT semester_id, creation_date, name FROM semester WHERE name={} ORDER BY id".format(semester_id)
+        command = "SELECT semester_id, creation_date, name FROM semester WHERE semester_id={} ORDER BY semester_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (semester_id, creation_date, name) in tuples:
+        for (id, creation_date, name) in tuples:
             semester = Semester()
-            semester.set_semester_id(semester_id)
+            semester.set_id(id)
             semester.set_creation_date(creation_date)
             semester.set_name(name)
             result.append(semester)
@@ -78,9 +78,9 @@ class SemesterMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (semester_id, creation_date, name) in tuples:
+        for (id, creation_date, name) in tuples:
             semester = Semester()
-            semester.set_semester_id(semester_id)
+            semester.set_id(id)
             semester.set_creation_date(creation_date)
             semester.set_name(name)
             result.append(semester)
@@ -109,7 +109,7 @@ class SemesterMapper (Mapper):
             semester.set_id(maxid[0]+1)
 
         command = "INSERT INTO semester (semester_id, creation_date, name) VALUES (%s,%s,%s)"
-        data = (semester.get_semester_id(), semester.get_creation_date(), semester.get_name())
+        data = (semester.get_id(), semester.get_creation_date(), semester.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -126,7 +126,7 @@ class SemesterMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE semester " + "SET name=%s WHERE semester_id=%s"
-        data = (semester.get_semester_id(), semester.get_creation_date(), semester.get_name())
+        data = (semester.get_id(), semester.get_creation_date(), semester.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -141,7 +141,7 @@ class SemesterMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM semester WHERE semester_id={}".format(semester.get_semester_id())
+        command = "DELETE FROM semester WHERE semester_id={}".format(semester.get_id())
         cursor.execute(command)
 
         self._cnx.commit()

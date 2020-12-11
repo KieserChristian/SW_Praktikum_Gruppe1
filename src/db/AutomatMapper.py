@@ -24,9 +24,9 @@ class AutomatMapper (Mapper):
         cursor.execute("SELECT * from automat")
         tuples = cursor.fetchall()
 
-        for (automat_id, current_state, creation_date) in tuples:
+        for (id, current_state, creation_date) in tuples:
             automat = Automat()
-            automat.set_id(automat_id)
+            automat.set_id(id)
             automat.set_current_state(current_state)
             automat.set_creation_date(creation_date)
             result.append(automat)
@@ -38,7 +38,7 @@ class AutomatMapper (Mapper):
 
     """find by id """
 
-    def find_by_id(self, automat_id):
+    def find_by_id(self, id):
         """Auslesen aller Konten eines durch Fremdschlüssel gegebenen Automats.
 
         :param automat_id Schlüssel des zugehörigen Kunden.
@@ -47,13 +47,13 @@ class AutomatMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT automat_id, current_state, creation_date FROM automat WHERE name={} ORDER BY automat_id".format(automat_id)
+        command = "SELECT automat_id, current_state, creation_date FROM automat WHERE automat_id={} ORDER BY automat_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (automat_id, current_state, creation_date) in tuples:
+        for (id, current_state, creation_date) in tuples:
             automat = Automat()
-            automat.set_id(automat_id)
+            automat.set_id(id)
             automat.set_current_state(current_state)
             automat.set_creation_date(creation_date)
             result.append(automat)
