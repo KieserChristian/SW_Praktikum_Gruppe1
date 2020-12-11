@@ -1,16 +1,15 @@
 from bo.nbo.NamedBusinessObject import NamedBusinessObject
 from so.Automat import Automat
+from so.State import State
 from bo.nbo.ProjectType import ProjectType
 from datetime import datetime
 
-class Project(NamedBusinessObject):
-
-    """transdisziplinaer = ProjectType("Transdiziplinäres Projekt", 10, 20)
-    interdisziplinaer = ProjectType( "Interdisziplinäres Projekt", 5, 10)
-    fachspezifisch = ProjectType("Fachspezifisches Projekt", 3, 5)"""
+class Project(NamedBusinessObject, Automat):
 
     def __init__(self):
-        super().__init__()
+        #Vererbung noch einmal überarbeiten
+        super().__init__(State.state_new)
+        #self._state_name = State.state_new
         self._capacity = 0
         self._external_partners = ""
         self._short_description = ""
@@ -119,3 +118,13 @@ class Project(NamedBusinessObject):
         project.set_bd_preferred_in_lecture_period(dictionary["bd_preferred_in_lecture_period"])
         project.set_special_room(dictionary["special_room"])
         return project
+
+    p = Project("IT-Project")
+
+    if p.is_in_state(State.state_new):
+        print(p, "in New")
+    
+    p.set_state(State.state_approved)
+
+    if p.is_in_state(State.state_approved):
+        print(p, "in Approved")
