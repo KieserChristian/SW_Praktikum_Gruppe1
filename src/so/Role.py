@@ -1,21 +1,20 @@
 from datetime import datetime
 from so.Automat import Automat
-#from bo.nbo.Person import Person
  
 """Basisklasse, für die Zuweisung der Berechtigungen der Personen"""
 
 class Role():
 
-    """student = Role ("Student")
+    student = Role ("Student")
     dozent = Role  ("Dozent")
-    admin = Role ("Admin")"""
+    admin = Role ("Admin")
 
     def __init__(self):
-
-            super().__init__()
-            self._id = 0
-            self._creation_date = datetime.now()
-            self._static_attribute = ""
+        #Vererbung noch einmal überarbeiten
+        #super().__init__()
+        self._id = 0
+        self._creation_date = datetime.now()
+        self._static_attribute = ""
 
     def set_static_attribute(self, static_attribute):
         """Setzen eines statischen Attributs"""
@@ -24,12 +23,6 @@ class Role():
     def get_static_attribute(self, static_attribute):
         """Auslesen eines statischen Attributs"""
         return self._static_attribute
-        
-    #def set_role(self, person_id):
-        """Setzen einer Rolle"""
-            
-    #def get_role (self, person_id):
-        """Auslesen einer Rolle"""
 
     def get_id(self):
         """Auslesen der ID"""

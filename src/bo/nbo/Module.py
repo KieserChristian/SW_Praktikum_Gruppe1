@@ -1,4 +1,3 @@
-#from BusinessObject import BusinessObject
 from bo.nbo.NamedBusinessObject import NamedBusinessObject
 from datetime import datetime
 
