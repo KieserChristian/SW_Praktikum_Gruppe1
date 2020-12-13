@@ -55,9 +55,7 @@ participation = api.inherit('Participation', bo, {
 })
 
 grading = api.inherit('Grading', bo, {
-    'grading_id': fields.Integer(attribute='_grading_id',
-                                description='Bewertungs-ID')
-
+    'grade': fields.Integer(attribute='_grade', description='Eine Grade'),
 })
 
 module = api.inherit('Module', bo, nbo, {
@@ -482,16 +480,17 @@ class RoleRelatedPersonOperations(Resource):
         else:
             return 'Role not found', 500
 
-@projectTool.route('/grading')
+@projectTool.route('/grading/<int:grading_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('grading_id', 'Dies ist die ID von Grading')
 class GradingOperations(Resource):
+    #post route für create_grading_administration aus project_admin.py 
     @projectTool.marshal_with(grading)
     #@secured
     def get(self, grading_id):
         """Auslesen eines bestimmten Grading-Objektes, welches durch die grading_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
-        grad = adm.get_role_by_id(grading_id)
+        grad = adm.get_grading_by_id(grading_id)
         return grad
     
     #@secured
@@ -499,11 +498,12 @@ class GradingOperations(Resource):
         """Löschen eines bestimmten Grading-Objektes, welches durch die grading_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
         grad = adm.get_grading_by_id(grading_id)
+     
         if grad is not None:
             adm.delete_grading(grad)
             return 'gelöscht', 200
         else:
-            return '', 500
+            return 'There was some error', 500
     
     @projectTool.marshal_with(grading)
     @projectTool.expect(grading, validate=True)

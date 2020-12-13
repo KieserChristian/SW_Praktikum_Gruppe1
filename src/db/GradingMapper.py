@@ -31,22 +31,26 @@ class GradingMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT grading_id, creation date, grade FROM grading WHERE grade={} ORDER BY grading_id".format(id)
+        command = "SELECT grading_id, creation_date, grade FROM grading WHERE grading_id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, grade) in tuples:
+        try:
+            (id, creation_date, grade) = tuples[0]
             grading = Grading()
             grading.set_id(id)
             grading.set_creation_date(creation_date)
             grading.set_grade(grade)
-            result.append(grading)
+            result = grading
+        except IndexError:
+            print("There was no object with this id")
+            result = None
 
         self._cnx.commit()
         cursor.close()
 
         return result
-
+             
 
     def insert(self, grading):
         
@@ -79,9 +83,8 @@ class GradingMapper (Mapper):
 
 
     def delete(self, grading):
-        
         cursor = self._cnx.cursor()
-
+        print(grading)
         command = "DELETE FROM grading WHERE grading_id={}".format(grading.get_id())
         cursor.execute(command)
 

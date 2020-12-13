@@ -24,7 +24,7 @@ class Grading(BusinessObject):
     def to_dict(self):
         """Umwandeln Grading() in ein Python dictionary dict ()"""
         result = {
-            "id": self.get_id (),
+            "id": self.get_id(),
             "grading": self.get_grade(),
             "creation_Date": self.get_creation_date()
         }
@@ -33,7 +33,7 @@ class Grading(BusinessObject):
     @staticmethod
     def from_dict(dictionary=dict()):
         """Umwandel eines Python dict () in eine Note/Bewertung"""
-        grad = Grad()
+        grad = Grading()
         grad.set_id(dictionary["id"])
         grad.set_grade(dictionary["grade"])
         grad.set_creation_date(dictionary["creation_date"])
