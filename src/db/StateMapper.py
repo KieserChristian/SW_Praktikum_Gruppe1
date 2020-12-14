@@ -24,9 +24,9 @@ class StateMapper (Mapper):
         cursor.execute("SELECT * from state")
         tuples = cursor.fetchall()
 
-        for (state_id, creation_date, name) in tuples:
+        for (id, creation_date, name) in tuples:
             state = State()
-            state.set_id(state_id)
+            state.set_id(id)
             state.set_creation_date(creation_date)
             state.set_name(name)
             result.append(state)
@@ -38,7 +38,7 @@ class StateMapper (Mapper):
 
     """find by id """
 
-    def find_by_id(self, state_id):
+    def find_by_id(self, id):
         """Auslesen aller Konten eines durch Fremdschlüssel gegebenen States.
 
         :param state_id Schlüssel des zugehörigen Kunden.
@@ -47,13 +47,13 @@ class StateMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT state_id, creation_date, name FROM states WHERE name={} ORDER BY id".format(state_id)
+        command = "SELECT state_id, creation_date, name FROM states WHERE state_id={} ORDER BY state_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (state_id, creation_date, name) in tuples:
+        for (id, creation_date, name) in tuples:
             state = State()
-            state.set_id(state_id)
+            state.set_id(id)
             state.set_creation_date(creation_date)
             state.set_name(name)
             result.append(state)
@@ -79,10 +79,10 @@ class StateMapper (Mapper):
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            state.set_state_id(maxid[0]+1)
+            state.set_id(maxid[0]+1)
 
         command = "INSERT INTO state (state_id, creation_date, name) VALUES (%s,%s,%s)"
-        data = (state.get_state_id(), state.get_creation_date(), state.get_name())
+        data = (state.get_id(), state.get_creation_date(), state.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -99,7 +99,7 @@ class StateMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE state " + "SET name=%s WHERE state_id=%s"
-        data = (state.get_state_id(), state.get_creation_date(), state.get_name())
+        data = (state.get_id(), state.get_creation_date(), state.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -114,7 +114,7 @@ class StateMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM state WHERE state_id={}".format(state.get_state_id())
+        command = "DELETE FROM state WHERE state_id={}".format(state.get_id())
         cursor.execute(command)
 
         self._cnx.commit()

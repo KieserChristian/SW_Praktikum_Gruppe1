@@ -3,6 +3,10 @@ from datetime import datetime
 
 class ProjectType(NamedBusinessObject):
 
+    """ transdisciplinary = ProjectType("Transdiziplinäres Projekt", 10, 20)
+    interdisciplinary = ProjectType("Interdisziplinäres Projekt", 5, 10)
+    subject-specific = ProjectType("Fachspezifisches Projekt", 3, 5) """
+
     def __init__(self):
         super.__init__()
         self._number_ects = 0
@@ -31,9 +35,9 @@ class ProjectType(NamedBusinessObject):
     @staticmethod
     def from_dict(dictionary=dict()):
         """Umwandeln eines Python dict () """
-        projecttype = ProjectType()
-        projecttype.set_id(dictionary["id"])
-        projecttype.set_creation_date(dictionary["creation_date"])
-        projecttype.set_number_ects(dictionary["number_ects"])
-        projecttype.set_number_sws(dictionary["number_sws"])
-        return projecttype
+        project_type = ProjectType()
+        project_type.set_id(dictionary["id"])
+        project_type.set_creation_date(dictionary["creation_date"])
+        project_type.set_number_ects(dictionary["number_ects"])
+        project_type.set_number_sws(dictionary["number_sws"])
+        return project_type

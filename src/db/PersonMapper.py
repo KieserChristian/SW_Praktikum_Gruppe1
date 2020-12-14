@@ -24,9 +24,9 @@ class PersonMapper (Mapper):
         cursor.execute("SELECT * from person")
         tuples = cursor.fetchall()
 
-        for (person_id, creation_date, name, google_id) in tuples:
+        for (id, google_id, creation_date, name) in tuples:
             person = Person()
-            person.set_person_id(person_id)
+            person.set_id(id)
             person.set_google_id(google_id)
             person.set_creation_date(creation_date)
             person.set_name(name)
@@ -39,7 +39,7 @@ class PersonMapper (Mapper):
 
     """find by id """
 
-    def find_by_id(self, person_id):
+    def find_by_id(self, id):
         """Auslesen aller Konten eines durch Fremdschlüssel gegebenen Person.
 
         :param person_id Schlüssel des zugehörigen Kunden.
@@ -48,13 +48,13 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, google_id, name, creation_date FROM person WHERE name={} ORDER BY person_id".format(person_id)
+        command = "SELECT person_id, google_id, creation_date, name FROM person WHERE person_id={} ORDER BY person_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (person_id, google_id, creation_date, name) in tuples:
+        for (id, google_id, creation_date, name) in tuples:
             person = Person()
-            person.set_person_id(person_id)
+            person.set_person_id(id)
             person.set_google_id(google_id)
             person.set_creation_date(creation_date)
             person.set_name(name)
@@ -76,13 +76,13 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, google_id, name, creation_date FROM person WHERE name={} ORDER BY person_id".format(name)
+        command = "SELECT person_id, google_id, creation_date, name FROM person WHERE name={} ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (person_id, google_id, creation_date, name) in tuples:
+        for (id, google_id, creation_date, name) in tuples:
             person = Person()
-            person.set_person_id(person_id)
+            person.set_id(id)
             person.set_google_id(google_id)
             person.set_creation_date(creation_date)
             person.set_name(name)
@@ -112,7 +112,7 @@ class PersonMapper (Mapper):
             person.set_id(maxid[0]+1)
 
         command = "INSERT INTO person (person_id, google_id, creation_date, name) VALUES (%s,%s,%s,%s)"
-        data = (person.get_person_id(), person.get_creation_date(), person.get_name(),person.get_google_id())
+        data = (person.get_person_id(), person.get_google_id(), person.get_creation_date(), person.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -129,7 +129,7 @@ class PersonMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE person " + "SET name=%s WHERE person_id=%s"
-        data = (person.get_name(), person.get_person_id(), person.get_creation_date(), person.get_google_id())
+        data = (person.get_person_id(), person.get_google_id(), person.get_creation_date(), person.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -144,7 +144,7 @@ class PersonMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM person WHERE person_id={}".format(person.get_person_id())
+        command = "DELETE FROM person WHERE person_id={}".format(person.get_id())
         cursor.execute(command)
 
         self._cnx.commit()
