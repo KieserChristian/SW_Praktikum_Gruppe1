@@ -9,7 +9,8 @@ class Participation(BusinessObject):
         super().__init__()
 
     def __str__(self):
-        return "view of creation_date {}, participation_id {}".format(self.get_id(), self.get_creation_date())
+        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Teilnahmeinstanz"""
+        return "Teilahme: {}".format(self.get_id())
 
     @staticmethod
     def from_dict(dictionary=dict()):

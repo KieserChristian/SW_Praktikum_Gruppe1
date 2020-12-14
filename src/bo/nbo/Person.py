@@ -19,7 +19,7 @@ class Person(NamedBusinessObject):
         """Auslesen der Google Id"""
         return self._google_id
 
-    def set_email(self, email)
+    def set_email(self, email):
         """Setzen der Mailadresse"""
         self._email = email
 
@@ -29,7 +29,7 @@ class Person(NamedBusinessObject):
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Personeninstanz"""
-        return "Person: {}, Google-ID: {}, E-Mail: {} ".format(self.get_id(), self.get_google_id(), self.get_email())
+        return "Person: {} {}, Google-ID: {}, E-Mail: {}".format(self.get_id(), self.get_name(), self.get_google_id(), self.get_email())
 
     @staticmethod
     def from_tuples (tuples=list()):

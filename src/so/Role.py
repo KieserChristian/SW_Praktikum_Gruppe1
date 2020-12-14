@@ -36,3 +36,7 @@ class Role():
     def get_creation_date(self):
         """Auslesen des Erstelldatums"""
         return self._creation_date
+    
+    def __str__(self):
+        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Rolleninstanz"""
+        return "Rolle: {} {} ".format(self.get_id(), self.get_static_attribute())

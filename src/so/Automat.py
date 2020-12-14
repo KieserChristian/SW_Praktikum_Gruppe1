@@ -34,6 +34,10 @@ class Automat():
     def is_in_state(self, state):
         """Überprüfung, ob der momentane Zustand mit dem übertragenen Attribut übereinstimmt. Falls ja, gibt er True aus, falls nein, gibt er False aus."""
         return state == self._current_state
+    
+    def __str__(self):
+        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Automateninstanz"""
+        return "Automat: {} befindet sich momentan im Zustand {}".format(self.get_id(), self.get_state())
 
 
 

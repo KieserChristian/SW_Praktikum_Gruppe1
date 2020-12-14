@@ -11,7 +11,7 @@ class Semester(NamedBusinessObject):
 
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Semesterinstanz"""
-        return "Semester: {}, Name: {} ".format(self.get_id(), self.get_name())
+        return "Semester: {} {}".format(self.get_id(), self.get_name())
 
     @staticmethod
     def from_dict(dictionary=dict()):

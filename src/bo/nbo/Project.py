@@ -93,10 +93,10 @@ class Project(NamedBusinessObject, Automat):
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projektinstanz"""
-        return "Projekt:{}, Name: {}, Anzahl Plätze: {}, Externe Partner: {}, Kurzbeschreibung: {}, " \
-                "Wöchentliche: {}, Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Prüfungszeit: {}, " \
-                " Präferierte Blocktage in der Vorlesungszeit: {}, " \
-                "Besonderer Raum erforderlich: {} ".format(self.get_id(), self.get_name(), self._capacity(),
+        return "Projekt: {} {}, Anzahl der Plätze: {}, Externe Partner: {}, Kurzbeschreibung: {},"\
+                "Wöchentliche Veranstalung: {}, Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Prüfungszeit: {},"\
+                "Präferierte Blocktage in der Vorlesungszeit: {},"\
+                "Erforderlichkeit eines besonderen Raums: {}".format(self.get_id(), self.get_name(), self._capacity(),
                                                           self._external_partners(), self._short_description(),
                                                           self._weekly_flag(), self._bd_before_lecture_period(),
                                                           self._bd_in_exam_period(), self._bd_preferred_in_lecture_period(), self._special_room())

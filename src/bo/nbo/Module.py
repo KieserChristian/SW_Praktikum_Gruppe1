@@ -17,7 +17,7 @@ class Module(NamedBusinessObject):
 
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Modulinstanz"""
-        return "Modul: {}, mit der EDV-Nummer {} ".format(self.get_id(), self._edv_number())
+        return "Modul: {} {}, EDV-Nummer: {}".format(self.get_id(), self.get_name(), self._edv_number())
     
     @staticmethod
     def from_dict(dictionary=dict()):

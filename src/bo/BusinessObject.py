@@ -24,7 +24,3 @@ class BusinessObject(ABC):
     def get_creation_date(self):
         """Auslesen des Erstelldatums"""
         return self._creation_date
-    
-    def __str__(self):
-        """Darstellung des Objekts wird ausgegeben"""
-        return str(self._id)

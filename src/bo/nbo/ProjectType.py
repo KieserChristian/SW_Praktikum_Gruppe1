@@ -48,7 +48,7 @@ class ProjectType(NamedBusinessObject):
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projekttypinstanz"""
-        return "Projekttyp: {}, Anzahl der ECTS: {}, Anzahl der SWS: {} ".format(self.get_id(), self.get_number_ects(), self.get_number_sws())
+        return "Projekttyp: {} {}, Anzahl der ECTS: {}, Anzahl der SWS: {}".format(self.get_id(), self.get_name(), self.get_number_ects(), self.get_number_sws())
 
     @staticmethod
     def from_dict(dictionary=dict()):

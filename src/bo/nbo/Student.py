@@ -29,7 +29,7 @@ class Student(Person, NamedBusinessObject):
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Studenteninstanz"""
-        return "Student: {}, Matrikelnummer: {}, Studiengangskürzel: {} ".format(self.get_id(), self.get_matriculation_number(), self.get_course_abbreviation())
+        return "Student: {} {}, Matrikelnummer: {}, Studiengangskürzel: {}".format(self.get_id(), self.get_name(), self.get_matriculation_number(), self.get_course_abbreviation())
 
     @staticmethod
     def from_dict(dictionary=dict()):

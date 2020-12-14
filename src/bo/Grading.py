@@ -26,8 +26,9 @@ class Grading(BusinessObject):
         }
         return result
     
-        def __str__(self):
-        return "Grading list: {}, Grading_id: {}, view of creation_date {}".format(self.get_grade(), self.get_id(), self.get_creation_date())
+    def __str__(self):
+        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Bewertungsinstanz"""
+        return "Bewertung: {} {}".format(self.get_id(), self.get_grade())
 
     @staticmethod
     def from_dict(dictionary=dict()):
