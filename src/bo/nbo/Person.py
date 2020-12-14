@@ -2,38 +2,34 @@ from so.Role import Role
 from datetime import datetime
 from bo.nbo.NamedBusinessObject import NamedBusinessObject
 
+"""Realisierung der Personenklasse für die beteiligten Akteure im Projektverwaltungstool"""
+
 class Person(NamedBusinessObject):
 
     def __init__(self):
         super.__init__()
-        #self._authorization = role
         self._google_id = ""
         self._email = ""
-
-    def __str__(self):
-        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Personeninstanz"""
-        return "Person: {}, Rolle: {}, Google-ID: {}, E-Mail: {} ".format(self.get_id(), self.get_authorization(),
-                                                                        self.get_google_id(), self.get_email())
-
-    """ def set_authorization(self, name):
-        Berechtigung setzen
-        self._authorization = name
-
-    def get_authorization(self):
-        Berechtigung auslesen
-        return self._authorization """
-
-    def get_google_id (self):
-        """Auslesen der Google Id"""
-        return self._google_id
-
-    def get_email (self):
-        """Auslesen der Mail"""
-        return self._email
 
     def set_google_id(self, google_id):
         """Google Id setzen"""
         self._google_id = google_id
+    
+    def get_google_id (self):
+        """Auslesen der Google Id"""
+        return self._google_id
+
+    def set_email(self, email)
+        """Setzen der Mailadresse"""
+        self._email = email
+
+    def get_email (self):
+        """Auslesen der Mailadresse"""
+        return self._email
+    
+    def __str__(self):
+        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Personeninstanz"""
+        return "Person: {}, Google-ID: {}, E-Mail: {} ".format(self.get_id(), self.get_google_id(), self.get_email())
 
     @staticmethod
     def from_tuples (tuples=list()):
@@ -45,7 +41,7 @@ class Person(NamedBusinessObject):
             person.set_creation_date (creation_date)
             person.set_email (email)
             person.set_google_id (google_id)
-            person.set_authorization (authorization)
+            #person.set_authorization (authorization)
             person.set_name (name)
             result.append (person)
         return result
@@ -57,7 +53,7 @@ class Person(NamedBusinessObject):
         person.set_id(dictionary["id"])
         person.set_creation_date(dictionary["creation_date"])
         person.set_name(dictionary["name"])
-        person.set_authorization(dictionary["authorization"])
+        #person.set_authorization(dictionary["authorization"])
         return person
 
 """ if __name__ == "__main__":

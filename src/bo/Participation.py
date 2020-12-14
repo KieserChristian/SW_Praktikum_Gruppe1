@@ -1,12 +1,11 @@
 from datetime import datetime
-from abc import ABC
 from bo.BusinessObject import BusinessObject
 
+"""Realisierung der Teilnahmeklasse für die Teilnahme von Studenten an Projekten"""
 
 class Participation(BusinessObject):
-    def __init__(self):
     
-        """ Realisierung der Teilnahmeklasse Bestehend aus einer ID und einem Erstellungsdatum"""
+    def __init__(self):
         super().__init__()
 
     def __str__(self):
@@ -14,7 +13,7 @@ class Participation(BusinessObject):
 
     @staticmethod
     def from_dict(dictionary=dict()):
-        """Umwandel eines Python dict () """
+        """Umwandeln eines Python dict () """
         participation = Participation()
         participation.set_id(dictionary["id"])
         participation.set_creation_date(dictionary["creation_date"])

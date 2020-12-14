@@ -2,12 +2,11 @@ from bo.nbo.NamedBusinessObject import NamedBusinessObject
 from abc import ABC
 from datetime import datetime
 
+"""Realisierung der Semesterklasse für das Projektangebot in Semestern"""
 
 class Semester(NamedBusinessObject):
     
     def __init__(self):
-        
-        """ Realisierung der Semesterklasse Bestehend aus einer ID und einem Erstellungsdatum"""
         super().__init__()
 
     def __str__(self):
