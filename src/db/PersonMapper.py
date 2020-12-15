@@ -3,32 +3,25 @@ from db.Mapper import Mapper
 
 class PersonMapper (Mapper):
     """Mapper-Klasse, die Person-Objekte auf eine relationale
-    Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
-    gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
-    gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
-    in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
+    Datenbank abbildet
     """
     def __init__(self):
         super().__init__()
 
-    """find all"""
-
     def find_all(self):
-        """Auslesen aller Konten.
+        """Auslesen aller vorhandenen Personen.
 
-        :return Eine Sammlung mit Person-Objekten, die sämtliche Konten
-                repräsentieren.
+        :return Eine Sammlung aller Personen-Objekte
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT * from person")
+        cursor.execute("SELECT id, google_id, name FROM person")
         tuples = cursor.fetchall()
 
-        for (id, google_id, creation_date, name) in tuples:
+        for (id, google_id, name) in tuples:
             person = Person()
             person.set_id(id)
             person.set_google_id(google_id)
-            person.set_creation_date(creation_date)
             person.set_name(name)
             result.append(person)
 
@@ -37,26 +30,22 @@ class PersonMapper (Mapper):
 
         return result
 
-    """find by id """
-
     def find_by_id(self, id):
-        """Auslesen aller Konten eines durch Fremdschlüssel gegebenen Person.
+        """Auslesen einer Person durch die ID
 
-        :param person_id Schlüssel des zugehörigen Kunden.
-        :return Eine Sammlung mit Person-Objekten, die sämtliche Konten der
-                betreffenden Person repräsentieren.
+        :param id
+        :return Person-Objekt, das der übergebenen ID entspricht
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, google_id, creation_date, name FROM person WHERE person_id={} ORDER BY person_id".format(id)
+        command = "SELECT id, google_id, name FROM person WHERE id={} ORDER BY id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, google_id, creation_date, name) in tuples:
+        for (id, google_id, name) in tuples:
             person = Person()
-            person.set_person_id(id)
+            person.set_id(id)
             person.set_google_id(google_id)
-            person.set_creation_date(creation_date)
             person.set_name(name)
             result.append(person)
 
@@ -65,26 +54,23 @@ class PersonMapper (Mapper):
 
         return result
 
-    """find by name"""
-
     def find_by_name(self, name):
-        """Auslesen aller Kunden anhand des Namens.
+        """Auslesen aller Personen anhand des Namens.
 
-        :param name Name der zugehörigen Person.
+        :param name
         :return Eine Sammlung mit Person-Objekten, die sämtliche Personen
             mit dem gewünschten Namen enthält.
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, google_id, creation_date, name FROM person WHERE name={} ORDER BY name".format(name)
+        command = "SELECT id, google_id, name FROM person WHERE name={} ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, google_id, creation_date, name) in tuples:
+        for (id, google_id, name) in tuples:
             person = Person()
             person.set_id(id)
             person.set_google_id(google_id)
-            person.set_creation_date(creation_date)
             person.set_name(name)
             result.append(person)
 
@@ -92,8 +78,6 @@ class PersonMapper (Mapper):
         cursor.close()
 
         return result
-
-    """insert person"""
 
     def insert(self, person):
         """Einfügen eines Person-Objekts in die Datenbank.
@@ -101,50 +85,46 @@ class PersonMapper (Mapper):
         Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
         berichtigt.
 
-        :param person das zu speichernde Objekt
+        :param person
         :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
         """
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(person_id) AS maxid FROM person ")
+        cursor.execute("SELECT MAX(id) AS maxid FROM person ")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
             person.set_id(maxid[0]+1)
 
-        command = "INSERT INTO person (person_id, google_id, creation_date, name) VALUES (%s,%s,%s,%s)"
-        data = (person.get_person_id(), person.get_google_id(), person.get_creation_date(), person.get_name())
+        command = "INSERT INTO person (id, google_id, name) VALUES (%s,%s,%s,%s)"
+        data = (person.get_id(), person.get_google_id(), person.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
         return person
 
-    """update person"""
-
     def update(self, person):
         """Wiederholtes Schreiben eines Objekts in die Datenbank.
 
-        :param person das Objekt, das in die DB geschrieben werden soll
+        :param person
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE person " + "SET name=%s WHERE person_id=%s"
-        data = (person.get_person_id(), person.get_google_id(), person.get_creation_date(), person.get_name())
+        command = "UPDATE person " + "SET name=%s WHERE id=%s"
+        data = (person.get_id(), person.get_google_id(), person.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
 
-    """delete person""" 
-
     def delete(self, person):
-        """Löschen der Daten eines Person-Objekts aus der Datenbank.
+        """Löschen eines Person-Objekts aus der Datenbank.
 
-        :param person das aus der DB zu löschende "Objekt"
+        :param person
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM person WHERE person_id={}".format(person.get_id())
+        command = "DELETE FROM person WHERE id={}".format(person.get_id())
         cursor.execute(command)
 
         self._cnx.commit()
