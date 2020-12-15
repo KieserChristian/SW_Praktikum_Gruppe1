@@ -114,3 +114,15 @@ class ProjectTypeMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
+
+if (__name__ == "__main__"):
+    project_type = ProjectType()
+    project_type.set_id(1)
+    project_type.set_name("")
+
+
+            
+    with ProjectTypeMapper() as mapper:
+        result = mapper.insert(project_type)
+
+     

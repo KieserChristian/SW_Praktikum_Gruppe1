@@ -442,7 +442,7 @@ class RoleListOperations(Resource):
     def get(self):
         """Auslesen aller Role-Objekte"""
         adm = ProjectAdministration()
-        role_list = admn.get_all_roles()
+        role_list = adm.get_all_roles()
         return role_list
     
     @projectTool.marshal_with(role, code=200)

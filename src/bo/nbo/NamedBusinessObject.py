@@ -8,8 +8,8 @@ class NamedBusinessObject(BusinessObject,ABC):
     
     """Basisklasse, die in jede Klasse übernommen wird, die einen Namen als Attribut hat"""
 
-    def __init__(self, name):
-        super.__init__()
+    def __init__(self):
+        super().__init__()
         self._name = ""
 
     def set_name(self, name):

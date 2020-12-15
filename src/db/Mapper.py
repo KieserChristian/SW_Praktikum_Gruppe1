@@ -13,7 +13,7 @@ class Mapper (AbstractContextManager, ABC):
         
         if os.getenv('GAE_ENV', '').startswith('standard'):
             
-            self._cnx = connector.connect(user='root', password='',
+            self._cnx = connector.connect(user='demo', password='demo',
                                           #unix_socket(Anbindung muss noch ergänzt werden)
                                           database='it_projekt')
         else:

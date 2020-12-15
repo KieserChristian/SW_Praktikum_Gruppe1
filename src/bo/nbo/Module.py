@@ -6,7 +6,7 @@ from datetime import datetime
 class Module(NamedBusinessObject):
     
     def __init__(self):
-        super.__init__()
+        super().__init__()
         self._edv_number = 0
 
     def set_edv_number(self, edv_number):
