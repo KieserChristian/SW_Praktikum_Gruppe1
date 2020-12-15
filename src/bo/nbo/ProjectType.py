@@ -10,7 +10,7 @@ class ProjectType(NamedBusinessObject):
     subject_specific = "Fachspezifisches Projekt"       # sws=3    ects=5
 
     def __init__(self):
-        super.__init__()
+        super().__init__()
         self._number_ects = 0
         self._number_sws = 0
 

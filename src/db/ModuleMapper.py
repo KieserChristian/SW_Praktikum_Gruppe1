@@ -82,7 +82,7 @@ class ModuleMapper (Mapper):
             module.set_id(maxid[0]+1)
 
         command = "INSERT INTO module (module_id, name, edv_number) VALUES (%s,%s,%s)"
-        data = (module.get_id(), module.get_name(), module.get_edv_number)
+        data = (module.get_id(), module.get_name(), module.get_edv_number())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -112,5 +112,12 @@ class ModuleMapper (Mapper):
         self._cnx.commit()
         cursor.close()
     
-
-    
+        if (__name__ == "__main__"):
+            module = Module()
+            module.set_id(1)
+            module.set_name("ADS")
+        
+        with ModuleMapper() as mapper:
+            result = mapper.insert(module)
+            print (result)
+        
