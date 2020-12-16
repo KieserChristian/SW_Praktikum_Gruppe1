@@ -26,12 +26,12 @@ class ProjectMapper (Mapper):
 
         for (id, edv_number, name, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) in tuples:
             project = Project()
-            project.set_project_id(id)
+            project.set_id(id)
             project.set_edv_number(edv_number)
             project.set_name(name)
             project.set_capacity(capacity)
             project.set_external_partners(external_partners)
-            project.set_short_descripton(short_description)
+            project.set_short_description(short_description)
             project.set_weekly_flag(weekly_flag)
             project.set_bd_before_lecture_period(bd_before_lecture_period)
             project.set_bd_in_exam_period(bd_in_exam_period)
@@ -67,7 +67,7 @@ class ProjectMapper (Mapper):
             project.set_name(name)
             project.set_capacity(capacity)
             project.set_external_partners(external_partners)
-            project.set_short_descripton(short_description)
+            project.set_short_description(short_description)
             project.set_weekly_flag(weekly_flag)
             project.set_bd_before_lecture_period(bd_before_lecture_period)
             project.set_bd_in_exam_period(bd_in_exam_period)
@@ -103,7 +103,7 @@ class ProjectMapper (Mapper):
             project.set_name(name)
             project.set_capacity(capacity)
             project.set_external_partners(external_partners)
-            project.set_short_descripton(short_description)
+            project.set_short_description(short_description)
             project.set_weekly_flag(weekly_flag)
             project.set_bd_before_lecture_period(bd_before_lecture_period)
             project.set_bd_in_exam_period(bd_in_exam_period)
@@ -142,7 +142,7 @@ class ProjectMapper (Mapper):
             project.set_name(name)
             project.set_capacity(capacity)
             project.set_external_partners(external_partners)
-            project.set_short_descripton(short_description)
+            project.set_short_description(short_description)
             project.set_weekly_flag(weekly_flag)
             project.set_bd_before_lecture_period(bd_before_lecture_period)
             project.set_bd_in_exam_period(bd_in_exam_period)
@@ -176,10 +176,19 @@ class ProjectMapper (Mapper):
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            project.set_id(maxid[0]+1)
 
-        command = "INSERT INTO project (project_id, edv_number, name, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        data = (project.get_id(), project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_descriptions(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.bd_in_lecture_period(), project.bd_preferred_in_lecture_period(), project.special_room())
+            if maxid[0] is not None:
+                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
+                um 1 hoch und weisen diesen Wert als ID dem Person-Objekt zu."""
+                project.set_id(maxid[0] + 1)
+
+            else:
+                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
+                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
+                project.set_id(1)
+
+        command = "INSERT INTO project (project_id, creation_date, edv_number, name, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        data = (project.get_id(), project.get_creation_date() , project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_in_lecture_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -196,7 +205,7 @@ class ProjectMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE project " + "SET name=%s WHERE project_id=%s"
-        data = (project.get_id(), project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_descriptions(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.bd_in_lecture_period(), project.bd_preferred_in_lecture_period(), project.special_room())
+        data = (project.get_id(), project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.bd_in_lecture_period(), project.bd_preferred_in_lecture_period(), project.special_room())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -216,3 +225,26 @@ class ProjectMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
+
+
+if (__name__ == "__main__"):
+    project = Project()
+    project.set_id(id)
+    project.set_edv_number(22245)
+    project.set_name("stini")
+    project.set_capacity(124)
+    project.set_external_partners("sap")
+    project.set_short_description("ReWe")
+    project.set_weekly_flag(0)
+    project.set_bd_before_lecture_period(1)
+    project.set_bd_in_exam_period(2)
+    project.set_bd_in_lecture_period(3)
+    project.set_bd_preferred_in_lecture_period(4)
+    project.set_special_room("audimax")
+
+    with ProjectMapper() as mapper:
+        result = mapper.insert(project)
+
+    # with PersonMapper() as mapper:
+    #     result = mapper.find_by_google_id("kai.kuster@gmx.de")
+    #     print(result)
