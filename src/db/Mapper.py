@@ -24,7 +24,7 @@ class Mapper (AbstractContextManager, ABC):
 
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):x
+    def __exit__(self, exc_type, exc_val, exc_tb):
         self._cnx.close()
 
    
