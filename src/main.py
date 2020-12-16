@@ -55,6 +55,7 @@ participation = api.inherit('Participation', bo, {
 })
 
 grading = api.inherit('Grading', bo, {
+    'grading_id': fields.Integer(attribute='_grading_id', description='Grading-ID')
     'grade': fields.Integer(attribute='_grade', description='Eine Grade'),
 })
 
@@ -492,6 +493,23 @@ class GradingOperations(Resource):
         adm = ProjectAdministration()
         grad = adm.get_grading_by_id(grading_id)
         return grad
+
+    @projectTool.marshal_with(grading, code=200)
+    @projectTool.expect(grading) 
+    #@secured
+        #Hier wird ein Grading-Objekt von Client-Seite erwartet
+    def post(self):
+        """Anlegen eines neuen Grading-Objekts"""
+        adm = ProjectAdministration()
+        proposal = Grading.from_dict(api.payload)
+
+        if proposal is not None:
+            """Wir verwenden Name und garding_id des Proposals für die Erzeugung eines Grading-Objektes."""
+            grad = adm.create_grading(proposal.get_grading_id())
+
+            return grad, 200
+        else:
+                return '', 500
     
     #@secured
     def delete(self, grading_id):
