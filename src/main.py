@@ -25,7 +25,7 @@ CORS(app, resources=r'/project/*')
 
 #App name festlegen
 api = Api(app, version='1.0', title='ProjectTool API',
-    description= 'Ein Projektverwaltungsmodul für Hochschulen')
+    description= 'Ein Projektverwaltungstool für Hochschulen')
 
 #Namespace festlegen
 """Namespace"""
