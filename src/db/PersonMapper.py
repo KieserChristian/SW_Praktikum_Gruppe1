@@ -15,14 +15,15 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT id, google_id, name FROM person")
+        cursor.execute("SELECT person_id, google_id, name, email FROM person")
         tuples = cursor.fetchall()
 
-        for (id, google_id, name) in tuples:
+        for (id, google_id, name, email) in tuples:
             person = Person()
             person.set_id(id)
             person.set_google_id(google_id)
             person.set_name(name)
+            person.set_email(email)
             result.append(person)
 
         self._cnx.commit()
@@ -33,12 +34,12 @@ class PersonMapper (Mapper):
     def find_by_id(self, id):
         """Auslesen einer Person durch die ID
 
-        :param id
+        :param  id
         :return Person-Objekt, das der übergebenen ID entspricht
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, google_id, name FROM person WHERE id={} ORDER BY id".format(id)
+        command = "SELECT person_id, google_id, name, email FROM person WHERE person_id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -47,6 +48,7 @@ class PersonMapper (Mapper):
             person.set_id(id)
             person.set_google_id(google_id)
             person.set_name(name)
+            person.set_email(email)
             result.append(person)
 
         self._cnx.commit()
@@ -57,21 +59,22 @@ class PersonMapper (Mapper):
     def find_by_name(self, name):
         """Auslesen aller Personen anhand des Namens.
 
-        :param name
+        :param  name
         :return Eine Sammlung mit Person-Objekten, die sämtliche Personen
             mit dem gewünschten Namen enthält.
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, google_id, name FROM person WHERE name={} ORDER BY name".format(name)
+        command = "SELECT person_id, google_id, name, email FROM person WHERE name={}".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, google_id, name) in tuples:
+        for (id, google_id, name, email) in tuples:
             person = Person()
             person.set_id(id)
             person.set_google_id(google_id)
             person.set_name(name)
+            person.set_email(email)
             result.append(person)
 
         self._cnx.commit()
@@ -89,14 +92,22 @@ class PersonMapper (Mapper):
         :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
         """
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(id) AS maxid FROM person ")
+        cursor.execute("SELECT MAX(person_id) AS maxid FROM person")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            person.set_id(maxid[0]+1)
 
-        command = "INSERT INTO person (id, google_id, name) VALUES (%s,%s,%s,%s)"
-        data = (person.get_id(), person.get_google_id(), person.get_name())
+            if maxid[0] is not None:
+                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
+                um 1 hoch und weisen diesen Wert als ID dem Person-Objekt zu."""
+                person.set_id(maxid[0] + 1)
+            else:
+                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
+                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
+                person.set_id(1)
+
+        command = "INSERT INTO person (person_id, google_id, name, email) VALUES (%s,%s,%s,%s)"
+        data = (person.get_id(), person.get_google_id(), person.get_name(), person.get_email())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -110,8 +121,8 @@ class PersonMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE person " + "SET name=%s WHERE id=%s"
-        data = (person.get_id(), person.get_google_id(), person.get_name())
+        command = "UPDATE person " + "SET google_id=%s, name=%s, email=%s WHERE person_id=%s"
+        data = (person.get_google_id(), person.get_name(), person.get_email(), person.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -124,7 +135,7 @@ class PersonMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM person WHERE id={}".format(person.get_id())
+        command = "DELETE FROM person WHERE person_id={}".format(person.get_id())
         cursor.execute(command)
 
         self._cnx.commit()

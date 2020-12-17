@@ -15,13 +15,15 @@ class StudentMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT id, name, matriculation_number, course_abbreviation FROM student")
+        cursor.execute("SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student")
         tuples = cursor.fetchall()
 
-        for (id, name, matriculation_number, course_abbreviation) in tuples:
+        for (id, google_id, name, email, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
+            student.set_google_id(google_id)
             student.set_name(name)
+            student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
             result.append(student)
@@ -34,19 +36,21 @@ class StudentMapper (Mapper):
     def find_by_id(self, id):
         """Auslesen einer Studenten durch die ID
 
-        :param id
+        :param  student_id
         :return Student-Objekt, das der übergebenen ID entspricht
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, name, matriculation_number, course_abbreviation FROM student WHERE name={} ORDER BY id".format(id)
+        command = "SELECT student_id, name, matriculation_number, course_abbreviation FROM student WHERE name={} ORDER BY id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, name, matriculation_number, course_abbreviation) in tuples:
+        for (id, google_id, name, email, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
+            student.set_google_id(google_id)
             student.set_name(name)
+            student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
             result.append(student)
@@ -65,14 +69,16 @@ class StudentMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, name, matriculation_number, course_abbreviation FROM student WHERE name LIKE '{}' ORDER BY name".format(name)
+        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE name LIKE '{}' ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, name, matriculation_number, course_abbreviation) in tuples:
+        for (id, google_id, name, email, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
+            student.set_google_id(google_id)
             student.set_name(name)
+            student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
             result.append(student)
@@ -90,14 +96,16 @@ class StudentMapper (Mapper):
         """      
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, name, matriculation_number, course_abbreviation FROM student WHERE matriculation_number LIKE '{}' ORDER BY matriculation_number".format(matriculation_number)
+        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE matriculation_number LIKE '{}' ORDER BY matriculation_number".format(matriculation_number)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, name, matriculation_number, course_abbreviation) in tuples:
+        for (id, google_id, name, email, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
+            student.set_google_id(google_id)
             student.set_name(name)
+            student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
             result.append(student)
@@ -115,14 +123,16 @@ class StudentMapper (Mapper):
         """          
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT id, name, matriculation_number, course_abbreviation FROM student WHERE course_abbreviation LIKE '{}' ORDER BY course_abbreviation".format(course_abbreviation)
+        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE course_abbreviation LIKE '{}' ORDER BY course_abbreviation".format(course_abbreviation)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, name, matriculation_number, course_abbreviation) in tuples:
+        for (id, google_id, name, email, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
+            student.set_google_id(google_id)
             student.set_name(name)
+            student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
             result.append(student)
@@ -138,18 +148,27 @@ class StudentMapper (Mapper):
         Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
         berichtigt.
 
-        :param student
+        :param  student
         :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
         """        
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(id) AS maxid FROM student ")
+        cursor.execute("SELECT MAX(student_id) AS maxid FROM student ")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            student.set_id(maxid[0]+1)
 
-        command = "INSERT INTO student (id, name, matriculation_number, course_abbreviation) VALUES (%s,%s,%s,%s)"
-        data = (student.get_id(), student.get_name(), student.get_matriculation_number, student.get_course_abbreviation)
+            if maxid[0] is not None:
+                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
+                um 1 hoch und weisen diesen Wert als ID dem Student-Objekt zu."""
+                student.set_id(maxid[0] + 1)
+
+            else:
+                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
+                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
+                student.set_id(1)
+
+        command = "INSERT INTO student (student_id, google_id, name, email, matriculation_number, course_abbreviation) VALUES (%s,%s,%s,%s,%s,%s)"
+        data = (student.get_id(), student.get_google_id(), student.get_name(), student.get_email(), student.get_matriculation_number, student.get_course_abbreviation)
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -163,8 +182,8 @@ class StudentMapper (Mapper):
         """       
         cursor = self._cnx.cursor()
 
-        command = "UPDATE student " + "SET name=%s WHERE id=%s"
-        data = (student.get_id(), student.get_name(), student.get_matriculation_number, student.get_course_abbreviation)
+        command = "UPDATE student " + "SET google_id=%s, name=%s, email=%s, matriculation_number=%s, course_abbreviation=%s WHERE student_id=%s"
+        data = (student.get_google_id(), student.get_name(), student.get_email(), student.get_matriculation_number, student.get_course_abbreviation, student.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -177,7 +196,7 @@ class StudentMapper (Mapper):
         """       
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM student WHERE id={}".format(student.get_id())
+        command = "DELETE FROM student WHERE student_id={}".format(student.get_id())
         cursor.execute(command)
 
         self._cnx.commit()

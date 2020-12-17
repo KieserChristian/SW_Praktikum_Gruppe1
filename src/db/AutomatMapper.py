@@ -1,34 +1,27 @@
 from so.Automat import Automat
 from db.Mapper import Mapper
 
+"""Mapper-Klasse, die Automat-Objekte auf eine relationale Datenbank abbildet"""
+
 class AutomatMapper (Mapper):
-    """Mapper-Klasse, die Automat-Objekte auf eine relationale
-    Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
-    gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
-    gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
-    in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
-    """
+
     def __init__(self):
         super().__init__()
 
-    """find all """
-
     def find_all(self):
-        """Auslesen aller Automaten.
+        """Auslesen aller vorhandenen Automaten
 
-        :return Eine Sammlung mit Automat-Objekten, die sämtliche Konten
-                repräsentieren.
-        """
+        :return Eine Sammlung aller Automat-Objekte"""
+        
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT * from automat")
+        cursor.execute("SELECT automat_id, current_state FROM automat")
         tuples = cursor.fetchall()
 
-        for (id, current_state, creation_date) in tuples:
+        for (id, current_state) in tuples:
             automat = Automat()
             automat.set_id(id)
-            automat.set_current_state(current_state)
-            automat.set_creation_date(creation_date)
+            automat.set_state(current_state)
             result.append(automat)
 
         self._cnx.commit()
@@ -36,34 +29,28 @@ class AutomatMapper (Mapper):
 
         return result
 
-    """find by id """
-
     def find_by_id(self, id):
-        """Auslesen aller Konten eines durch Fremdschlüssel gegebenen Automats.
+        """Auslesen eines Automats durch die ID
 
-        :param automat_id Schlüssel des zugehörigen Kunden.
-        :return Eine Sammlung mit Automat-Objekten, die sämtliche Konten der
-                betreffenden Automaten repräsentieren.
-        """
+        :param  automat_id
+        :return Automatobjekt, das der übergebenen ID entspricht"""
+            
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT automat_id, current_state, creation_date FROM automat WHERE automat_id={} ORDER BY automat_id".format(id)
+        command = "SELECT automat_id, current_state FROM automat WHERE automat_id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, current_state, creation_date) in tuples:
+        for (id, current_state) in tuples:
             automat = Automat()
             automat.set_id(id)
-            automat.set_current_state(current_state)
-            automat.set_creation_date(creation_date)
-            result.append(automat)
+            automat.set_state(current_state)
+            result = automat
 
         self._cnx.commit()
         cursor.close()
 
         return result
-
-    """insert automat"""
 
     def insert(self, automat):
         """Einfügen eines Automat-Objekts in die Datenbank.
@@ -71,44 +58,47 @@ class AutomatMapper (Mapper):
         Dabei wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
         berichtigt.
 
-        :param automat das zu speichernde Objekt
-        :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID.
-        """
+        :param  automat
+        :return das bereits übergebene Objekt, jedoch mit ggf. korrigierter ID."""
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(automat_id) AS maxid FROM automat ")
+        cursor.execute("SELECT MAX(automat_id) AS maxid FROM automat")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            automat.set_id(maxid[0]+1)
 
-        command = "INSERT INTO automat (automat_id, current_state, creation_date) VALUES (%s,%s,%s)"
-        data = (automat.get_id(), automat.get_current_state(),automat.get_creation_date())
+            if maxid[0] is not None:
+                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
+                um 1 hoch und weisen diesen Wert als ID dem Automat-Objekt zu."""
+                automat.set_id(maxid[0]+1)
+            else:
+                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
+                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
+                automat.set_id(1)
+
+        command = "INSERT INTO automat (automat_id, current_state) VALUES (%s,%s)"
+        data = (automat.get_id(), automat.get_state())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
         return automat
 
-    """update automat"""
-
     def update(self, automat):
         """Wiederholtes Schreiben eines Objekts in die Datenbank.
 
-        :param automat das Objekt, das in die DB geschrieben werden soll
+        :param automat 
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE automat " + "SET name=%s WHERE automat_id=%s"
-        data = (automat.get_current_state(), automat.get_id(), automat.get_creation_date)
+        command = "UPDATE automat " + "SET current_state=%s WHERE automat_id=%s"
+        data = (automat.get_state(), automat.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
 
-    """delete automat""" 
-
     def delete(self, automat):
-        """Löschen der Daten eines Automaten-Objekts aus der Datenbank.
+        """Löschen der Daten eines Automat-Objekts aus der Datenbank.
 
         :param automat das aus der DB zu löschende "Objekt"
         """
@@ -119,3 +109,9 @@ class AutomatMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
+
+""" if (__name__ == "__main__"):
+    with AutomatMapper() as mapper:
+        result = mapper.find_all()
+        for a in result:
+            print(a) """

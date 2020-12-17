@@ -1,4 +1,3 @@
-from so.Role import Role
 from datetime import datetime
 from bo.nbo.NamedBusinessObject import NamedBusinessObject
 
@@ -35,13 +34,12 @@ class Person(NamedBusinessObject):
     def from_tuples (tuples=list()):
         """Umwandeln eines DB tuples in ein Python Objekt (Person())"""
         result = []
-        for (person_id, id, creation_date, email, google_id, authorization, name) in tuples:
+        for (id, creation_date, email, google_id, name) in tuples:
             person = Person()
-            person.set_id (person_id)
+            person.set_id (id)
             person.set_creation_date (creation_date)
             person.set_email (email)
             person.set_google_id (google_id)
-            #person.set_authorization (authorization)
             person.set_name (name)
             result.append (person)
         return result
@@ -53,7 +51,6 @@ class Person(NamedBusinessObject):
         person.set_id(dictionary["id"])
         person.set_creation_date(dictionary["creation_date"])
         person.set_name(dictionary["name"])
-        #person.set_authorization(dictionary["authorization"])
         return person
 
 """ if __name__ == "__main__":

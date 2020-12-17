@@ -42,5 +42,5 @@ class State():
         return self._creation_date
 
     def __str__(self):
-        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Zustandinstanz"""
+        """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Zustandsinstanz"""
         return "Momentaner Zustand: {} {}".format(self.get_id(), self.get_state_name())
