@@ -188,7 +188,7 @@ class ProjectMapper (Mapper):
                 project.set_id(1)
 
         command = "INSERT INTO project (project_id, creation_date, edv_number, name, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        data = (project.get_id(), project.get_creation_date() , project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_in_lecture_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room())
+        data = (project.get_id(), project.get_creation_date(), project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_in_lecture_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -204,8 +204,8 @@ class ProjectMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE project " + "SET name=%s WHERE project_id=%s"
-        data = (project.get_id(), project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.bd_in_lecture_period(), project.bd_preferred_in_lecture_period(), project.special_room())
+        command = "UPDATE project " + "SET edv_number=%s, name=%s, capacity=%s, external_partners=%s, short_description=%s, weekly_flag=%s, bd_before_lecture_period=%s, bd_in_exam_period=%s, bd_in_lecture_period=%s, bd_preferred_in_lecture_period=%s, special_room=%s WHERE project_id=%s"
+        data = (project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.bd_in_lecture_period(), project.bd_preferred_in_lecture_period(), project.special_room(), project.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
