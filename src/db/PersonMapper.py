@@ -39,7 +39,7 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, google_id, name, email FROM person WHERE person_id={}".format(id)
+        command = "SELECT person_id, google_id, name, email FROM person WHERE person_id={} ORDER BY person_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -65,7 +65,7 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, google_id, name, email FROM person WHERE name={}".format(name)
+        command = "SELECT person_id, google_id, name, email FROM person WHERE name={} ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 

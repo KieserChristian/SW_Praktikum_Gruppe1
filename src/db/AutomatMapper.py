@@ -37,7 +37,7 @@ class AutomatMapper (Mapper):
             
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT automat_id, current_state FROM automat WHERE automat_id={}".format(id)
+        command = "SELECT automat_id, current_state FROM automat WHERE automat_id={} ORDER BY automat_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 

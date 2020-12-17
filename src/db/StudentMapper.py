@@ -36,12 +36,12 @@ class StudentMapper (Mapper):
     def find_by_id(self, id):
         """Auslesen einer Studenten durch die ID
 
-        :param  student_id
+        :param  id
         :return Student-Objekt, das der übergebenen ID entspricht
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, name, matriculation_number, course_abbreviation FROM student WHERE name={} ORDER BY id".format(id)
+        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE student_id={} ORDER BY student_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -69,7 +69,7 @@ class StudentMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE name LIKE '{}' ORDER BY name".format(name)
+        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE name={} ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -96,7 +96,7 @@ class StudentMapper (Mapper):
         """      
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE matriculation_number LIKE '{}' ORDER BY matriculation_number".format(matriculation_number)
+        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE matriculation_number={} ORDER BY matriculation_number".format(matriculation_number)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -123,7 +123,7 @@ class StudentMapper (Mapper):
         """          
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE course_abbreviation LIKE '{}' ORDER BY course_abbreviation".format(course_abbreviation)
+        command = "SELECT student_id, google_id, name, email, matriculation_number, course_abbreviation FROM student WHERE course_abbreviation={} ORDER BY course_abbreviation".format(course_abbreviation)
         cursor.execute(command)
         tuples = cursor.fetchall()
 

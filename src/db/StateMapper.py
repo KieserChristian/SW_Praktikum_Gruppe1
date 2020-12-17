@@ -37,7 +37,7 @@ class StateMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT state_id, state_name FROM state WHERE state_id={}".format(id)
+        command = "SELECT state_id, state_name FROM state WHERE state_id={} ORDER BY state_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
