@@ -257,8 +257,7 @@ class ProjectAdministration():
         """Eine Teilnahme anlegen"""
 
         participation = Participation()
-        participation.set_name(name)
-        participation.set_id(1)
+        #participation.set_name(name)
 
         with ParticipationMapper() as mapper:
             return mapper.insert(participation)
@@ -333,6 +332,13 @@ class ProjectAdministration():
 
         with GradingMapper() as mapper:
             return mapper.insert(grading)
+    
+    def create_grading(self, grade):
+        grading = Grading()
+        grading.set_grade(grade)
+
+        with GradingMapper() as mapper:
+            mapper.insert(grading)
     
     def save_grading(self, grading):
         """Eine Bewertung speichern"""

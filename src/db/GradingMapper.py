@@ -48,20 +48,19 @@ class GradingMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
-
         return result
              
 
     def insert(self, grading):
         
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(grading_id) AS maxid FROM grading ")
+        cursor.execute("SELECT MAX(grading_id) AS maxid FROM grading")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
             grading.set_id(maxid[0]+1)
 
-        command = "INSERT INTO grading (grading_id, grade) VALUES (%s,%s)"
+        command = "INSERT INTO grading (grading_id, creation_date, grade) VALUES (%s, CURRENT_TIMESTAMP,%s)"
         data = (grading.get_id(), grading.get_grade())
         cursor.execute(command, data)
 
