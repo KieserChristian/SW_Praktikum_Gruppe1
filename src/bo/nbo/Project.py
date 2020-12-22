@@ -101,13 +101,17 @@ class Project(NamedBusinessObject, Automat):
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projektinstanz"""
-        return "Projekt: {} {}, Anzahl der Plätze: {}, Externe Partner: {}, Kurzbeschreibung: {},"\
-                "Wöchentliche Veranstalung: {}, Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Prüfungszeit: {},"\
-                "Präferierte Blocktage in der Vorlesungszeit: {},"\
-                "Erforderlichkeit eines besonderen Raums: {}".format(self.get_id(), self.get_name(), self._capacity(),
-                                                          self._external_partners(), self._short_description(),
-                                                          self._weekly_flag(), self._bd_before_lecture_period(),
-                                                          self._bd_in_exam_period(), self._bd_preferred_in_lecture_period(), self._special_room())
+        return "Projekt: {} {}, Anzahl der Plätze: {}, Externe Partner: {}, Kurzbeschreibung: {}," \
+               "Wöchentliche Veranstalung: {}, Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Prüfungszeit: {}," \
+               "Präferierte Blocktage in der Vorlesungszeit: {}," \
+               "Erforderlichkeit eines besonderen Raums: {}".format(self.get_id(), self.get_name(), self.get_capacity(),
+                                                                    self.get_external_partners(),
+                                                                    self.get_short_description(),
+                                                                    self.get_weekly_flag(),
+                                                                    self.get_bd_before_lecture_period(),
+                                                                    self.get_bd_in_exam_period(),
+                                                                    self.get_bd_preferred_in_lecture_period(),
+                                                                    self.get_special_room())
 
     @staticmethod
     def from_dict(dictionary=dict()):

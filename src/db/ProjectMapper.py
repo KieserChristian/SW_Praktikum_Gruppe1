@@ -19,15 +19,18 @@ class ProjectMapper (Mapper):
 
         :return Eine Sammlung mit Project-Objekten, die sämtliche Konten
                 repräsentieren.
+                "SELECT * from it_project.project"
         """
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT * from project")
+        command=("SELECT * from it_projekt.project")
+        cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, edv_number, name, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) in tuples:
+        for (id, creation_date, edv_number, name, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) in tuples:
             project = Project()
             project.set_id(id)
+            project.set_creation_date(creation_date)
             project.set_edv_number(edv_number)
             project.set_name(name)
             project.set_capacity(capacity)
@@ -128,15 +131,13 @@ class ProjectMapper (Mapper):
         :return Project-Objekt, das dem übergebenen EDV entspricht, None bei
             nicht vorhandenem DB-Tupel.
         """
-        result = None
-
+        result = []
         cursor = self._cnx.cursor()
-        command = "SELECT project_id, edv_number, name, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room FROM project WHERE edv_number={}".format(edv_number)
+        command = "SELECT project_id, edv_number, name, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room FROM project WHERE edv_number LIKE '{}' ORDER BY name".format(edv_number)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        try:
-            (id, edv_number, name, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) = tuples [0]
+        for (id, edv_number, name, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period,bd_in_exam_period, bd_in_lecture_period, bd_preferred_in_lecture_period, special_room) in tuples:
             project = Project()
             project.set_id(id)
             project.set_edv_number(edv_number)
@@ -150,11 +151,7 @@ class ProjectMapper (Mapper):
             project.set_bd_in_lecture_period(bd_in_lecture_period)
             project.set_bd_preferred_in_lecture_period(bd_preferred_in_lecture_period)
             project.set_special_room(special_room)
-            result=project
-        except IndexError:
-            """Der IndexError wird oben beim Zugriff auf tuples[0] auftreten, wenn der vorherige SELECT-Aufruf
-            keine Tupel liefert, sondern tuples = cursor.fetchall() eine leere Sequenz zurück gibt."""
-            result = None
+            result.append(project)
 
         self._cnx.commit()
         cursor.close()
@@ -258,25 +255,13 @@ class ProjectMapper (Mapper):
         #result = mapper.delete(project)
         #print(result)
 
-"""find_all methode test läuft noch"""
+"""find_by_id getestet"""
 #if (__name__ == "__main__"):
-    #project = Project()
-    #project.set_id(1)
-    #project.get_edv_number()
-    #project.get_name()
-    #project.get_capacity()
-    #project.get_external_partners()
-    #project.get_short_description()
-    #project.get_weekly_flag()
-    #project.get_bd_before_lecture_period()
-    #project.get_bd_in_exam_period()
-    #project.get_bd_in_lecture_period()
-    #project.get_bd_preferred_in_lecture_period()
-    #project.get_special_room()
 
     #with ProjectMapper() as mapper:
-        #result = mapper.find_all()
-        #print(result)
+        #result = mapper.find_by_id(1)
+        #for p in result:
+            #print(p)
 
 """update methode getestet"""
 #if (__name__ == "__main__"):
@@ -296,3 +281,30 @@ class ProjectMapper (Mapper):
 
     #with ProjectMapper() as mapper:
         #result = mapper.update(project)
+
+"""find all getestet"""
+
+#if (__name__ == "__main__"):
+
+    #with ProjectMapper() as mapper:
+        #result = mapper.find_all()
+        #for p in result:
+            #print(p)
+
+"""find_by_name getestet"""
+
+# if (__name__ == "__main__"):
+#
+#     with ProjectMapper() as mapper:
+#         result = mapper.find_by_name("peter")
+#         for p in result:
+#             print(p)
+
+"""find_by_edv_number getestet"""
+
+#if (__name__ == "__main__"):
+
+    #with ProjectMapper() as mapper:
+        #result = mapper.find_by_edv()
+        #for p in result:
+            #print(p)
