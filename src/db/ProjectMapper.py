@@ -1,5 +1,6 @@
 from bo.nbo.Project import Project
 from db.Mapper import Mapper
+#from bo.BusinessObject import BusinessObject
 
 class ProjectMapper (Mapper):
     """Mapper-Klasse, die Project-Objekte auf eine relationale
@@ -204,8 +205,8 @@ class ProjectMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE project " + "SET edv_number=%s, name=%s, capacity=%s, external_partners=%s, short_description=%s, weekly_flag=%s, bd_before_lecture_period=%s, bd_in_exam_period=%s, bd_in_lecture_period=%s, bd_preferred_in_lecture_period=%s, special_room=%s WHERE project_id=%s"
-        data = (project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.bd_in_lecture_period(), project.bd_preferred_in_lecture_period(), project.special_room(), project.get_id())
+        command = "UPDATE project " + "SET edv_number=%s, name=%s, capacity=%s, external_partners=%s, short_description=%s, weekly_flag=%s, bd_before_lecture_period=%s, bd_in_exam_period=%s, bd_in_lecture_period=%s, bd_preferred_in_lecture_period=%s, special_room=%s WHERE project_id={}".format(project.get_id())
+        data = (project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_in_lecture_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -227,24 +228,71 @@ class ProjectMapper (Mapper):
         cursor.close()
 
 
-if (__name__ == "__main__"):
-    project = Project()
-    project.set_id(id)
-    project.set_edv_number(22245)
-    project.set_name("stini")
-    project.set_capacity(124)
-    project.set_external_partners("sap")
-    project.set_short_description("ReWe")
-    project.set_weekly_flag(0)
-    project.set_bd_before_lecture_period(1)
-    project.set_bd_in_exam_period(2)
-    project.set_bd_in_lecture_period(3)
-    project.set_bd_preferred_in_lecture_period(4)
-    project.set_special_room("audimax")
+"""Insert Methode Getestet """
 
-    with ProjectMapper() as mapper:
-        result = mapper.insert(project)
+#if (__name__ == "__main__"):
+    #project = Project()
+    #project.set_id(id)
+    #project.set_edv_number(22245)
+    #project.set_name("stini")
+    #project.set_capacity(124)
+    #project.set_external_partners("sap")
+    #project.set_short_description("ReWe")
+    #project.set_weekly_flag(0)
+    #project.set_bd_before_lecture_period(1)
+    #project.set_bd_in_exam_period(2)
+    #project.set_bd_in_lecture_period(3)
+    #project.set_bd_preferred_in_lecture_period(4)
+    #project.set_special_room("audimax")
 
-    # with PersonMapper() as mapper:
-    #     result = mapper.find_by_google_id("kai.kuster@gmx.de")
-    #     print(result)
+    #with ProjectMapper() as mapper:
+       #result = mapper.insert(project)
+
+"""Delete Methode getestet"""
+
+#if (__name__ == "__main__"):
+    #project = Project()
+    #project.set_id(3)
+
+    #with ProjectMapper() as mapper:
+        #result = mapper.delete(project)
+        #print(result)
+
+"""find_all methode test läuft noch"""
+#if (__name__ == "__main__"):
+    #project = Project()
+    #project.set_id(1)
+    #project.get_edv_number()
+    #project.get_name()
+    #project.get_capacity()
+    #project.get_external_partners()
+    #project.get_short_description()
+    #project.get_weekly_flag()
+    #project.get_bd_before_lecture_period()
+    #project.get_bd_in_exam_period()
+    #project.get_bd_in_lecture_period()
+    #project.get_bd_preferred_in_lecture_period()
+    #project.get_special_room()
+
+    #with ProjectMapper() as mapper:
+        #result = mapper.find_all()
+        #print(result)
+
+"""update methode getestet"""
+#if (__name__ == "__main__"):
+    #project = Project()
+    #project.set_id(2)
+    #project.set_edv_number(23)
+    #project.set_name("ggg")
+    #project.set_capacity(12)
+    #project.set_external_partners("yyy")
+    #project.set_short_description("sdf")
+    #project.set_weekly_flag(1)
+    #project.set_bd_before_lecture_period(2)
+    #project.set_bd_in_exam_period(3)
+    #project.set_bd_in_lecture_period(4)
+    #project.set_bd_preferred_in_lecture_period(5)
+    #project.set_special_room("audimaxx")
+
+    #with ProjectMapper() as mapper:
+        #result = mapper.update(project)

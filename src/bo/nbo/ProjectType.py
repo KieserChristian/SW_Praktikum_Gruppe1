@@ -14,7 +14,7 @@ class ProjectType(NamedBusinessObject):
         self._number_ects = 0
         self._number_sws = 0
 
-    def set_number_ects(self, number_ects):
+    def set_number_ects(self, number_ects, transdisciplinary,interdisciplinary,subject_specific):
         """ects anzahl setzen"""
         self._number_ects = number_ects
         if ProjectType == transdisciplinary:
@@ -30,14 +30,14 @@ class ProjectType(NamedBusinessObject):
         """ects anzahl auslesen"""
         return self._number_ects
     
-    def set_number_sws(self,number_sws):
+    def set_number_sws(self,number_sws,transdisciplinary,interdisciplinary,subject_specific):
         """semester wochenstunden setzen"""
         self._number_sws = number_sws
         if ProjectType == transdisciplinary:
             self._number_sws = 10
         elif ProjectType == interdisciplinary:
             self._number_sws = 5
-        elif ProjectType == subject-specific:
+        elif ProjectType == subject_specific:
             self._number_sws = 3
         else:
             print("No projecttype found")

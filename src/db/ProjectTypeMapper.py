@@ -82,10 +82,19 @@ class ProjectTypeMapper (Mapper):
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            project_type.set_id(maxid[0]+1)
 
-        command = "INSERT INTO project_type (project_type_id, name, number_ects, number_sws) VALUES (%s,%s,%s,%s)"
-        data = (project_type.get_id(), project_type.get_name(), project_type.get_number_ects, project_type.get_number_sws)
+            if maxid[0] is not None:
+                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
+                um 1 hoch und weisen diesen Wert als ID dem Person-Objekt zu."""
+                project_type.set_id(maxid[0] + 1)
+
+            else:
+                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
+                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
+                project_type.set_id(1)
+
+        command = "INSERT INTO project_type (project_type_id, creation_date, name, number_ects, number_sws) VALUES (%s,%s,%s,%s,%s)"
+        data = (project_type.get_id(), project_type.get_creation_date(), project_type.get_name(), project_type.get_number_ects, project_type.get_number_sws)
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -116,13 +125,15 @@ class ProjectTypeMapper (Mapper):
         cursor.close()
 
 if (__name__ == "__main__"):
-    project_type = ProjectType()
-    project_type.set_id(1)
-    project_type.set_name("")
+    p = ProjectType()
+    p.set_id(1)
+    #project_type.set_name("")
+    #project_type.set_number_ects()
+    #project_type.set_number_sws()
 
 
             
     with ProjectTypeMapper() as mapper:
-        result = mapper.insert(project_type)
+        result = mapper.insert(p)
 
      
