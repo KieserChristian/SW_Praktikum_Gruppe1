@@ -49,13 +49,13 @@ class ParticipationMapper (Mapper):
     def insert(self, participation):
         
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(participation_id) AS maxid FROM participation ")
+        cursor.execute("SELECT MAX(participation_id) AS maxid FROM participation")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
             participation.set_id(maxid[0]+1)
 
-        command = "INSERT INTO participation (participation_id) VALUES (%s)"
+        command = "INSERT INTO participation (participation_id, creation_date) VALUES (%s, CURRENT_TIMESTAMP)"
         data = (participation.get_id())
         cursor.execute(command, data)
 

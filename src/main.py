@@ -50,13 +50,13 @@ nbo = api.model('NamedBusinessObject', {
 """Participation, Grading, Module, Project, ProjectType, Semester, Person & Student sind BusinessObjects"""
 
 participation = api.inherit('Participation', bo, {
-    'participation_id': fields.Integer(attribute='_participation_id',
-                                        description='Teilnahme-ID')
+    'participation_id': fields.Integer(attribute='_participation_id', description='Teilnahme-ID')
 })
 
 grading = api.inherit('Grading', bo, {
-    'grading_id': fields.Integer(attribute='_grading_id', description='Grading-ID')
+    'grading_id': fields.Integer(attribute='_grading_id', description='Grading-ID'),
     'grade': fields.Integer(attribute='_grade', description='Eine Grade'),
+    'creation_date': fields.DateTime(attribute='_creation_date', description='Erstellungszeitpunkt des BusinessObjects')
 })
 
 module = api.inherit('Module', bo, nbo, {
@@ -485,15 +485,20 @@ class RoleRelatedPersonOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('grading_id', 'Dies ist die ID von Grading')
 class GradingOperations(Resource):
-    #post route für create_grading_administration aus project_admin.py 
-    @projectTool.marshal_with(grading)
+    @projectTool.marshal_list_with(grading)
+    #@projectTool.param('grading_id', 'Dies ist die ID von unserem Grading Objekt')
     #@secured
     def get(self, grading_id):
         """Auslesen eines bestimmten Grading-Objektes, welches durch die grading_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
         grad = adm.get_grading_by_id(grading_id)
+        print(grad)
         return grad
 
+
+@projectTool.route('/grading')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class GradingOperations(Resource):
     @projectTool.marshal_with(grading, code=200)
     @projectTool.expect(grading) 
     #@secured
@@ -504,12 +509,11 @@ class GradingOperations(Resource):
         proposal = Grading.from_dict(api.payload)
 
         if proposal is not None:
-            """Wir verwenden Name und garding_id des Proposals für die Erzeugung eines Grading-Objektes."""
-            grad = adm.create_grading(proposal.get_grading_id())
-
+            """Wir verwenden Grading_id und Grade des Proposals für die Erzeugung eines Grading-Objektes."""
+            grad = adm.create_grading(proposal.get_grade())
             return grad, 200
         else:
-                return '', 500
+            return '', 500
     
     #@secured
     def delete(self, grading_id):
@@ -753,11 +757,11 @@ class ModuleListOperations(Resource):
         else:
             return '', 500 
 
-@projectTool.route('/participation')
+@projectTool.route('/participation/<int:participation_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('participation_id', 'Dies ist die ID von Participation')
 class ParticipationOperations(Resource):
-    @projectTool.marshal_with(participation)
+    @projectTool.marshal_list_with(participation)
     #@secured
     def get(self, participation_id):
         """Auslesen eines bestimmten Participation-Objektes, welches durch die participation_id in dem URI bestimmt wird."""
@@ -813,7 +817,7 @@ class ParticipationListOperations(Resource):
 
         if proposal is not None:
             """Wir verwenden die participation_id des Proposals für die Erzeugung eines Participation-Objektes."""
-            part = adm.create_participation(proposal.get_participation_id())
+            part = adm.create_participation(proposal.get_id())
 
             return part, 200       
         else:
