@@ -11,7 +11,8 @@ class ModuleMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT * from module")
+        command=("SELECT * from it_projekt.module")
+        cursor.execute(command)
         tuples = cursor.fetchall()
 
         for (id, creation_date, name, edv_number) in tuples:
@@ -32,7 +33,7 @@ class ModuleMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT module_id, creation_date, name, edv_number FROM module WHERE edv_number={} ORDER BY module_id".format(id)
+        command = "SELECT module_id, creation_date, name, edv_number FROM module WHERE module_id={} ORDER BY module_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -54,14 +55,13 @@ class ModuleMapper (Mapper):
       
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT module_id, creation_date, name, edv_number FROM module WHERE name={} ORDER BY name".format(name)
+        command = "SELECT module_id, name, edv_number FROM module WHERE name LIKE '{}' ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, edv_number) in tuples:
+        for (id, name, edv_number) in tuples:
             module = Module()
             module.set_id(id)
-            module.set_creation_date(creation_date)
             module.set_name(name)
             module.set_edv_number(edv_number)
             result.append(module)
@@ -103,8 +103,8 @@ class ModuleMapper (Mapper):
        
         cursor = self._cnx.cursor()
 
-        command = "UPDATE module " + "SET name=%s WHERE module_id=%s"
-        data = (module.get_name(), module.get_id())
+        command = "UPDATE module " + "SET name=%s, edv_number=%s WHERE module_id={}".format(module.get_id())
+        data = (module.get_name(), module.get_edv_number())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -121,8 +121,8 @@ class ModuleMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
-# """Insert Methode Getestet """
-#
+"""Insert Methode Getestet """
+
 # if (__name__ == "__main__"):
 #     module = Module()
 #     module.set_id(id)
@@ -132,7 +132,7 @@ class ModuleMapper (Mapper):
 #     with ModuleMapper() as mapper:
 #        result = mapper.insert(module)
 
-"""Delete Methode nicht getestet"""
+"""Delete Methode getestet"""
 
 # if (__name__ == "__main__"):
 #     module = Module()
@@ -142,56 +142,40 @@ class ModuleMapper (Mapper):
 #         result = mapper.delete(module)
 #         print(result)
 
-"""find_by_id nicht getestet"""
-#if (__name__ == "__main__"):
-
-    #with ProjectMapper() as mapper:
-        #result = mapper.find_by_id(1)
-        #for p in result:
-            #print(p)
-
-"""update methode nicht getestet"""
-#if (__name__ == "__main__"):
-    #project = Project()
-    #project.set_id(2)
-    #project.set_edv_number(23)
-    #project.set_name("ggg")
-    #project.set_capacity(12)
-    #project.set_external_partners("yyy")
-    #project.set_short_description("sdf")
-    #project.set_weekly_flag(1)
-    #project.set_bd_before_lecture_period(2)
-    #project.set_bd_in_exam_period(3)
-    #project.set_bd_in_lecture_period(4)
-    #project.set_bd_preferred_in_lecture_period(5)
-    #project.set_special_room("audimaxx")
-
-    #with ProjectMapper() as mapper:
-        #result = mapper.update(project)
-
-"""find all nicht getestet"""
-
-#if (__name__ == "__main__"):
-
-    #with ProjectMapper() as mapper:
-        #result = mapper.find_all()
-        #for p in result:
-            #print(p)
-
-"""find_by_name nicht getestet"""
+"""find_by_id getestet"""
 
 # if (__name__ == "__main__"):
 #
-#     with ProjectMapper() as mapper:
-#         result = mapper.find_by_name("peter")
+#     with ModuleMapper() as mapper:
+#         result = mapper.find_by_id(1)
 #         for p in result:
 #             print(p)
 
-"""find_by_edv_number nicht getestet"""
+"""update methode getestet"""
 
-#if (__name__ == "__main__"):
+# if (__name__ == "__main__"):
+#     module = Module()
+#     module.set_id(1)
+#     module.set_name("hhhh")
+#     module.set_edv_number(890123)
+#
+#     with ModuleMapper() as mapper:
+#         result = mapper.update(module)
 
-    #with ProjectMapper() as mapper:
-        #result = mapper.find_by_edv()
-        #for p in result:
-            #print(p)
+"""find all getestet"""
+
+# if (__name__ == "__main__"):
+#
+#     with ModuleMapper() as mapper:
+#         result = mapper.find_all()
+#         for p in result:
+#             print(p)
+
+"""find_by_name getestet"""
+
+# if (__name__ == "__main__"):
+#
+#     with ModuleMapper() as mapper:
+#         result = mapper.find_by_name("name")
+#         for p in result:
+#             print(p)
