@@ -4,6 +4,7 @@ import './App.css';
 //import Themen from "./Theme";
 //import der Components
 //import firebaseConfig from "./firebaseconfig";
+//import { BrowserRouter as Router, Switch, Link, Route} from "react-router-dom"
 
 
 function App() {
