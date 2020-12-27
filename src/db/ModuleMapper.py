@@ -115,7 +115,7 @@ class ModuleMapper (Mapper):
         
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM module WHERE id={}".format(module.get_id())
+        command = "DELETE FROM module WHERE module_id={}".format(module.get_id())
         cursor.execute(command)
 
         self._cnx.commit()
@@ -134,13 +134,13 @@ class ModuleMapper (Mapper):
 
 """Delete Methode nicht getestet"""
 
-#if (__name__ == "__main__"):
-    #project = Project()
-    #project.set_id(3)
-
-    #with ProjectMapper() as mapper:
-        #result = mapper.delete(project)
-        #print(result)
+# if (__name__ == "__main__"):
+#     module = Module()
+#     module.set_id(1)
+#
+#     with ModuleMapper() as mapper:
+#         result = mapper.delete(module)
+#         print(result)
 
 """find_by_id nicht getestet"""
 #if (__name__ == "__main__"):
