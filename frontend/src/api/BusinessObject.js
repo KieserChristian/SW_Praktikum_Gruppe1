@@ -6,10 +6,10 @@ export default class BusinessOject {
 
     /** Setzen der ID des BOs @ param aid - neue id des Bos 
 
-    *@param {*} anid */
+    *@param {*} anId */
 
-    setId(anid) {
-        this.id = anid;
+    setId(anId) {
+        this.id = anId;
     }
 
 
