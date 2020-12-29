@@ -1,0 +1,6 @@
+- [React Router-Dom](https://reacttraining.com/react-router/web/guides/quick-start)
+  - `npm install --save react-router-dom`
+- [Material-UI](https://material-ui.com)
+  - `npm install @material-ui/core`
+- [Google firebase authentication](https://firebase.google.com/docs/web/setup)
+  - `npm install --save firebase`
