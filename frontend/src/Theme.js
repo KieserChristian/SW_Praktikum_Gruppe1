@@ -59,7 +59,7 @@ const theme = createMuiTheme({
   }, 
 });
 
-
+/** 
 //A custom theme for this app
 const theme = createMuiTheme({
     palette: {
@@ -77,6 +77,6 @@ const theme = createMuiTheme({
      },
   },
  });
-
+*/
 
 export default theme;

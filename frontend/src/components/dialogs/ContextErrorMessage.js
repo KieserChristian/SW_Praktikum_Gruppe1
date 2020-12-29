@@ -11,7 +11,7 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
  */
 
 class ContextErrorMessage extends Component {
-    #standartText = "Das hätte nicht passieren sollen, sorry!";
+    #standardText = "Das hätte nicht passieren sollen, sorry!";
 
     render() {
         const { classes, error, contextErrorMsg, onReload } = this.props;
