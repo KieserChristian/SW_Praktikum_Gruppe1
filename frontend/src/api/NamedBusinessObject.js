@@ -5,16 +5,16 @@ export default class NamedBusinessObject extends BusinessObject{
     //konstruiert ein RoleBO mit einem gegebenen Namen
 
     /** 
-     * @param {String} aname der Name der RoleBO
+     * @param {String} aName der Name der RoleBO
      */
 
-    constructor(aname) {
+    constructor(aName) {
         super();
-            this.name = aname;
+        this.name = aName;
     }
 
-    setName(aname){
-        this.name = aname 
+    setName(aName){
+        this.name = aName 
     }
 
     getName(){
@@ -23,9 +23,9 @@ export default class NamedBusinessObject extends BusinessObject{
 
     toString(){
         let result = "";
-        for (var prop in this)
+        for (var prop in this) {
             result += prop + ":" + this[prop] + "";
-
+        }
         return result;
     }
 }
