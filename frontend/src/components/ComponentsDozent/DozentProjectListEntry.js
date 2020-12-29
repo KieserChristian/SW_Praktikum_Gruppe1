@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ProjectmanagementAPI from '../../api/ProjectmanagementAPI';
 
+/**test */
 
  class ProjectListEntry extends Component{
     deleteProject(id){

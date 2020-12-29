@@ -5,6 +5,7 @@ import ProjectListEntry from '../ProjectListEntry.js';
 import DozentProjectListEntry from './DozentProjectListEntry'
 import PersonNBO from '../../api/PersonNBO';
 
+/**test */
 
 class DozentProjectList extends Component{
     constructor(props){
