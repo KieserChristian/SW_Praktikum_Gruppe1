@@ -19,8 +19,8 @@ class Mapper (AbstractContextManager, ABC):
         else:
 
             self._cnx = connector.connect(user='demo', password='demo',
-                                  host='127.0.0.1',
-                                  database='it_projekt')
+                                  host='127.0.0.1', port='3307',
+                                  database='sw_praktikum_cloud')
 
         return self
 
