@@ -9,7 +9,7 @@ import Header from './components/layout/Header';
 import Theme from './Theme';
 import SignIn from './components/pages/SignIn';
 import './App.css';
-import LoadingProcess from './components/dialogs/LoadingProcess';
+import LoadingProgress from './components/dialogs/LoadingProgress';
 import ContextErrorMessage from './components/dialogs/ContextErrorMessage';
 
 
@@ -124,7 +124,7 @@ class App extends React.Component {
 									<SignIn onSignIn={this.handleSignIn} />
                 </>
 						}
-						<LoadingProcess show={authLoading} />
+						<LoadingProgress show={authLoading} />
 						<ContextErrorMessage error={authError} contextErrorMsg={`Während deiner Anmeldung lief etwas schief.`} onReload={this.handleSignIn} />
 						<ContextErrorMessage error={appError} contextErrorMsg={`Während deiner Anmeldung lief etwas schief. Bitte lade die Seite erneut.`} />
 					</Container>
