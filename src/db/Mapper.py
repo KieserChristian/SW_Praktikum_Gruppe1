@@ -14,8 +14,8 @@ class Mapper (AbstractContextManager, ABC):
         if os.getenv('GAE_ENV', '').startswith('standard'):
             
             self._cnx = connector.connect(user='demo', password='demo',
-                                          #unix_socket(Anbindung muss noch ergänzt werden)
-                                          database='it_projekt')
+                                          unix_socket='/cloudsql/sw-praktikum-gruppe1:europe-west3:sw-praktikum',
+                                          database='sw_praktikum_cloud')
         else:
 
             self._cnx = connector.connect(user='demo', password='demo',
