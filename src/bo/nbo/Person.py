@@ -6,25 +6,36 @@ from bo.nbo.NamedBusinessObject import NamedBusinessObject
 class Person(NamedBusinessObject):
 
     def __init__(self):
-        super.__init__()
+        super().__init__()
         self._google_id = ""
         self._email = ""
 
     def set_google_id(self, google_id):
-        """Google Id setzen"""
+        """Externe Google ID setzen"""
         self._google_id = google_id
     
     def get_google_id (self):
-        """Auslesen der Google Id"""
+        """Externe Google ID auslesen"""
         return self._google_id
 
     def set_email(self, email):
-        """Setzen der Mailadresse"""
+        """Mailadresse setzen"""
         self._email = email
 
     def get_email (self):
-        """Auslesen der Mailadresse"""
+        """Mailadresse auslesen"""
         return self._email
+
+    def to_dict(self):
+        """Umwandeln von Person() in ein Python dictionary dict()"""
+        result = {
+            "id": self.get_id(),
+            "creation_date": self.get_creation_date(),
+            "name": self.get_name(),
+            "google_id": self.get_google_id(),
+            "email": self.get_email()
+        }
+        return result
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Personeninstanz"""
@@ -34,13 +45,13 @@ class Person(NamedBusinessObject):
     def from_tuples (tuples=list()):
         """Umwandeln eines DB tuples in ein Python Objekt (Person())"""
         result = []
-        for (id, creation_date, email, google_id, name) in tuples:
+        for (id, creation_date, name, google_id, email) in tuples:
             person = Person()
             person.set_id (id)
             person.set_creation_date (creation_date)
-            person.set_email (email)
-            person.set_google_id (google_id)
             person.set_name (name)
+            person.set_google_id (google_id)
+            person.set_email (email)
             result.append (person)
         return result
 
@@ -51,15 +62,6 @@ class Person(NamedBusinessObject):
         person.set_id(dictionary["id"])
         person.set_creation_date(dictionary["creation_date"])
         person.set_name(dictionary["name"])
+        person.set_google_id(dictionary["google_id"])
+        person.set_email(dictionary["email"])
         return person
-
-""" if __name__ == "__main__":
-
-    Person wird testhalber eine Berechtigung zugewiesen
-
-    Mensch1 = Person ()
-    Mensch1.set_authorization(Person.student)
-    Mensch1.set_name ("Dani")
-    Mensch1.set_id (1)
-    print(Mensch1) """
-

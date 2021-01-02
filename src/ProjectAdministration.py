@@ -30,11 +30,13 @@ class ProjectAdministration():
     """
     Person-Methoden
     """
-    def create_person(self, name: str, google_id: int):
+    def create_person(self, creation_date, name, google_id, email):
         """Eine Person anlegen"""
         person = Person()
+        person.set_creation_date(creation_date)
         person.set_name(name)
-        person.set_id(google_id)
+        person.set_google_id(google_id)
+        person.set_email(email)
         person.set_id(1)
 
         with PersonMapper() as mapper:

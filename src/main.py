@@ -106,6 +106,10 @@ semester = api.inherit('Semester', bo, nbo, {
 person = api.inherit('Person', bo, nbo, {
     'person_id': fields.Integer(attribute='_person_id',
                                 description='Person-ID'),
+    'google_id': fields.Integer(attribute='_google_id',
+                                description='Google-ID'),
+    'email': fields.String(attribute='_email',
+                            description='E-Mail')
 })
 
 student = api.inherit('student', bo, nbo, {
@@ -202,8 +206,8 @@ class PersonListOperations(Resource):
         proposal = Person.from_dict(api.payload)
 
         if proposal is not None:
-            """Wir verwenden Name und person_id des Proposals für die Erzeugung eines Personen-Objektes."""
-            pers = adm.create_person(proposal.get_name(), proposal.get_person_id())
+            """Wir verwenden person_id, name, google_id und email des Proposals für die Erzeugung eines Personen-Objektes."""
+            pers = adm.create_person(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email())
 
             return pers, 200
         else:
