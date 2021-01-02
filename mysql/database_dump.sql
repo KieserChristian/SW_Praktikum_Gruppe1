@@ -109,11 +109,7 @@ DROP TABLE IF EXISTS `participation`;
 CREATE TABLE `participation` (
   `participation_id` int(11) NOT NULL,
   `creation_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`participation_id`),
-  CONSTRAINT `grading_id` FOREIGN KEY (`participation_id`) REFERENCES `grading` (`grading_id`),
-  CONSTRAINT `module_id` FOREIGN KEY (`participation_id`) REFERENCES `module` (`module_id`),
-  CONSTRAINT `project_id` FOREIGN KEY (`participation_id`) REFERENCES `project` (`project_id`),
-  CONSTRAINT `student_idd` FOREIGN KEY (`participation_id`) REFERENCES `student` (`student_id`)
+  PRIMARY KEY (`participation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -137,8 +133,9 @@ CREATE TABLE `person` (
   `person_id` int(11) NOT NULL,
   `creation_date` datetime DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`person_id`),
-  CONSTRAINT `student_id` FOREIGN KEY (`person_id`) REFERENCES `student` (`student_id`)
+  `google_id` int(11) NOT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -169,14 +166,9 @@ CREATE TABLE `project` (
   `bd_before_lecture_period` int(11) DEFAULT NULL,
   `bd_in_exam_period` int(11) DEFAULT NULL,
   `bd_in_lecture_period` int(11) DEFAULT NULL,
-  `bd_preffered_in_lecture_period` int(11) DEFAULT NULL,
-  `special_room` int(11) DEFAULT NULL,
-  PRIMARY KEY (`project_id`),
-  CONSTRAINT `module_idd` FOREIGN KEY (`project_id`) REFERENCES `module` (`module_id`),
-  CONSTRAINT `person_idd` FOREIGN KEY (`project_id`) REFERENCES `person` (`person_id`),
-  CONSTRAINT `project_type_id` FOREIGN KEY (`project_id`) REFERENCES `project_type` (`project_type_id`),
-  CONSTRAINT `semester_id` FOREIGN KEY (`project_id`) REFERENCES `semester` (`semester_id`),
-  CONSTRAINT `state_id` FOREIGN KEY (`project_id`) REFERENCES `state` (`state_id`)
+  `bd_preferred_in_lecture_period` int(11) DEFAULT NULL,
+  `special_room` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`project_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -226,8 +218,7 @@ CREATE TABLE `role` (
   `role_id` int(11) NOT NULL,
   `creation_date` datetime DEFAULT NULL,
   `static_attribute` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`role_id`),
-  CONSTRAINT `person_id` FOREIGN KEY (`role_id`) REFERENCES `person` (`person_id`)
+  PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
