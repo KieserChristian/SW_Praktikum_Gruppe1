@@ -5,42 +5,26 @@ from datetime import datetime
 
 class ProjectType(NamedBusinessObject):
 
-    transdisciplinary = "Transdiziplinäres Projekt"     # sws=10   ects=20
-    interdisciplinary = "Interdisziplinäres Projekt"    # sws=5    ects=10
-    subject_specific = "Fachspezifisches Projekt"       # sws=3    ects=5
+    # transdisciplinary = "Transdiziplinäres Projekt"     # sws=10   ects=20
+    # interdisciplinary = "Interdisziplinäres Projekt"    # sws=5    ects=10
+    # subject_specific = "Fachspezifisches Projekt"       # sws=3    ects=5
 
     def __init__(self):
         super().__init__()
         self._number_ects = 0
         self._number_sws = 0
 
-    def set_number_ects(self, number_ects, transdisciplinary,interdisciplinary,subject_specific):
+    def set_number_ects(self, number_ects):
         """ects anzahl setzen"""
         self._number_ects = number_ects
-        if ProjectType == transdisciplinary:
-            self._number_ects = 20
-        elif ProjectType == interdisciplinary:
-            self._number_ects = 10
-        elif ProjectType == subject_specific:
-            self._number_ects = 5
-        else:
-            print("No projecttype found")
     
     def get_number_ects(self):
         """ects anzahl auslesen"""
         return self._number_ects
     
-    def set_number_sws(self,number_sws,transdisciplinary,interdisciplinary,subject_specific):
+    def set_number_sws(self,number_sws):
         """semester wochenstunden setzen"""
         self._number_sws = number_sws
-        if ProjectType == transdisciplinary:
-            self._number_sws = 10
-        elif ProjectType == interdisciplinary:
-            self._number_sws = 5
-        elif ProjectType == subject_specific:
-            self._number_sws = 3
-        else:
-            print("No projecttype found")
     
     def get_number_sws(self):
         """semester wochenstunden auslesen"""

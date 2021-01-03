@@ -78,7 +78,7 @@ class ProjectTypeMapper (Mapper):
     def insert(self, project_type):
         
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT MAX(project_type_id) AS maxid FROM project_type ")
+        cursor.execute("SELECT MAX(project_type_id) AS maxid FROM project_type")
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
@@ -94,7 +94,7 @@ class ProjectTypeMapper (Mapper):
                 project_type.set_id(1)
 
         command = "INSERT INTO project_type (project_type_id, creation_date, name, number_ects, number_sws) VALUES (%s,%s,%s,%s,%s)"
-        data = (project_type.get_id(), project_type.get_creation_date(), project_type.get_name(), project_type.get_number_ects, project_type.get_number_sws)
+        data = (project_type.get_id(), project_type.get_creation_date(), project_type.get_name(), project_type.get_number_ects(), project_type.get_number_sws())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -125,15 +125,13 @@ class ProjectTypeMapper (Mapper):
         cursor.close()
 
 if (__name__ == "__main__"):
-    p = ProjectType()
-    p.set_id(1)
-    #project_type.set_name("")
-    #project_type.set_number_ects()
-    #project_type.set_number_sws()
+    project_type = ProjectType
+    project_type.set_id(id)
+    project_type.set_name("transdisziplinär")
+    project_type.set_number_ects(5)
+    project_type.set_number_sws(4)
 
 
-            
     with ProjectTypeMapper() as mapper:
-        result = mapper.insert(p)
+        result = mapper.insert(project_type)
 
-     
