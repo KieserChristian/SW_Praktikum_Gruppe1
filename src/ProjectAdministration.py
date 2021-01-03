@@ -81,12 +81,15 @@ class ProjectAdministration():
     Student-Methoden
     """
 
-    def create_student(self, name:str, course_abbreviation:str, matriculation_number:int):
+    def create_student(self, creation_date, name, google_id, email, matriculation_number, course_abbreviation):
         """Einen Studenten anlegen"""
         student = Student()
+        student.set_creation_date(creation_date)
         student.set_name(name)
+        student.set_google_id(google_id)
+        student.set_email(email)
+        student.set_matriculation_number(matriculation_number)
         student.set_course_abbreviation(course_abbreviation)
-        student.set_id(matriculation_number)
         student.set_id(1)
 
         with StudentMapper() as mapper:

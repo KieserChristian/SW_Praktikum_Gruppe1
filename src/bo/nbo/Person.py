@@ -14,7 +14,7 @@ class Person(NamedBusinessObject):
         """Externe Google ID setzen"""
         self._google_id = google_id
     
-    def get_google_id (self):
+    def get_google_id(self):
         """Externe Google ID auslesen"""
         return self._google_id
 
@@ -22,7 +22,7 @@ class Person(NamedBusinessObject):
         """Mailadresse setzen"""
         self._email = email
 
-    def get_email (self):
+    def get_email(self):
         """Mailadresse auslesen"""
         return self._email
 

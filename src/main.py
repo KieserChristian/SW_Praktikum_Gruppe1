@@ -104,24 +104,20 @@ semester = api.inherit('Semester', bo, nbo, {
 })
 
 person = api.inherit('Person', bo, nbo, {
-    'person_id': fields.Integer(attribute='_person_id',
-                                description='Person-ID'),
-    'google_id': fields.Integer(attribute='_google_id',
+    'google_id': fields.String(attribute='_google_id',
                                 description='Google-ID'),
     'email': fields.String(attribute='_email',
                             description='E-Mail')
 })
 
-student = api.inherit('student', bo, nbo, {
-    'student_id': fields.Integer(attribute='_student_id',
-                                description='Studenten-ID'),
-    'matriculation_number': fields.Integer(attribute='_matriculation_number',
-                                description='Matrikulationsnummer des Studenten'),
+student = api.inherit('Student', bo, nbo, person, {
+    'matriculation_number': fields.String(attribute='_matriculation_number',
+                                description='Immatrikulationsnummer des Studenten'),
     'course_abbreviation': fields.String(attribute='_course_abbreviation',
-                                description='Studiengangskürzel des Studenten'),
+                                description='Studiengangkürzel des Studenten'),
 })
 
-state = api.model('state', {
+state = api.model('State', {
     'state_name': fields.String(attribute='_state_name',
                                 description='Name des Zustands'),
     'id': fields.Integer(attribute='_id',
@@ -130,7 +126,7 @@ state = api.model('state', {
                                     description='Erstellungszeitpunkt des BusinessObjects')
 })
 
-role = api.model('role', {
+role = api.model('Role', {
     'static_attribute': fields.String(attribute='_static_attribute',
                                 description='Statisches Attribut'),
     'id': fields.Integer(attribute='_id',
@@ -139,7 +135,7 @@ role = api.model('role', {
                                     description='Erstellungszeitpunkt des BusinessObjects')
 })
 
-automat = api.model('automat', {
+automat = api.model('Automat', {
     'current_state': fields.String(attribute='_current_state',
                                 description='Aktueller Zustand'),
     'id': fields.Integer(attribute='_id',
@@ -206,9 +202,7 @@ class PersonListOperations(Resource):
         proposal = Person.from_dict(api.payload)
 
         if proposal is not None:
-            """Wir verwenden person_id, name, google_id und email des Proposals für die Erzeugung eines Personen-Objektes."""
             pers = adm.create_person(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email())
-
             return pers, 200
         else:
             return '', 500
@@ -271,9 +265,7 @@ class StudentListOperations(Resource):
         proposal = Student.from_dict(api.payload)
 
         if proposal is not None:
-            """Wir verwenden student_id und matriculation_number des Proposals für die Erzeugung eines Studenten-Objektes."""
-            stud = adm.create_student(proposal.get_student_id(), proposal.get_matriculation_number())
-
+            stud = adm.create_student(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email(), proposal.get_matriculation_number(), proposal.get_course_abbreviation())
             return stud, 200       
         else:
             return '', 500 
