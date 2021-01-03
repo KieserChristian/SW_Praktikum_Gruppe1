@@ -4,35 +4,34 @@ import ProjectAdministration from '../../api/ProjectAdministration';
 import ProjectListEntry from '../ProjectListEntry.js';
 import DozentProjectListEntry from './DozentProjectListEntry'
 import PersonNBO from '../../api/PersonNBO';
+import StudentNBO from "../../api/StudentNBO";
+import GradingBO from "../../api/GradingBO";
+import ProjectNBO from"../../apiProject";
+import SemesterNBO from "../"
 
-
-
-/**test */
-
-class DozentProjectList extends Component{
-    constructor(props){
+class GradingList extends Components {
+    constructor (props){
         super(props)
-        this.state = {
-            projects: [],
-            person: new PersonNBO("Daniel", "Weinert", "googleID", "mail", "Dozent"),
-            error:""
+        this.state ={
+        grading: [],
+        project: new ProjectNBO("Daniel, Weinert, Matr.Nr., Project ,Note, bestanden/nicht bestanden "),
+        error: ""
         }
-        this.state.person.setID(2) /**Rolle Dozent =2 */
+        this.state.grading.setID(1)
         this.getAllProjectsForPerson = this.getAllProjectsForPerson.bind(this)
     }
-  
     getAllProjectsForPerson(){
         console.log(this.state);
         ProjectmanagementAPI.getAPI().getProjectsForPerson(this.state.person.getID()).then(projectNBOs => 
+        this.setState({
+            projects:projectNBOs
+        })).catch(e => 
             this.setState({
-                projects:projectNBOs
-            })).catch(e => 
-                this.setState({
-                    projects:[],
-                    error:e
-            }));
-        console.log("error:",this.state.error)
-    }
+                projects:[],
+                error:e
+        }));
+         console.log("error:",this.state.error)
+
     getAllProjects(){
         ProjectmanagementAPI.getAPI().getProjects().then(projectBOs => 
             this.setState({
@@ -44,7 +43,7 @@ class DozentProjectList extends Component{
             }));
         console.log("error:",this.state.error)
     }
-    
+        
     componentDidMount(){
         this.getAllProjectsForPerson()
     }
@@ -52,23 +51,23 @@ class DozentProjectList extends Component{
     render(){
         const{projects} = this.state
 
-        
+    
         return(
             <div>
-                <Paper>
+             <Paper>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
                                 <TableCell> ID</TableCell>
                                 <TableCell align='center'>Projekt</TableCell>
-                                <TableCell align='center' >Capacity</TableCell>
-                                <TableCell align='center' >Projecttyp</TableCell>
-                                <TableCell align='center' >State</TableCell>
+                                <TableCell align='center' >Name</TableCell>
+                                <TableCell align='center' >Matriculation_Number</TableCell>
+                                <TableCell align='center' >Note</TableCell>
                                 <TableCell align='center' >Bearbeiten</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        {projects.map(project => <DozentProjectListEntry key={project.getID()} project={project} reloadProjects={this.getAllProjectsForPerson}/>)}
+                        {projects.map(project => <GradingList key={project.getID()} project={project} reloadProjects={this.getAllProjectsForPerson}/>)}
                         </TableBody>
                     </Table>
                 </Paper>
@@ -76,4 +75,4 @@ class DozentProjectList extends Component{
         )
     }
 }
- export default DozentProjectList;
+export default GradingList;

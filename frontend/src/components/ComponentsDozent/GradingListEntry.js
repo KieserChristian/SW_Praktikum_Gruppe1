@@ -3,11 +3,9 @@ import { TableRow, TableCell} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ProjectmanagementAPI from '../../api/ProjectmanagementAPI';
-import ProjectNBOs from "../../api/ProjectNBO";
+import GradingList from "../ComponentsDozent/GradingList";
 
-/**test */
-
- class ProjectListEntry extends Component{
+class GradingListEntry extends Component{
     deleteProject(id){
         ProjectmanagementAPI.getAPI().deleteProject(id).then (() => {
             this.props.reloadProjects()}).catch(e => console.log(e))
@@ -42,6 +40,7 @@ import ProjectNBOs from "../../api/ProjectNBO";
                             size="small" 
                             onClick={() => this.deleteProject(project.getID())}>
                             <DeleteIcon/>
+                      
                         </IconButton>
                     </TableCell>
                 </TableRow>
