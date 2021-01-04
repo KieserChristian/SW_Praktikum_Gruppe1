@@ -23,7 +23,7 @@ class ProjectMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command=("SELECT * from it_projekt.project")
+        command=("SELECT * from project")
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -284,12 +284,12 @@ class ProjectMapper (Mapper):
 
 """find all getestet"""
 
-#if (__name__ == "__main__"):
-
-    #with ProjectMapper() as mapper:
-        #result = mapper.find_all()
-        #for p in result:
-            #print(p)
+# if (__name__ == "__main__"):
+#
+#     with ProjectMapper() as mapper:
+#         result = mapper.find_all()
+#         for p in result:
+#             print(p)
 
 """find_by_name getestet"""
 

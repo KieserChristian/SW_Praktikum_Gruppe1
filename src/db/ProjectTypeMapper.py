@@ -33,14 +33,13 @@ class ProjectTypeMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT project_type_id, creation_date, name, number_ects, number_sws FROM project_type WHERE name={} ORDER BY project_type_id".format(id)
+        command = "SELECT project_type_id, name, number_ects, number_sws FROM project_type WHERE project_type_id={} ORDER BY project_type_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, number_ects, number_sws) in tuples:
+        for (id, name, number_ects, number_sws) in tuples:
             project_type = ProjectType()
             project_type.set_id(id)
-            project_type.set_creation_date(creation_date)
             project_type.set_name(name)
             project_type.set_number_ects(number_ects)
             project_type.set_number_sws(number_sws)
@@ -56,7 +55,7 @@ class ProjectTypeMapper (Mapper):
       
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT project_type_id, creation_date, name, number_ects, number_sws FROM project_type WHERE name={} ORDER BY name".format(name)
+        command = "SELECT project_type_id, creation_date, name, number_ects, number_sws FROM project_type WHERE name LIKE '{}' ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -158,5 +157,31 @@ class ProjectTypeMapper (Mapper):
 #
 #     with ProjectTypeMapper() as mapper:
 #         result = mapper.update(project_type)
+
+"""find_by_id getestet"""
+# if (__name__ == "__main__"):
+#
+#     with ProjectTypeMapper() as mapper:
+#         result = mapper.find_by_id(3)
+#         for p in result:
+#             print(p)
+
+"""find all getestet"""
+
+# if (__name__ == "__main__"):
+#
+#     with ProjectTypeMapper() as mapper:
+#         result = mapper.find_all()
+#         for p in result:
+#             print(p)
+
+"""find_by_name getestet"""
+
+# if (__name__ == "__main__"):
+#
+#     with ProjectTypeMapper() as mapper:
+#         result = mapper.find_by_name("fachspezifisch")
+#         for p in result:
+#             print(p)
 
 
