@@ -106,8 +106,8 @@ class ProjectTypeMapper (Mapper):
        
         cursor = self._cnx.cursor()
 
-        command = "UPDATE project_type " + "SET name=%s WHERE project_type_id=%s"
-        data = (account.get_name(), account.get_id())
+        command = "UPDATE project_type " + "SET name=%s, number_ects=%s, number_sws=%s WHERE project_type_id={}".format(project_type.get_id())
+        data = (project_type.get_name(), project_type.get_number_ects(), project_type.get_number_sws())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -118,20 +118,45 @@ class ProjectTypeMapper (Mapper):
         
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM project_type WHERE id={}".format(project_type.get_id())
+        command = "DELETE FROM project_type WHERE project_type_id={}".format(project_type.get_id())
         cursor.execute(command)
 
         self._cnx.commit()
         cursor.close()
 
-if (__name__ == "__main__"):
-    project_type = ProjectType
-    project_type.set_id(id)
-    project_type.set_name("transdisziplinär")
-    project_type.set_number_ects(5)
-    project_type.set_number_sws(4)
+"""Insert Methode Getestet """
 
+# if (__name__ == "__main__"):
+#     project_type = ProjectType()
+#     project_type.set_id(id)
+#     project_type.set_name("transdisziplinär")
+#     project_type.set_number_ects(5)
+#     project_type.set_number_sws(4)
+#
+#
+#     with ProjectTypeMapper() as mapper:
+#         result = mapper.insert(project_type)
 
-    with ProjectTypeMapper() as mapper:
-        result = mapper.insert(project_type)
+"""Delete Methode getestet"""
+
+# if (__name__ == "__main__"):
+#     project_type = ProjectType()
+#     project_type.set_id(1)
+#
+#     with ProjectTypeMapper() as mapper:
+#         result = mapper.delete(project_type)
+#         print(result)
+
+"""update methode getestet"""
+
+# if (__name__ == "__main__"):
+#     project_type = ProjectType()
+#     project_type.set_id(4)
+#     project_type.set_name("fachspezifisch")
+#     project_type.set_number_ects(4)
+#     project_type.set_number_sws(6)
+#
+#     with ProjectTypeMapper() as mapper:
+#         result = mapper.update(project_type)
+
 

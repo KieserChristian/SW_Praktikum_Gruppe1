@@ -227,23 +227,23 @@ class ProjectMapper (Mapper):
 
 """Insert Methode Getestet """
 
-if (__name__ == "__main__"):
-    project = Project()
-    project.set_id(id)
-    project.set_edv_number(22245)
-    project.set_name("stini")
-    project.set_capacity(124)
-    project.set_external_partners("sap")
-    project.set_short_description("ReWe")
-    project.set_weekly_flag(0)
-    project.set_bd_before_lecture_period(1)
-    project.set_bd_in_exam_period(2)
-    project.set_bd_in_lecture_period(3)
-    project.set_bd_preferred_in_lecture_period(4)
-    project.set_special_room("audimax")
-
-    with ProjectMapper() as mapper:
-       result = mapper.insert(project)
+# if (__name__ == "__main__"):
+#     project = Project()
+#     project.set_id(id)
+#     project.set_edv_number(22245)
+#     project.set_name("stini")
+#     project.set_capacity(124)
+#     project.set_external_partners("sap")
+#     project.set_short_description("ReWe")
+#     project.set_weekly_flag(0)
+#     project.set_bd_before_lecture_period(1)
+#     project.set_bd_in_exam_period(2)
+#     project.set_bd_in_lecture_period(3)
+#     project.set_bd_preferred_in_lecture_period(4)
+#     project.set_special_room("audimax")
+#
+#     with ProjectMapper() as mapper:
+#        result = mapper.insert(project)
 
 """Delete Methode getestet"""
 
