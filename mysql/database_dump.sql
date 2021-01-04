@@ -34,8 +34,8 @@ DROP TABLE IF EXISTS `automat`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `automat` (
   `automat_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `current_state` varchar(45) DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `current_state` varchar(45) NOT NULL,
   PRIMARY KEY (`automat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -58,8 +58,8 @@ DROP TABLE IF EXISTS `grading`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `grading` (
   `grading_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `grade` float DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `grade` float NOT NULL,
   PRIMARY KEY (`grading_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -70,7 +70,6 @@ CREATE TABLE `grading` (
 
 LOCK TABLES `grading` WRITE;
 /*!40000 ALTER TABLE `grading` DISABLE KEYS */;
-INSERT INTO `grading` VALUES (1,NULL,1),(2,NULL,NULL),(3,NULL,3),(4,NULL,0.9),(5,'2020-12-20 17:38:21',5.8),(6,'2020-12-20 20:13:34',3),(7,'2020-12-20 20:19:34',4),(8,'2020-12-20 20:23:04',4.25),(9,'2020-12-20 20:25:34',5.5),(10,'2020-12-20 20:27:32',3.69),(11,'2020-12-20 20:34:33',3.22),(12,'2020-12-20 20:35:14',3.22),(13,'2020-12-20 20:40:02',3.22),(14,'2020-12-20 20:45:52',3.22),(15,'2020-12-21 11:55:48',4.7),(16,'2020-12-22 10:45:08',4);
 /*!40000 ALTER TABLE `grading` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,9 +82,9 @@ DROP TABLE IF EXISTS `module`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `module` (
   `module_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `edv_number` int(11) DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `edv_number` varchar(45) NOT NULL,
   PRIMARY KEY (`module_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -108,7 +107,7 @@ DROP TABLE IF EXISTS `participation`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `participation` (
   `participation_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
   PRIMARY KEY (`participation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -131,10 +130,10 @@ DROP TABLE IF EXISTS `person`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `person` (
   `person_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `google_id` int(11) NOT NULL,
-  `email` varchar(45) DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `google_id` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -157,15 +156,15 @@ DROP TABLE IF EXISTS `project`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `project` (
   `project_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `capacity` int(11) DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `capacity` int(11) NOT NULL,
   `external_partners` varchar(45) DEFAULT NULL,
-  `short_description` varchar(45) DEFAULT NULL,
+  `short_description` varchar(45) NOT NULL,
   `weekly_flag` tinyint(4) DEFAULT NULL,
   `bd_before_lecture_period` int(11) DEFAULT NULL,
-  `bd_in_exam_period` int(11) DEFAULT NULL,
   `bd_in_lecture_period` int(11) DEFAULT NULL,
+  `bd_in_exam_period` int(11) DEFAULT NULL,
   `bd_preferred_in_lecture_period` int(11) DEFAULT NULL,
   `special_room` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`project_id`)
@@ -190,10 +189,10 @@ DROP TABLE IF EXISTS `project_type`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `project_type` (
   `project_type_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `number_ects` int(11) DEFAULT NULL,
-  `number_sws` int(11) DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `number_ects` int(11) NOT NULL,
+  `number_sws` int(11) NOT NULL,
   PRIMARY KEY (`project_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -216,8 +215,8 @@ DROP TABLE IF EXISTS `role`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role` (
   `role_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `static_attribute` varchar(45) DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `static_attribute` varchar(45) NOT NULL,
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -240,8 +239,8 @@ DROP TABLE IF EXISTS `semester`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `semester` (
   `semester_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `name` varchar(45) NOT NULL,
   PRIMARY KEY (`semester_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -264,8 +263,8 @@ DROP TABLE IF EXISTS `state`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `state` (
   `state_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `state_name` varchar(45) DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `state_name` varchar(45) NOT NULL,
   PRIMARY KEY (`state_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -288,10 +287,12 @@ DROP TABLE IF EXISTS `student`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `student` (
   `student_id` int(11) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `matriculation_number` int(11) DEFAULT NULL,
-  `course_abbreviation` varchar(45) DEFAULT NULL,
+  `creation_date` datetime NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `google_id` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `matriculation_number` varchar(45) NOT NULL,
+  `course_abbreviation` varchar(45) NOT NULL,
   PRIMARY KEY (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -23,11 +23,8 @@ app = Flask(__name__)
 """Flask-Erweiterung für Cross-Origin Resource Sharing"""
 CORS(app, resources=r'/project/*')
 
-#App name festlegen
-api = Api(app, version='1.0', title='ProjectTool API',
-    description= 'Ein Projektverwaltungstool für Hochschulen')
+api = Api(app, version='1.0', title='Promato', description= 'Ein Projektmanagementtool für Hochschulen')
 
-#Namespace festlegen
 """Namespace"""
 projectTool = api.namespace('project', description= 'Funktionen der Projektverwaltung')
 
@@ -37,111 +34,99 @@ Es wird definiert, wie sie beim Marshelling definiert werden.
 """
 bo = api.model('BusinessObject', {
     'id': fields.Integer(attribute='_id',
-                        description='Der Unique Identifier eines Business Object'),
+                                description='Unique Identifier eines Business Objects'),
     'creation_date': fields.DateTime(attribute='_creation_date',
-                                    description='Erstellungszeitpunkt des BusinessObjects')
+                                description='Erstellungszeitpunkt eines BusinessObjects')
 })
 
 nbo = api.model('NamedBusinessObject', {
     'name': fields.String(attribute='_name',
-                        description='Name des NBO')
+                                description='Name eines BusinessObjects bzw. NamedBusinessObjects')
 })     
 
 """Participation, Grading, Module, Project, ProjectType, Semester, Person & Student sind BusinessObjects"""
 
-participation = api.inherit('Participation', bo, {
-    'participation_id': fields.Integer(attribute='_participation_id', description='Teilnahme-ID')
-})
+participation = api.inherit('Participation', bo)
 
 grading = api.inherit('Grading', bo, {
-    'grading_id': fields.Integer(attribute='_grading_id', description='Grading-ID'),
-    'grade': fields.Integer(attribute='_grade', description='Eine Grade'),
-    'creation_date': fields.DateTime(attribute='_creation_date', description='Erstellungszeitpunkt des BusinessObjects')
+    'grade': fields.Float(attribute='_grade', 
+                                description='Note zur Bewertung einer Projektteilnahme')
 })
 
 module = api.inherit('Module', bo, nbo, {
-    'module_id': fields.Integer(attribute='_module_id',
-                                description='Modul-ID'),
-    'edv_number': fields.Integer(attribute='_edv_number',
-                                description='EDV-Nummer des Moduls')   ,
+    'edv_number': fields.String(attribute='_edv_number',
+                                description='EDV-Nummer eines Moduls')
 })
 
 project = api.inherit('Project', bo, nbo, {
-    'project_id': fields.Integer(attribute='_project_id',
-                                description='Projekt-ID'),
+    'capacity': fields.Integer(attribute='_capacity',
+                                description='Kapazität eines Projekts (maximale Teilnehmeranzahl)'),  
     'external_partner': fields.String(attribute='_external_partner',
-                                description='Welche externen Partner notwendig sind'),
-    'capacity': fields.String(attribute='_capacity',
-                                description='Kapazität des Projekts'),                               
+                                description='Externe Partner, die am Projekt beteiligt sind'),  
+    'short_description': fields.String(attribute='_short_description',
+                                description='Kurzbeschreibung des Projekts'),                           
     'weekly_flag': fields.Boolean(attribute='_weekly_flag',
                                 description='Flag, ob eine Vorlesung wöchentlich stattfindet'),
-    'bd_preferred_in_lecture_periode': fields.Integer(attribute='_bd_preferred_in_lecture_periode',
-                                description='Bevorzugte Blocktage in der Vorlesungszeit'),
-    'bd_in_lecture_periode_saturday': fields.Integer(attribute='_bd_in_lecture_periode_saturday',
-                                description='Blocktage in der Vorlesungszeit am Samstag'),
-    'bd_in_exam_periode': fields.Integer(attribute='_bd_in_exam_periode',
-                                description='Blocktage während der Prüfungszeit'),
-    'bd_before_lecture_periode': fields.Integer(attribute='_bd_before_lecture_periode',
+    'bd_before_lecture_period': fields.Integer(attribute='_bd_before_lecture_periode',
                                 description='Blocktage vor der Vorlesungszeit'), 
-    'short_description': fields.String(attribute='_short_description',
-                                description='Kurzbeschreibung des Projekts'),
+    'bd_in_lecture_period': fields.Integer(attribute='_bd_in_lecture_periode_saturday',
+                                description='Blocktage in der Vorlesungszeit (samstags)'),
+    'bd_in_exam_period': fields.Integer(attribute='_bd_in_exam_periode',
+                                description='Blocktage während der Prüfungszeit'),
+    'bd_preferred_in_lecture_period': fields.Integer(attribute='_bd_preferred_in_lecture_periode',
+                                description='Bevorzugte Blocktage in der Vorlesungszeit'),
     'special_room': fields.String(attribute='_special_room',
                                 description='Bevorzugte oder spezielle Räume für das Projekt')
 })
 
 project_type = api.inherit('ProjectType', bo, nbo, {
-    'project_type_id': fields.Integer(attribute='_project_type_id',
-                                description='Projekttyp-ID'),
     'number_ects': fields.Integer(attribute='_number_ects',
                                 description='Anzahl der ECTS des Projekts'),
     'number_sws': fields.Integer(attribute='_number_sws',
-                                description='Anzahl der SWS des Projekts'),
+                                description='Anzahl der SWS des Projekts')
 })
 
-semester = api.inherit('Semester', bo, nbo, {
-    'semester_id': fields.Integer(attribute='_semester_id',
-                                description='Semester-ID'),
-})
+semester = api.inherit('Semester', bo, nbo)
 
 person = api.inherit('Person', bo, nbo, {
     'google_id': fields.String(attribute='_google_id',
-                                description='Google-ID'),
+                                description='Externe Google-ID der Person'),
     'email': fields.String(attribute='_email',
-                            description='E-Mail')
+                                description='E-Mail-Adresse der Person')
 })
 
 student = api.inherit('Student', bo, nbo, person, {
     'matriculation_number': fields.String(attribute='_matriculation_number',
                                 description='Immatrikulationsnummer des Studenten'),
     'course_abbreviation': fields.String(attribute='_course_abbreviation',
-                                description='Studiengangkürzel des Studenten'),
+                                description='Studiengangkürzel des Studenten')
 })
 
 state = api.model('State', {
-    'state_name': fields.String(attribute='_state_name',
-                                description='Name des Zustands'),
     'id': fields.Integer(attribute='_id',
-                        description='Der Unique Identifier eines Business Object'),
+                                description='Unique Identifier eines BusinessObjects'),
     'creation_date': fields.DateTime(attribute='_creation_date',
-                                    description='Erstellungszeitpunkt des BusinessObjects')
+                                description='Erstellungszeitpunkt eines BusinessObjects'),
+    'state_name': fields.String(attribute='_state_name',
+                                description='Name des Zustands')
 })
 
 role = api.model('Role', {
-    'static_attribute': fields.String(attribute='_static_attribute',
-                                description='Statisches Attribut'),
     'id': fields.Integer(attribute='_id',
-                        description='Der Unique Identifier eines Business Object'),
+                                description='Unique Identifier eines BusinessObjects'),
     'creation_date': fields.DateTime(attribute='_creation_date',
-                                    description='Erstellungszeitpunkt des BusinessObjects')
+                                description='Erstellungszeitpunkt eines BusinessObjects'),
+    'static_attribute': fields.String(attribute='_static_attribute',
+                                description='Statisches Attribut')
 })
 
 automat = api.model('Automat', {
-    'current_state': fields.String(attribute='_current_state',
-                                description='Aktueller Zustand'),
     'id': fields.Integer(attribute='_id',
-                        description='Der Unique Identifier eines Business Object'),
+                                description='Unique Identifier eines BusinessObjects'),
     'creation_date': fields.DateTime(attribute='_creation_date',
-                                    description='Erstellungszeitpunkt des BusinessObjects')
+                                description='Erstellungszeitpunkt eines BusinessObjects'),
+    'current_state': fields.String(attribute='_current_state',
+                                description='Aktueller Zustand')
 })
 
 @projectTool.route('/person')
