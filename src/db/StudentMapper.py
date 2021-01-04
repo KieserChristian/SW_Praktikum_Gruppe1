@@ -90,6 +90,62 @@ class StudentMapper (Mapper):
         cursor.close()
 
         return result
+    
+    def find_by_google_id(self, google_id):
+        """Auslesen eines Studenten durch die Google-ID
+
+        :param  google_id
+        :return Student-Objekt, das der übergebenen Google-ID entspricht
+        """
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT student_id, creation_date, name, google_id, email, matriculation_number, course_abbreviation FROM student WHERE google_id={} ORDER BY google_id".format(google_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        for (id, creation_date, name, google_id, email, matriculation_number, course_abbreviation) in tuples:
+            student = Student()
+            student.set_id(id)
+            student.set_creation_date(creation_date)
+            student.set_name(name)
+            student.set_google_id(google_id)
+            student.set_email(email)
+            student.set_matriculation_number(matriculation_number)
+            student.set_course_abbreviation(course_abbreviation)
+            result.append(student)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+    def find_by_email(self, email):
+        """Auslesen eines Studenten durch die E-Mail-Adresse
+
+        :param  email
+        :return Student-Objekt, das der übergebenen E-Mail-Adresse entspricht
+        """
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT student_id, creation_date, name, google_id, email, matriculation_number, course_abbreviation FROM student WHERE email={} ORDER BY email".format(email)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        for (id, creation_date, name, google_id, email, matriculation_number, course_abbreviation) in tuples:
+            student = Student()
+            student.set_id(id)
+            student.set_creation_date(creation_date)
+            student.set_name(name)
+            student.set_google_id(google_id)
+            student.set_email(email)
+            student.set_matriculation_number(matriculation_number)
+            student.set_course_abbreviation(course_abbreviation)
+            result.append(student)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
 
     def find_by_matriculation_number(self, matriculation_number):
         """Auslesen eines Studenten durch die Matrikelnummer

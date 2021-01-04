@@ -84,6 +84,58 @@ class PersonMapper (Mapper):
         cursor.close()
 
         return result
+    
+    def find_by_google_id(self, google_id):
+        """Auslesen einer Person durch die Google-ID
+
+        :param  google_id
+        :return Person-Objekt, das der übergebenen Google-ID entspricht
+        """
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE google_id={} ORDER BY google_id".format(google_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        for (id, creation_date, name, google_id, email) in tuples:
+            person = Person()
+            person.set_id(id)
+            person.set_creation_date(creation_date)
+            person.set_name(name)
+            person.set_google_id(google_id)
+            person.set_email(email)
+            result.append(person)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
+    def find_by_email(self, email):
+        """Auslesen einer Person durch die E-Mail-Adresse
+
+        :param  email
+        :return Person-Objekt, das der übergebenen E-Mail-Adresse entspricht
+        """
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE email={} ORDER BY email".format(email)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        for (id, creation_date, name, google_id, email) in tuples:
+            person = Person()
+            person.set_id(id)
+            person.set_creation_date(creation_date)
+            person.set_name(name)
+            person.set_google_id(google_id)
+            person.set_email(email)
+            result.append(person)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
 
     def insert(self, person):
         """Einfügen eines Person-Objekts in die Datenbank.
