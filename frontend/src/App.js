@@ -11,6 +11,7 @@ import SignIn from './components/pages/SignIn';
 import './App.css';
 import LoadingProgress from './components/dialogs/LoadingProgress';
 import ContextErrorMessage from './components/dialogs/ContextErrorMessage';
+import LogIn from './components/pages/LogIn';
 
 
 /*
@@ -96,26 +97,20 @@ class App extends React.Component {
 		firebase.auth().onAuthStateChanged(this.handleAuthStateChange);
   }
   
-  // Die gesamte Applikation rendern
+   // Die gesamte Applikation rendern
   render() {
     const { currentUser, appError, authError, authLoading } = this.state;
-
     return(
 			<ThemeProvider theme={Theme}>
 				{/* Global CSS reset and browser normalization. CssBaseline kickstarts an elegant, consistent, and simple baseline to build upon. */}
 				<CssBaseline />
 				<Router basename={process.env.PUBLIC_URL}>
 					<Container maxWidth='md'>
-						<Header user={currentUser} />
 						{ 
 							// Is a user signed in?
 							currentUser ?
 								<>
-									<Redirect to='startpage' />
-                  <SignIn/>
-									<Route path='/startpage'>
-										<SignIn/>
-									</Route>
+                  <LogIn/>
 								</>
 								:
 								// else show the sign in page
