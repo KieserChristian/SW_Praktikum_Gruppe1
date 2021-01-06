@@ -141,7 +141,7 @@ class ProjectAdministration():
     Semester-Methoden
     """
 
-    def create_semester(self, name:str):
+    def create_semester(self, id:int, name:str):
         """Ein Semester anlegen"""
         semester = Semester()
         semester.set_name(name)
@@ -258,7 +258,7 @@ class ProjectAdministration():
     Participation-Methoden
     """
 
-    def create_participation(self, name:str):
+    def create_participation(self, participation):
         """Eine Teilnahme anlegen"""
 
         participation = Participation()

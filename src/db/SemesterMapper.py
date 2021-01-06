@@ -110,6 +110,9 @@ class SemesterMapper (Mapper):
 
         command = "INSERT INTO semester (semester_id, creation_date, name) VALUES (%s,%s,%s)"
         data = (semester.get_id(), semester.get_creation_date(), semester.get_name())
+        print('Semester id is '+str(semester.get_id()))
+        print('Semester date is '+str(semester.get_creation_date()))
+        print('Semester name is '+str(semester.get_name()))
         cursor.execute(command, data)
 
         self._cnx.commit()

@@ -26,7 +26,7 @@ class ParticipationMapper (Mapper):
         return result
 
     
-    def find_by_id(self, id):
+    """def find_by_id(self, id):
 
         result = []
         cursor = self._cnx.cursor()
@@ -59,6 +59,43 @@ class ParticipationMapper (Mapper):
         data = (participation.get_id())
         cursor.execute(command, data)
 
+        self._cnx.commit()
+        cursor.close()
+        return participation"""
+
+    def find_by_id(self, id):
+
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT participation_id, creation_date FROM participation WHERE participation_id={}".format(id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            (id, creation_date) = tuples[0]
+            participation = Participation()
+            participation.set_id(id)
+            participation.set_creation_date(creation_date)
+            result = participation
+        except IndexError:
+            print("There was no object with this id")
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+        return result
+
+    def insert(self, participation):
+        
+        cursor = self._cnx.cursor()
+        cursor.execute("SELECT MAX(participation_id) AS maxid FROM participation")
+        tuples = cursor.fetchall()
+
+        for (maxid) in tuples:
+            participation.set_id(maxid[0]+1)
+
+        command = "INSERT INTO participation (creation_date, participation_id) VALUES (CURRENT_TIMESTAMP, "+str(participation.get_id()) +")"
+        cursor.execute(command)
         self._cnx.commit()
         cursor.close()
         return participation

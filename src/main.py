@@ -360,6 +360,25 @@ class SemesterOperations(Resource):
         sem = adm.get_semester_by_id(semester_id)
         return sem
 
+@projectTool.route('/semester')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class SemesterOperations(Resource):
+    @projectTool.marshal_with(semester, code=200)
+    @projectTool.expect(semester) 
+    #@secured
+        #Hier wird ein Semester-Objekt von Client-Seite erwartet
+    def post(self):
+        """Anlegen eines neuen Semester-Objekts"""
+        adm = ProjectAdministration()
+        proposal = Semester.from_dict(api.payload)
+
+        if proposal is not None:
+            """Wir verwenden Semester_id und Grade des Proposals für die Erzeugung eines Semester-Objektes."""
+            sem = adm.create_semester(proposal.get_id(), proposal.get_name())
+            return sem, 200
+        else:
+            return '', 500
+
     #@secured
     def delete(self, semester_id):
         """Löschen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
