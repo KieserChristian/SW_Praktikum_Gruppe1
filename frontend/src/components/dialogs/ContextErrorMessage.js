@@ -17,7 +17,7 @@ class ContextErrorMessage extends Component {
         const { classes, error, contextErrorMsg, onReload } = this.props;
 
         return (
-            (error !== null) ?
+            (error) ?
               <Alert severity='error' className={classes.root}>
                 <div>
                   {this.#standardText}
