@@ -418,6 +418,16 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             return mapper.find_by_name(name)
     
+    def get_projects_of_person(self, person):
+        """Alle Projekte der gegebenen Person auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.find_by_id(person.get_id())
+    
+    def get_projects_of_student(self, student):
+        """Alle Projekte des gegebenen Student auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.find_by_id(student.get_id())
+    
     def get_projects_by_state_id(self):
         """Alle Projekte, die sich in einem bestimmten Zustand befinden, ausgeben"""
         with ProjectMapper() as mapper:

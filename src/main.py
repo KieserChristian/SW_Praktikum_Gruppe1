@@ -129,9 +129,9 @@ automat = api.model('Automat', {
                                 description='Aktueller Zustand')
 })
 
-@projectTool.route('/person')
+@projectTool.route('/person/<int:person_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('project_id', 'Dies ist die ID von Person')
+@projectTool.param('person_id', 'Dies ist die ID von Person')
 class PersonOperations(Resource):
     @projectTool.marshal_with(person)
     #@secured
@@ -166,7 +166,38 @@ class PersonOperations(Resource):
         else:
             return '', 500
 
-@projectTool.route('/person')
+@projectTool.route('/person-by-name/<string:name>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('name', 'Dies ist der Name von Person')
+class PersonByNameOperations(Resource):
+    @projectTool.marshal_with(person)
+    #@secured
+    def get(self, name):
+        """Auslesen eines bestimmten Personen-Objekts, welches durch den Namen bestimmt wird."""
+
+        adm = ProjectAdministration()
+        pers = adm.get_person_by_name(name)
+        return pers
+
+@projectTool.route('/person/<int:person_id>/projects')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('person_id', 'Dies ist die ID von Person')
+class PersonRelatedProjectOperations(Resource):
+    @projectTool.marshal_with(project)
+    #@secured
+    def get(self, person_id):
+        """Auslesen aller Project-Objekte eines bestimmten Person-Objekts, welches durch die ID von Person bestimmt wird."""
+
+        adm = ProjectAdministration()
+        pers = adm.get_person_by_id(person_id)
+        
+        if pers is not None:
+            project_list = adm.get_projects_of_person(pers)
+            return project_list
+        else:
+            return "Person not found", 500
+
+@projectTool.route('/persons')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PersonListOperations(Resource):
     @projectTool.marshal_list_with(person)
@@ -192,14 +223,14 @@ class PersonListOperations(Resource):
         else:
             return '', 500
     
-@projectTool.route('/student')
+@projectTool.route('/student/<int:student_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('student_id', 'Dies ist die ID von Student')
 class StudentOperations(Resource):
     @projectTool.marshal_with(student)
     #@secured
     def get(self, student_id):
-        """Auslesen eines bestimmten Student-Objektes, welches durch die student_id in dem URI bestimmt wird."""
+        """Auslesen eines bestimmten Student-Objekts, welches durch die student_id in dem URI bestimmt wird."""
 
         adm = ProjectAdministration()
         stud = adm.get_student_by_id(student_id)
@@ -207,7 +238,7 @@ class StudentOperations(Resource):
         
     #@secured
     def delete(self, student_id):
-        """Löschen eines bestimmten Student-Objektes, welches durch die student_id in dem URI bestimmt wird."""
+        """Löschen eines bestimmten Student-Objekts, welches durch die student_id in dem URI bestimmt wird."""
 
         adm = ProjectAdministration()
         stud = adm.get_student_by_id(student_id)
@@ -218,6 +249,7 @@ class StudentOperations(Resource):
     @projectTool.expect(student, validate=True)
     #@secured
     def put(self, student_id):
+        """Update eines bestimmten Student-Objekts"""
 
         adm = ProjectAdministration()
         stud = Student.from_dict(api.payload)
@@ -229,7 +261,25 @@ class StudentOperations(Resource):
         else:
             return '', 500
 
-@projectTool.route('/student')
+@projectTool.route('/student/<int:student_id>/projects')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('student_id', 'Dies ist die ID von Student')
+class StudentRelatedProjectOperations(Resource):
+    @projectTool.marshal_with(project)
+    #@secured
+    def get(self, student_id):
+        """Auslesen aller Project-Objekte eines bestimmten Student-Objekts, welches durch die ID von Student bestimmt wird."""
+
+        adm = ProjectAdministration()
+        stud = adm.get_student_by_id(student_id)
+        
+        if stud is not None:
+            project_list = adm.get_projects_of_student(stud)
+            return project_list
+        else:
+            return "Student not found", 500
+
+@projectTool.route('/students')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class StudentListOperations(Resource):
     @projectTool.marshal_list_with(student)
@@ -255,7 +305,8 @@ class StudentListOperations(Resource):
         else:
             return '', 500 
 
-@projectTool.route('/student')
+"""Doppelung mit Post-Methode in StudentListOperations"""
+""" @projectTool.route('/student')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class StudentRegisterOperations(Resource):
     @projectTool.marshal_with(student, code=200)
@@ -263,18 +314,18 @@ class StudentRegisterOperations(Resource):
     #@secured
         #Hier wird ein Student-Objekt von Client-Seite erwartet
     def post(self):
-        """Resgistrierung eines Studenten (Anlegen eines neuen Student-Objekts"""
+        Registrierung eines Studenten (Anlegen eines neuen Student-Objekts
         adm = ProjectAdministration()
         proposal = Student.from_dict(api.payload)
 
         if proposal is not None:
-            """Wir verwenden student_id des Proposals für die Erzeugung eines neuen Student Objektes"""
+            Wir verwenden student_id des Proposals für die Erzeugung eines neuen Student Objektes
             stud = adm.create_student(proposal.get_student_id())
             return stud, 200
         else:
-            return '', 500
+            return '', 500 """
 
-@projectTool.route('/student-by-matriculation-number')
+@projectTool.route('/student-by-matriculation-number/<string:matriculation_number>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('matriculation_number_id', 'Die Matrikelnummer des Studenten')
 class StudentByMatriculationNumberOperations(Resource):
@@ -288,7 +339,7 @@ class StudentByMatriculationNumberOperations(Resource):
         stud = adm.get_student_by_matriculation_number(matriculation_number)
         return stud
 
-@projectTool.route('/student-by-name')    
+@projectTool.route('/student-by-name/<string:name>')    
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('name', 'Der Name des Studenten')
 class StudentByNameOperations(Resource):
