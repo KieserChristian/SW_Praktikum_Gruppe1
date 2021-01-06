@@ -12,6 +12,7 @@ import './App.css';
 import LoadingProgress from './components/dialogs/LoadingProgress';
 import ContextErrorMessage from './components/dialogs/ContextErrorMessage';
 import LogIn from './components/pages/LogIn';
+//import StudentGradingView from './components/views/StudentGradingView';
 
 
 /*
