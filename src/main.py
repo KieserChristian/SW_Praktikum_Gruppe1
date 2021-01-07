@@ -415,17 +415,7 @@ class SemesterOperations(Resource):
         else:
             return '', 500
 
-    #@secured
-    def delete(self, semester_id):
-        """Löschen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
-        adm = ProjectAdministration()
-        sem = adm.get_semester_by_id(semester_id)
-        if sem is not None:
-            adm.delete_semester(sem)
-            return 'gelöscht', 200
-        else:
-            return '', 500
-    
+
     @projectTool.marshal_with(semester)
     @projectTool.expect(semester, validate=True)
     #@secured
@@ -438,6 +428,23 @@ class SemesterOperations(Resource):
             sem.set_id(semester_id)
             adm.save_semester(sem)
             return '', 200
+        else:
+            return '', 500
+
+@projectTool.route('/semester/<int:semester_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('semester_id', 'Dies ist die ID des Semesters')
+class SemesterOperations(Resource):
+    @projectTool.marshal_list_with(semester)
+    #@secured
+    def delete(self, semester_id):
+        """Löschen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        sem = adm.get_semester_by_id(semester_id)
+        print(sem.str())
+        if sem is not None:
+            #adm.delete_semester(sem)
+            return 'gelöscht', 200
         else:
             return '', 500
 
@@ -545,6 +552,17 @@ class GradingOperations(Resource):
         grad = adm.get_grading_by_id(grading_id)
         print(grad)
         return grad
+    
+    def delete(self, grading_id):
+        """Löschen eines bestimmten Grading-Objektes, welches durch die grading_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        grad = adm.get_grading_by_id(grading_id)
+     
+        if grad is not None:
+            adm.delete_grading(grad)
+            return 'gelöscht', 200
+        else:
+            return 'There was some error', 500
 
 
 @projectTool.route('/grading')
@@ -566,18 +584,6 @@ class GradingOperations(Resource):
         else:
             return '', 500
     
-    #@secured
-    def delete(self, grading_id):
-        """Löschen eines bestimmten Grading-Objektes, welches durch die grading_id in dem URI bestimmt wird."""
-        adm = ProjectAdministration()
-        grad = adm.get_grading_by_id(grading_id)
-     
-        if grad is not None:
-            adm.delete_grading(grad)
-            return 'gelöscht', 200
-        else:
-            return 'There was some error', 500
-    
     @projectTool.marshal_with(grading)
     @projectTool.expect(grading, validate=True)
     #@secured
@@ -592,6 +598,18 @@ class GradingOperations(Resource):
             return '', 200
         else:
             return '', 500
+
+@projectTool.route('/grading')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class GradingListOperations(Resource):
+    @projectTool.marshal_list_with(grading)
+    #@secured
+    def get(self):
+        """Auslesen aller Grading-Objekte"""
+        adm = ProjectAdministration()
+        grading_list = adm.get_all_gradings()
+        return grading_list
+
 
 @projectTool.route('/grading-by-participation')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')

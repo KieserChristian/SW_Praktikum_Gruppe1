@@ -19,7 +19,7 @@ class BusinessObject(ABC):
 
     def set_creation_date(self, creation_date):
         """Erstellungsdatum setzen"""
-        self._creation_date = datetime.now()
+        self._creation_date = creation_date
     
     def get_creation_date(self):
         """Auslesen des Erstelldatums"""

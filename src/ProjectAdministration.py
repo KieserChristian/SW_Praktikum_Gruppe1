@@ -276,14 +276,8 @@ class ProjectAdministration():
         """Eine Teilnahme löschen"""
         """Und die zugehörige Bewertung löschen"""
         with ParticipationMapper() as mapper:
-            gradings = self.get_grading_of_participation(participation)
-            
-            if not (gradings is None):
-                for g in gradings:
-                    self.delete(g)
-
-            mapper.delete(participation)
-
+            return mapper.delete(participation)
+          
     def get_participation_by_id(self, id):
         """Eine Teilnahme anhand ihrer ID auslesen"""
         with ParticipationMapper() as mapper:
