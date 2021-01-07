@@ -130,7 +130,7 @@ class ProjectAdministration():
     def get_student_by_matriculation_number(self, matriculation_number):
         """Den Student mit seiner Matrikelnummer auslesen"""
         with StudentMapper() as mapper:
-            return mapper.find_by_number(matriculation_number)
+            return mapper.find_by_matriculation_number(matriculation_number)
     
     def get_student_by_course_abbreviation(self, course_abbreviation):
         """Den Student mit seinem Studiengangskürzel auslesen"""
@@ -262,7 +262,6 @@ class ProjectAdministration():
         """Eine Teilnahme anlegen"""
 
         participation = Participation()
-        #participation.set_name(name)
 
         with ParticipationMapper() as mapper:
             return mapper.insert(participation)
