@@ -148,8 +148,12 @@ class PersonOperations(Resource):
 
         adm = ProjectAdministration()
         pers = adm.get_person_by_id(person_id)
-        adm.delete_person(pers)
-        return 'gelöscht', 200
+
+        if pers is not None:
+            adm.delete_person(pers)
+            return 'gelöscht', 200
+        else:
+            return 'There was some error', 500
 
     @projectTool.marshal_with(person)
     @projectTool.expect(person, validate=True)
@@ -157,7 +161,7 @@ class PersonOperations(Resource):
     def put(self, person_id):
         """Update eines bestimmten Personen-Objekts."""
         adm = ProjectAdministration()
-        pers = person.from_dict(api.payload)
+        pers = Person.from_dict(api.payload)
 
         if pers is not None:
             pers.set_id(person_id)
@@ -327,7 +331,7 @@ class StudentRegisterOperations(Resource):
 
 @projectTool.route('/student-by-matriculation-number/<string:matriculation_number>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('matriculation_number_id', 'Die Matrikelnummer des Studenten')
+@projectTool.param('matriculation_number', 'Die Matrikelnummer des Studenten')
 class StudentByMatriculationNumberOperations(Resource):
     @projectTool.marshal_with(student)
     #@secured
