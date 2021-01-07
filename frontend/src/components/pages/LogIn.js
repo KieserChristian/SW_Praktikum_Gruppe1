@@ -11,9 +11,9 @@ class LogIn extends React.Component {
 
         return(
         <div>
-            <Button variant="contained">Student</Button>
-            <Button variant="contained">Dozent</Button>
-            <Button variant="contained">Admin</Button>
+            <Button variant="contained" size= "large" color="primary" href ="SudentView">Student</Button>
+            <Button variant="contained" size= "large" color="secondary" href ="DocentView" >Dozent</Button>
+            <Button variant="contained" size= "large" color="default" href ="AdminView" >Admin</Button>
         </div>
         );
     }
