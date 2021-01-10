@@ -40,7 +40,7 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE person_id={} ORDER BY person_id".format(id)
+        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE person_id='{}' ORDER BY person_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -67,7 +67,7 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE name={} ORDER BY name".format(name)
+        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE name='{}' ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -93,7 +93,7 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE google_id={} ORDER BY google_id".format(google_id)
+        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE google_id='{}' ORDER BY google_id".format(google_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -119,7 +119,7 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE email={} ORDER BY email".format(email)
+        command = "SELECT person_id, creation_date, name, google_id, email FROM person WHERE email='{}' ORDER BY email".format(email)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -190,7 +190,9 @@ class PersonMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "DELETE FROM person WHERE person_id={}".format(person.get_id())
+        print(person.get_id())
+
+        command = "DELETE FROM person WHERE person_id='{}'".format(person.get_id())
         cursor.execute(command)
 
         self._cnx.commit()

@@ -32,6 +32,9 @@ class LogIn extends React.Component {
                 </Button>
                 </Link>
         </center>        
+            <Button variant="contained" size= "large" color="primary" href ="SudentView">Student</Button>
+            <Button variant="contained" size= "large" color="secondary" href ="DocentView" >Dozent</Button>
+            <Button variant="contained" size= "large" color="default" href ="AdminView" >Admin</Button>
         </div>
          
         
