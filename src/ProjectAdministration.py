@@ -130,7 +130,7 @@ class ProjectAdministration():
     def get_student_by_matriculation_number(self, matriculation_number):
         """Den Student mit seiner Matrikelnummer auslesen"""
         with StudentMapper() as mapper:
-            return mapper.find_by_number(matriculation_number)
+            return mapper.find_by_matriculation_number(matriculation_number)
     
     def get_student_by_course_abbreviation(self, course_abbreviation):
         """Den Student mit seinem Studiengangskürzel auslesen"""
@@ -141,7 +141,7 @@ class ProjectAdministration():
     Semester-Methoden
     """
 
-    def create_semester(self, name:str):
+    def create_semester(self, id:int, name:str):
         """Ein Semester anlegen"""
         semester = Semester()
         semester.set_name(name)
@@ -258,11 +258,10 @@ class ProjectAdministration():
     Participation-Methoden
     """
 
-    def create_participation(self, name:str):
+    def create_participation(self, participation):
         """Eine Teilnahme anlegen"""
 
         participation = Participation()
-        #participation.set_name(name)
 
         with ParticipationMapper() as mapper:
             return mapper.insert(participation)
@@ -276,14 +275,8 @@ class ProjectAdministration():
         """Eine Teilnahme löschen"""
         """Und die zugehörige Bewertung löschen"""
         with ParticipationMapper() as mapper:
-            gradings = self.get_grading_of_participation(participation)
-            
-            if not (gradings is None):
-                for g in gradings:
-                    self.delete(g)
-
-            mapper.delete(participation)
-
+            return mapper.delete(participation)
+          
     def get_participation_by_id(self, id):
         """Eine Teilnahme anhand ihrer ID auslesen"""
         with ParticipationMapper() as mapper:
@@ -417,6 +410,16 @@ class ProjectAdministration():
         """Ein Projekt anhand seines Namens auslesen"""
         with ProjectMapper() as mapper:
             return mapper.find_by_name(name)
+    
+    def get_projects_of_person(self, person):
+        """Alle Projekte der gegebenen Person auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.find_by_id(person.get_id())
+    
+    def get_projects_of_student(self, student):
+        """Alle Projekte des gegebenen Student auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.find_by_id(student.get_id())
     
     def get_projects_by_state_id(self):
         """Alle Projekte, die sich in einem bestimmten Zustand befinden, ausgeben"""
