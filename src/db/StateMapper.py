@@ -15,7 +15,7 @@ class StateMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT state_id, state_name FROM state")
+        cursor.execute("SELECT * FROM state")
         tuples = cursor.fetchall()
 
         for (id, state_name) in tuples:
@@ -111,9 +111,3 @@ class StateMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
-
-""" if (__name__ == "__main__"):
-    with StateMapper() as mapper:
-        result = mapper.find_all()
-        for s in result:
-            print(s) """

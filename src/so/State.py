@@ -5,7 +5,6 @@ from datetime import datetime
 class State():
     
     """Unveränderliche oder statische Variablen für die Zustände, die nach dem Anlegen eines Projekts diesem zugeordnet werden können"""
-
     state_new = "Neu"
     state_accepted = "Genehmigt"
     state_declined = "Abgelehnt"
@@ -18,11 +17,11 @@ class State():
         self._creation_date = datetime.now()
 
     def set_state_name(self, state_name):
-        """State setzen"""
+        """Zustandsnamen setzen"""
         self._state_name = state_name
     
     def get_state_name(self):
-        """State auslesen"""
+        """Zustandsnamen auslesen"""
         return self._state_name
 
     def set_id(self, value):
@@ -43,4 +42,4 @@ class State():
 
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Zustandsinstanz"""
-        return "Momentaner Zustand: {} {}".format(self.get_id(), self.get_state_name())
+        return "Zustand: {} {}".format(self.get_id(), self.get_state_name())

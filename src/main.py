@@ -2,7 +2,6 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 
-
 from ProjectAdministration import ProjectAdministration
 from bo.Participation import Participation
 from bo.Grading import Grading
@@ -12,7 +11,6 @@ from bo.nbo.ProjectType import ProjectType
 from bo.nbo.Semester import Semester
 from bo.nbo.Person import Person
 from bo.nbo.Student import Student
-#from so.Automat import Automat
 from so.State import State
 from so.Role import Role
 #from SecurityDecorator import secured
@@ -42,7 +40,12 @@ bo = api.model('BusinessObject', {
 nbo = api.model('NamedBusinessObject', {
     'name': fields.String(attribute='_name',
                                 description='Name eines BusinessObjects bzw. NamedBusinessObjects')
-})     
+})  
+
+automat = api.model('Automat', {
+    'current_state': fields.String(attribute='_current_state',
+                                description='Aktueller Zustand')
+})
 
 """Participation, Grading, Module, Project, ProjectType, Semester, Person & Student sind BusinessObjects"""
 
@@ -58,10 +61,10 @@ module = api.inherit('Module', bo, nbo, {
                                 description='EDV-Nummer eines Moduls')
 })
 
-project = api.inherit('Project', bo, nbo, {
+project = api.inherit('Project', bo, nbo, automat, {
     'capacity': fields.Integer(attribute='_capacity',
                                 description='Kapazität eines Projekts (maximale Teilnehmeranzahl)'),  
-    'external_partner': fields.String(attribute='_external_partner',
+    'external_partners': fields.String(attribute='_external_partner',
                                 description='Externe Partner, die am Projekt beteiligt sind'),  
     'short_description': fields.String(attribute='_short_description',
                                 description='Kurzbeschreibung des Projekts'),                           
@@ -118,15 +121,6 @@ role = api.model('Role', {
                                 description='Erstellungszeitpunkt eines BusinessObjects'),
     'static_attribute': fields.String(attribute='_static_attribute',
                                 description='Statisches Attribut')
-})
-
-automat = api.model('Automat', {
-    'id': fields.Integer(attribute='_id',
-                                description='Unique Identifier eines BusinessObjects'),
-    'creation_date': fields.DateTime(attribute='_creation_date',
-                                description='Erstellungszeitpunkt eines BusinessObjects'),
-    'current_state': fields.String(attribute='_current_state',
-                                description='Aktueller Zustand')
 })
 
 @projectTool.route('/person/<int:person_id>')
@@ -309,26 +303,6 @@ class StudentListOperations(Resource):
         else:
             return '', 500 
 
-"""Doppelung mit Post-Methode in StudentListOperations"""
-""" @projectTool.route('/student')
-@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-class StudentRegisterOperations(Resource):
-    @projectTool.marshal_with(student, code=200)
-    @projectTool.expect(student)
-    #@secured
-        #Hier wird ein Student-Objekt von Client-Seite erwartet
-    def post(self):
-        Registrierung eines Studenten (Anlegen eines neuen Student-Objekts
-        adm = ProjectAdministration()
-        proposal = Student.from_dict(api.payload)
-
-        if proposal is not None:
-            Wir verwenden student_id des Proposals für die Erzeugung eines neuen Student Objektes
-            stud = adm.create_student(proposal.get_student_id())
-            return stud, 200
-        else:
-            return '', 500 """
-
 @projectTool.route('/student-by-matriculation-number/<string:matriculation_number>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('matriculation_number', 'Die Matrikelnummer des Studenten')
@@ -369,6 +343,15 @@ class StateOperations(Resource):
         adm = ProjectAdministration()
         stat = adm.get_state_by_id(state_id)
         return stat
+    
+    #@secured
+    def delete(self, state_id):
+        """Löschen eines bestimmten State-Objekts, welches durch die state_id in dem URI bestimmt wird."""
+
+        adm = ProjectAdministration()
+        stud = adm.get_student_by_id(student_id)
+        adm.delete_student(stud)
+        return 'gelöscht', 200
 
 @projectTool.route('/state/project')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -750,19 +733,6 @@ class ProjectTypeListOperations(Resource):
             return projtyp, 200
         else:
                 return '', 500
-
-@projectTool.route('/automat')
-@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('automat_id', 'Dies ist die ID von Automat')
-class AutomatOperations(Resource):
-    @projectTool.marshal_with(automat)
-    #@secured
-    def get(self, automat_id):
-        """Auslesen eines bestimmten Automat-Objektes, welches durch die automat_id in dem URI bestimmt wird."""
-
-        adm = ProjectAdministration()
-        aut = adm.get_automat_by_id(automat_id)
-        return aut
         
 @projectTool.route('/module')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
