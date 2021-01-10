@@ -10,7 +10,6 @@ class Project(NamedBusinessObject, Automat):
 
     def __init__(self):
         super().__init__()
-        self._edv_number = 0
         self._capacity = 0
         self._external_partners = ""
         self._short_description = ""
@@ -20,12 +19,6 @@ class Project(NamedBusinessObject, Automat):
         self._bd_in_lecture_period = 0
         self._bd_preferred_in_lecture_period = 0
         self._special_room = ""
-
-    def set_edv_number(self,edv_number):
-        self._edv_number = edv_number
-
-    def get_edv_number(self):
-        return self._edv_number
 
     def set_capacity(self, capacity):
         """Kapazität setzen"""
