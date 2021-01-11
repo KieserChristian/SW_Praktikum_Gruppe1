@@ -135,7 +135,8 @@ class PersonOperations(Resource):
         adm = ProjectAdministration()
         pers = adm.get_person_by_id(person_id)
         return pers
-        
+
+    @projectTool.marshal_with(person)   
     #@secured
     def delete(self, person_id):
         """Löschen eines bestimmten Personen-Objekts, welches durch die person_id in dem URI bestimmt wird."""
@@ -160,7 +161,7 @@ class PersonOperations(Resource):
         if pers is not None:
             pers.set_id(person_id)
             adm.save_person(pers)
-            return '', 200
+            return pers, 200
         else:
             return '', 500
 
@@ -240,8 +241,12 @@ class StudentOperations(Resource):
 
         adm = ProjectAdministration()
         stud = adm.get_student_by_id(student_id)
-        adm.delete_student(stud)
-        return 'gelöscht', 200
+
+        if stud is not None:
+            adm.delete_student(stud)
+            return 'gelöscht', 200
+        else:
+            return 'There was no student object with this id', 500
 
     @projectTool.marshal_with(student)
     @projectTool.expect(student, validate=True)
@@ -255,7 +260,7 @@ class StudentOperations(Resource):
         if stud is not None:
             stud.set_id(student_id)
             adm.save_student(stud)
-            return '', 200
+            return stud, 200
         else:
             return '', 500
 
@@ -373,18 +378,6 @@ class StateRelatedProjectOperations(Resource):
 
 @projectTool.route('/semester')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('semester_id', 'Dies ist die ID von Semester')
-class SemesterOperations(Resource):
-    @projectTool.marshal_with(semester)
-    #@secured
-    def get(self, semester_id):
-        """Auslesen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
-        adm = ProjectAdministration()
-        sem = adm.get_semester_by_id(semester_id)
-        return sem
-
-@projectTool.route('/semester')
-@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class SemesterOperations(Resource):
     @projectTool.marshal_with(semester, code=200)
     @projectTool.expect(semester) 
@@ -422,18 +415,30 @@ class SemesterOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('semester_id', 'Dies ist die ID des Semesters')
 class SemesterOperations(Resource):
+    @projectTool.marshal_with(semester)
+    #@secured
+    def get(self, semester_id):
+        """Auslesen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        sem = adm.get_semester_by_id(semester_id)
+
+        if sem is not None:
+            return sem, 200
+        else:
+            return 'Semester nicht vorhanden', 500
+
     @projectTool.marshal_list_with(semester)
     #@secured
     def delete(self, semester_id):
         """Löschen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
         sem = adm.get_semester_by_id(semester_id)
-        print(sem.str())
+        
         if sem is not None:
-            #adm.delete_semester(sem)
+            adm.delete_semester(sem)
             return 'gelöscht', 200
         else:
-            return '', 500
+            return 'There was some error', 500
 
 @projectTool.route('/semester/project')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -502,8 +507,8 @@ class RoleListOperations(Resource):
 
         if proposal is not None:
             """Wir verwenden role_id des Proposals für die Erzeugung eines Role-Objektes."""
-            rol = adm.create_role(proposal.get_role_id())
-
+            rol = adm.create_role_for_person(proposal.get_role_id())
+            #muss noch gefixed werden, mehr Übergabeparameter nötig; vergleiche l192 ProjectAdmin
             return rol, 200
         else:
             return '', 500
@@ -713,7 +718,7 @@ class ProjectTypeOperations(Resource):
         if projtyp is not None:
             projtyp.set_id(project_type_id)
             adm.save_project_type(projtyp)
-            return '', 200
+            return projtyp, 200
         else:
             return '', 500
 
@@ -743,7 +748,20 @@ class ProjectTypeListOperations(Resource):
 
             return projtyp, 200
         else:
-                return '', 500
+            return '', 500
+
+@projectTool.route('/automat')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('automat_id', 'Dies ist die ID von Automat')
+class AutomatOperations(Resource):
+    @projectTool.marshal_with(automat)
+    #@secured
+    def get(self, automat_id):
+        """Auslesen eines bestimmten Automat-Objektes, welches durch die automat_id in dem URI bestimmt wird."""
+
+        adm = ProjectAdministration()
+        aut = adm.get_automat_by_id(automat_id)
+        return aut
         
 @projectTool.route('/module')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -779,7 +797,7 @@ class ModuleOperations(Resource):
         if mod is not None:
             mod.set_id(module_id)
             adm.save_module(mod)
-            return '', 200
+            return mod, 200
         else:
             return '', 500
 
@@ -832,7 +850,7 @@ class ParticipationOperations(Resource):
             adm.delete_participation(part)
             return 'gelöscht', 200
         else:
-            return '', 500
+            return 'There is no participation object with that id', 500
     
     @projectTool.marshal_with(participation)
     @projectTool.expect(participation, validate=True)
@@ -845,7 +863,7 @@ class ParticipationOperations(Resource):
         if part is not None:
             part.set_id(participation_id)
             adm.save_participation(part)
-            return '', 200
+            return part, 200
         else:
             return '', 500
 
