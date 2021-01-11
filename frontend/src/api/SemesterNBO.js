@@ -1,4 +1,4 @@
-import NamedBusinessObject from './NamedBusinessObject';
+/* import NamedBusinessObject from './NamedBusinessObject';
 
 // Repräsentiert ein Semester
 
@@ -29,4 +29,4 @@ export default class SemesterBO extends NamedBusinessObject {
 
         return result;
         }
-}
+} */

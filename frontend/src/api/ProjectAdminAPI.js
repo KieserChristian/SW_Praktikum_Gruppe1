@@ -11,15 +11,15 @@ import GradingBO from "./GradingBO";
 import ParticipationBO from "./ParticipationBO";
 import SemesterNBO from "./SemesterNBO";
 
-export default class ProjectAdministration {
+export default class ProjectAdminAPI {
 
     static #api = null;
 
     // Local Backend
-    #projectServerBaseURL = 'http://localhost:3000/';
+    #projectServerBaseURL = 'http://localhost:5000/project';
 
     // Grading related
-    #getAllGradingsURL = () => `${this.#projectServerBaseURL}/gradings`;
+    /* #getAllGradingsURL = () => `${this.#projectServerBaseURL}/gradings`;
     #getGradingURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
     #getGradingByParticipationIdURL = (participationId) => `${this.#projectServerBaseURL}/grading/by-participation-id`;
     #getGradingByIdURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
@@ -29,7 +29,7 @@ export default class ProjectAdministration {
     #deleteGradingURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
     #updateGradingURL = (gradingBO) => `${this.#projectServerBaseURL}/gradings`;
     #addGradingToParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
-    #removeGradingFromParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
+    #removeGradingFromParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`; */
 
 /*     // Module related
     #getAllModulesURL = () => `${this.#projectServerBaseURL}/modules`;
@@ -46,6 +46,9 @@ export default class ProjectAdministration {
     // Person related
 
     // Project related
+    #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
+    //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
+
 
     // ProjectType related
 
@@ -56,7 +59,7 @@ export default class ProjectAdministration {
 
     static getAPI() {
         if (this.#api == null) {
-            this.#api = new ProjectAdministration();
+            this.#api = new ProjectAdminAPI();
         }
         return this.#api;
     }
@@ -73,9 +76,19 @@ export default class ProjectAdministration {
       return res.json();
     })
 
+
+
+    getAllProjectsAPI() {
+      return this.#fetchAdvanced(this.#getAllProjectsURL()).then((responseJSON) => {
+        let ProjectNBOs = ProjectNBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(ProjectNBOs);
+        })
+      })
+    }
     // Gibt eine Promise zurück mit einer Liste von GradingBOs
 
-    getAllGradings() {
+/*     getAllGradings() {
         return this.#fetchAdvanced(this.#getAllGradingsURL()).then((responseJSON) => {
             let gradingBOs = GradingBO.fromJSON(responseJSON);
             return new Promise(function (resolve) {
@@ -197,7 +210,7 @@ export default class ProjectAdministration {
                 resolve(responseParticipation)
             })
         })
-    };
+    }; */
 
-
+    
 }

@@ -1,4 +1,4 @@
-import PersonNBO from "./PersonNBO";
+/* import PersonNBO from "./PersonNBO";
 
 export default class StudentNBO extends PersonNBO {
 
@@ -33,9 +33,6 @@ export default class StudentNBO extends PersonNBO {
                result.push(s);
            })
        }else {
-           /**Bei persons(student) handelt es sich um ein singuläres Objekt (nur vereinzelt vorkommend), eine Person Bsp. daniel weinert
-            * kann nicht zweimal existieren
-            */
            let s = student;
            Object.setPrototypeOf(s,StudentNBO.prototype);
            result.push(s);
@@ -43,6 +40,6 @@ export default class StudentNBO extends PersonNBO {
 
        return result;
    }
-}
+} */
 
 

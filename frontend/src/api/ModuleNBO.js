@@ -1,12 +1,12 @@
-import NamedBusinessObject from './NamedBusinessObject';
+/* import NamedBusinessObject from './NamedBusinessObject';
 
 export default class Module extends NamedBusinessObject, BusinessObject{
 
     //konstruiert eine ModuleNBO mit einem gegebenen Namen
 
-    /** 
-     * @param {String} aName der Name der ModuleNBO
-     */
+     
+    @param {String} aName der Name der ModuleNBO
+     
 
     constructor(aName, anEdv_number) {
         super(aName);
@@ -22,9 +22,9 @@ export default class Module extends NamedBusinessObject, BusinessObject{
         return this.edv_number
     }
 
-    /**
-     * Gibt Array von ModuleNBOs von gegebenen JSON strukturen zurück
-     */
+    
+    Gibt Array von ModuleNBOs von gegebenen JSON strukturen zurück
+     
 
     static fromJSON(modules) {
         let result = [];
@@ -43,4 +43,4 @@ export default class Module extends NamedBusinessObject, BusinessObject{
         
         return result;
     }
-}
+} */

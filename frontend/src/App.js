@@ -13,7 +13,7 @@ import LoadingProgress from './components/dialogs/LoadingProgress';
 import ContextErrorMessage from './components/dialogs/ContextErrorMessage';
 import LogIn from './components/pages/LogIn';
 //import StudentGradingView from './components/views/StudentGradingView';
-
+import StudentView from './components/StudentView';
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
@@ -98,7 +98,7 @@ class App extends React.Component {
 		firebase.auth().onAuthStateChanged(this.handleAuthStateChange);
   }
   
-   // Die gesamte Applikation rendern
+  // Die gesamte Applikation rendern
   render() {
     const { currentUser, appError, authError, authLoading } = this.state;
     return(
@@ -112,6 +112,7 @@ class App extends React.Component {
 							currentUser ?
 								<>
                   <LogIn/>
+                  <StudentView/>
 								</>
 								:
 								// else show the sign in page
