@@ -51,7 +51,7 @@ class PersonMapper (Mapper):
             person.set_name(name)
             person.set_google_id(google_id)
             person.set_email(email)
-            result.append(person)
+            result = person
 
         self._cnx.commit()
         cursor.close()
@@ -78,7 +78,7 @@ class PersonMapper (Mapper):
             person.set_name(name)
             person.set_google_id(google_id)
             person.set_email(email)
-            result.append(person)
+            result = person
 
         self._cnx.commit()
         cursor.close()
@@ -104,7 +104,7 @@ class PersonMapper (Mapper):
             person.set_name(name)
             person.set_google_id(google_id)
             person.set_email(email)
-            result.append(person)
+            result = person
 
         self._cnx.commit()
         cursor.close()
@@ -130,7 +130,7 @@ class PersonMapper (Mapper):
             person.set_name(name)
             person.set_google_id(google_id)
             person.set_email(email)
-            result.append(person)
+            result = person
 
         self._cnx.commit()
         cursor.close()
@@ -189,8 +189,6 @@ class PersonMapper (Mapper):
         :param person
         """
         cursor = self._cnx.cursor()
-
-        print(person.get_id())
 
         command = "DELETE FROM person WHERE person_id='{}'".format(person.get_id())
         cursor.execute(command)
