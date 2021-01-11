@@ -668,6 +668,17 @@ class ProjectRelatedParticipationOperations(Resource):
         else:
             return 'Project not found', 500
 
+@projectTool.route('/projects')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    @projectTool.marshal_list_with(project)
+    #@secured
+    def get(self):
+        """Auslesen aller Project-Objektes"""
+        adm = ProjectAdministration()
+        project_list = adm.get_all_projects()
+        return project_list
+
 @projectTool.route('/project-type')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('project_type_id', 'Dies ist die ID von ProjectType')
