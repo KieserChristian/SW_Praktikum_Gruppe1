@@ -1,38 +1,33 @@
 import BusinessObject from './BusinessObject';
 
-export default class Grading extends BusinessObject{
+export default class GradingBO extends BusinessObject{
 
-    //konstruiert ein GradingBO mit einem gegebenen Namen
-
-    /** 
-     * @param {*} anId der Name der GradingBO
-     */
-
-    constructor(anId, aGrade) {
-        super(anId);
-            this.id = anId
+    constructor(aGrade) {
+        super();
             this.grade = aGrade
-
     }
 
-    /**
-     * setzt neue Benotung
-     * die get-syntax  gibt die Benotung aus
-     */
-
     setGrade(aGrade) {
-        this.grade = aGrade
+        this.grade = aGrade;
     }
 
     getGrade() {
-        return this.grade
+        return this.grade;
     }
 
-    toString(){
-        let result = "";
-        for (var prop in this)
-            result += prop + ":" + this[prop] + "";
+    static fromJSON(grading) {
+        let result = [];
 
+        if (Array.isArray(grading)) {
+            grading.forEach((g) => {
+                Object.setPrototypeOf(g,GradingBO.prototype);
+                result.push(g);
+            })
+        } else {
+            let g = grading;
+            Object.setPrototypeOf(g,GradingBO.prototype);
+            result.push(g);
+        }
         return result;
     }
 }

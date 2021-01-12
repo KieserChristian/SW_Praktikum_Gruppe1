@@ -19,7 +19,7 @@ export default class ProjectAdminAPI {
     #projectServerBaseURL = 'http://localhost:5000/project';
 
     // Grading related
-    /* #getAllGradingsURL = () => `${this.#projectServerBaseURL}/gradings`;
+    #getAllGradingsURL = () => `${this.#projectServerBaseURL}/gradings`;
     #getGradingURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
     #getGradingByParticipationIdURL = (participationId) => `${this.#projectServerBaseURL}/grading/by-participation-id`;
     #getGradingByIdURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
@@ -29,24 +29,24 @@ export default class ProjectAdminAPI {
     #deleteGradingURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
     #updateGradingURL = (gradingBO) => `${this.#projectServerBaseURL}/gradings`;
     #addGradingToParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
-    #removeGradingFromParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`; */
+    #removeGradingFromParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
 
-/*     // Module related
-    #getAllModulesURL = () => `${this.#projectServerBaseURL}/modules`;
+     // Module related
+/*     #getAllModulesURL = () => `${this.#projectServerBaseURL}/modules`;
     #getModuleByIdURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;
     #getModuleByNameURL = (name) => `${this.#projectServerBaseURL}/modules`;
     #getModuleByEdvNumberURL = (edvNumber) => `${this.#projectServerBaseURL}/modules`;
     #createModuleURL = () => `${this.#projectServerBaseURL}/modules`;
     #saveModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;
     #deleteModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;
-    #updateModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`; */
+    #updateModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;  */
        
     // Participation related
 
     // Person related
 
     // Project related
-    #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
+    //#getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
 
     // ProjectType related
@@ -78,14 +78,23 @@ export default class ProjectAdminAPI {
 
     //Project
 
+<<<<<<< HEAD
+
+/*     getAllProjectsAPI() {
+      return this.#fetchAdvanced(this.#getAllProjectsURL()).then((responseJSON) => {
+=======
     getAllProjects() {
       return this.#fetchAdvanced(this.#getAllProjectsURL())
       .then((responseJSON) => {
+>>>>>>> stini
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(ProjectNBOs);
         })
       })
+<<<<<<< HEAD
+    } */
+=======
     }
 
     //ProjectType
@@ -100,17 +109,18 @@ export default class ProjectAdminAPI {
       })
     }
    
+>>>>>>> stini
     // Gibt eine Promise zurück mit einer Liste von GradingBOs
 
-/*     getAllGradings() {
-        return this.#fetchAdvanced(this.#getAllGradingsURL()).then((responseJSON) => {
-            let gradingBOs = GradingBO.fromJSON(responseJSON);
-            return new Promise(function (resolve) {
-                resolve(gradingBOs)
-            })
+    getAllGradings() {
+      return this.#fetchAdvanced(this.#getAllGradingsURL()).then((responseJSON) => {
+        let gradingBOs = GradingBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(gradingBOs)
         })
+      })
     };
-
+/*
     getGrading(gradingId) {
         return this.#fetchAdvanced(this.#getGradingURL(gradingId)).then((responseJSON) => {
           let responseGradingBO = GradingBO.fromJSON(responseJSON)[0];

@@ -55,7 +55,7 @@ class StudentMapper (Mapper):
             student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
-            result.append(student)
+            result = student
 
         self._cnx.commit()
         cursor.close()
@@ -84,7 +84,7 @@ class StudentMapper (Mapper):
             student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
-            result.append(student)
+            result = student
 
         self._cnx.commit()
         cursor.close()
@@ -112,7 +112,7 @@ class StudentMapper (Mapper):
             student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
-            result.append(student)
+            result = student
 
         self._cnx.commit()
         cursor.close()
@@ -140,7 +140,7 @@ class StudentMapper (Mapper):
             student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
-            result.append(student)
+            result = student
 
         self._cnx.commit()
         cursor.close()
@@ -168,7 +168,7 @@ class StudentMapper (Mapper):
             student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
-            result.append(student)
+            result = student
 
         self._cnx.commit()
         cursor.close()
@@ -196,7 +196,7 @@ class StudentMapper (Mapper):
             student.set_email(email)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
-            result.append(student)
+            result = student
 
         self._cnx.commit()
         cursor.close()

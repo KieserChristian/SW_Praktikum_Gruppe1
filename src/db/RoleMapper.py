@@ -35,12 +35,16 @@ class RoleMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name) in tuples:
+        try:
+            (id, creation_date, name) = tuples[0]
             role = Role()
             role.set_id(id)
             role.set_creation_date(creation_date)
             role.set_name(name)
-            result.append(role)
+            result = role
+        except IndexError:
+            print("There was no object with this id")
+            result = None
 
         self._cnx.commit()
         cursor.close()

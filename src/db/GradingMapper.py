@@ -83,7 +83,6 @@ class GradingMapper (Mapper):
 
     def delete(self, grading):
         cursor = self._cnx.cursor()
-        print(grading.get_id())
         command = "DELETE FROM grading WHERE grading_id={}".format(grading.get_id())
         cursor.execute(command)
 
