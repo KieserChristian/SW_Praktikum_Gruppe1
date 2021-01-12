@@ -11,9 +11,6 @@ import TableRow from '@material-ui/core/TableRow';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 
-
-
-
 class StudentGradingView extends React.Component {
 
     constructor(props) {

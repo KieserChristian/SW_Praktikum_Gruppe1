@@ -78,23 +78,14 @@ export default class ProjectAdminAPI {
 
     //Project
 
-<<<<<<< HEAD
-
-/*     getAllProjectsAPI() {
-      return this.#fetchAdvanced(this.#getAllProjectsURL()).then((responseJSON) => {
-=======
     getAllProjects() {
       return this.#fetchAdvanced(this.#getAllProjectsURL())
       .then((responseJSON) => {
->>>>>>> stini
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(ProjectNBOs);
         })
       })
-<<<<<<< HEAD
-    } */
-=======
     }
 
     //ProjectType
@@ -109,7 +100,6 @@ export default class ProjectAdminAPI {
       })
     }
    
->>>>>>> stini
     // Gibt eine Promise zurück mit einer Liste von GradingBOs
 
     getAllGradings() {
