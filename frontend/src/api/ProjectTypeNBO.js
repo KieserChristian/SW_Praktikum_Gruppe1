@@ -1,11 +1,9 @@
 import NamedBusinessObject from './NamedBusinessObject';
 
-// Repräsentiert einen ProjectType
+export default class ProjectTypeNBO extends NamedBusinessObject {
 
-export default class ProjectTypeBO extends NamedBusinessObject {
-
-    constructor (aName, aNumberEcts, aNumberSws) {
-        super(aName);
+    constructor (aNumberEcts, aNumberSws) {
+        super();
         this.number_ects = aNumberEcts;
         this.number_sws = aNumberSws;
     }
@@ -28,22 +26,19 @@ export default class ProjectTypeBO extends NamedBusinessObject {
 
     // Returns an Array of ProjectType from a given JSON structure
 
-    static fromJSON(projecttypes) {
+    static fromJSON(projecttype) {
         let result = [];
 
-        if (Array.isArray(projecttypes)) {
-            projecttypes.forEach((projtyp) => {
-                Object.setPrototypeOf(projtyp, ProjectTypeBO.prototype)
-                result.push(projtyp)
+        if (Array.isArray(projecttype)) {
+            projecttype.forEach((p) => {
+                Object.setPrototypeOf(p, ProjectTypeNBO.prototype);
+                result.push(p);
             })
-
         } else {
-
-            let projtyp = projecttypes
-            Object.setPrototypeOf(projtyp, ProjectTypeBO.prototype)
-            result.push(projtyp)
+            let p = projecttype;
+            Object.setPrototypeOf(p, ProjectTypeNBO.prototype);
+            result.push(p);
         }
-
         return result;
         }
 }

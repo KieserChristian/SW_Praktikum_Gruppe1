@@ -1,6 +1,5 @@
 from bo.nbo.Project import Project
 from db.Mapper import Mapper
-#from bo.BusinessObject import BusinessObject
 
 class ProjectMapper (Mapper):
     """Mapper-Klasse, die Project-Objekte auf eine relationale

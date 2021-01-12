@@ -29,6 +29,17 @@ class ProjectType(NamedBusinessObject):
     def get_number_sws(self):
         """semester wochenstunden auslesen"""
         return self._number_sws
+
+    def to_dict(self):
+        """Umwandeln von ProjectType() in ein Python dictionary dict()"""
+        result = {
+            "id": self.get_id(),
+            "creation_date": self.get_creation_date(),
+            "name": self.get_name(),
+            "number_ects": self.get_number_ects(),
+            "number_sws": self.get_number_sws()
+        }
+        return result
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projekttypinstanz"""

@@ -502,7 +502,7 @@ class ProjectAdministration():
         with ProjectTypeMapper() as mapper:
             mapper.delete(project_type)
     
-    def get_project_type_by_id(self,id):
+    def get_project_type_by_id(self, id):
         """Einen Projekttyp anhand seiner ID auslesen"""
         with ProjectTypeMapper() as mapper:
             return mapper.find_by_id(id)
