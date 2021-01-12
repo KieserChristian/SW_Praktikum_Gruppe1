@@ -17,9 +17,31 @@ class LogIn extends React.Component {
             
         <div>
            <center> 
-            <Button variant="contained">Student</Button>
-            <Button variant="contained">Dozent</Button>
             
+                <Link to='/StudentView'>
+                <Button
+                    size= "large"
+                    variant="contained"
+                    color="primary"
+                    
+                 >
+                            Student
+                  
+                </Button>
+                </Link>
+
+                <Link to='/DocentView'>
+                <Button
+                    size= "large"
+                    variant="contained"
+                    color="secondary"
+                    
+                 >
+                            Dozent
+                  
+                </Button>
+                </Link>
+
                 <Link to='/AdminView'>
                 <Button
                     size= "large"
@@ -31,10 +53,8 @@ class LogIn extends React.Component {
                   
                 </Button>
                 </Link>
-        </center>        
-            <Button variant="contained" size= "large" color="primary" href ="SudentView">Student</Button>
-            <Button variant="contained" size= "large" color="secondary" href ="DocentView" >Dozent</Button>
-            <Button variant="contained" size= "large" color="default" href ="AdminView" >Admin</Button>
+            </center>        
+
         </div>
          
         
