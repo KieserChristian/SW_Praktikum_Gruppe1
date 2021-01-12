@@ -591,7 +591,7 @@ class GradingOperations(Resource):
         else:
             return '', 500
 
-@projectTool.route('/grading')
+@projectTool.route('/gradings')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class GradingListOperations(Resource):
     @projectTool.marshal_list_with(grading)
