@@ -1,9 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
-//import LoadingProgress from './dialogs/LoadingProgress';
-import { withStyles, Typography, Grid } from '@material-ui/core';
-import ProjectNBO from '../api/ProjectNBO'
+import LoadingProgress from './dialogs/LoadingProgress';
+import { withStyles, Typography, Grid, Button } from '@material-ui/core';
 
 class StudentView extends React.Component {
 
@@ -15,49 +14,34 @@ class StudentView extends React.Component {
       //filteredProjects: [],
       //projectFilter: '',
       error: null,
-      //loadingProgress: false
+      loadingProgress: false
     } 
   }
 
   getAllProjects = () => {
-     ProjectAdminAPI.getAPI().getAllProjectsAPI()
-      .then(projectNBOs =>
-        this.setState({
-          projects: projectNBOs,
-          //filteredProjects: [...projectNBOs],
-          //loadingProgress: false,
-          //error: null
-        }))
-        /*
-        .catch(e =>
-          this.setState({
-            projects: [],
-            //loadingInProgress: false,
-            error: e
-          })
-        );
-    this.setState({
-      //loadingInProgress: true,
-      error: null
+    ProjectAdminAPI.getAPI().getAllProjects().then(projectNBOs => {
+      this.setState({
+        projects: projectNBOs,
+        //filteredProjects: [...projectNBOs],
+        loadingProgress: false,
+        error: null
+      });
+    }).catch(e => {
+      this.setState({
+        projects: [],
+        loadingInProgress: false,
+        error: e
+      })
     });
-    */
+    this.setState({
+    loadingInProgress: true,
+    error: null
+    });
   }
 
   componentDidMount() {
-    this.getAllProjects()
-    /* fetch('http://localhost:5000/project/projects').then(response => {
-    return response.json()}).then((responseJSON) => {
-      let ProjectNBOs = ProjectNBO.fromJSON(responseJSON);
-      return new Promise(function (resolve) {
-        resolve(ProjectNBOs);
-      })
-    }).then(projectobject => {
-      this.setState({
-        projects: projectobject
-      })
-    }) */
+    this.getAllProjects();
   }
-  
 
   render() {
     const { classes } = this.props;
@@ -67,13 +51,15 @@ class StudentView extends React.Component {
         <Grid className={classes.projects} container spacing={1} justify='flex-start' alignItems='center'>
           <Grid item>
             <Typography>
-              Projekte für Studenten:
+            Hier können Sie Projekte an- und abmelden:
             </Typography>
-            {projects.length > 0 ? 
+            {
+            projects.length > 0 ? 
               projects.map(project =>
                 <div>
-                <div>{project.getName()}</div>
-                <div>{project.getCapacity()}</div>
+                <Button variant='contained'>{project.getName()} {project.getCapacity()}</Button>
+                <Button variant="outlined" color="primary">Anmelden</Button>
+                <Button variant="outlined" color="secondary">Abmelden</Button>
                 </div>
                 )
                 :
