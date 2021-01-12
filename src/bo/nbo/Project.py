@@ -5,6 +5,8 @@ from bo.nbo.ProjectType import ProjectType
 from datetime import datetime
 
 """Realisierung der Projektklasse für die Organisation von Projekten"""
+"""Projekte sind Automaten, daher erbt die Klasse Project das Attribut current_state sowie die Methoden aus
+der Klasse Automat. Für eine nähere Erläuterung siehe Automat.py."""
 
 class Project(NamedBusinessObject, Automat):
 
@@ -94,14 +96,19 @@ class Project(NamedBusinessObject, Automat):
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projektinstanz"""
-        return "Projekt: {} {}, Anzahl der Plätze: {}, Externe Partner: {}, Kurzbeschreibung: {}," \
-               "Wöchentliche Veranstalung: {}, Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Prüfungszeit: {}," \
-               "Präferierte Blocktage in der Vorlesungszeit: {}," \
-               "Erforderlichkeit eines besonderen Raums: {}".format(self.get_id(), self.get_name(), self.get_capacity(),
+        return  "Projekt: {} {}, Momentaner Zustand: {}, Anzahl der Plätze: {}, Externe Partner: {}," \
+                "Kurzbeschreibung: {}, Wöchentliche Veranstalung: {}," \
+                "Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Vorlesungszeit: {}," \
+                "Anzahl der Blocktage in der Prüfungszeit: {}, Präferierte Blocktage in der Vorlesungszeit: {}," \
+                "Erforderlichkeit eines besonderen Raums: {}".format(self.get_id(), 
+                                                                    self.get_name(),
+                                                                    self.get_state(), 
+                                                                    self.get_capacity(),
                                                                     self.get_external_partners(),
                                                                     self.get_short_description(),
                                                                     self.get_weekly_flag(),
                                                                     self.get_bd_before_lecture_period(),
+                                                                    self.get_bd_in_lecture_period(),
                                                                     self.get_bd_in_exam_period(),
                                                                     self.get_bd_preferred_in_lecture_period(),
                                                                     self.get_special_room())
@@ -113,6 +120,7 @@ class Project(NamedBusinessObject, Automat):
         project.set_id(dictionary["id"])
         project.set_creation_date(dictionary["creation_date"])
         project.set_name(dictionary["name"])
+        project.set_state(dictionary["current_state"])
         project.set_capacity(dictionary["capacity"])
         project.set_external_partners(dictionary["external_partners"])
         project.set_short_description(dictionary["short_description"])
@@ -123,13 +131,3 @@ class Project(NamedBusinessObject, Automat):
         project.set_bd_preferred_in_lecture_period(dictionary["bd_preferred_in_lecture_period"])
         project.set_special_room(dictionary["special_room"])
         return project
-
-    """ p = Project("IT-Project")
-
-    if p.is_in_state(State.state_new):
-        print(p, "in New")
-    
-    p.set_state(State.state_approved)
-
-    if p.is_in_state(State.state_approved):
-        print(p, "in Approved") """

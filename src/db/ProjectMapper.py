@@ -27,11 +27,12 @@ class ProjectMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room) in tuples:
+        for (id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room) in tuples:
             project = Project()
             project.set_id(id)
             project.set_creation_date(creation_date)
             project.set_name(name)
+            project.set_state(current_state)
             project.set_capacity(capacity)
             project.set_external_partners(external_partners)
             project.set_short_description(short_description)
@@ -59,14 +60,16 @@ class ProjectMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT project_id, name, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room FROM project WHERE project_id={} ORDER BY project_id".format(id)
+        command = "SELECT project_id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room FROM project WHERE project_id={} ORDER BY project_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, name, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room) in tuples:
+        for (id, creation_date, name, current_state, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room) in tuples:
             project = Project()
             project.set_id(id)
+            project.set_creation_date(creation_date)
             project.set_name(name)
+            project.set_state(current_state)
             project.set_capacity(capacity)
             project.set_external_partners(external_partners)
             project.set_short_description(short_description)
@@ -94,14 +97,16 @@ class ProjectMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT project_id, name, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room FROM project WHERE name LIKE '{}' ORDER BY name".format(name)
+        command = "SELECT project_id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room FROM project WHERE name LIKE '{}' ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, name, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room) in tuples:
+        for (id, creation_date, name, current_state, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room) in tuples:
             project = Project()
             project.set_id(id)
+            project.set_creation_date(creation_date)
             project.set_name(name)
+            project.set_state(current_state)
             project.set_capacity(capacity)
             project.set_external_partners(external_partners)
             project.set_short_description(short_description)
@@ -145,8 +150,8 @@ class ProjectMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 project.set_id(1)
 
-        command = "INSERT INTO project (project_id, creation_date, name, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        data = (project.get_id(), project.get_creation_date(), project.get_edv_number(), project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room())
+        command = "INSERT INTO project (project_id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        data = (project.get_id(), project.get_creation_date(), project.get_name(), project.get_state(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -162,8 +167,8 @@ class ProjectMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE project " + "SET name=%s, capacity=%s, external_partners=%s, short_description=%s, weekly_flag=%s, bd_before_lecture_period=%s, bd_in_lecture_period=%s, bd_in_exam_period=%s, bd_preferred_in_lecture_period=%s, special_room=%s WHERE project_id={}".format(project.get_id())
-        data = (project.get_name(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room())
+        command = "UPDATE project " + "SET creation_date=%s, name=%s, current_state=%s, capacity=%s, external_partners=%s, short_description=%s, weekly_flag=%s, bd_before_lecture_period=%s, bd_in_lecture_period=%s, bd_in_exam_period=%s, bd_preferred_in_lecture_period=%s, special_room=%s WHERE project_id={}".format(project.get_id())
+        data = (project.get_creation_date(), project.get_name(), project.get_current_state(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room())
         cursor.execute(command, data)
 
         self._cnx.commit()

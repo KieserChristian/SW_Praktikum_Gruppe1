@@ -3,6 +3,15 @@ from datetime import datetime
 
 """Realisierung der Hilfsklasse Automat für die Modellierung von Zuständen für Projekte"""
 
+"""Die Klasse Automat besitzt keine ID und kein Erstellungsdatum und enthält lediglich den momentanen Zustand
+und die zugehörigen Methoden für Setzen und Auslesen des Zustandes sowie die Abfrage des momentanen Zustands.
+Die Klasse Project erbt von NamedBusinessObject bzw. BusinessObject und Automat. 
+In der Klasse BusinessObject sind bereits ID und Erstellungszeitpunkt enthalten, weshalb diese Attribute
+in Automat nicht definiert werden (sonst käme es bei der Vererbung an Project zu einer Doppelung).
+Projekte sind Automaten und jegliche Methoden und Attribute werden auch nur über Projekt realisiert.
+Die Klasse Automat ist somit eher als Hilfsklasse anzusehen ähnlich wie die abstrakten Basisklassen 
+BusinessObject und NamedBusinessObject."""
+
 class Automat():
 
     def __init__(self, initial_state):
