@@ -679,12 +679,12 @@ class ProjectListOperations(Resource):
     @projectTool.marshal_list_with(project)
     #@secured
     def get(self):
-        """Auslesen aller Project-Objektes"""
+        """Auslesen aller Project-Objekte"""
         adm = ProjectAdministration()
         project_list = adm.get_all_projects()
         return project_list
 
-@projectTool.route('/project-type')
+@projectTool.route('/project-type/<int:project_type_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('project_type_id', 'Dies ist die ID von ProjectType')
 class ProjectTypeOperations(Resource):
@@ -722,7 +722,7 @@ class ProjectTypeOperations(Resource):
         else:
             return '', 500
 
-@projectTool.route('/project-type')
+@projectTool.route('/project-types')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjectTypeListOperations(Resource):
     @projectTool.marshal_list_with(project_type)

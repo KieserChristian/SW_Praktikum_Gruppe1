@@ -49,8 +49,8 @@ export default class ProjectAdminAPI {
     //#getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
 
-
     // ProjectType related
+    #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project/project-type/§{project_type_id}`;
 
     // Semester related
 
@@ -76,16 +76,40 @@ export default class ProjectAdminAPI {
       return res.json();
     })
 
+    //Project
 
+<<<<<<< HEAD
 
 /*     getAllProjectsAPI() {
       return this.#fetchAdvanced(this.#getAllProjectsURL()).then((responseJSON) => {
+=======
+    getAllProjects() {
+      return this.#fetchAdvanced(this.#getAllProjectsURL())
+      .then((responseJSON) => {
+>>>>>>> stini
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(ProjectNBOs);
         })
       })
+<<<<<<< HEAD
     } */
+=======
+    }
+
+    //ProjectType
+
+    getProjectTypeById(projectTypeId) {
+      return this.#fetchAdvanced(this.#getProjectTypeByIdURL(projectTypeId))
+      .then((responseJSON) => {
+        let ProjectTypeNBOs = ProjectTypeNBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(ProjectTypeNBOs);
+        })
+      })
+    }
+   
+>>>>>>> stini
     // Gibt eine Promise zurück mit einer Liste von GradingBOs
 
     getAllGradings() {
