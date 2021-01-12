@@ -40,3 +40,12 @@ class Role():
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Rolleninstanz"""
         return "Rolle: {} {} ".format(self.get_id(), self.get_static_attribute())
+
+    @staticmethod
+     def from_dict(dictionary=dict()):
+         """Umwandeln eines Python dict () """
+         role = Role()
+         role.set_id(dictionary["id"])
+         role.set_creation_date(dictionary["creation_date"])
+         role.set_static_attribute(dictionary["static_attribute"])
+         return role 

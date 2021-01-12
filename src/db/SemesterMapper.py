@@ -51,12 +51,16 @@ class SemesterMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name) in tuples:
+        try:
+            (id, creation_date, name) = tuples[0]
             semester = Semester()
             semester.set_id(id)
             semester.set_creation_date(creation_date)
             semester.set_name(name)
-            result.append(semester)
+            result = semester
+        except IndexError:
+            print("There was no object with this id")
+            result = None
 
         self._cnx.commit()
         cursor.close()
@@ -83,7 +87,7 @@ class SemesterMapper (Mapper):
             semester.set_id(id)
             semester.set_creation_date(creation_date)
             semester.set_name(name)
-            result.append(semester)
+            result = semester
 
         self._cnx.commit()
         cursor.close()
@@ -110,9 +114,6 @@ class SemesterMapper (Mapper):
 
         command = "INSERT INTO semester (semester_id, creation_date, name) VALUES (%s,%s,%s)"
         data = (semester.get_id(), semester.get_creation_date(), semester.get_name())
-        print('Semester id is '+str(semester.get_id()))
-        print('Semester date is '+str(semester.get_creation_date()))
-        print('Semester name is '+str(semester.get_name()))
         cursor.execute(command, data)
 
         self._cnx.commit()
