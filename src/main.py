@@ -617,7 +617,7 @@ class GradingByParticipationOperations(Resource):
         grad = adm.get_grading_by_participation_id(participation_id)
         return grad
 
-@projectTool.route('/project')
+@projectTool.route('/project/<int:project_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('project_id', 'Dies ist die ID von Project')
 class ProjectOperations(Resource):
@@ -683,6 +683,21 @@ class ProjectListOperations(Resource):
         adm = ProjectAdministration()
         project_list = adm.get_all_projects()
         return project_list
+
+    @projectTool.marshal_with(project, code=200)
+    @projectTool.expect(project) 
+    #@secured
+        #Hier wird ein Personen-Objekt von Client-Seite erwartet
+    def post(self):
+        """Anlegen eines neuen Project-Objekts"""
+        adm = ProjectAdministration()
+        proj = Project.from_dict(api.payload)
+
+        if proj is not None:
+            proj = adm.create_project(proj.get_name(), proj.get_id(), proj.get_external_partners(), proj.get_capacity(), proj.get_weekly_flag(), proj.get_bd_preferred_in_lecture_period(), proj.get_bd_in_lecture_period(), proj.get_bd_in_exam_period(), proj.get_bd_before_lecture_period(), proj.get_short_description(), proj.get_special_room())
+            return proj, 200
+        else:
+            return '', 500
 
 @projectTool.route('/project-type/<int:project_type_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -763,7 +778,7 @@ class AutomatOperations(Resource):
         aut = adm.get_automat_by_id(automat_id)
         return aut
         
-@projectTool.route('/module')
+@projectTool.route('/module/<int:module_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('module_id', 'Dies ist die ID von Module')
 class ModuleOperations(Resource):
@@ -801,7 +816,7 @@ class ModuleOperations(Resource):
         else:
             return '', 500
 
-@projectTool.route('/module')
+@projectTool.route('/modules')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ModuleListOperations(Resource):
     @projectTool.marshal_list_with(module)

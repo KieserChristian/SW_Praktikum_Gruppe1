@@ -1,3 +1,5 @@
+from bo import BusinessObject
+from bo.nbo import NamedBusinessObject
 from bo.Grading import Grading
 from bo.Participation import Participation
 from bo.nbo.Module import Module
@@ -367,19 +369,19 @@ class ProjectAdministration():
     Project-Methoden
     """
 
-    def create_project(self, name:str, external_partners:str, capacity:int, short_description:str, special_room:str):
+    def create_project(self, name:str, id, external_partners:str, capacity:int, weekly_flag:bool, bd_preferred_in_lecture_period:int, bd_in_lecture_period:int, bd_in_exam_period:int, bd_before_lecture_period:int, short_description:str, special_room:str):
         """Ein Projekt anlegen"""
 
         project = Project()
         project.set_name(name)
-        project.set_id(1)
+        project.set_id(id)
         project.set_external_partners(external_partners)
         project.set_capacity(capacity)
-        project.set_weekly_flag(False)
-        project.set_bd_preferred_in_lecture_period(0)
-        project.set_bd_in_lecture_period(0)
-        project.set_bd_in_exam_period(0)
-        project.set_bd_before_lecture_period(0)
+        project.set_weekly_flag(weekly_flag)
+        project.set_bd_preferred_in_lecture_period(bd_preferred_in_lecture_period)
+        project.set_bd_in_lecture_period(bd_in_lecture_period)
+        project.set_bd_in_exam_period(bd_in_exam_period)
+        project.set_bd_before_lecture_period(bd_before_lecture_period)
         project.set_short_description(short_description)
         project.set_special_room(special_room)
 
