@@ -128,7 +128,7 @@ role = api.model('Role', {
 @projectTool.param('person_id', 'Dies ist die ID von Person')
 class PersonOperations(Resource):
     @projectTool.marshal_with(person)
-    @secured
+    #@secured
     def get(self, person_id):
         """Auslesen eines bestimmten Personen-Objekts, welches durch die person_id in dem URI bestimmt wird."""
 
@@ -137,7 +137,7 @@ class PersonOperations(Resource):
         return pers
 
     @projectTool.marshal_with(person)   
-    @secured
+    #@secured
     def delete(self, person_id):
         """Löschen eines bestimmten Personen-Objekts, welches durch die person_id in dem URI bestimmt wird."""
 
@@ -152,7 +152,7 @@ class PersonOperations(Resource):
 
     @projectTool.marshal_with(person)
     @projectTool.expect(person, validate=True)
-    @secured
+    #@secured
     def put(self, person_id):
         """Update eines bestimmten Personen-Objekts."""
         adm = ProjectAdministration()
@@ -170,7 +170,7 @@ class PersonOperations(Resource):
 @projectTool.param('name', 'Dies ist der Name von Person')
 class PersonByNameOperations(Resource):
     @projectTool.marshal_with(person)
-    @secured
+    #@secured
     def get(self, name):
         """Auslesen eines bestimmten Personen-Objekts, welches durch den Namen bestimmt wird."""
 
@@ -183,7 +183,7 @@ class PersonByNameOperations(Resource):
 @projectTool.param('person_id', 'Dies ist die ID von Person')
 class PersonRelatedProjectOperations(Resource):
     @projectTool.marshal_with(project)
-    @secured
+    #@secured
     def get(self, person_id):
         """Auslesen aller Project-Objekte eines bestimmten Person-Objekts, welches durch die ID von Person bestimmt wird."""
 
@@ -200,7 +200,7 @@ class PersonRelatedProjectOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PersonListOperations(Resource):
     @projectTool.marshal_list_with(person)
-    @secured
+    #@secured
     def get(self):
         """Auslesen aller Personen-Objekte"""
         adm = ProjectAdministration()
@@ -209,7 +209,7 @@ class PersonListOperations(Resource):
 
     @projectTool.marshal_with(person, code=200)
     @projectTool.expect(person) 
-    @secured
+    #@secured
         #Hier wird ein Personen-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Personen-Objekts"""
@@ -227,7 +227,7 @@ class PersonListOperations(Resource):
 @projectTool.param('student_id', 'Dies ist die ID von Student')
 class StudentOperations(Resource):
     @projectTool.marshal_with(student)
-    @secured
+    #@secured
     def get(self, student_id):
         """Auslesen eines bestimmten Student-Objekts, welches durch die student_id in dem URI bestimmt wird."""
 
@@ -235,7 +235,7 @@ class StudentOperations(Resource):
         stud = adm.get_student_by_id(student_id)
         return stud
         
-    @secured
+    #@secured
     def delete(self, student_id):
         """Löschen eines bestimmten Student-Objekts, welches durch die student_id in dem URI bestimmt wird."""
 
@@ -250,7 +250,7 @@ class StudentOperations(Resource):
 
     @projectTool.marshal_with(student)
     @projectTool.expect(student, validate=True)
-    @secured
+    #@secured
     def put(self, student_id):
         """Update eines bestimmten Student-Objekts"""
 
@@ -269,7 +269,7 @@ class StudentOperations(Resource):
 @projectTool.param('student_id', 'Dies ist die ID von Student')
 class StudentRelatedProjectOperations(Resource):
     @projectTool.marshal_with(project)
-    @secured
+    #@secured
     def get(self, student_id):
         """Auslesen aller Project-Objekte eines bestimmten Student-Objekts, welches durch die ID von Student bestimmt wird."""
 
@@ -286,7 +286,7 @@ class StudentRelatedProjectOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class StudentListOperations(Resource):
     @projectTool.marshal_list_with(student)
-    @secured
+    #@secured
     def get(self):
         """Auslesen aller Student-Objekte"""
         adm = ProjectAdministration()
@@ -295,7 +295,7 @@ class StudentListOperations(Resource):
 
     @projectTool.marshal_with(student, code=200)
     @projectTool.expect(student) 
-    @secured
+    #@secured
         #Hier wird ein Student-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Student-Objekts"""
@@ -313,7 +313,7 @@ class StudentListOperations(Resource):
 @projectTool.param('matriculation_number', 'Die Matrikelnummer des Studenten')
 class StudentByMatriculationNumberOperations(Resource):
     @projectTool.marshal_with(student)
-    @secured
+    #@secured
     def get(self, matriculation_number):
         """Auslesen von Student-Objekten, die durch die Matrikelnummer bestimmt werden.
         Die auszulesenden Objekte werden durch 'matriculation_number' in dem URI bestimmt.
@@ -327,7 +327,7 @@ class StudentByMatriculationNumberOperations(Resource):
 @projectTool.param('name', 'Der Name des Studenten')
 class StudentByNameOperations(Resource):
     @projectTool.marshal_with(student)
-    @secured
+    #@secured
     def get(self, name):
         """Auslesen von Student-Objekten, die durch den Namen bestimmt werden.
         Die auszulesenden Objekte werden durch 'name' in dem URI bestimmt.
@@ -341,7 +341,7 @@ class StudentByNameOperations(Resource):
 @projectTool.param('state_id', 'Dies ist die ID von State')
 class StateOperations(Resource):
     @projectTool.marshal_with(state)
-    @secured
+    #@secured
     def get(self, state_id):
         """Auslesen eines bestimmten State-Objektes, welches durch die state_id in dem URI bestimmt wird."""
 
@@ -349,7 +349,7 @@ class StateOperations(Resource):
         stat = adm.get_state_by_id(state_id)
         return stat
     
-    @secured
+    #@secured
     def delete(self, state_id):
         """Löschen eines bestimmten State-Objekts, welches durch die state_id in dem URI bestimmt wird."""
 
@@ -363,7 +363,7 @@ class StateOperations(Resource):
 @projectTool.param('state_id', 'Dies ist die ID von Project')
 class StateRelatedProjectOperations(Resource):
     @projectTool.marshal_with(project)
-    @secured
+    #@secured
     def get(self, state_id):
         """Auslesen aller Project-Objekte bezüglich eines bestimmten State-Objekts"""
         adm = ProjectAdministration()
@@ -381,7 +381,7 @@ class StateRelatedProjectOperations(Resource):
 class SemesterOperations(Resource):
     @projectTool.marshal_with(semester, code=200)
     @projectTool.expect(semester) 
-    @secured
+    #@secured
         #Hier wird ein Semester-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Semester-Objekts"""
@@ -398,7 +398,7 @@ class SemesterOperations(Resource):
 
     @projectTool.marshal_with(semester)
     @projectTool.expect(semester, validate=True)
-    @secured
+    #@secured
     def put(self, semester_id):
         """Update eines bestimmten Semester-Objektes."""
         adm = ProjectAdministration()
@@ -416,7 +416,7 @@ class SemesterOperations(Resource):
 @projectTool.param('semester_id', 'Dies ist die ID des Semesters')
 class SemesterOperations(Resource):
     @projectTool.marshal_with(semester)
-    @secured
+    #@secured
     def get(self, semester_id):
         """Auslesen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
@@ -428,7 +428,7 @@ class SemesterOperations(Resource):
             return 'Semester nicht vorhanden', 500
 
     @projectTool.marshal_list_with(semester)
-    @secured
+    #@secured
     def delete(self, semester_id):
         """Löschen eines bestimmten Semester-Objektes, welches durch die semester_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
@@ -445,7 +445,7 @@ class SemesterOperations(Resource):
 @projectTool.param('semester_id', 'Dies ist die ID von Semester')
 class SemesterRelatedProjectOperations(Resource):
     @projectTool.marshal_with(project)
-    @secured
+    #@secured
     def get(self, semester_id):
         """Auslesen aller Project-Objekte bezüglich eines bestimmten Semester-Objekts"""
         adm = ProjectAdministration()
@@ -463,7 +463,7 @@ class SemesterRelatedProjectOperations(Resource):
 @projectTool.param('role_id', 'Dies ist die ID von Role')
 class RoleOperations(Resource):
     @projectTool.marshal_with(role)
-    @secured
+    #@secured
     def get(self, role_id):
         """Auslesen eines bestimmten Role-Objektes, welches durch die role_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
@@ -472,7 +472,7 @@ class RoleOperations(Resource):
     
     @projectTool.marshal_with(role)
     @projectTool.expect(role, validate=True)
-    @secured
+    #@secured
     def put(self, role_id):
         #Update eines bestimmten Role-Objekts.
         adm = ProjectAdministration()
@@ -489,7 +489,7 @@ class RoleOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class RoleListOperations(Resource):
     @projectTool.marshal_list_with(role)
-    @secured
+    #@secured
     def get(self):
         """Auslesen aller Role-Objekte"""
         adm = ProjectAdministration()
@@ -498,7 +498,7 @@ class RoleListOperations(Resource):
     
     @projectTool.marshal_with(role, code=200)
     @projectTool.expect(role)
-    @secured
+    #@secured
         #Hier wird ein Role-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Role-Objekts"""
@@ -518,7 +518,7 @@ class RoleListOperations(Resource):
 @projectTool.param('role_id', 'Dies ist die ID von Role')
 class RoleRelatedPersonOperations(Resource):
     @projectTool.marshal_with(person)
-    @secured
+    #@secured
     def get(self, role_id):
         """Auslesen aller Personen-Objekte bezüglich eines bestimmten Role-Objekts"""
         adm = ProjectAdministration()
@@ -537,7 +537,7 @@ class RoleRelatedPersonOperations(Resource):
 class GradingOperations(Resource):
     @projectTool.marshal_list_with(grading)
     #@projectTool.param('grading_id', 'Dies ist die ID von unserem Grading Objekt')
-    @secured
+    #@secured
     def get(self, grading_id):
         """Auslesen eines bestimmten Grading-Objektes, welches durch die grading_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
@@ -562,7 +562,7 @@ class GradingOperations(Resource):
 class GradingOperations(Resource):
     @projectTool.marshal_with(grading, code=200)
     @projectTool.expect(grading) 
-    @secured
+    #@secured
         #Hier wird ein Grading-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Grading-Objekts"""
@@ -578,7 +578,7 @@ class GradingOperations(Resource):
     
     @projectTool.marshal_with(grading)
     @projectTool.expect(grading, validate=True)
-    @secured
+    #@secured
     def put(self, grading_id):
         """Update eines bestimmten Grading-Objekts."""
         adm = ProjectAdministration()
@@ -595,7 +595,7 @@ class GradingOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class GradingListOperations(Resource):
     @projectTool.marshal_list_with(grading)
-    @secured
+    #@secured
     def get(self):
         """Auslesen aller Grading-Objekte"""
         adm = ProjectAdministration()
@@ -608,7 +608,7 @@ class GradingListOperations(Resource):
 @projectTool.param('participation_id', 'Die ID der Teilnahme')
 class GradingByParticipationOperations(Resource):
     @projectTool.marshal_with(grading)
-    @secured
+    #@secured
     def get(self, participation_id):
         """Auslesen eines Grading-Objektes, welches durch die Participation-ID bestimmt wird.
         Das auszulesende Objekt wird durch 'participation_id' in dem URI bestimmt.
@@ -622,14 +622,14 @@ class GradingByParticipationOperations(Resource):
 @projectTool.param('project_id', 'Dies ist die ID von Project')
 class ProjectOperations(Resource):
     @projectTool.marshal_with(project)
-    @secured
+    #@secured
     def get(self, project_id):
         """Auslesen eines bestimmten Project-Objektes, welches durch die project_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
         proj = adm.get_project_by_id(project_id)
         return proj
     
-    @secured
+    #@secured
     def delete(self, project_id):
         """Löschen eines bestimmten Project-Objektes, welches durch die project_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
@@ -642,7 +642,7 @@ class ProjectOperations(Resource):
     
     @projectTool.marshal_with(project)
     @projectTool.expect(project, validate=True)
-    @secured
+    #@secured
     def put(self, project_id):
         """Update eines bestimmten Project-Objekts."""
         adm = ProjectAdministration()
@@ -660,7 +660,7 @@ class ProjectOperations(Resource):
 @projectTool.param('project_id', 'Dies ist die ID von Project')
 class ProjectRelatedParticipationOperations(Resource):
     @projectTool.marshal_with(participation)
-    @secured
+    #@secured
     def get(self, project_id):
         """Auslesen aller Participation-Objekte bezüglich eines bestimmten Project-Objekts"""
         adm = ProjectAdministration()
@@ -677,7 +677,7 @@ class ProjectRelatedParticipationOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjectListOperations(Resource):
     @projectTool.marshal_list_with(project)
-    @secured
+    #@secured
     def get(self):
         """Auslesen aller Project-Objekte"""
         adm = ProjectAdministration()
@@ -686,7 +686,7 @@ class ProjectListOperations(Resource):
 
     @projectTool.marshal_with(project, code=200)
     @projectTool.expect(project) 
-    @secured
+    #@secured
         #Hier wird ein Personen-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Project-Objekts"""
@@ -704,14 +704,14 @@ class ProjectListOperations(Resource):
 @projectTool.param('project_type_id', 'Dies ist die ID von ProjectType')
 class ProjectTypeOperations(Resource):
     @projectTool.marshal_with(project_type)
-    @secured
+    #@secured
     def get(self, project_type_id):
         """Auslesen eines bestimmten ProjectType-Objektes, welches durch die project_type_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
         projtyp = adm.get_project_type_by_id(project_type_id)
         return projtyp
     
-    @secured
+    #@secured
     def delete(self, project_type_id):
         """Löschen eines bestimmten ProjectType-Objektes, welches durch die project_type_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
@@ -724,7 +724,7 @@ class ProjectTypeOperations(Resource):
     
     @projectTool.marshal_with(project_type)
     @projectTool.expect(project_type, validate=True)
-    @secured
+    #@secured
     def put(self, project_type_id):
         """Update eines bestimmten ProjectType-Objekts."""
         adm = ProjectAdministration()
@@ -741,7 +741,7 @@ class ProjectTypeOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjectTypeListOperations(Resource):
     @projectTool.marshal_list_with(project_type)
-    @secured
+    #@secured
     def get(self):
         """Auslesen aller ProjectType-Objekte"""
         adm = ProjectAdministration()
@@ -750,7 +750,7 @@ class ProjectTypeListOperations(Resource):
 
     @projectTool.marshal_with(project_type, code=200)
     @projectTool.expect(project_type) 
-    @secured
+    #@secured
         #Hier wird ein ProjectType-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen ProjectType-Objekts"""
@@ -770,7 +770,7 @@ class ProjectTypeListOperations(Resource):
 @projectTool.param('automat_id', 'Dies ist die ID von Automat')
 class AutomatOperations(Resource):
     @projectTool.marshal_with(automat)
-    @secured
+    #@secured
     def get(self, automat_id):
         """Auslesen eines bestimmten Automat-Objektes, welches durch die automat_id in dem URI bestimmt wird."""
 
@@ -783,14 +783,14 @@ class AutomatOperations(Resource):
 @projectTool.param('module_id', 'Dies ist die ID von Module')
 class ModuleOperations(Resource):
     @projectTool.marshal_with(module)
-    @secured
+    #@secured
     def get(self, module_id):
         """Auslesen eines bestimmten Module-Objektes, welches durch die module_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
         mod = adm.get_module_by_id(module_id)
         return mod
     
-    @secured
+    #@secured
     def delete(self, module_id):
         """Löschen eines bestimmten Module-Objektes, welches durch die module_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
@@ -803,7 +803,7 @@ class ModuleOperations(Resource):
     
     @projectTool.marshal_with(module)
     @projectTool.expect(module, validate=True)
-    @secured
+    #@secured
     def put(self, module_id):
         """Update eines bestimmten Module-Objekts."""
         adm = ProjectAdministration()
@@ -820,7 +820,7 @@ class ModuleOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ModuleListOperations(Resource):
     @projectTool.marshal_list_with(module)
-    @secured
+    #@secured
     def get(self):
         """Auslesen aller Module-Objekte"""
         adm = ProjectAdministration()
@@ -829,7 +829,7 @@ class ModuleListOperations(Resource):
 
     @projectTool.marshal_with(module, code=200)
     @projectTool.expect(module) 
-    @secured
+    #@secured
         #Hier wird ein Module-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Module-Objekts"""
@@ -849,14 +849,14 @@ class ModuleListOperations(Resource):
 @projectTool.param('participation_id', 'Dies ist die ID von Participation')
 class ParticipationOperations(Resource):
     @projectTool.marshal_list_with(participation)
-    @secured
+    #@secured
     def get(self, participation_id):
         """Auslesen eines bestimmten Participation-Objektes, welches durch die participation_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
         part = adm.get_participation_by_id(participation_id)
         return part
     
-    @secured
+    #@secured
     def delete(self, participation_id):
         """Löschen eines bestimmten Participation-Objektes, welches durch die participation_id in dem URI bestimmt wird."""
         adm = ProjectAdministration()
@@ -869,7 +869,7 @@ class ParticipationOperations(Resource):
     
     @projectTool.marshal_with(participation)
     @projectTool.expect(participation, validate=True)
-    @secured
+    #@secured
     def put(self, participation_id):
         """Update eines bestimmten Participation-Objekts."""
         adm = ProjectAdministration()
@@ -886,7 +886,7 @@ class ParticipationOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ParticipationListOperations(Resource):
     @projectTool.marshal_list_with(participation)
-    @secured
+    #@secured
     def get(self):
         """Auslesen aller Participation-Objekte"""
         adm = ProjectAdministration()
@@ -895,7 +895,7 @@ class ParticipationListOperations(Resource):
 
     @projectTool.marshal_with(participation, code=200)
     @projectTool.expect(participation) 
-    @secured
+    #@secured
         #Hier wird ein Participation-Objekt von Client-Seite erwartet
     def post(self):
         """Anlegen eines neuen Participation-Objekts"""
