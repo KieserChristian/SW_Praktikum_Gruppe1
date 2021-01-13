@@ -6,7 +6,7 @@ from ProjectAdministration import ProjectAdministration
 
 
 def secured(function):
-    """Decorator zur Google Firebase-basierten Authentifizierung von Benutzern
+    Decorator zur Google Firebase-basierten Authentifizierung von Benutzern
 
     Da es sich bei diesem System um eine basale Fallstudie zu Lehrzwecken handelt, wurde hier
     bewusst auf ein ausgefeiltes Berechtigungskonzept verzichtet. Vielmehr soll dieses Decorator
@@ -17,7 +17,7 @@ def secured(function):
     Account besitzt, sich an diesem System anmelden kann. Bei jeder Anmeldung werden Klarname,
     Mail-Adresse sowie die Google User ID in unserem System gespeichert bzw. geupdated. Auf diese
     Weise könnte dann für eine Erweiterung des Systems auf jene Daten zurückgegriffen werden.
-    """
+    
     firebase_request_adapter = requests.Request()
 
     def wrapper(*args, **kwargs):
@@ -46,19 +46,19 @@ def secured(function):
 
                     user = adm.get_user_by_google_id(google_id)
                     if user is not None:
-                        """Fall: Der Benutzer ist unserem System bereits bekannt.
+                        Fall: Der Benutzer ist unserem System bereits bekannt.
                         Wir gehen davon aus, dass die google_id sich nicht ändert.
                         Wohl aber können sich der zugehörige Klarname (name) und die
                         E-Mail-Adresse ändern. Daher werden diese beiden Daten sicherheitshalber
-                        in unserem System geupdated."""
+                        in unserem System geupdated.
                         user.set_name(name)
                         user.set_email(email)
                         adm.save_user(user)
                     else:
-                        """Fall: Der Benutzer war bislang noch nicht eingelogged. 
+                        Fall: Der Benutzer war bislang noch nicht eingelogged. 
                         Wir legen daher ein neues User-Objekt an, um dieses ggf. später
                         nutzen zu können.
-                        """
+                        
                         user = adm.create_user(name, email, google_id)
 
                     print(request.method, request.path, "angefragt durch:", name, email)

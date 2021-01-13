@@ -13,7 +13,7 @@ from bo.nbo.Person import Person
 from bo.nbo.Student import Student
 from so.State import State
 from so.Role import Role
-from SecurityDecorator import secured
+#from SecurityDecorator import secured
 
 """Flask instanzieren"""
 app = Flask(__name__)
