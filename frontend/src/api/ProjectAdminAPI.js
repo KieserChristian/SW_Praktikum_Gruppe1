@@ -46,7 +46,7 @@ export default class ProjectAdminAPI {
     // Person related
 
     // Project related
-    //#getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
+    #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
 
     // ProjectType related

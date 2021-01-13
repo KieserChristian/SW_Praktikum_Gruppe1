@@ -11,9 +11,9 @@ import SignIn from './components/pages/SignIn';
 import './App.css';
 import LoadingProgress from './components/dialogs/LoadingProgress';
 import ContextErrorMessage from './components/dialogs/ContextErrorMessage';
-//import LogIn from './components/pages/LogIn';
+import LogIn from './components/pages/LogIn';
 import StudentGradingView from './components/StudentGradingView';
-//import StudentView from './components/StudentView';
+import StudentView from './components/StudentView';
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
@@ -111,7 +111,9 @@ class App extends React.Component {
 							// Is a user signed in?
 							currentUser ?
 								<>
-                  <StudentGradingView/>
+                  <LogIn/>
+                  <StudentView/>
+                  <StudentGradingView/>                  
 								</>
 								:
 								// else show the sign in page
