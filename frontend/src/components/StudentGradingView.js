@@ -41,42 +41,37 @@ class StudentGradingView extends React.Component {
         <div className={classes.root}>
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
         <Grid Container spacing={2}>
-            <Grid item xs={12} sm={6} style={{paddingTop: 10, paddingBottom: 10,}} >
-                <Button style={{paddingBottom: 10, paddingLeft: 10}} variant="contained">Projektübersicht</Button>
-                <Button style={{paddingBottom: 10, paddingLeft: 10}} variant="contained">Leistungsübersicht</Button>
-            </Grid>
-
             <Grid>
-                <Button variant="contained">Notenspiegel</Button>
+                <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">Notenspiegel</Button>
             </Grid>
         </Grid>
         <TableRow>
-                    <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: colors.grey[100]}} colSpan={10}>
+                    <TableCell style={{width: '100%', paddingBottom: 0, paddingTop: 0, backgroundColor: colors.grey[100]}} colSpan={10}>
                             <Box margin={1}>
                                 <Table size="small" aria-label="purchases">
                                     <TableHead >
                                         <TableRow>
-                                            <TableCell colSpan={1} padding="none" align="left">EDV-Nummer</TableCell>
-                                            <TableCell colSpan={1} padding="none" align="left">Modul</TableCell>
-                                            <TableCell colSpan={1} padding="none" align="left">Semester</TableCell>
-                                            <TableCell colSpan={1} padding="none" align="center">Note</TableCell>
-                                            <TableCell colSpan={1} padding="none" align="center">ECTS</TableCell>
-                                            <TableCell colSpan={1} padding="none" align="center">SWS</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">EDV-Nummer</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Modul</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Semester</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Note</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">ECTS</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">SWS</TableCell>
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody>
-                                        <TableCell colSpan={1} padding="none" align="left">Test</TableCell>
-                                        <TableCell colSpan={1} padding="none" align="left">Test</TableCell>
-                                        <TableCell colSpan={1} padding="none" align="left">Test</TableCell>
+                                    <TableBody style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
+                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
+                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
+                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
                                         {gradings.length > 0 ? 
                                                 gradings.map(grading =>
-                                                    <TableCell colSpan={1} padding="none" align="center">{grading.getGrade()}</TableCell>
+                                                    <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{grading.getGrade()}</TableCell>
                                                     )
                                                     :
                                                     null
                                         }
-                                        <TableCell colSpan={1} padding="none" align='center'>Test</TableCell>
-                                        <TableCell colSpan={1} padding="none" align='center'>Test</TableCell>
+                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align='center'>Test</TableCell>
+                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align='center'>Test</TableCell>
                                     </TableBody>
                                 </Table>
                             </Box>

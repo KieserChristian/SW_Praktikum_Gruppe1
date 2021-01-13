@@ -14,6 +14,7 @@ import ContextErrorMessage from './components/dialogs/ContextErrorMessage';
 import LogIn from './components/pages/LogIn';
 import StudentGradingView from './components/StudentGradingView';
 import StudentView from './components/StudentView';
+import StudentNavigation from './components/StudentNavigation';
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
@@ -112,6 +113,7 @@ class App extends React.Component {
 							currentUser ?
 								<>
                   <LogIn/>
+                  <StudentNavigation/>
                   <StudentView/>
                   <StudentGradingView/>                  
 								</>
