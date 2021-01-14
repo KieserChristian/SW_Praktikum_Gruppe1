@@ -1,38 +1,38 @@
-/* import PersonNBO from "./PersonNBO";
+import NamedBusinessObject from "./NamedBusinessObject"
 
-export default class StudentNBO extends PersonNBO {
+export default class StudentNBO extends NamedBusinessObject {
 
-    constructor(aname,anid){
-        super(aname,anid);
-        this.matriculation_number = amatriculation_number
-        this.course_abbreviation = acourse_abbreviation
+    constructor(aMatriculationNumber, aCourseAbbreviation){
+        super();
+        this.matriculation_number = aMatriculationNumber
+        this.course_abbreviation = aCourseAbbreviation
     }
 
-    setMatriculationNumber (amatriculation_number){
-        this.matriculation_number = amatriculation_number
+    setMatriculationNumber (aMatriculationNumber){
+        this.matriculation_number = aMatriculationNumber;
     }
 
     getMatriculationNumber(){
-        return this.matriculation_number
+        return this.matriculation_number;
     }
 
-    setCourseAbbreviation(acourse_abbreviation){
-        this.course_abbreviation = acourse_abbreviation
+    setCourseAbbreviation(aCourseAbbreviation){
+        this.course_abbreviation = aCourseAbbreviation;
     }
 
     getCourseAbbreviation(){
-        return this.course_abbreviation
+        return this.course_abbreviation;
     }
     
     static fromJSON(student) {
         let result = [];
 
        if (Array.isArray(student)) {
-           project.forEach((s) => {
+           student.forEach((s) => {
                Object.setPrototypeOf(s,StudentNBO.prototype);
                result.push(s);
            })
-       }else {
+       } else {
            let s = student;
            Object.setPrototypeOf(s,StudentNBO.prototype);
            result.push(s);
@@ -40,6 +40,6 @@ export default class StudentNBO extends PersonNBO {
 
        return result;
    }
-} */
+}
 
 
