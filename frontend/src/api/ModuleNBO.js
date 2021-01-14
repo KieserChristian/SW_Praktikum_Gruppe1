@@ -1,17 +1,16 @@
-/* import NamedBusinessObject from './NamedBusinessObject';
+import NamedBusinessObject from './NamedBusinessObject';
 
-export default class Module extends NamedBusinessObject, BusinessObject{
+export default class ModuleNBO extends NamedBusinessObject {
 
     //konstruiert eine ModuleNBO mit einem gegebenen Namen
 
      
-    @param {String} aName der Name der ModuleNBO
-     
 
-    constructor(aName, anEdv_number) {
+    constructor(aName, anEdv_number, aModule) {
         super(aName);
             this.name = aName;
-            this.edv_number = anEdv_number 
+            this.edv_number = anEdv_number
+            this.module = aModule
     }
 
     setEdv_number(){
@@ -22,25 +21,30 @@ export default class Module extends NamedBusinessObject, BusinessObject{
         return this.edv_number
     }
 
-    
-    Gibt Array von ModuleNBOs von gegebenen JSON strukturen zurück
-     
+    setModule(aModule) {
+        this.module = aModule;
+    }
 
-    static fromJSON(modules) {
+    getModule() {
+        return this.module;
+    }
+
+
+    static fromJSON(module) {
         let result = [];
 
-        if (Array.isArray(modules)) {
-            modules.forEach((m) => {
+        if (Array.isArray(module)) {
+            module.forEach((m) => {
                 Object.setPorototypeOf(m, ModuleNBO.prototype);
                 result.push(m);
             })
         }    else { 
             //ist ein singuläres Objekt (nur vereinzelnt vorkommend), ein Modul, bsp. ADS kann nicht einzeln existieren
-            let m = modules;
+            let m = module;
             Object.setPrototypeOf(m, ModuleNBO.prototype);
             result.push(m);
         }
         
         return result;
     }
-} */
+}
