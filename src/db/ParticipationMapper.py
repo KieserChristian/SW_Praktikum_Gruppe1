@@ -18,6 +18,7 @@ class ParticipationMapper (Mapper):
             participation = Participation()
             participation.set_id(id)
             participation.set_creation_date(creation_date)
+            participation.set_student(student)
             result.append(participation)
 
         self._cnx.commit()
@@ -67,15 +68,16 @@ class ParticipationMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT participation_id, creation_date FROM participation WHERE participation_id={}".format(id)
+        command = "SELECT participation_id, creation_date, student FROM participation WHERE participation_id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, creation_date) = tuples[0]
+            (id, creation_date, student) = tuples[0]
             participation = Participation()
             participation.set_id(id)
             participation.set_creation_date(creation_date)
+            participation.set_student(student)
             print(participation.get_creation_date())
             result = participation
         except IndexError:
@@ -123,3 +125,30 @@ class ParticipationMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
+    
+    def get_participations_of_student(self, student_id):
+        result = []
+        
+        cursor = self._cnx.cursor()
+        command = """
+        SELECT participation.participation_id, student.student_id, student.name, student.matriculation_number
+        FROM participation
+        INNER JOIN student
+        ON participation.student_id=student.student_id
+        WHERE participation.student_id={0}
+        """.format(student_id)
+        
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for(participation_id, student_id, name, matriculation_number) in tuples:
+                student_json = {"participation_id": participation_id, "student_id": student_id, "student_name": name, "matriculation_number": matriculation_number}
+                result.append(student_json)
+        except IndexError:
+            print("There was no object with this id")
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+        return result

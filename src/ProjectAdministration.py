@@ -292,8 +292,8 @@ class ProjectAdministration():
     def get_participations_of_student(self, student):
         """Alle Teilnahmen des Studenten auslesen"""
         with ParticipationMapper() as mapper:
-            return mapper.find_by_id(student.get_id())
-    
+            return mapper.get_participations_of_student(student)
+
     def get_participations_by_project_id(self, project):
         """Die Teilnehmerliste eines bestimmten Projekts ausgeben"""
         with ParticipationMapper() as mapper:
