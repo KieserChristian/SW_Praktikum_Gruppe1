@@ -895,5 +895,19 @@ class ParticipationListOperations(Resource):
         else:
             return '', 500 
 
+@projectTool.route('/participationofstudent/<int:student_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ParticipationListOperations(Resource):
+    #@secured
+    def get(self, student_id):
+        """Auslesen aller Participation-Objekte"""
+        adm = ProjectAdministration()
+        participationofstudent = adm.get_participations_of_student(student_id)
+        
+        if participationofstudent != []:
+            return participationofstudent, 200
+        else:
+            return 'There is no Participation for that Student', 500
+
 if __name__ == '__main__':
     app.run(debug=True)
