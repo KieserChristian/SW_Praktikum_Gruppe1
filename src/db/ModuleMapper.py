@@ -11,7 +11,7 @@ class ModuleMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command=("SELECT * from it_projekt.module")
+        command=("SELECT * from module")
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -43,7 +43,7 @@ class ModuleMapper (Mapper):
             module.set_creation_date(creation_date)
             module.set_name(name)
             module.set_edv_number(edv_number)
-            result.append(module)
+            result = module
 
         self._cnx.commit()
         cursor.close()

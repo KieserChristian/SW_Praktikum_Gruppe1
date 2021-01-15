@@ -175,6 +175,7 @@ class PersonMapper (Mapper):
         :param person
         """
         cursor = self._cnx.cursor()
+        print(person.get_creation_date())
 
         command = "UPDATE person " + "SET creation_date=%s, name=%s, google_id=%s, email=%s WHERE person_id=%s"
         data = (person.get_creation_date(), person.get_name(), person.get_google_id(), person.get_email(), person.get_id())

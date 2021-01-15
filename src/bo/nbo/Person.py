@@ -39,7 +39,7 @@ class Person(NamedBusinessObject):
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Personeninstanz"""
-        return "Person: {} {}, Google-ID: {}, E-Mail: {}".format(self.get_id(), self.get_name(), self.get_google_id(), self.get_email())
+        return "Person: {}, Google-ID: {}, E-Mail: {}, Creation-Date: {}".format(self.get_id(), self.get_name(), self.get_google_id(), self.get_email(), self.get_creation_date())
 
     @staticmethod
     def from_tuples (tuples=list()):
@@ -47,12 +47,12 @@ class Person(NamedBusinessObject):
         result = []
         for (id, creation_date, name, google_id, email) in tuples:
             person = Person()
-            person.set_id (id)
-            person.set_creation_date (creation_date)
-            person.set_name (name)
-            person.set_google_id (google_id)
-            person.set_email (email)
-            result.append (person)
+            person.set_id(id)
+            person.set_creation_date(creation_date)
+            person.set_name(name)
+            person.set_google_id(google_id)
+            person.set_email(email)
+            result.append(person)
         return result
 
     @staticmethod

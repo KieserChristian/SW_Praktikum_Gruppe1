@@ -49,7 +49,9 @@ automat = api.model('Automat', {
 
 """Participation, Grading, Module, Project, ProjectType, Semester, Person & Student sind BusinessObjects"""
 
-participation = api.inherit('Participation', bo)
+participation = api.inherit('Participation', bo, {
+    "student_id": fields.Integer(attribute='_student_id')
+})
 
 grading = api.inherit('Grading', bo, {
     'grade': fields.Float(attribute='_grade', 
@@ -123,6 +125,24 @@ role = api.model('Role', {
                                 description='Statisches Attribut')
 })
 
+@projectTool.route('/person')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class PersonOperations(Resource):
+    @projectTool.marshal_with(person)
+    @projectTool.expect(person, validate=True)
+    #@secured
+    def put(self):
+        """Update eines bestimmten Personen-Objekts."""
+        adm = ProjectAdministration()
+        pers = Person.from_dict(api.payload)
+        print(pers)
+
+        if pers is not None:
+            adm.save_person(pers)
+            return pers, 200
+        else:
+            return '', 500
+
 @projectTool.route('/person/<int:person_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('person_id', 'Dies ist die ID von Person')
@@ -149,21 +169,6 @@ class PersonOperations(Resource):
             return 'gelöscht', 200
         else:
             return 'There was some error', 500
-
-    @projectTool.marshal_with(person)
-    @projectTool.expect(person, validate=True)
-    #@secured
-    def put(self, person_id):
-        """Update eines bestimmten Personen-Objekts."""
-        adm = ProjectAdministration()
-        pers = Person.from_dict(api.payload)
-
-        if pers is not None:
-            pers.set_id(person_id)
-            adm.save_person(pers)
-            return pers, 200
-        else:
-            return '', 500
 
 @projectTool.route('/person-by-name/<string:name>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -575,21 +580,20 @@ class GradingOperations(Resource):
             return grad, 200
         else:
             return '', 500
-    
+
     @projectTool.marshal_with(grading)
     @projectTool.expect(grading, validate=True)
     #@secured
-    def put(self, grading_id):
+    def put(self):
         """Update eines bestimmten Grading-Objekts."""
         adm = ProjectAdministration()
         grad = Grading.from_dict(api.payload)
-
         if grad is not None:
-            grad.set_id(grading_id)
             adm.save_grading(grad)
-            return '', 200
+            return grad, 200
         else:
             return '', 500
+
 
 @projectTool.route('/gradings')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -603,7 +607,7 @@ class GradingListOperations(Resource):
         return grading_list
 
 
-@projectTool.route('/grading-by-participation')
+@projectTool.route('/grading-by-participation/<int:participation_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('participation_id', 'Die ID der Teilnahme')
 class GradingByParticipationOperations(Resource):
@@ -765,7 +769,7 @@ class ProjectTypeListOperations(Resource):
         else:
             return '', 500
 
-@projectTool.route('/automat')
+@projectTool.route('/automat/<int:automat_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('automat_id', 'Dies ist die ID von Automat')
 class AutomatOperations(Resource):
@@ -799,22 +803,8 @@ class ModuleOperations(Resource):
             adm.delete_module(mod)
             return 'gelöscht', 200
         else:
-            return '', 500
+            return 'There was some error', 500
     
-    @projectTool.marshal_with(module)
-    @projectTool.expect(module, validate=True)
-    #@secured
-    def put(self, module_id):
-        """Update eines bestimmten Module-Objekts."""
-        adm = ProjectAdministration()
-        mod = Module.from_dict(api.payload)
-
-        if mod is not None:
-            mod.set_id(module_id)
-            adm.save_module(mod)
-            return mod, 200
-        else:
-            return '', 500
 
 @projectTool.route('/modules')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -835,14 +825,27 @@ class ModuleListOperations(Resource):
         """Anlegen eines neuen Module-Objekts"""
         adm = ProjectAdministration()
         proposal = Module.from_dict(api.payload)
-
+        print(proposal)
         if proposal is not None:
-            """Wir verwenden module_id und edv_number des Proposals für die Erzeugung eines Module-Objektes."""
-            mod = adm.create_module(proposal.get_module_id(), proposal.get_edv_number())
-
+            """Wir verwenden module_name und edv_number des Proposals für die Erzeugung eines Module-Objektes."""
+            mod = adm.create_module(proposal.get_name(), proposal.get_edv_number())
             return mod, 200       
         else:
             return '', 500 
+
+    @projectTool.marshal_with(module)
+    @projectTool.expect(module, validate=True)
+    #@secured
+    def put(self):
+        """Update eines bestimmten Module-Objekts."""
+        adm = ProjectAdministration()
+        mod = Module.from_dict(api.payload)
+
+        if mod is not None:
+            adm.save_module(mod)
+            return mod, 200
+        else:
+            return '', 500
 
 @projectTool.route('/participation/<int:participation_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -867,20 +870,6 @@ class ParticipationOperations(Resource):
         else:
             return 'There is no participation object with that id', 500
     
-    @projectTool.marshal_with(participation)
-    @projectTool.expect(participation, validate=True)
-    #@secured
-    def put(self, participation_id):
-        """Update eines bestimmten Participation-Objekts."""
-        adm = ProjectAdministration()
-        part = Participation.from_dict(api.payload)
-
-        if part is not None:
-            part.set_id(participation_id)
-            adm.save_participation(part)
-            return part, 200
-        else:
-            return '', 500
 
 @projectTool.route('/participation')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -908,7 +897,22 @@ class ParticipationListOperations(Resource):
 
             return part, 200       
         else:
-            return '', 500 
+            return '', 500
+
+    @projectTool.marshal_with(participation)
+    @projectTool.expect(participation, validate=True)
+    #@secured
+    def put(self):
+        """Update eines bestimmten Participation-Objekts."""
+        adm = ProjectAdministration()
+        part = Participation.from_dict(api.payload)
+
+        if part is not None:
+            adm.save_participation(part)
+            return part, 200
+        else:
+            return '', 500
+
 
 @projectTool.route('/participationofstudent/<int:student_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')

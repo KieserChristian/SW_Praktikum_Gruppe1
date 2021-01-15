@@ -14,11 +14,11 @@ class ParticipationMapper (Mapper):
         cursor.execute("SELECT * from participation")
         tuples = cursor.fetchall()
 
-        for (id, creation_date) in tuples:
+        for (id, creation_date, student) in tuples:
             participation = Participation()
             participation.set_id(id)
             participation.set_creation_date(creation_date)
-            participation.set_student(student)
+            participation.set_student_id(student)
             result.append(participation)
 
         self._cnx.commit()
@@ -68,16 +68,16 @@ class ParticipationMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT participation_id, creation_date, student FROM participation WHERE participation_id={}".format(id)
+        command = "SELECT participation_id, creation_date, student_id FROM participation WHERE participation_id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, creation_date, student) = tuples[0]
+            (id, creation_date, student_id) = tuples[0]
             participation = Participation()
             participation.set_id(id)
             participation.set_creation_date(creation_date)
-            participation.set_student(student)
+            participation.set_student_id(student_id)
             print(participation.get_creation_date())
             result = participation
         except IndexError:
@@ -108,7 +108,7 @@ class ParticipationMapper (Mapper):
        
         cursor = self._cnx.cursor()
 
-        command = "UPDATE participation " + "SET participation_id=%s WHERE participation_id=%s"
+        command = "UPDATE participation " + "SET student_id=" + str(participation.get_student_id()) + " WHERE participation_id={}".format(participation.get_id())
         data = (participation.get_id())
         cursor.execute(command, data)
 

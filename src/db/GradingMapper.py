@@ -73,12 +73,13 @@ class GradingMapper (Mapper):
        
         cursor = self._cnx.cursor()
 
-        command = "UPDATE grading " + "SET grade=%s WHERE grading_id=%s"
-        data = (grading.get_id(), grading.get_grade())
+        command = "UPDATE grading " + "SET grade=" + str(grading.get_grade()) + " WHERE grading_id={}".format(grading.get_id())
+        data = (grading.get_grade())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
+        return grading
 
 
     def delete(self, grading):

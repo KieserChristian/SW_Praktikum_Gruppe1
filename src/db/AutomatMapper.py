@@ -41,15 +41,19 @@ class AutomatMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, current_state) in tuples:
+        try:
+            (id, current_state) = tuples[0]
             automat = Automat()
             automat.set_id(id)
             automat.set_state(current_state)
             result = automat
 
+        except IndexError:
+            print("There was no object with this id")
+            result = None
+
         self._cnx.commit()
         cursor.close()
-
         return result
 
     def insert(self, automat):

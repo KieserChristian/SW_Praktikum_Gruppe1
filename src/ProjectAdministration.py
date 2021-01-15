@@ -562,7 +562,7 @@ class ProjectAdministration():
 
         module = Module()
         module.set_name(name)
-        module.set_id(edv_number)
+        module.set_edv_number(edv_number)
         module.set_id(1)
 
         with ModuleMapper() as mapper:

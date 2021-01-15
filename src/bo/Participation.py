@@ -27,5 +27,5 @@ class Participation(BusinessObject):
         participation = Participation()
         participation.set_id(dictionary["id"])
         participation.set_creation_date(dictionary["creation_date"])
-        participation.set_student_id(dictionary["student"])
+        participation.set_student_id(dictionary["student_id"])
         return participation

@@ -7,7 +7,7 @@ class Module(NamedBusinessObject):
     
     def __init__(self):
         super().__init__()
-        self._edv_number = 0
+        self._edv_number = None
 
     def set_edv_number(self, edv_number):
         self._edv_number = edv_number
@@ -25,5 +25,6 @@ class Module(NamedBusinessObject):
         module = Module()
         module.set_id(dictionary["id"])
         module.set_creation_date(dictionary["creation_date"])
-        module.set_name(dictionary["Name"])
+        module.set_edv_number(dictionary["edv_number"])
+        module.set_name(dictionary["name"])
         return module
