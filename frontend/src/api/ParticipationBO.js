@@ -1,23 +1,24 @@
 import BusinessObject from './BusinessObject';
 
-export default class Participation extends BusinessObject{
+export default class ParticipationBO extends BusinessObject{
 
-    //konstruiert ein ParticipationBO mit einem gegebenen Namen
-
-    /** 
-     * @param {*} anId der Name der ParticipationBO
-     */
-
-    constructor(anId) {
-        super(anId);
+    constructor() {
+        super();
     }
 
+    static fromJSON(participation) {
+        let result = [];
 
-    toString(){
-        let result = "";
-        for (var prop in this)
-            result += prop + ":" + this[prop] + "";
-
+        if (Array.isArray(participation)) {
+            participation.forEach((pa) => {
+                Object.setPrototypeOf(pa,ParticipationBO.prototype);
+                result.push(pa);
+            })
+        } else {
+            let pa = participation;
+            Object.setPrototypeOf(pa,ParticipationBO.prototype);
+            result.push(pa);
+        }
         return result;
     }
 }

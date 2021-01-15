@@ -48,6 +48,7 @@ export default class ProjectAdminAPI {
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
+    #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/{project_id}`
 
     // ProjectType related
     #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project/project-type/§{project_type_id}`;
@@ -82,6 +83,16 @@ export default class ProjectAdminAPI {
       return this.#fetchAdvanced(this.#getAllProjectsURL())
       .then((responseJSON) => {
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(ProjectNBOs);
+        })
+      })
+    }
+
+    getProjectById(projectId) {
+      return this.#fetchAdvanced(this.#getProjectByIdURL(projectId))
+      .then((responseJSON) => {
+        let ProjectNBOs = ProjectNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
           resolve(ProjectNBOs);
         })

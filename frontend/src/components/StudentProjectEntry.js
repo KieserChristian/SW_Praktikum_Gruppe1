@@ -1,5 +1,7 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
+import LoadingProgress from './dialogs/LoadingProgress';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -13,7 +15,7 @@ class StudentProjectEntry extends React.Component {
         super(props);
 
         this.state = {
-            project: props.project,
+            ProjectNBOs: props.project,
             //showProjectRegisterDialog: false,     #Projekt anmelden
             //showProjectCancelDialog: false        #Projekt abmelden
         };
@@ -21,7 +23,7 @@ class StudentProjectEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { project } = this.state;
+        const { error, loadingInProgress, ProjectNBOs } = this.state;
         return (
             <div className={classes.root}>
                 <Accordion>
@@ -32,10 +34,10 @@ class StudentProjectEntry extends React.Component {
                         <Grid className={classes.project} container spacing={1} justify='flex-start' alignItems='center'>
                             <Grid item>
                                 <Typography className={classes.heading}>
-                                    Testüberschrift
+                                    { ProjectNBOs.getName() }
                                 </Typography>
                                 <Typography className={classes.secondaryHeading}>
-                                    Testbeschreibung
+                                    { ProjectNBOs.getCapacity() }
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -52,7 +54,7 @@ class StudentProjectEntry extends React.Component {
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
-                            Testdetails zum Testprojekt
+                            { ProjectNBOs.getShortDescription()}
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
