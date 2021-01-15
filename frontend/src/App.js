@@ -116,7 +116,6 @@ class App extends React.Component {
                   <LogIn/>
                   <StudentNavigation/>
                   <StudentView/>
-                  <StudentProjectEntry/>
                   <StudentGradingView/>                  
 								</>
 								:
