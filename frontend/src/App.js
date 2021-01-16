@@ -18,7 +18,9 @@ import StudentNavigation from './components/StudentNavigation';
 import StudentProjectEntry from './components/StudentProjectEntry';
 import DocentBewertungsListe from './components/DocentBewertungsListe';
 //import DocentView from "./components/DocentView";
-//import DocentBewertungsListe from './components/DocentBewertungsListe';
+import DocentMeineProjekte from "./components/DocentMeineProjekte";
+import DocentMyProjectTeilnehmerListe from "./components/DocentMyProjectTeilnehmerListe";
+
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
@@ -121,6 +123,8 @@ class App extends React.Component {
                   <StudentView/>
                   <StudentGradingView/>
                   <DocentBewertungsListe/>
+                  <DocentMeineProjekte/>
+                  <DocentMyProjectTeilnehmerListe/>
                                
 								</>
 								:

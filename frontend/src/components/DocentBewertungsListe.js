@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-//import ProjectAdminAPI from '../api/ProjectAdminAPI';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import { Button, Grid, Typography, withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -21,18 +21,28 @@ class DocentBewertungsListe extends React.Component {
             error: null,
         }
     }
-
+    getAllGradings = () => {
+        ProjectAdminAPI.getAPI().getAllGradings().then(gradingBOs => {
+            this.setState({
+                gradings: gradingBOs,
+            })
+        })
+    }
+   
+    componentDidMount() {
+        this.getAllGradings()
+    }
    
 
     render() {
         const { classes } = this.props;
-        const { projects, gradings } = this.state;
+        const {  gradings } = this.state;
         
 
         return(
         <div className={classes.root}>
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
-        <Grid Container spacing={2}>
+        <Grid Container spacing={2} direction = "column">
             <Grid>
                 <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">Bewertungsliste</Button> 
             </Grid>
@@ -54,6 +64,15 @@ class DocentBewertungsListe extends React.Component {
                                     <TableBody style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
                                         <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
                                         <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
+                                        <TableCell>TEST</TableCell>
+                                        {gradings.length > 0 ? 
+                                                gradings.map(grading =>
+                                                    <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{grading.getGrade()}</TableCell>
+                                                    )
+                                                    :
+                                                    null
+                                                }
+
 
                                      
 
@@ -62,7 +81,7 @@ class DocentBewertungsListe extends React.Component {
                                 </Table>
                             </Box>
                         </TableCell>
-            </TableRow>
+        </TableRow>
         </Paper>
         </div>
         );
