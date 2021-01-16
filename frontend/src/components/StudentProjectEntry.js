@@ -6,8 +6,9 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import { withStyles, Typography, Grid } from '@material-ui/core';
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import StudentProjectCancellation from './dialogs/StudentProjectCancellation';
 
 class StudentProjectEntry extends React.Component {
 
@@ -16,14 +17,13 @@ class StudentProjectEntry extends React.Component {
 
         this.state = {
             ProjectNBOs: props.project,
-            //showProjectRegisterDialog: false,     #Projekt anmelden
-            //showProjectCancelDialog: false        #Projekt abmelden
+            showProjectCancellationDialog: false
         };
     }
 
     render() {
         const { classes } = this.props;
-        const { error, loadingInProgress, ProjectNBOs } = this.state;
+        const { error, loadingInProgress, ProjectNBOs, showProjectCancellationDialog } = this.state;
         return (
             <div className={classes.root}>
                 <Accordion>
@@ -32,7 +32,7 @@ class StudentProjectEntry extends React.Component {
                         aria-controls="panel1bh-content"
                         id="panel1bh-header">
                         <Grid className={classes.project} container spacing={1} justify='flex-start' alignItems='center'>
-                            <Grid item>
+                            <Grid item style={{width: '80%'}}>
                                 <Typography className={classes.heading}>
                                     { ProjectNBOs.getName() }
                                 </Typography>
@@ -41,20 +41,15 @@ class StudentProjectEntry extends React.Component {
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <ButtonGroup variant='text' size='small'>
-                                    <Button color='primary'>
-                                        Anmelden
-                                    </Button>
-                                    <Button color='secondary'>
-                                        Abmelden
-                                    </Button>
-                                </ButtonGroup>
+                                <Button variant='text' size='small' color='secondary' alignItems='right'>
+                                    <StudentProjectCancellation show={showProjectCancellationDialog}/>
+                                </Button>
                             </Grid>
                         </Grid>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
-                            { ProjectNBOs.getShortDescription()}
+                            { ProjectNBOs.getShortDescription() }
                         </Typography>
                     </AccordionDetails>
                 </Accordion>

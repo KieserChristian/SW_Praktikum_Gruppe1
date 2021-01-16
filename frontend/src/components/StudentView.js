@@ -50,7 +50,7 @@ class StudentView extends React.Component {
     return (
       <div className={classes.root}>
         <Grid className={classes.projects} container spacing={1} justify='flex-start' alignItems='center'>
-          <Grid item>
+          <Grid item style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
             <Typography>
             Hier können Sie Projekte an- und abmelden:
             </Typography>

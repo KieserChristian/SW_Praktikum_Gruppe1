@@ -15,7 +15,6 @@ import LogIn from './components/pages/LogIn';
 import StudentGradingView from './components/StudentGradingView';
 import StudentView from './components/StudentView';
 import StudentNavigation from './components/StudentNavigation';
-import StudentProjectEntry from './components/StudentProjectEntry';
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
