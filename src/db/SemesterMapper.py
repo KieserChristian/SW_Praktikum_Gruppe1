@@ -14,7 +14,7 @@ class SemesterMapper (Mapper):
     """find all """
 
     def find_all(self):
-        """Auslesen aller Konten.
+        """Auslesen aller Semester.
 
         :return Eine Sammlung mit Semester-Objekten, die sämtliche Konten
                 repräsentieren.
@@ -51,16 +51,12 @@ class SemesterMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        try:
-            (id, creation_date, name) = tuples[0]
+        for (id, creation_date, name) in tuples:
             semester = Semester()
             semester.set_id(id)
             semester.set_creation_date(creation_date)
             semester.set_name(name)
             result = semester
-        except IndexError:
-            print("There was no object with this id")
-            result = None
 
         self._cnx.commit()
         cursor.close()
@@ -87,7 +83,7 @@ class SemesterMapper (Mapper):
             semester.set_id(id)
             semester.set_creation_date(creation_date)
             semester.set_name(name)
-            result = semester
+            result.append(semester)
 
         self._cnx.commit()
         cursor.close()
@@ -129,12 +125,14 @@ class SemesterMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE semester " + "SET name=%s WHERE semester_id=%s"
-        data = (semester.get_id(), semester.get_creation_date(), semester.get_name())
+        command = "UPDATE semester " + "SET name=%s WHERE semester_id={}".format(semester.get_id())
+        #command = "UPDATE semester " + "SET name=" + str(semester.get_name()) + " WHERE semester_id={}".format(semester.get_id())
+        data = (semester.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
+        return semester
 
     """delete semester""" 
 

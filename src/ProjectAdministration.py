@@ -23,6 +23,7 @@ from db.StudentMapper import StudentMapper
 from db.AutomatMapper import AutomatMapper
 from db.StateMapper import StateMapper
 from db.RoleMapper import RoleMapper
+from datetime import datetime
 
 class ProjectAdministration():
 
@@ -263,7 +264,8 @@ class ProjectAdministration():
     def create_participation(self, participation):
         """Eine Teilnahme anlegen"""
 
-        participation = Participation()
+        #participation = Participation()
+        #participation.set_student_id(student_id) 
 
         with ParticipationMapper() as mapper:
             return mapper.insert(participation)
@@ -369,7 +371,7 @@ class ProjectAdministration():
     Project-Methoden
     """
 
-    def create_project(self, name:str, id, external_partners:str, capacity:int, weekly_flag:bool, bd_preferred_in_lecture_period:int, bd_in_lecture_period:int, bd_in_exam_period:int, bd_before_lecture_period:int, short_description:str, special_room:str):
+    def create_project(self, name:str, id, external_partners:str, capacity:int, weekly_flag:bool, bd_preferred_in_lecture_period:int, bd_in_lecture_period:int, bd_in_exam_period:int, bd_before_lecture_period:int, short_description:str, special_room:str, state:str):
         """Ein Projekt anlegen"""
 
         project = Project()
@@ -384,6 +386,7 @@ class ProjectAdministration():
         project.set_bd_before_lecture_period(bd_before_lecture_period)
         project.set_short_description(short_description)
         project.set_special_room(special_room)
+        project.set_state(state)
 
         with ProjectMapper() as mapper:
             return mapper.insert(project)
@@ -391,6 +394,7 @@ class ProjectAdministration():
     def save_project(self, project):
         """Ein Projekt speichern"""
         with ProjectMapper() as mapper:
+            print("Projadmin-date:"+project.get_creation_date())
             mapper.update(project)
     
     def delete_project(self, project):

@@ -97,7 +97,7 @@ class ParticipationMapper (Mapper):
         for (maxid) in tuples:
             participation.set_id(maxid[0]+1)
 
-        command = "INSERT INTO participation (creation_date, participation_id) VALUES (CURRENT_TIMESTAMP, "+str(participation.get_id()) +")"
+        command = "INSERT INTO participation (creation_date, participation_id, student_id) VALUES (CURRENT_TIMESTAMP, "+str(participation.get_id()) +", "+str(participation.get_student_id()) +")"
         cursor.execute(command)
         self._cnx.commit()
         cursor.close()

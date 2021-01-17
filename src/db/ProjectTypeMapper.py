@@ -37,14 +37,18 @@ class ProjectTypeMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, number_ects, number_sws) in tuples:
+        try:
+            (id, creation_date, name, number_ects, number_sws) = tuples[0]
             project_type = ProjectType()
             project_type.set_id(id)
             project_type.set_creation_date(creation_date)
             project_type.set_name(name)
             project_type.set_number_ects(number_ects)
             project_type.set_number_sws(number_sws)
-            result.append(project_type)
+            result = project_type
+        except IndexError:
+            print("There was no object with this id")
+            result = None
 
         self._cnx.commit()
         cursor.close()
@@ -60,14 +64,18 @@ class ProjectTypeMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, number_ects, number_sws) in tuples:
+        try:
+            (id, creation_date, name, number_ects, number_sws) = tuples[0]
             project_type = ProjectType()
             project_type.set_id(id)
             project_type.set_creation_date(creation_date)
             project_type.set_name(name)
             project_type.set_number_ects(number_ects)
             project_type.set_number_sws(number_sws)
-            result.append(project_type)
+            result = project_type
+        except IndexError:
+            print("There was no object with this id")
+            result = None
 
         self._cnx.commit()
         cursor.close()
@@ -82,16 +90,7 @@ class ProjectTypeMapper (Mapper):
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-
-            if maxid[0] is not None:
-                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
-                um 1 hoch und weisen diesen Wert als ID dem Person-Objekt zu."""
-                project_type.set_id(maxid[0] + 1)
-
-            else:
-                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
-                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
-                project_type.set_id(1)
+            project_type.set_id(maxid[0]+1)
 
         command = "INSERT INTO project_type (project_type_id, creation_date, name, number_ects, number_sws) VALUES (%s,%s,%s,%s,%s)"
         data = (project_type.get_id(), project_type.get_creation_date(), project_type.get_name(), project_type.get_number_ects(), project_type.get_number_sws())
@@ -112,6 +111,7 @@ class ProjectTypeMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
+        return project_type
 
 
     def delete(self, project_type):
