@@ -1,7 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import ProjectAdminAPI from '../api/ProjectAdminAPI';
-import LoadingProgress from './dialogs/LoadingProgress';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -17,13 +14,25 @@ class StudentProjectEntry extends React.Component {
 
         this.state = {
             ProjectNBOs: props.project,
-            showProjectCancellationDialog: false
+            showDialog: false
         };
+    }
+
+    handleClick = () => {
+        this.setState({
+            showDialog: true
+        });
+    }
+
+    closeDialog = () => {
+        this.setState({
+            showDialog: false
+        });
     }
 
     render() {
         const { classes } = this.props;
-        const { error, loadingInProgress, ProjectNBOs, showProjectCancellationDialog } = this.state;
+        const { ProjectNBOs, showDialog } = this.state;
         return (
             <div className={classes.root}>
                 <Accordion>
@@ -31,7 +40,7 @@ class StudentProjectEntry extends React.Component {
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel1bh-content"
                         id="panel1bh-header">
-                        <Grid className={classes.project} container spacing={1} justify='flex-start' alignItems='center'>
+                        <Grid container spacing={1} justify='flex-start' alignItems='center'>
                             <Grid item style={{width: '80%'}}>
                                 <Typography className={classes.heading}>
                                     { ProjectNBOs.getName() }
@@ -41,11 +50,12 @@ class StudentProjectEntry extends React.Component {
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant='text' size='small' color='secondary' alignItems='right'>
-                                    <StudentProjectCancellation show={showProjectCancellationDialog}/>
+                                <Button onClick={this.handleClick} variant='text' size='small' color='secondary'>
+                                    Abmelden
                                 </Button>
                             </Grid>
                         </Grid>
+                        <StudentProjectCancellation show={showDialog} close={this.closeDialog}/>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
@@ -70,7 +80,7 @@ const styles = theme => ({
     secondaryHeading: {
       fontSize: theme.typography.pxToRem(15),
       color: theme.palette.text.secondary,
-    },
+    }
 });
 
 export default withStyles(styles)(StudentProjectEntry);

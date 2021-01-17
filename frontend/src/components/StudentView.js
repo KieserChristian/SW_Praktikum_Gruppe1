@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import LoadingProgress from './dialogs/LoadingProgress';
-import { withStyles, Typography, Grid, Button } from '@material-ui/core';
+import { withStyles, Typography, Grid } from '@material-ui/core';
 import StudentProjectEntry from './StudentProjectEntry';
 
 class StudentView extends React.Component {
@@ -49,10 +49,10 @@ class StudentView extends React.Component {
     const { error, loadingInProgress, projects } = this.state;
     return (
       <div className={classes.root}>
-        <Grid className={classes.projects} container spacing={1} justify='flex-start' alignItems='center'>
+        <Grid container spacing={1} justify='flex-start' alignItems='center'>
           <Grid item style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
             <Typography>
-            Hier können Sie Projekte an- und abmelden:
+            Hier können Sie sich von angemeldeten Projekten abmelden:
             </Typography>
             {
             projects.length > 0 ? 
