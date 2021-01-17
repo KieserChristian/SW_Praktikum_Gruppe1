@@ -5,19 +5,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 //import TextField from '@material-ui/core/TextField';
 import React, { Component } from 'react';
 
+/*  Dieser Dialog öffnet sich, sobald der Info-Button nebem einem Projekt aus der StudentAvailableProjectEntry.js angeklickt wird.
+    Er behinhaltet einen Infotext mit dem Projektnamen, Projekttyp, Anzahl ECTS, Anzahl SWS, sowie eine Kurzbeschreibung und 
+    lässt sich über einen Close-Button schließen.
+*/
+
 class ProjectDetailsDialog extends Component {
     constructor (props) {
         super(props)
         this.state = {
         }
-    }
-
-    handleClose = () => {
-        this.props.setNewProjectDialogValue({
-          name: '',
-          value: ''
-        });
-        this.props.openProjectAddDialog(false);
     }
 
     onDialogClose =()=>{
@@ -26,10 +23,9 @@ class ProjectDetailsDialog extends Component {
 
     
     render() {
-        const { newProjectDialogValue } = this.state
-        const { open } = this.props;
+        const { openInfo } = this.props;
         return (
-            <Dialog open={open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+            <Dialog open={openInfo} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Business Intelligence</DialogTitle>
             <DialogContent>
                 <DialogContentText>

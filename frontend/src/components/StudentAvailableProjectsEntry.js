@@ -1,11 +1,10 @@
 import React from 'react';
-import { Button, ButtonGroup, Grid, Typography, withStyles} from '@material-ui/core';
+import { Button, Grid, Typography, withStyles} from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
-import LoadingProgress from './dialogs/LoadingProgress';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
+import StudentProjectRegistration from './dialogs/StudentProjectRegistration';
 
 
 /*  StudentAvailableProjectsEntry wird aus der StudentAvailableProjectsView.js aufgerufen, um sich für das angezeigte
@@ -18,38 +17,45 @@ class StudentAvailableProjectsEntry extends React.Component {
         super(props);
         this.state = {
             ProjectNBOs: props.project,
-            
-            openDialog: false,
+            openDialogInfo: false,
+            openDialogRegistration: false,
         };
     }
 
-   
-    
+    openDialogInfo = () => {
+        this.setState({
+            openDialogInfo: true})
+    }
 
-    openDialog = () => {
+    openDialogRegistration = () => {
         this.setState({
-            openDialog: true})
+            openDialogRegistration: true})
     }
     
-    closeDialog = () => {
+    closeDialogInfo = () => {
         this.setState({
-            openDialog: false})
+            openDialogInfo: false})
     }
+
+    closeDialogRegistration = () => {
+        this.setState({
+            openDialogRegistration: false})
+    }
+
 
     render() {
         const { classes } = this.props;
-        const { error, loadingInProgress, ProjectNBOs, openDialog} = this.state;
+        const { error, ProjectNBOs, openDialogInfo, openDialogRegistration} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
                             <Grid>
                             <React.Fragment>
                                 <ProjectDetailsDialog
-                                    openDialog={this.openDialog}
-                                    open={openDialog}
-                                    onCloseProp={this.closeDialog}
+                                    openInfo={openDialogInfo}
+                                    onCloseProp={this.closeDialogInfo}
                                 />
-                                <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={ this.openDialog}>
+                                <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={this.openDialogInfo}>
                                 <InfoIcon/>
                                 </IconButton>
                             </React.Fragment>
@@ -60,11 +66,15 @@ class StudentAvailableProjectsEntry extends React.Component {
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <ButtonGroup variant='text' size='small'>
-                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}}>
+                            <React.Fragment>
+                                <StudentProjectRegistration
+                                    openRegistration={openDialogRegistration}
+                                    onCloseProp={this.closeDialogRegistration}
+                                />
+                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogRegistration}>
                                         Anmelden
                                     </Button>
-                                </ButtonGroup>
+                            </React.Fragment>
                             </Grid>
                         </Grid>
             </div>
