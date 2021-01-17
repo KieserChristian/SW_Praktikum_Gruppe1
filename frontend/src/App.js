@@ -17,6 +17,8 @@ import StudentView from './components/StudentView';
 import StudentNavigation from './components/StudentNavigation';
 import StudentProjectEntry from './components/StudentProjectEntry';
 import DocentBewertungsListe from './components/DocentBewertungsListe';
+import StudentAvailableProjectsView from './components/StudentAvailableProjectsView';
+import StudentAvailableProjectsEntry from './components/StudentAvailableProjectsEntry';
 //import DocentView from "./components/DocentView";
 //import DocentBewertungsListe from './components/DocentBewertungsListe';
 
@@ -120,7 +122,8 @@ class App extends React.Component {
                   <StudentNavigation/>
                   <StudentView/>
                   <StudentGradingView/>
-                  <DocentBewertungsListe/>
+{/*                   <DocentBewertungsListe/> */}
+                  <StudentAvailableProjectsView/>
                                
 								</>
 								:
