@@ -15,7 +15,6 @@ import LogIn from './components/pages/LogIn';
 import StudentGradingView from './components/StudentGradingView';
 import StudentView from './components/StudentView';
 import StudentNavigation from './components/StudentNavigation';
-import StudentProjectEntry from './components/StudentProjectEntry';
 import DocentBewertungsListe from './components/DocentBewertungsListe';
 import StudentAvailableProjectsView from './components/StudentAvailableProjectsView';
 import StudentAvailableProjectsEntry from './components/StudentAvailableProjectsEntry';
@@ -124,7 +123,7 @@ class App extends React.Component {
                   <StudentGradingView/>
 {/*                   <DocentBewertungsListe/> */}
                   <StudentAvailableProjectsView/>
-                               
+
 								</>
 								:
 								// else show the sign in page

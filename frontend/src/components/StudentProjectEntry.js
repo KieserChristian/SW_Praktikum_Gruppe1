@@ -1,13 +1,11 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import ProjectAdminAPI from '../api/ProjectAdminAPI';
-import LoadingProgress from './dialogs/LoadingProgress';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import { withStyles, Typography, Grid } from '@material-ui/core';
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import StudentProjectCancellation from './dialogs/StudentProjectCancellation';
 
 class StudentProjectEntry extends React.Component {
 
@@ -16,14 +14,25 @@ class StudentProjectEntry extends React.Component {
 
         this.state = {
             ProjectNBOs: props.project,
-            //showProjectRegisterDialog: false,     #Projekt anmelden
-            //showProjectCancelDialog: false        #Projekt abmelden
+            showDialog: false
         };
+    }
+
+    handleClick = () => {
+        this.setState({
+            showDialog: true
+        });
+    }
+
+    closeDialog = () => {
+        this.setState({
+            showDialog: false
+        });
     }
 
     render() {
         const { classes } = this.props;
-        const { error, loadingInProgress, ProjectNBOs } = this.state;
+        const { ProjectNBOs, showDialog } = this.state;
         return (
             <div className={classes.root}>
                 <Accordion>
@@ -31,8 +40,8 @@ class StudentProjectEntry extends React.Component {
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel1bh-content"
                         id="panel1bh-header">
-                        <Grid className={classes.project} container spacing={1} justify='flex-start' alignItems='center'>
-                            <Grid item>
+                        <Grid container spacing={1} justify='flex-start' alignItems='center'>
+                            <Grid item style={{width: '80%'}}>
                                 <Typography className={classes.heading}>
                                     { ProjectNBOs.getName() }
                                 </Typography>
@@ -41,20 +50,16 @@ class StudentProjectEntry extends React.Component {
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <ButtonGroup variant='text' size='small'>
-                                    <Button color='primary'>
-                                        Anmelden
-                                    </Button>
-                                    <Button color='secondary'>
-                                        Abmelden
-                                    </Button>
-                                </ButtonGroup>
+                                <Button onClick={this.handleClick} variant='text' size='small' color='secondary'>
+                                    Abmelden
+                                </Button>
                             </Grid>
                         </Grid>
+                        <StudentProjectCancellation show={showDialog} close={this.closeDialog}/>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
-                            { ProjectNBOs.getShortDescription()}
+                            { ProjectNBOs.getShortDescription() }
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
@@ -75,7 +80,7 @@ const styles = theme => ({
     secondaryHeading: {
       fontSize: theme.typography.pxToRem(15),
       color: theme.palette.text.secondary,
-    },
+    }
 });
 
 export default withStyles(styles)(StudentProjectEntry);
