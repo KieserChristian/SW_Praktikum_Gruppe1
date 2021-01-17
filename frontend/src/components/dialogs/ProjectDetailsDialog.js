@@ -30,12 +30,24 @@ class ProjectDetailsDialog extends Component {
         const { open } = this.props;
         return (
             <Dialog open={open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Test</DialogTitle>
+            <DialogTitle id="form-dialog-title">Business Intelligence</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                Test
+                Projekt:
                 </DialogContentText>
-                <Button onClick={this.onDialogClose} >close</Button>        
+                <DialogContentText>
+                Projekttyp:
+                </DialogContentText>
+                <DialogContentText>
+                ECTS
+                </DialogContentText>
+                <DialogContentText>
+                SWS:
+                </DialogContentText>
+                <DialogContentText>
+                Kurzbeschreibung:
+                </DialogContentText>
+                <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.onDialogClose} >close</Button>        
             </DialogContent>
         </Dialog>
         );
