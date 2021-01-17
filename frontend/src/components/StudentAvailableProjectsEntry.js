@@ -30,15 +30,15 @@ class StudentAvailableProjectsEntry extends React.Component {
         const { error, loadingInProgress, ProjectNBOs } = this.state;
         return (
             <div className={classes.root}>
-                        <Grid className={classes.project} container spacing={1} justify='flex-start' alignItems='center'>
-                            <Grid item>
-                                <Typography className={classes.heading}>
+                        <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
+                            <Grid item style={{marginBottom: 10, marginTop: 10}}>
+                                <Typography className={classes.heading} >
                                     { ProjectNBOs.getName() }
                                 </Typography>
                             </Grid>
                             <Grid item>
                                 <ButtonGroup variant='text' size='small'>
-                                    <Button color='primary'>
+                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}}>
                                         Anmelden
                                     </Button>
                                 </ButtonGroup>
