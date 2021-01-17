@@ -3,6 +3,9 @@ import { Button, ButtonGroup, Grid, Typography, withStyles} from '@material-ui/c
 import { withRouter } from 'react-router-dom';
 import LoadingProgress from './dialogs/LoadingProgress';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import InfoIcon from '@material-ui/icons/Info';
+import IconButton from '@material-ui/core/IconButton';
+import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
 
 
 /*  StudentAvailableProjectsEntry wird aus der StudentAvailableProjectsView.js aufgerufen, um sich für das angezeigte
@@ -13,24 +16,44 @@ class StudentAvailableProjectsEntry extends React.Component {
 
     constructor(props) {
         super(props);
-        
-        this.handleClose = this.handleClose(this);
-
         this.state = {
             ProjectNBOs: props.project,
+            
+            openDialog: false,
         };
     }
 
-    handleClose() {
-        this.setState({show: false});
+   
+    
+
+    openDialog = () => {
+        this.setState({
+            openDialog: true})
+    }
+    
+    closeDialog = () => {
+        this.setState({
+            openDialog: false})
     }
 
     render() {
         const { classes } = this.props;
-        const { error, loadingInProgress, ProjectNBOs } = this.state;
+        const { error, loadingInProgress, ProjectNBOs, openDialog} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
+                            <Grid>
+                            <React.Fragment>
+                                <ProjectDetailsDialog
+                                    openDialog={this.openDialog}
+                                    open={openDialog}
+                                    onCloseProp={this.closeDialog}
+                                />
+                                <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={ this.openDialog}>
+                                <InfoIcon/>
+                                </IconButton>
+                            </React.Fragment>
+                            </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
                                     { ProjectNBOs.getName() }
