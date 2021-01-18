@@ -50,6 +50,7 @@ class ProjectType(NamedBusinessObject):
         """Umwandeln eines Python dict () """
         project_type = ProjectType()
         project_type.set_id(dictionary["id"])
+        project_type.set_name(dictionary["name"])
         project_type.set_creation_date(dictionary["creation_date"])
         project_type.set_number_ects(dictionary["number_ects"])
         project_type.set_number_sws(dictionary["number_sws"])

@@ -37,7 +37,7 @@ bo = api.model('BusinessObject', {
                                 description='Erstellungszeitpunkt eines BusinessObjects')
 })
 
-nbo = api.model('NamedBusinessObject', {
+nbo = api.model('NamedBusinessObject', { 
     'name': fields.String(attribute='_name',
                                 description='Name eines BusinessObjects bzw. NamedBusinessObjects')
 })  
@@ -404,15 +404,14 @@ class SemesterOperations(Resource):
     @projectTool.marshal_with(semester)
     @projectTool.expect(semester, validate=True)
     #@secured
-    def put(self, semester_id):
+    def put(self):
         """Update eines bestimmten Semester-Objektes."""
         adm = ProjectAdministration()
         sem = Semester.from_dict(api.payload)
 
         if sem is not None:
-            sem.set_id(semester_id)
             adm.save_semester(sem)
-            return '', 200
+            return sem, 200
         else:
             return '', 500
 
@@ -643,21 +642,25 @@ class ProjectOperations(Resource):
             return 'gelöscht', 200
         else:
             return '', 500
-    
+
+
+@projectTool.route('/project')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectOperations(Resource):
     @projectTool.marshal_with(project)
     @projectTool.expect(project, validate=True)
     #@secured
-    def put(self, project_id):
+    def put(self):
         """Update eines bestimmten Project-Objekts."""
         adm = ProjectAdministration()
         proj = Project.from_dict(api.payload)
 
         if proj is not None:
-            proj.set_id(project_id)
             adm.save_project(proj)
-            return '', 200
+            return proj, 200
         else:
-            return '', 500
+            return 'There was an error with that project object', 500
+    
 
 @projectTool.route('/project/participation')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -698,7 +701,7 @@ class ProjectListOperations(Resource):
         proj = Project.from_dict(api.payload)
 
         if proj is not None:
-            proj = adm.create_project(proj.get_name(), proj.get_id(), proj.get_external_partners(), proj.get_capacity(), proj.get_weekly_flag(), proj.get_bd_preferred_in_lecture_period(), proj.get_bd_in_lecture_period(), proj.get_bd_in_exam_period(), proj.get_bd_before_lecture_period(), proj.get_short_description(), proj.get_special_room())
+            proj = adm.create_project(proj.get_name(), proj.get_id(), proj.get_external_partners(), proj.get_capacity(), proj.get_weekly_flag(), proj.get_bd_preferred_in_lecture_period(), proj.get_bd_in_lecture_period(), proj.get_bd_in_exam_period(), proj.get_bd_before_lecture_period(), proj.get_short_description(), proj.get_special_room(), proj.get_state())
             return proj, 200
         else:
             return '', 500
@@ -763,8 +766,7 @@ class ProjectTypeListOperations(Resource):
 
         if proposal is not None:
             """Wir verwenden Name und project_type_id des Proposals für die Erzeugung eines ProjectType-Objektes."""
-            projtyp = adm.create_project_type(proposal.get_name(), proposal.get_project_type_id())
-
+            projtyp = adm.create_project_type(proposal.get_name(), proposal.get_number_ects(), proposal.get_number_sws())
             return projtyp, 200
         else:
             return '', 500
@@ -893,8 +895,7 @@ class ParticipationListOperations(Resource):
 
         if proposal is not None:
             """Wir verwenden die participation_id des Proposals für die Erzeugung eines Participation-Objektes."""
-            part = adm.create_participation(proposal.get_id())
-
+            part = adm.create_participation(proposal)
             return part, 200       
         else:
             return '', 500
@@ -909,6 +910,7 @@ class ParticipationListOperations(Resource):
 
         if part is not None:
             adm.save_participation(part)
+            print(part) 
             return part, 200
         else:
             return '', 500
