@@ -17,9 +17,10 @@ import StudentView from './components/StudentView';
 import StudentNavigation from './components/StudentNavigation';
 import DocentBewertungsListe from './components/DocentBewertungsListe';
 import StudentAvailableProjectsView from './components/StudentAvailableProjectsView';
-import StudentAvailableProjectsEntry from './components/StudentAvailableProjectsEntry';
-//import DocentView from "./components/DocentView";
-//import DocentBewertungsListe from './components/DocentBewertungsListe';
+import DocentView from './components/DocentView';
+import AdminView from './components/AdminView';
+import DocentNavigation from './components/DocentNavigation';
+import AdminNavigation from './components/AdminNavigation';
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
@@ -117,13 +118,30 @@ class App extends React.Component {
 							// Is a user signed in?
 							currentUser ?
 								<>
+                <Redirect from='/' to='login'/>
+                <Route exact path='/login'>
                   <LogIn/>
+                </Route>
+                <Route path='/student'>
                   <StudentNavigation/>
+                </Route>
+                <Route path='/student/projektübersicht'>
                   <StudentView/>
-                  <StudentGradingView/>
-{/*                   <DocentBewertungsListe/> */}
                   <StudentAvailableProjectsView/>
-
+                </Route>
+                <Route path='/student/leistungsübersicht'>
+                  <StudentGradingView/>
+                </Route>
+                <Route path='/dozent'>
+                  <DocentNavigation/>
+                </Route>
+                <Route path='/dozent/projektübersicht'>
+                  <DocentView/>
+                  <DocentBewertungsListe/>
+                </Route>
+                <Route path='/admin'>
+                  <AdminNavigation/>
+                </Route>
 								</>
 								:
 								// else show the sign in page

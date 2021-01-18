@@ -42,7 +42,7 @@ class StudentGradingView extends React.Component {
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
         <Grid Container spacing={2}>
             <Grid>
-                <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">Notenspiegel</Button>
+                <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">Leistungsübersicht</Button>
             </Grid>
         </Grid>
         <TableRow>
