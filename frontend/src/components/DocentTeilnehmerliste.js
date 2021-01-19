@@ -15,6 +15,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
+import {Link} from 'react-router-dom';
 
 class DocentTeilnehmerliste extends React.Component {
 
