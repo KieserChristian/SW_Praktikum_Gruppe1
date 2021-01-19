@@ -14,6 +14,7 @@ class ProjectDetailsDialog extends Component {
     constructor (props) {
         super(props)
         this.state = {
+            ProjectNBOs: props.project
         }
     }
 
@@ -24,12 +25,13 @@ class ProjectDetailsDialog extends Component {
     
     render() {
         const { openInfo } = this.props;
+        const { ProjectNBOs } = this.state;
         return (
             <Dialog open={openInfo} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Business Intelligence</DialogTitle>
+            <DialogTitle id="form-dialog-title">{ProjectNBOs.getName()}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                Projekt:
+                Modul:
                 </DialogContentText>
                 <DialogContentText>
                 Projekttyp:
