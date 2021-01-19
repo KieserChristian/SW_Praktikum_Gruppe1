@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import { Button, Grid, Typography, withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -8,51 +7,49 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import ProjectNBO from '../api/ProjectNBO';
+import Icon from '@material-ui/core/Icon';
+import SaveIcon from '@material-ui/icons/Save';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
 
-class DocentBewertungsListe extends React.Component {
+class DocentTeilnehmerliste extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            projects: [],
-            gradings:[],
+            students:[],
             error: null,
         }
     }
-    getAllGradings = () => {
-        ProjectAdminAPI.getAPI().getAllGradings().then(gradingBOs => {
-            this.setState({
-                gradings: gradingBOs,
-            })
-        })
-    }
-    getAllProjects = ( ) => {
-        ProjectAdminAPI.getAPI().getAllProjects().then(projectNBOs => {
-            this.setState({
-                projects: ProjectNBO,
-            })
-        })
-    }
 
-    componentDidMount() {
-        this.getAllGradings()
+    getStudentById = () => {
+        ProjectAdminAPI.getAPI().getStudentById().then(studentNBOs => {
+            this.setState({
+                students: studentNBOs,
+            })
+        })
     }
    
+    componentDidMount() {
+        this.getStudentById()
+    }
+  
 
     render() {
         const { classes } = this.props;
-        const {  gradings, projects } = this.state;
+        const { studentNBOs } = this.state;
         
 
         return(
         <div className={classes.root}>
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
-        <Grid Container spacing={2} direction = "column">
+        <Grid Container spacing={2}>
             <Grid>
-                <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">Bewertungsliste</Button> 
+                <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">Teilnehmerliste</Button> 
             </Grid>
         </Grid>
         <TableRow>
@@ -63,41 +60,27 @@ class DocentBewertungsListe extends React.Component {
                                         <TableRow>
                                             <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Matr.Nr.</TableCell>
                                             <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Name</TableCell>
-                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projekt</TableCell>
-                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Note</TableCell>
-                                
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Benotung</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Speichern</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Löschen</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Test</TableCell>
                                         </TableRow>
-
                                     </TableHead>
                                     <TableBody style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
                                         <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
                                         <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
-                                        <TableCell>TEST</TableCell>
-                                        {gradings.length > 0 ? 
-                                                gradings.map(grading =>
-                                                    <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{grading.getGrade()}</TableCell>
-                                                    )
-                                                    :
-                                                    null
-                                                }
-                                        {projects.length > 0 ? 
-                                                projects.map(grading =>
-                                                    <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{grading.getProjects()}</TableCell>
-                                                    )
-                                                    :
-                                                    null
-                                                }
+                                        <TableCell><TextField  align="center" id="standard-number" type="number" InputLabelProps={{ shrink: true,}}></TextField></TableCell>
+                                        <TableCell><Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center" variant="contained" color="primary" size="small" className={classes.button} startIcon={<SaveIcon/>}>Speichern</Button></TableCell>
+                                        <TableCell><IconButton style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center" aria-label="delete" className={classes.margin}><DeleteIcon fontSize="small" /></IconButton></TableCell>
 
 
-
-                                     
 
                                     
                                     </TableBody>
                                 </Table>
                             </Box>
                         </TableCell>
-        </TableRow>
+            </TableRow>
         </Paper>
         </div>
         );
@@ -112,4 +95,4 @@ const styles = theme => ({
     }
   });
 
-export default withRouter(withStyles(styles)(DocentBewertungsListe));
+export default withRouter(withStyles(styles)(DocentTeilnehmerliste));

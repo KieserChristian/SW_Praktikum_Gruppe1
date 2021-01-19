@@ -21,6 +21,11 @@ import DocentView from './components/DocentView';
 import AdminView from './components/AdminView';
 import DocentNavigation from './components/DocentNavigation';
 import AdminNavigation from './components/AdminNavigation';
+import DocentTeilnehmerliste from './components/DocentTeilnehmerliste';
+//import DocentView from "./components/DocentView";
+import DocentMeineProjekte from "./components/DocentMeineProjekte";
+
+
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
@@ -142,6 +147,9 @@ class App extends React.Component {
                 <Route path='/admin'>
                   <AdminNavigation/>
                 </Route>
+                  <DocentMeineProjekte/>
+                  <DocentTeilnehmerliste/>                 
+                               
 								</>
 								:
 								// else show the sign in page
