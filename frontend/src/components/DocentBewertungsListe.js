@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import ProjectNBO from '../api/ProjectNBO';
 
 class DocentBewertungsListe extends React.Component {
 
@@ -28,7 +29,14 @@ class DocentBewertungsListe extends React.Component {
             })
         })
     }
-   
+    getAllProjects = ( ) => {
+        ProjectAdminAPI.getAPI().getAllProjects().then(projectNBOs => {
+            this.setState({
+                projects: ProjectNBO,
+            })
+        })
+    }
+
     componentDidMount() {
         this.getAllGradings()
     }
@@ -36,7 +44,7 @@ class DocentBewertungsListe extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const {  gradings } = this.state;
+        const {  gradings, projects } = this.state;
         
 
         return(
@@ -72,6 +80,14 @@ class DocentBewertungsListe extends React.Component {
                                                     :
                                                     null
                                                 }
+                                        {projects.length > 0 ? 
+                                                projects.map(projects =>
+                                                    <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{grading.getProjects()}</TableCell>
+                                                    )
+                                                    :
+                                                    null
+                                                }
+
 
 
                                      

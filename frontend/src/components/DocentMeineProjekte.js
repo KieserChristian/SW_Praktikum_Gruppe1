@@ -56,26 +56,28 @@ class DocentMeineProjekte extends React.Component {
                                                 <Button
                                                     type="submit"
                                                     variant="contained"
-                                                    color="primary" 
+                                                    color="default" 
                                                 >    
                                                     Teilnehmerliste
                                                 </Button>
                                             </TableCell>
-                                                <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projekt</TableCell>
+                                                <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projekt Butto</TableCell>
                                                 <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projektyp</TableCell>
                                                 <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Status</TableCell>
                                         </TableRow>
         
                                     </TableHead>
                                         <TableBody style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
-                                            {projects.length > 0 ? 
-                                                projects.map(project =>
-                                                    <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{project.getProject()}</TableCell>
-                                                    )
-                                                    :
-                                                    null
-                                                }
-                                            
+                                     
+                                                <Button
+                                                    type="submit"
+                                                    variant="contained"
+                                                    color="primary"
+                                                    href="DocentMyProjectTeilnehmer.js" 
+                                                >    
+                                                    Teilnehmerliste
+                                                </Button>
+    
                                             
                                             
                                             <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
