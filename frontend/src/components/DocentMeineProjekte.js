@@ -53,13 +53,7 @@ class DocentMeineProjekte extends React.Component {
                                     <TableHead >
                                         <TableRow>
                                             <TableCell>
-                                                <Button
-                                                    type="submit"
-                                                    variant="contained"
-                                                    color="default" 
-                                                >    
-                                                    Teilnehmerliste
-                                                </Button>
+
                                             </TableCell>
                                                 <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projekt Butto</TableCell>
                                                 <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projektyp</TableCell>
