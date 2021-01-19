@@ -16,18 +16,15 @@ import StudentGradingView from './components/StudentGradingView';
 import StudentView from './components/StudentView';
 import StudentNavigation from './components/StudentNavigation';
 import DocentBewertungsListe from './components/DocentBewertungsListe';
-<<<<<<< HEAD
 import StudentAvailableProjectsView from './components/StudentAvailableProjectsView';
 import DocentView from './components/DocentView';
 import AdminView from './components/AdminView';
 import DocentNavigation from './components/DocentNavigation';
 import AdminNavigation from './components/AdminNavigation';
-=======
 //import DocentView from "./components/DocentView";
 import DocentMeineProjekte from "./components/DocentMeineProjekte";
 import DocentMyProjectTeilnehmerListe from "./components/DocentMyProjectTeilnehmerListe";
 
->>>>>>> daniw
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
