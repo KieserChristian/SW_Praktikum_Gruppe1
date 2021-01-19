@@ -73,7 +73,6 @@ class DocentTeilnehmerliste extends React.Component {
                                         <TableCell><Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center" variant="contained" color="primary" size="small" className={classes.button} startIcon={<SaveIcon/>}>Speichern</Button></TableCell>
                                         <TableCell><IconButton style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center" aria-label="delete" className={classes.margin}><DeleteIcon fontSize="small" /></IconButton></TableCell>
 
-                                                <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center" >{ studentNBOs.getName() }</TableCell>
 
 
                                     

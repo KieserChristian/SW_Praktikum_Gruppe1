@@ -81,7 +81,7 @@ class DocentBewertungsListe extends React.Component {
                                                     null
                                                 }
                                         {projects.length > 0 ? 
-                                                projects.map(projects =>
+                                                projects.map(grading =>
                                                     <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{grading.getProjects()}</TableCell>
                                                     )
                                                     :
