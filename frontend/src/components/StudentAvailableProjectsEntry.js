@@ -54,6 +54,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                 <ProjectDetailsDialog
                                     openInfo={openDialogInfo}
                                     onCloseProp={this.closeDialogInfo}
+                                    project={ProjectNBOs}
                                 />
                                 <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={this.openDialogInfo}>
                                 <InfoIcon/>
