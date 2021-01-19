@@ -21,6 +21,7 @@ import DocentView from './components/DocentView';
 import AdminView from './components/AdminView';
 import DocentNavigation from './components/DocentNavigation';
 import AdminNavigation from './components/AdminNavigation';
+import DocentTeilnehmerliste from './components/DocentTeilnehmerliste';
 //import DocentView from "./components/DocentView";
 import DocentMeineProjekte from "./components/DocentMeineProjekte";
 import DocentMyProjectTeilnehmerListe from "./components/DocentMyProjectTeilnehmerListe";
@@ -148,6 +149,7 @@ class App extends React.Component {
                 </Route>
                   <DocentMeineProjekte/>
                   <DocentMyProjectTeilnehmerListe/>
+                  <DocentTeilnehmerliste/>                 
                                
 								</>
 								:
