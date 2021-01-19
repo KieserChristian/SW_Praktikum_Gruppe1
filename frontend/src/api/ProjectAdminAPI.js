@@ -56,7 +56,7 @@ export default class ProjectAdminAPI {
     // Semester related
 
     // Student related
-
+    #getStudentByIdURL = (studentId) => `${this.#projectServerBaseURL}/person/student/§{student_id}`;
 
     static getAPI() {
         if (this.#api == null) {
@@ -237,5 +237,14 @@ export default class ProjectAdminAPI {
         })
     }; */
 
-    
+
+    getStudentById(studentId) {
+      return this.#fetchAdvanced(this.#getStudentByIdURL(studentId))
+      .then((responseJSON) => {
+        let StudentNBOs = StudentNBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(StudentNBOs);
+        })
+      })
+    }
 }

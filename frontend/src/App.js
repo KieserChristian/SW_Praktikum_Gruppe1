@@ -17,6 +17,7 @@ import StudentView from './components/StudentView';
 import StudentNavigation from './components/StudentNavigation';
 import StudentProjectEntry from './components/StudentProjectEntry';
 import DocentBewertungsListe from './components/DocentBewertungsListe';
+import DocentTeilnehmerliste from './components/DocentTeilnehmerliste';
 //import DocentView from "./components/DocentView";
 //import DocentBewertungsListe from './components/DocentBewertungsListe';
 
@@ -121,6 +122,7 @@ class App extends React.Component {
                   <StudentView/>
                   <StudentGradingView/>
                   <DocentBewertungsListe/>
+                  <DocentTeilnehmerliste/>                 
                                
 								</>
 								:
