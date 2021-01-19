@@ -15,11 +15,12 @@ class GradingMapper (Mapper):
         cursor.execute("SELECT * from grading")
         tuples = cursor.fetchall()
 
-        for (id, creation_date, grade) in tuples:
+        for (id, creation_date, grade, participation_id) in tuples:
             grading = Grading()
             grading.set_id(id)
             grading.set_creation_date(creation_date)
             grading.set_grade(grade)
+            grading.set_participation_id(participation)
             result.append(grading)
 
         self._cnx.commit()
@@ -31,16 +32,17 @@ class GradingMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT grading_id, creation_date, grade FROM grading WHERE grading_id={}".format(id)
+        command = "SELECT grading_id, creation_date, grade, participation_id FROM grading WHERE grading_id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, creation_date, grade) = tuples[0]
+            (id, creation_date, grade, participation_id) = tuples[0]
             grading = Grading()
             grading.set_id(id)
             grading.set_creation_date(creation_date)
             grading.set_grade(grade)
+            grading.set_participation_id(participation_id)
             result = grading
         except IndexError:
             print("There was no object with this id")
@@ -60,10 +62,9 @@ class GradingMapper (Mapper):
         for (maxid) in tuples:
             grading.set_id(maxid[0]+1)
 
-        command = "INSERT INTO grading (grading_id, creation_date, grade) VALUES (%s, CURRENT_TIMESTAMP,%s)"
-        data = (grading.get_id(), grading.get_grade())
+        command = "INSERT INTO grading (grading_id, creation_date, grade, participation_id) VALUES (%s, CURRENT_TIMESTAMP,%s, %s)"
+        data = (grading.get_id(), grading.get_grade(), grading.get_participation_id())
         cursor.execute(command, data)
-
         self._cnx.commit()
         cursor.close()
         return grading
@@ -90,4 +91,31 @@ class GradingMapper (Mapper):
         self._cnx.commit()
         cursor.close()
 
+
+    def get_grading_by_participation(self, participation_id):
+            result = []
+            
+            cursor = self._cnx.cursor()
+            command = """
+            SELECT grading.grading_id, grading.grade, participation.participation_id, participation.student_id
+            FROM grading
+            INNER JOIN participation
+            ON grading.participation_id=participation.participation_id
+            WHERE grading.participation_id={0}
+            """.format(participation_id)
+            
+            cursor.execute(command)
+            tuples = cursor.fetchall()
+
+            try:
+                for(grading_id, grade, participation_id, student_id) in tuples:
+                    participation_json = {"grading_id": grading_id, "grade": grade, "participation_id": participation_id, "student_id": student_id}
+                    result.append(participation_json)
+            except IndexError:
+                print("There was no object with this id")
+                result = None
+
+            self._cnx.commit()
+            cursor.close()
+            return result
 
