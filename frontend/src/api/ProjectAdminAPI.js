@@ -238,7 +238,7 @@ export default class ProjectAdminAPI {
     }; */
 
 
-    getStudentById(studentId) {
+    /**getStudentById(studentId) {
       return this.#fetchAdvanced(this.#getStudentByIdURL(studentId))
       .then((responseJSON) => {
         let StudentNBOs = StudentNBO.fromJSON(responseJSON)[0];
@@ -247,4 +247,6 @@ export default class ProjectAdminAPI {
         })
       })
     }
+    */
+    
 }

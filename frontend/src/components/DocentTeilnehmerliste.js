@@ -26,17 +26,7 @@ class DocentTeilnehmerliste extends React.Component {
         }
     }
 
-    getStudentById = () => {
-        ProjectAdminAPI.getAPI().getStudentById().then(studentNBOs => {
-            this.setState({
-                students: studentNBOs,
-            })
-        })
-    }
-   
-    componentDidMount() {
-        this.getStudentById()
-    }
+
   
 
     render() {
