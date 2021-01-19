@@ -365,7 +365,7 @@ class ProjectAdministration():
     def get_grading_by_participation_id(self, participation):
         """Die Bewertung von einer Teilnahme auslesen"""
         with GradingMapper() as mapper:
-            return mapper.find_by_id(participation.get_id())
+            return mapper.get_grading_by_participation(participation)
 
     """
     Project-Methoden
