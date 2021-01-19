@@ -8,7 +8,8 @@ class StudentProjectCancellation extends React.Component {
 
         this.state = {
             deletingInProgress: false,
-            deletingError: null
+            deletingError: null,
+            ProjectNBOs: props.project
         };
     }
 
@@ -23,7 +24,7 @@ class StudentProjectCancellation extends React.Component {
 
     render() {
         const { classes, show } = this.props;
-        const { deletingInProgress, deletingError } = this.state;
+        const { deletingInProgress, deletingError, ProjectNBOs } = this.state;
         return (
             <Dialog open={show} onClose={this.handleClose}>
                 <DialogTitle id="alert-dialog-title">
@@ -31,7 +32,7 @@ class StudentProjectCancellation extends React.Component {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Möchten Sie sich von dem Projekt "Building a Data Cube" wirklich abmelden?
+                        Möchten Sie sich von dem Projekt "{ProjectNBOs.getName()}" wirklich abmelden?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

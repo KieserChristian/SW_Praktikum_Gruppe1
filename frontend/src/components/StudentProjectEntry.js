@@ -14,6 +14,7 @@ class StudentProjectEntry extends React.Component {
 
         this.state = {
             ProjectNBOs: props.project,
+            ProjectTypeNBOs: props.projecttype,
             showDialog: false
         };
     }
@@ -55,7 +56,7 @@ class StudentProjectEntry extends React.Component {
                                 </Button>
                             </Grid>
                         </Grid>
-                        <StudentProjectCancellation show={showDialog} close={this.closeDialog}/>
+                        <StudentProjectCancellation show={showDialog} close={this.closeDialog} project={ProjectNBOs}/>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
