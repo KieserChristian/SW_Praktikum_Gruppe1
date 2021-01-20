@@ -21,7 +21,7 @@ export default class ProjectAdminAPI {
     // Grading related
     #getAllGradingsURL = () => `${this.#projectServerBaseURL}/gradings`;
     #getGradingURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
-    #getGradingByParticipationIdURL = (participationId) => `${this.#projectServerBaseURL}/grading/by-participation-id`;
+    #getGradingByParticipationIdURL = (participationId) => `${this.#projectServerBaseURL}/grading-by-participation-id`;
     #getGradingByIdURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
     #createGradingURL = (grading) => `${this.#projectServerBaseURL}/gradings`;
     #createGradingForParticipationURL = () => `${this.#projectServerBaseURL}/gradings`;
@@ -31,9 +31,11 @@ export default class ProjectAdminAPI {
     #addGradingToParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
     #removeGradingFromParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
 
+    #getModuleByProjectURL = (projectId) => `${this.#projectServerBaseURL}/module-by-project/${projectId}`;
+
      // Module related
 /*     #getAllModulesURL = () => `${this.#projectServerBaseURL}/modules`;
-    #getModuleByIdURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;
+    
     #getModuleByNameURL = (name) => `${this.#projectServerBaseURL}/modules`;
     #getModuleByEdvNumberURL = (edvNumber) => `${this.#projectServerBaseURL}/modules`;
     #createModuleURL = () => `${this.#projectServerBaseURL}/modules`;
@@ -122,6 +124,15 @@ export default class ProjectAdminAPI {
         })
       })
     };
+    
+    getModuleByProject(projectId) {
+      return this.#fetchAdvanced(this.#getModuleByProjectURL(projectId)).then((responseJSON) => {
+          let responseModule = ModuleNBO.fromJSON(responseJSON)[0];
+          return new Promise(function (resolve) {
+              resolve(responseModule)
+          })
+      })
+  };
 /*
     getGrading(gradingId) {
         return this.#fetchAdvanced(this.#getGradingURL(gradingId)).then((responseJSON) => {

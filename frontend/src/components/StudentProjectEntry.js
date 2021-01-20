@@ -14,7 +14,6 @@ class StudentProjectEntry extends React.Component {
 
         this.state = {
             ProjectNBOs: props.project,
-            ProjectTypeNBOs: props.projecttype,
             showDialog: false
         };
     }

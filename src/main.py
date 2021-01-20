@@ -55,7 +55,8 @@ participation = api.inherit('Participation', bo, {
 
 grading = api.inherit('Grading', bo, {
     'grade': fields.Float(attribute='_grade', 
-                                description='Note zur Bewertung einer Projektteilnahme')
+                                description='Note zur Bewertung einer Projektteilnahme'),
+    'participation_id': fields.Integer(attribute='participation_id')
 })
 
 module = api.inherit('Module', bo, nbo, {
@@ -606,19 +607,22 @@ class GradingListOperations(Resource):
         return grading_list
 
 
-@projectTool.route('/grading-by-participation/<int:participation_id>')
+@projectTool.route('/grading_by_participation/<int:participation_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('participation_id', 'Die ID der Teilnahme')
 class GradingByParticipationOperations(Resource):
-    @projectTool.marshal_with(grading)
     #@secured
     def get(self, participation_id):
         """Auslesen eines Grading-Objektes, welches durch die Participation-ID bestimmt wird.
         Das auszulesende Objekt wird durch 'participation_id' in dem URI bestimmt.
         """
         adm = ProjectAdministration()
-        grad = adm.get_grading_by_participation_id(participation_id)
-        return grad
+        grading_by_participation = adm.get_grading_by_participation_id(participation_id)
+
+        if grading_by_participation != []:
+            return grading_by_participation, 200
+        else:
+            return 'There is no Grading for that Participation', 500
+
 
 @projectTool.route('/project/<int:project_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
