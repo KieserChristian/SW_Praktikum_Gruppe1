@@ -22,6 +22,8 @@ class StudentAvailableProjectsEntry extends React.Component {
         };
     }
 
+    
+
     openDialogInfo = () => {
         this.setState({
             openDialogInfo: true})
