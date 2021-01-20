@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
 class DocentMeineProjekte extends React.Component {
@@ -24,7 +25,8 @@ class DocentMeineProjekte extends React.Component {
     }
 
     getAllProjects = () => {
-        ProjectAdminAPI.getAPI().getAllProjects().then(projectsNBOs => {
+        var api = ProjectAdminAPI.getAPI()
+        api.getAPI().getAllProjects().then(projectsNBOs => {
             this.setState({
                 projects: projectsNBOs,
             })
@@ -68,7 +70,7 @@ class DocentMeineProjekte extends React.Component {
                                             <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} color="primary" variant="contained">Teilnehmerliste</Button>
 
                                                     
-                                                  
+                                                 
                                                    
                                                    
                                                    
