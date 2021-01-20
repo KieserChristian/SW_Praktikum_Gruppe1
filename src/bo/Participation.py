@@ -17,6 +17,15 @@ class Participation(BusinessObject):
         """Setzen eines Fremdschlüssels zum Student."""
         self._student_id = student
 
+    def to_dict(self):
+        """Umwandeln Grading() in ein Python dictionary dict ()"""
+        result = {
+            "id": self.get_id(),
+            "creation_date": self.get_creation_date(),
+            "student_id": self.get_student_id()
+        }
+        return result
+
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Teilnahmeinstanz"""
         return "Teilnahme: {}, von {}".format(self.get_id(), self.get_student_id())

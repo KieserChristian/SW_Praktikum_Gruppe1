@@ -11,10 +11,11 @@ class ParticipationMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT * from participation")
+        command=("SELECT * from participation")
+        cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, student) in tuples:
+        for (id, creation_date, student_id) in tuples:
             participation = Participation()
             participation.set_id(id)
             participation.set_creation_date(creation_date)

@@ -2,8 +2,17 @@ import BusinessObject from './BusinessObject';
 
 export default class ParticipationBO extends BusinessObject{
 
-    constructor() {
+    constructor(aStudentId) {
         super();
+            this.student_Id = aStudentId
+    }
+
+    setStudentId(aStudentId) {
+        this.student_Id = aStudentId;
+    }
+
+    getStudentId() {
+        return this.student_Id;
     }
 
     static fromJSON(participation) {

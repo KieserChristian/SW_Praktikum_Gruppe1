@@ -42,6 +42,7 @@ export default class ProjectAdminAPI {
     #updateModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;  */
        
     // Participation related
+    #getParticipationByIdURL = () => `${this.#projectServerBaseURL}/participations`;
 
     // Person related
 
@@ -249,4 +250,13 @@ export default class ProjectAdminAPI {
     }
     */
     
+    getParticipationById(participationId) {
+      return this.#fetchAdvanced(this.#getParticipationByIdURL(participationId))
+      .then((responseJSON) => {
+        let responseParticipationBO = ParticipationBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(responseParticipationBO);
+        })
+      })
+    }
 }
