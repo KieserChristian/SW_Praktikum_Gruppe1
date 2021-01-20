@@ -28,22 +28,22 @@ class ProjectDetailsDialog extends Component {
         const { ProjectNBOs } = this.state;
         return (
             <Dialog open={openInfo} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">{ProjectNBOs.getName()}</DialogTitle>
+            <DialogTitle id="form-dialog-title" style={{color: 'white', backgroundColor: '#4caf50'}}><b>{ProjectNBOs.getName()}</b></DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                Modul:
+                <b>Projekt:</b> 
                 </DialogContentText>
                 <DialogContentText>
-                Projekttyp:
+                <b>Projekttyp:</b> 
                 </DialogContentText>
                 <DialogContentText>
-                ECTS
+                <b>ECTS:</b> 
                 </DialogContentText>
                 <DialogContentText>
-                SWS:
+                <b>SWS:</b> 
                 </DialogContentText>
                 <DialogContentText>
-                Kurzbeschreibung:
+                <b>Kurzbeschreibung:</b> {ProjectNBOs.getShortDescription()}
                 </DialogContentText>
                 <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.onDialogClose} >close</Button>        
             </DialogContent>
