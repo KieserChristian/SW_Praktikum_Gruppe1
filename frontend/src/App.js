@@ -5,10 +5,9 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConfig from './firebaseconfig';
 import Header from './components/layout/Header';
-//import About from './components/pages/About';
+import About from './components/pages/About';
 import Theme from './Theme';
 import SignIn from './components/pages/SignIn';
-import './App.css';
 import LoadingProgress from './components/dialogs/LoadingProgress';
 import ContextErrorMessage from './components/dialogs/ContextErrorMessage';
 import LogIn from './components/pages/LogIn';
@@ -22,7 +21,6 @@ import AdminView from './components/AdminView';
 import DocentNavigation from './components/DocentNavigation';
 import AdminNavigation from './components/AdminNavigation';
 import DocentTeilnehmerliste from './components/DocentTeilnehmerliste';
-//import DocentView from "./components/DocentView";
 import DocentMeineProjekte from "./components/DocentMeineProjekte";
 
 
@@ -152,9 +150,10 @@ class App extends React.Component {
                 <Route path='/admin'>
                   <AdminNavigation/>
                 </Route>
-                  
-                             
-                               
+
+                <Route path='/admin'>
+                  <AdminNavigation/>
+                </Route>                          
 								</>
 								:
 								// else show the sign in page
