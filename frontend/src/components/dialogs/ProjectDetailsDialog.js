@@ -67,6 +67,9 @@ class ProjectDetailsDialog extends Component {
                 <b>Projekttyp:</b> 
                 </DialogContentText>
                 <DialogContentText>
+                <b>Kapazität: {ProjectNBOs.getCapacity()} Plätze</b> 
+                </DialogContentText>
+                <DialogContentText>
                 <b>ECTS:</b> 
                 </DialogContentText>
                 <DialogContentText>
