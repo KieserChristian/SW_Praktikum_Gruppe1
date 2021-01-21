@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Grid} from '@material-ui/core';
+import { Button, Grid, DialogActions} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
-import { default as DialogContent, default as DialogContentText } from '@material-ui/core/DialogContent';
+import { default as DialogContent, default as DialogContentText, } from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 /*  Dieser Dialog öffnet sich, sobald der Anmelde-Button nebem einem Projekt aus der StudentAvailableProjectEntry.js angeklickt wird.
@@ -12,6 +12,7 @@ class StudentProjectRegistration extends Component {
     constructor (props) {
         super(props)
         this.state = {  
+            ProjectNBOs: props.project
         }
     }
 
@@ -19,21 +20,26 @@ class StudentProjectRegistration extends Component {
         this.props.onCloseProp()
     }
 
+    cancellationAlert =()=>{
+        alert("Anmeldung erfolgreich!");
+        this.onDialogClose()
+    }
+
     render() {
         const {openRegistration} = this.props;
+        const {ProjectNBOs} = this.state;
         return(
-            <Dialog open={openRegistration} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Möchtest du dich verbindlich für das Projekt anmelden?</DialogTitle>
-            <DialogContent>
-                <DialogContentText>
-                Projekt:
-                </DialogContentText>
-                <Grid justify='space-between' alignItems='center'>
-                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.onDialogClose} >Anmelden</Button> 
-                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.onDialogClose} >Abbrechen</Button>   
-                </Grid>     
+            <Dialog open={openRegistration}>
+                <DialogTitle id="alert-dialog-title">Sicherheitswarnung</DialogTitle>
+            <DialogContent id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description">
+                Möchten Sie sich zu dem Projekt <b>"{ProjectNBOs.getName()}"</b> wirklich anmelden?
+                </DialogContentText>    
             </DialogContent>
-
+            <DialogActions>
+                <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.cancellationAlert} >Anmelden</Button>
+                <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.onDialogClose} >Abbrechen</Button>
+                </DialogActions>
             </Dialog>
         );
     }
