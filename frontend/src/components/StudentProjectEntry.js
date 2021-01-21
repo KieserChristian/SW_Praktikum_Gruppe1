@@ -60,7 +60,10 @@ class StudentProjectEntry extends React.Component {
                     </Grid>   
                     <Grid style={{marginBottom: 10, marginTop: 10}}> 
                         <Typography className={classes.heading}>
-                            { ProjectNBOs.getName() } ({ ProjectNBOs.getCapacity() }/{ ProjectNBOs.getCapacity() } Plätze)
+                            <b>{ ProjectNBOs.getName() }</b> 
+                        </Typography>
+                        <Typography>
+                            Kapazität: { ProjectNBOs.getCapacity()} Plätze
                         </Typography>
                     </Grid>
                     <Grid>
@@ -70,7 +73,7 @@ class StudentProjectEntry extends React.Component {
                             close={this.closeDialog} 
                             project={ProjectNBOs}
                             />
-                            <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.handleClick}>
+                            <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.handleClick}>
                                 Abmelden
                             </Button>
                         </React.Fragment>
@@ -89,10 +92,6 @@ const styles = theme => ({
       fontSize: theme.typography.pxToRem(15),
       flexBasis: '33.33%',
       flexShrink: 0,
-    },
-    secondaryHeading: {
-      fontSize: theme.typography.pxToRem(15),
-      color: theme.palette.text.secondary,
     }
 });
 

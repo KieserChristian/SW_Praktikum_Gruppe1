@@ -44,6 +44,7 @@ export default class ProjectAdminAPI {
     #updateModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;  */
        
     // Participation related
+    #addParticipationToProjectURL = () => `${this.#projectServerBaseURL}/participations`;
 
     // Person related
 
@@ -123,7 +124,7 @@ export default class ProjectAdminAPI {
       })
     }
    
-    // Gibt eine Promise zurück mit einer Liste von GradingBOs
+    // Grading
 
     getAllGradings() {
       return this.#fetchAdvanced(this.#getAllGradingsURL()).then((responseJSON) => {
@@ -133,6 +134,8 @@ export default class ProjectAdminAPI {
         })
       })
     };
+
+    //Module
     
     getModuleByProject(projectId) {
       return this.#fetchAdvanced(this.#getModuleByProjectURL(projectId)).then((responseJSON) => {
@@ -142,6 +145,25 @@ export default class ProjectAdminAPI {
           })
       })
   };
+
+    //Participation
+
+    addParticipationToProject(newPar) {
+      return this.#fetchAdvanced(this.#addParticipationToProjectURL(), {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(newPar)
+      }).then((responseJSON) => {
+        let participationBO = ParticipationBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(participationBO);
+        })
+      })
+    }
+
 /*
     getGrading(gradingId) {
         return this.#fetchAdvanced(this.#getGradingURL(gradingId)).then((responseJSON) => {
