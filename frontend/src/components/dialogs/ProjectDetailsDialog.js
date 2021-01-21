@@ -16,7 +16,8 @@ class ProjectDetailsDialog extends Component {
         super(props)
         this.state = {
             ProjectNBOs: props.project,
-            module: null
+            module: null,
+            numberSws: null,
         }
     }
 
@@ -40,10 +41,32 @@ class ProjectDetailsDialog extends Component {
         loadingInProgress: true,
         error: null
         });
-      }
+    }
+
+    getNumberSwsByProject = () => {
+        ProjectAdminAPI.getAPI().getNumberSwsByProject(this.state.ProjectNBOs.getId())
+        .then(numberSwsAPI => {
+            this.setState({
+            numberSws: numberSwsAPI,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            numberSws: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
 
     componentDidMount() {
         this.getModuleByProject();
+        this.getNumberSwsByProject();
     }
 
     onDialogClose =()=>{
@@ -53,7 +76,7 @@ class ProjectDetailsDialog extends Component {
     
     render() {
         const { openInfo } = this.props;
-        const { ProjectNBOs , module} = this.state;
+        const { ProjectNBOs , module, numberSws} = this.state;
         return (
             <Dialog open={openInfo} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" style={{color: 'white', backgroundColor: '#4caf50'}}><b>{ProjectNBOs.getName()}</b></DialogTitle>
@@ -73,7 +96,9 @@ class ProjectDetailsDialog extends Component {
                 <b>ECTS:</b> 
                 </DialogContentText>
                 <DialogContentText>
-                <b>SWS:</b> 
+                    {numberSws?
+                        <b>{numberSws.getNumberSws()}</b> 
+                    :null}
                 </DialogContentText>
                 <DialogContentText>
                 <b>Kurzbeschreibung:</b> {ProjectNBOs.getShortDescription()}
