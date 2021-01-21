@@ -63,7 +63,7 @@ class StudentAvailableProjectsEntry extends React.Component {
         loadingInProgress: true,
         error: null
         });
-      }
+    }
 
     componentDidMount() {
         this.getNumberEctsByProject();
@@ -105,6 +105,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                 <StudentProjectRegistration
                                     openRegistration={openDialogRegistration}
                                     onCloseProp={this.closeDialogRegistration}
+                                    project={ProjectNBOs}
                                 />
                                     <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogRegistration}>
                                         Anmelden
