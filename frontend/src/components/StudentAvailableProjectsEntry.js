@@ -65,7 +65,10 @@ class StudentAvailableProjectsEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
-                                    { ProjectNBOs.getName() }
+                                    <b>{ ProjectNBOs.getName() }</b>
+                                </Typography>
+                                <Typography className={classes.heading}>
+                                    Kapazität: {ProjectNBOs.getCapacity()} Plätze
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -94,6 +97,10 @@ const styles = theme => ({
       flexBasis: '33.33%',
       flexShrink: 0,
     },
+    secondaryHeading: {
+        fontSize: theme.typography.pxToRem(15),
+        color: theme.palette.text.secondary,
+      }
 });
 
 
