@@ -150,12 +150,7 @@ class App extends React.Component {
                 <Route path='/admin'>
                   <AdminNavigation/>
                 </Route>
-                  
-                             
-                               
-                  <DocentTeilnehmerliste/>
-                  <DocentBewertungsListe/>
-                </Route>
+
                 <Route path='/admin'>
                   <AdminNavigation/>
                 </Route>                          
