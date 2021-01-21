@@ -49,6 +49,7 @@ export default class ProjectAdminAPI {
 
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
+    #getNumberEctsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-ects-by-project/${projectId}`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
     #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/{project_id}`
 
@@ -100,6 +101,15 @@ export default class ProjectAdminAPI {
         })
       })
     }
+
+    getNumberEctsByProject(projectId) {
+      return this.#fetchAdvanced(this.#getNumberEctsByProjectURL(projectId)).then((responseJSON) => {
+          let responseNumberEcts = ProjectTypeNBO.fromJSON(responseJSON)[0];
+          return new Promise(function (resolve) {
+              resolve(responseNumberEcts)
+          })
+      })
+  };
 
     //ProjectType
 
