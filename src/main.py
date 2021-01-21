@@ -578,6 +578,7 @@ class GradingOperations(Resource):
             """Wir verwenden Grading_id und Grade des Proposals für die Erzeugung eines Grading-Objektes."""
             grad = adm.create_grading(proposal.get_grade())
             return grad, 200
+            print(grad)
         else:
             return '', 500
 

@@ -21,6 +21,9 @@ class Project(NamedBusinessObject, Automat):
         self._bd_in_lecture_period = 0
         self._bd_preferred_in_lecture_period = 0
         self._special_room = ""
+        self._project_type_id = None # Fremdschlüsselbeziehung zu einem Projekttyp
+        self._module_id = None #Fremdschlüsselbeziehung zu einem Modul
+        self._state_id = None #Fremdschlüsselbeziehung zu einem Zustand
 
     def set_capacity(self, capacity):
         """Kapazität setzen"""
@@ -93,14 +96,39 @@ class Project(NamedBusinessObject, Automat):
     def get_special_room(self):
         """Spezieller Raum auslesen"""
         return self._special_room
+
+    def set_project_type_id(self, project_type):
+        """Setzen eines Fremdschlüssels zu einem Projecttyp"""
+        self._project_type_id = project_type
     
+    def get_project_type_id(self):
+        """Auslesen des Fremdschlüssels zum Projekttyp"""
+        return self._project_type_id
+
+    def set_module_id(self, module):
+        """Setzen eines Fremdschlüssels zu einem Modul"""
+        self._module_id = module
+
+    def get_module_id(self):
+        """"Auslesen des Fremdschlüssels zum Modul"""
+        return self._module_id
+
+    def set_state_id(self, state_id):
+        """Setzen eines Fremdschlüssels zu einem State"""
+        self._state_id = state
+    
+    def get_state_id(self):
+        """Auslesen des Fremdschlüssels zum State"""
+        return self._state_id
+
+
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projektinstanz"""
         return  "Projekt: {} {}, Momentaner Zustand: {}, Anzahl der Plätze: {}, Externe Partner: {}," \
                 "Kurzbeschreibung: {}, Wöchentliche Veranstalung: {}," \
                 "Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Vorlesungszeit: {}," \
                 "Anzahl der Blocktage in der Prüfungszeit: {}, Präferierte Blocktage in der Vorlesungszeit: {}," \
-                "Erforderlichkeit eines besonderen Raums: {}".format(self.get_id(), 
+                "Erforderlichkeit eines besonderen Raums: {}, Projekttyp des Projekts: {}, Modul des Projekts: {}, Zustand des Projekts: {}".format(self.get_id(), 
                                                                     self.get_name(),
                                                                     self.get_state(), 
                                                                     self.get_capacity(),
@@ -111,7 +139,10 @@ class Project(NamedBusinessObject, Automat):
                                                                     self.get_bd_in_lecture_period(),
                                                                     self.get_bd_in_exam_period(),
                                                                     self.get_bd_preferred_in_lecture_period(),
-                                                                    self.get_special_room())
+                                                                    self.get_special_room(),
+                                                                    self.get_project_type_id(),
+                                                                    self.get_module_id(),
+                                                                    self.get_state_id())
 
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -130,4 +161,7 @@ class Project(NamedBusinessObject, Automat):
         project.set_bd_in_lecture_period(dictionary["bd_in_lecture_period"])
         project.set_bd_preferred_in_lecture_period(dictionary["bd_preferred_in_lecture_period"])
         project.set_special_room(dictionary["special_room"])
+        project.get_project_type_id(dictionary["project_type_id"])
+        project.get_module_id(dictionary["module_id"])
+        project.get_state_id(dictionary["state_id"])
         return project

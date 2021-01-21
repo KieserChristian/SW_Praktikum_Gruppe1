@@ -1,4 +1,5 @@
 import React from 'react';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import { Button, Grid, Typography, withStyles} from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
@@ -19,10 +20,9 @@ class StudentAvailableProjectsEntry extends React.Component {
             ProjectNBOs: props.project,
             openDialogInfo: false,
             openDialogRegistration: false,
+            numberEcts: null
         };
-    }
-
-    
+    }    
 
     openDialogInfo = () => {
         this.setState({
@@ -44,10 +44,34 @@ class StudentAvailableProjectsEntry extends React.Component {
             openDialogRegistration: false})
     }
 
+    getNumberEctsByProject = () => {
+        ProjectAdminAPI.getAPI().getNumberEctsByProject(this.state.ProjectNBOs.getId())
+        .then(numberEctsAPI => {
+            this.setState({
+            numberEcts: numberEctsAPI,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            numberEcts: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
+
+    componentDidMount() {
+        this.getNumberEctsByProject();
+    }
 
     render() {
         const { classes } = this.props;
-        const { error, ProjectNBOs, openDialogInfo, openDialogRegistration} = this.state;
+        const { error, ProjectNBOs, numberEcts, openDialogInfo, openDialogRegistration} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
@@ -65,7 +89,15 @@ class StudentAvailableProjectsEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
-                                    { ProjectNBOs.getName() }
+                                    <b>{ ProjectNBOs.getName() }</b>
+                                </Typography>
+                                <Typography>
+                                    {numberEcts?
+                                        <b>{numberEcts.getNumberEcts()}</b> 
+                                    :null}
+                                </Typography>
+                                <Typography className={classes.heading}>
+                                    Kapazität: {ProjectNBOs.getCapacity()} Plätze
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -73,6 +105,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                 <StudentProjectRegistration
                                     openRegistration={openDialogRegistration}
                                     onCloseProp={this.closeDialogRegistration}
+                                    project={ProjectNBOs}
                                 />
                                     <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogRegistration}>
                                         Anmelden
@@ -94,6 +127,10 @@ const styles = theme => ({
       flexBasis: '33.33%',
       flexShrink: 0,
     },
+    secondaryHeading: {
+        fontSize: theme.typography.pxToRem(15),
+        color: theme.palette.text.secondary,
+      }
 });
 
 
