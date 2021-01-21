@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import LoadingProgress from './dialogs/LoadingProgress';
-import { withStyles, Typography, Grid, TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { withStyles, Paper, Button, Typography, Grid, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import StudentProjectEntry from './StudentProjectEntry';
 
@@ -68,34 +68,39 @@ class StudentView extends React.Component {
     const { error, loadingInProgress, projectFilter, filteredProjects } = this.state;
     return (
       <div className={classes.root}>
+      <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
         <Grid container spacing={1} justify='flex-start' alignItems='center'>
-          <Grid item>
-            <Typography>
-              Meine Projekte durchsuchen nach:
-            </Typography>
-            <TextField 
-              autoFocus fullWidth type='text' 
-              value={projectFilter} 
-              onChange={this.filterProjects}
-              InputProps={{
-                endAdornment: <InputAdornment position='end'>
-                  <IconButton onClick={this.clearProjectFilter}>
-                    <HighlightOffIcon/>
-                  </IconButton>
-                </InputAdornment>
-              }}
-            />
-          </Grid>
-          <Grid item style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
-            <Typography>
-              Hier können Sie sich von angemeldeten Projekten abmelden:
-            </Typography>
-            { 
-              filteredProjects.map(project =>
-                <StudentProjectEntry key={project.getId()} project={project}/>)
-            }
-          </Grid>
+          <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">
+            Angemeldete Projekte
+          </Button>
         </Grid>
+        <Grid style={{paddingTop: 15}}>
+          <Typography>
+            Meine Projekte durchsuchen nach:
+          </Typography>
+          <TextField 
+            autoFocus type='text' 
+            value={projectFilter} 
+            onChange={this.filterProjects}
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>
+                <IconButton onClick={this.clearProjectFilter}>
+                  <HighlightOffIcon/>
+                </IconButton>
+              </InputAdornment>
+            }}
+          />
+        </Grid>
+        <Grid style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
+          <Typography>
+            Hier können Sie sich von angemeldeten Projekten abmelden:
+          </Typography>
+          { 
+            filteredProjects.map(project =>
+              <StudentProjectEntry key={project.getId()} project={project}/>)
+          }
+        </Grid>
+      </Paper>
       </div>
     );
   }

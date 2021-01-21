@@ -1,11 +1,10 @@
 import React from 'react';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
 import { withStyles, Typography, Grid } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import InfoIcon from '@material-ui/icons/Info';
+import IconButton from '@material-ui/core/IconButton';
 import StudentProjectCancellation from './dialogs/StudentProjectCancellation';
+import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
 
 class StudentProjectEntry extends React.Component {
 
@@ -14,6 +13,7 @@ class StudentProjectEntry extends React.Component {
 
         this.state = {
             ProjectNBOs: props.project,
+            openDialogInfo: false,
             showDialog: false
         };
     }
@@ -30,39 +30,52 @@ class StudentProjectEntry extends React.Component {
         });
     }
 
+    openDialogInfo = () => {
+        this.setState({
+            openDialogInfo: true})
+    }
+
+    closeDialogInfo = () => {
+        this.setState({
+            openDialogInfo: false})
+    }
+
     render() {
         const { classes } = this.props;
-        const { ProjectNBOs, showDialog } = this.state;
+        const { ProjectNBOs, showDialog, openDialogInfo } = this.state;
         return (
             <div className={classes.root}>
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="panel1bh-content"
-                        id="panel1bh-header">
-                        <Grid container spacing={1} justify='flex-start' alignItems='center'>
-                            <Grid item style={{width: '80%'}}>
-                                <Typography className={classes.heading}>
-                                    { ProjectNBOs.getName() }
-                                </Typography>
-                                <Typography className={classes.secondaryHeading}>
-                                    { ProjectNBOs.getCapacity() }
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Button onClick={this.handleClick} variant='text' size='small' color='secondary'>
-                                    Abmelden
-                                </Button>
-                            </Grid>
-                        </Grid>
-                        <StudentProjectCancellation show={showDialog} close={this.closeDialog} project={ProjectNBOs}/>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                            { ProjectNBOs.getShortDescription() }
+                <Grid container spacing={1} justify='space-between' alignItems='center'>
+                    <Grid>
+                        <React.Fragment>
+                            <ProjectDetailsDialog
+                            openInfo={openDialogInfo}
+                            onCloseProp={this.closeDialogInfo}
+                            project={ProjectNBOs}
+                            />
+                            <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
+                                <InfoIcon/>
+                            </IconButton>
+                        </React.Fragment>
+                    </Grid>   
+                    <Grid style={{marginBottom: 10, marginTop: 10}}> 
+                        <Typography className={classes.heading}>
+                            { ProjectNBOs.getName() } ({ ProjectNBOs.getCapacity() }/{ ProjectNBOs.getCapacity() } Plätze)
                         </Typography>
-                    </AccordionDetails>
-                </Accordion>
+                    </Grid>
+                    <Grid>
+                        <React.Fragment>
+                            <StudentProjectCancellation 
+                            show={showDialog} 
+                            close={this.closeDialog} 
+                            project={ProjectNBOs}
+                            />
+                            <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.handleClick}>
+                                Abmelden
+                            </Button>
+                        </React.Fragment>
+                    </Grid>
+                </Grid>
             </div>
         );
     }
