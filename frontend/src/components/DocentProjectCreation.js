@@ -9,15 +9,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-
-import { green } from '@material-ui/core/colors';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import Favorite from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
+
 
 class DocentProjectCreation extends React.Component {
 
@@ -167,12 +160,52 @@ class DocentProjectCreation extends React.Component {
                                         <Checkbox/>Nein
                                     </TableCell>
                                 </TableRow>
+
+                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                        <Checkbox/>Blocktage vor Beginn der Vorlesungszeit
+                                    </TableCell>
+                                    <TableCell>
+                                        Anzahl: Tage
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                        <Checkbox/>Blocktage in der Prüfungszeit <b>(nur inter-/trans. Projekte!!!)</b>
+                                    </TableCell>
+                                    <TableCell>
+                                        Anzahl: Tage
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                        <Checkbox/>Blocktage (Samstage) in der Vorlesungszeit
+                                        <p>Präferierte Tage:</p>
+                                    </TableCell>
+                                    <TableCell>
+                                        Anzahl: Tage
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                        <Checkbox/>Besonderer Raum notwendig
+                                    </TableCell>
+                                </TableRow>
+
                             </TableBody>
                             </Table>
                             </Box>
 
                     </TableCell>    
                 </TableRow>
+                </Grid>
+                <Grid>
+                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}}>
+                        Absenden
+                    </Button>
                 </Grid>
             </Paper>
             </div>
