@@ -22,6 +22,7 @@ import DocentNavigation from './components/DocentNavigation';
 import AdminNavigation from './components/AdminNavigation';
 import DocentTeilnehmerliste from './components/DocentTeilnehmerliste';
 import DocentMeineProjekte from "./components/DocentMeineProjekte";
+import DocentProjectCreation from './components/DocentProjectCreation';
 
 
 
@@ -143,6 +144,9 @@ class App extends React.Component {
                   <DocentMeineProjekte/>
                   <DocentTeilnehmerliste/>
                   <DocentBewertungsListe/>
+                </Route>
+                <Route path='/dozent/neuesprojekt'>
+                  <DocentProjectCreation/>
                 </Route>
                 <Route path='/admin'>
                   <AdminNavigation/>
