@@ -532,7 +532,7 @@ class RoleRelatedPersonOperations(Resource):
 
         if rol is not None:
             person_list = adm.get_persons_by_role_id(role.get_id())
-            return person_list
+            return person_list, 200
         else:
             return 'Role not found', 500
 

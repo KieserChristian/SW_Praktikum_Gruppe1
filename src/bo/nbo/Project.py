@@ -115,7 +115,7 @@ class Project(NamedBusinessObject, Automat):
 
     def set_state_id(self, state_id):
         """Setzen eines Fremdschlüssels zu einem State"""
-        self._state_id = state
+        self._state_id = state_id
     
     def get_state_id(self):
         """Auslesen des Fremdschlüssels zum State"""
