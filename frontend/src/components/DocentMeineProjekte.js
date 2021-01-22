@@ -9,10 +9,6 @@ import DocentMeineProjekteEntry from "./DocentMeineProjekteEntry"
 import { withStyles, Grid, Button, Typography, Select} from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-
-
-
-
 class DocentMeineProjekte extends React.Component {
 
    
@@ -22,6 +18,7 @@ class DocentMeineProjekte extends React.Component {
     
         this.state = {
           projects: [],
+          project_Id:[],
           participation: [],
           error: null,
           loadingProgress: false,
@@ -29,20 +26,19 @@ class DocentMeineProjekte extends React.Component {
         
     }
     
-    getAllProjects = () => {
-        ProjectAdminAPI.getAPI().getAllProjects()
-        .then(projectNBOs => {
+    getProjectById = () => {
+        ProjectAdminAPI.getAPI().getProjectById().then(projectNBOs => {
             this.setState({
-            projects: projectNBOs,
-            loadingProgress: false,
-            error: null
-          });
+                projects: projectNBOs,
+                loadingProgress: false,
+                error: null
+            });
         }).catch(e => {
-          this.setState({
-            projects: [],
-            loadingInProgress: false,
-            error: e
-          })
+            this.setState({
+                projects: [],
+                loadingInProgress: false,
+                error: e
+            })
         });
         this.setState({
         loadingInProgress: true,
@@ -51,12 +47,12 @@ class DocentMeineProjekte extends React.Component {
     }
     
     componentDidMount() {
-        this.getAllProjects();
+        this.getProjectById();
     }
 
     render(){
         const { classes } = this.props;
-        const{projects, error} = this.state;
+        const{projects, error, project_id} = this.state;
 
         
         return(
@@ -65,24 +61,20 @@ class DocentMeineProjekte extends React.Component {
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
-                               
-                                <TableCell align='center'>Id</TableCell>
-                                <TableCell align='center'>Name</TableCell>
-                                <TableCell align='center' >Capacity</TableCell>                                
-                                <TableCell align='center' >State</TableCell>
-                                <TableCell align='center' >Projecttyp</TableCell>
-                                <TableCell align='center' >Bearbeiten</TableCell>
-                            </TableRow>
+                                <TableCell align='center'>Name</TableCell>   
+                                <TableCell align='center'>ECTS</TableCell>
+                                <TableCell align='center' >Projekttyp</TableCell>                                
+</TableRow>
                         </TableHead>
                         <TableBody>
-                        <Grid item>
-
-                            {projects.length > 0 ?
-                                projects.map(project =>
-                                    <DocentMeineProjekteEntry key={project.getProjectId()} project={project} />)
-                                    : 
-                                    null
-                            }
+                            <Grid item>
+                            <TableCell align='center' ></TableCell>
+                                {projects.length > 0 ?
+                                    projects.map(project =>
+                                        <DocentMeineProjekteEntry key={projects.getId()} project={project} />)
+                                        : 
+                                        null
+                                }
 
                         </Grid>
                         </TableBody>
