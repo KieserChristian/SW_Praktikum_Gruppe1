@@ -36,7 +36,6 @@ class ProjectAdministration():
     def create_person(self, creation_date, name, google_id, email):
         """Eine Person anlegen"""
         person = Person()
-        person.set_creation_date(creation_date)
         person.set_name(name)
         person.set_google_id(google_id)
         person.set_email(email)
@@ -87,7 +86,6 @@ class ProjectAdministration():
     def create_student(self, creation_date, name, google_id, email, matriculation_number, course_abbreviation):
         """Einen Studenten anlegen"""
         student = Student()
-        student.set_creation_date(creation_date)
         student.set_name(name)
         student.set_google_id(google_id)
         student.set_email(email)
@@ -107,12 +105,6 @@ class ProjectAdministration():
         """Den gewählten Studenten löschen"""
         """Und die zugehörigen Teilnahmen löschen"""
         with StudentMapper() as mapper:
-            participations = self.get_participations_of_student(student)
-
-            if not (participations is None):
-                for p in participations:
-                    self.delete_participation(p)
-
             mapper.delete(student)
     
     def get_student_by_id(self, id):

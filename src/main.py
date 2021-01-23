@@ -244,31 +244,14 @@ class StudentOperations(Resource):
     #@secured
     def delete(self, student_id):
         """Löschen eines bestimmten Student-Objekts, welches durch die student_id in dem URI bestimmt wird."""
-
         adm = ProjectAdministration()
         stud = adm.get_student_by_id(student_id)
-
         if stud is not None:
             adm.delete_student(stud)
             return 'gelöscht', 200
         else:
             return 'There was no student object with this id', 500
 
-    @projectTool.marshal_with(student)
-    @projectTool.expect(student, validate=True)
-    #@secured
-    def put(self, student_id):
-        """Update eines bestimmten Student-Objekts"""
-
-        adm = ProjectAdministration()
-        stud = Student.from_dict(api.payload)
-
-        if stud is not None:
-            stud.set_id(student_id)
-            adm.save_student(stud)
-            return stud, 200
-        else:
-            return '', 500
 
 @projectTool.route('/student/<int:student_id>/projects')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -307,12 +290,27 @@ class StudentListOperations(Resource):
         """Anlegen eines neuen Student-Objekts"""
         adm = ProjectAdministration()
         proposal = Student.from_dict(api.payload)
-
+        print(proposal)
         if proposal is not None:
             stud = adm.create_student(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email(), proposal.get_matriculation_number(), proposal.get_course_abbreviation())
             return stud, 200       
         else:
             return '', 500 
+
+    @projectTool.marshal_with(student)
+    @projectTool.expect(student, validate=True)
+    #@secured
+    def put(self):
+        """Update eines bestimmten Student-Objekts"""
+
+        adm = ProjectAdministration()
+        stud = Student.from_dict(api.payload)
+
+        if stud is not None:
+            adm.save_student(stud)
+            return stud, 200
+        else:
+            return '', 500
 
 @projectTool.route('/student-by-matriculation-number/<string:matriculation_number>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
