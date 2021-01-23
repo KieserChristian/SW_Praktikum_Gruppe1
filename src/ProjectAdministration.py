@@ -426,6 +426,21 @@ class ProjectAdministration():
         """Alle Projekte des gegebenen Student auslesen"""
         with ProjectMapper() as mapper:
             return mapper.find_by_id(student.get_id())
+
+    def get_project_type_of_project(self, project_id):
+        """Den Projekttyp eines Projekts auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.get_project_type_of_project(project_id)
+
+    def get_module_of_project(self, module):
+        """Das Modul eines Projekts auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.get_module_of_project(module)
+
+    def get_state_of_project(self, state):
+        """Den Zustand eines Projekts auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.get_state_of_project(state)
     
     def get_projects_by_state_id(self):
         """Alle Projekte, die sich in einem bestimmten Zustand befinden, ausgeben"""
