@@ -1,13 +1,16 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Button, Grid, Typography, withStyles} from '@material-ui/core';
+import { withRouter, Link } from 'react-router-dom';
+import InfoIcon from '@material-ui/icons/Info';
+import IconButton from '@material-ui/core/IconButton';
+import DocentView from './DocentView';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
 
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import { TableCell, TableRow, TableHead, TableBody} from '@material-ui/core'
-import DocentMeineProjekteEntry from "./DocentMeineProjekteEntry"
-import { withStyles, Grid, Button, Typography, Select} from '@material-ui/core';
-import PropTypes from 'prop-types';
+
+
+/*  DocentTeilnehmerlisteGrading.js wird aus der DocentTeilnehmerlisteGradingView.js aufgerufen, um den angezeigten
+    Student zu benoten.
+*/
 
 class DocentMeineProjekte extends React.Component {
 
@@ -17,75 +20,134 @@ class DocentMeineProjekte extends React.Component {
         super(props);
     
         this.state = {
-          projects: [],
-          project_Id:[],
-          participation: [],
-          error: null,
-          loadingProgress: false,
+            StudentNBOs: props.student,
+            ProjectNBOs: props.project,
+            numberEcts: null,
+            projectType: null,
         };
-        
     }
-    
-    getProjectById = () => {
-        ProjectAdminAPI.getAPI().getProjectById().then(projectNBOs => {
+
+
+    getParticipationsOfStudent = () => {
+        ProjectAdminAPI.getAPI().getParticipationsOfStudent(this.state.ParticipationBOs.getId())
+        .then(participationsOfStudentAPI => {
             this.setState({
-                projects: projectNBOs,
-                loadingProgress: false,
-                error: null
-            });
+            participationsOfStudent: participationsOfStudentAPI,
+            loadingProgress: false,
+            error: null
+          });
         }).catch(e => {
-            this.setState({
-                projects: [],
-                loadingInProgress: false,
-                error: e
-            })
+          this.setState({
+            participationsOfStudent: null,
+            loadingInProgress: false,
+            error: e
+          })
         });
         this.setState({
         loadingInProgress: true,
         error: null
         });
     }
-    
-    componentDidMount() {
-        this.getProjectById();
+
+    getProjectTypeByProject = () => {
+        ProjectAdminAPI.getAPI().getProjectTypeByProject(this.state.ProjectNBOs.getId())
+        .then(projectTypeAPI => {
+            this.setState({
+            projectType: projectTypeAPI,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            projectType: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
     }
 
-    render(){
-        const { classes } = this.props;
-        const{projects, error, project_id} = this.state;
+    getNumberEctsByProject = () => {
+        ProjectAdminAPI.getAPI().getNumberEctsByProject(this.state.ProjectNBOs.getId())
+        .then(numberEctsAPI => {
+            this.setState({
+            numberEcts: numberEctsAPI,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            numberEcts: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
 
-        
-        return(
-            <div>
-                <Paper>
-                    <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align='center'>Name</TableCell>   
-                                <TableCell align='center'>ECTS</TableCell>
-                                <TableCell align='center' >Projekttyp</TableCell>                                
-</TableRow>
-                        </TableHead>
-                        <TableBody>
+    componentDidMount() {
+        this.getNumberEctsByProject();
+        this.getProjectTypeByProject();
+    }
+
+    render() {
+        const { classes } = this.props;
+        const { error, ParticipationBOs, participationsOfStudent, numberEcts, ProjectNBOs, StudentNBOs, projectType} = this.state;
+        return (
+            <div className={classes.root}>
+                        <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
+
+                            <Grid item style={{marginBottom: 10, marginTop: 10}}>
+                                <Typography className={classes.heading} >
+                                    { ProjectNBOs.getName() }
+                                    
+                                </Typography>
+                                <Typography className={classes.heading} >
+                                    {numberEcts?
+                                        <b>{numberEcts.getNumberEcts()}</b> 
+                                    :"Test(5ECTS)"}
+                                </Typography>
+                                <Typography>
+                                    {projectType?
+                                        <b>{projectType.getName()}</b> 
+                                    :"Test(ProjektTyp)"}
+                                </Typography>
+                            </Grid>
                             <Grid item>
-                            <TableCell align='center' ></TableCell>
-                                {projects.length > 0 ?
-                                    projects.map(project =>
-                                        <DocentMeineProjekteEntry key={projects.getId()} project={project} />)
-                                        : 
-                                        null
-                                }
+                            <React.Fragment>
+                                
+                                   
+                                <Link to='/dozent/docentview'>
+                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}}>
+                                        Teilnehmerliste
+                                    </Button>
+                                </Link>
+                             
+                            </React.Fragment>
+                            </Grid>
 
                         </Grid>
-                        </TableBody>
-                    </Table>
-                </Paper>
             </div>
-        )
+        );
     }
 }
-        
- 
 
-                                        
-export default withRouter(DocentMeineProjekte);
+const styles = theme => ({
+    root: {
+        width: '100%',
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      flexBasis: '33.33%',
+      flexShrink: 0,
+    },
+});
+
+
+export default withStyles(styles)(DocentMeineProjekte);
