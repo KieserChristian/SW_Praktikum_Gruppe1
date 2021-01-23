@@ -2,12 +2,6 @@ import BusinessObject from './BusinessObject';
 
 export default class NamedBusinessObject extends BusinessObject{
 
-    //konstruiert ein RoleBO mit einem gegebenen Namen
-
-    /** 
-     * @param {String} aName der Name der RoleBO
-     */
-
     constructor(aName) {
         super();
         this.name = aName;
