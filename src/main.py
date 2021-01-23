@@ -50,7 +50,8 @@ automat = api.model('Automat', {
 """Participation, Grading, Module, Project, ProjectType, Semester, Person & Student sind BusinessObjects"""
 
 participation = api.inherit('Participation', bo, {
-    "student_id": fields.Integer(attribute='_student_id')
+    "student_id": fields.Integer(attribute='_student_id'),
+    'project_id': fields.Integer(attribute='_project_id')
 })
 
 grading = api.inherit('Grading', bo, {
@@ -711,6 +712,21 @@ class ProjectListOperations(Resource):
         else:
             return '', 500
 
+@projectTool.route('/project_type_of_project/<int:project_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, project_id):
+        """Auslesen aller Project-Objekte eines bestimmten project_types"""
+        adm = ProjectAdministration()
+        project_type_of_project = adm.get_project_type_of_project(project_id)
+        
+        if project_type_of_project != []:
+            return project_type_of_project, 200
+        else:
+            return 'There is no Project with that Project_type', 500
+
+
 @projectTool.route('/project-type/<int:project_type_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('project_type_id', 'Dies ist die ID von ProjectType')
@@ -934,6 +950,20 @@ class ParticipationListOperations(Resource):
             return participationofstudent, 200
         else:
             return 'There is no Participation for that Student', 500
+
+@projectTool.route('/project_of_participation/<int:participation_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ParticipationListOperations(Resource):
+    #@secured
+    def get(self, participation_id):
+        """Auslesen aller Participation-Objekte"""
+        adm = ProjectAdministration()
+        project_of_participation = adm.get_project_of_participation(participation_id)
+        
+        if project_of_participation != []:
+            return project_of_participation, 200
+        else:
+            return 'There is no Project for that Participation', 500
 
 if __name__ == '__main__':
     app.run(debug=True)

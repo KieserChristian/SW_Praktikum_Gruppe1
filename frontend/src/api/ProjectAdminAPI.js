@@ -59,6 +59,7 @@ export default class ProjectAdminAPI {
 
     // ProjectType related
     #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project/project-type/§{project_type_id}`;
+    #getProjectTypeByProjectURL = (projectId) => `${this.#projectServerBaseURL}/project-type-by-project/${projectId}`;
 
     // Semester related
 
@@ -122,7 +123,7 @@ export default class ProjectAdminAPI {
             resolve(responseNumberSws)
         })
     })
-};
+  };
 
     //ProjectType
 
@@ -135,6 +136,15 @@ export default class ProjectAdminAPI {
         })
       })
     }
+
+    getProjectTypeByProject(projectId) {
+      return this.#fetchAdvanced(this.#getProjectTypeByProjectURL(projectId)).then((responseJSON) => {
+          let responseProjectType = ProjectTypeNBO.fromJSON(responseJSON)[0];
+          return new Promise(function (resolve) {
+              resolve(responseProjectType)
+          })
+      })
+    };
    
     // Grading
 
@@ -156,7 +166,7 @@ export default class ProjectAdminAPI {
               resolve(responseModule)
           })
       })
-  };
+    };
 
     //Participation
 

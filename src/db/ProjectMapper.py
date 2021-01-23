@@ -201,24 +201,24 @@ class ProjectMapper (Mapper):
         cursor.close()
 
 
-    def get_project_type_of_project(self, project_type):
+    def get_project_type_of_project(self, project_id):
         result = []
         
         cursor = self._cnx.cursor()
         command = """
-        SELECT project.project_id, project.project_name, project_type.project_type_id, project_type.name
+        SELECT project.project_id, project.name, project_type.project_type_id, project_type.name
         FROM project
         INNER JOIN project_type
         ON project.project_type_id=project_type.project_type_id
-        WHERE project.project_type_id={0}
-        """.format(project_type_id)
+        WHERE project.project_id={0}
+        """.format(project_id)
         
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            for(project_id, name, project_type_id, name) in tuples:
-                project_type_json = {"project_id": project_id, "project_name": name, "project_type_id": project_type_id, "project_type_name": name}
+            for(project_id, project_name, project_type_id, project_type_name) in tuples:
+                project_type_json = {"project_id": project_id, "project_name": project_name, "project_type_id": project_type_id, "project_type_name": project_type_name}
                 result.append(project_type_json)
         except IndexError:
             print("There was no object with this id")

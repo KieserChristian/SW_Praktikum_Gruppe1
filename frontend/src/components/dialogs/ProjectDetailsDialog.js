@@ -84,7 +84,7 @@ class ProjectDetailsDialog extends Component {
                 <DialogContentText>
                     {module?
                         <b>Modul: {module.getName()}</b> 
-                    :null}
+                    :"Test(Modulname)"}
                 </DialogContentText>
                 <DialogContentText>
                 <b>Projekttyp:</b> 
@@ -98,7 +98,7 @@ class ProjectDetailsDialog extends Component {
                 <DialogContentText>
                     {numberSws?
                         <b>{numberSws.getNumberSws()}</b> 
-                    :null}
+                    :"Test(10SWS)"}
                 </DialogContentText>
                 <DialogContentText>
                 <b>Kurzbeschreibung:</b> {ProjectNBOs.getShortDescription()}
