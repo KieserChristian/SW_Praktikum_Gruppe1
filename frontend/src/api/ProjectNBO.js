@@ -2,7 +2,7 @@ import NamedBusinessObject from "./NamedBusinessObject"
 
 export default class ProjectNBO extends NamedBusinessObject {
 
-    constructor (aState, aCapacity, aPartner, aDescription, aFlag, aBDbeforeLecture, aBDinExam, aBDinLecture, aBDpreferredInLecture, aRoom) {
+    constructor (aState, aCapacity, aPartner, aDescription, aFlag, aBDbeforeLecture, aBDinExam, aBDinLecture, aBDpreferredInLecture, aRoom, aProjectTypeId) {
         super ();
         this.current_state = aState;
         this.capacity = aCapacity;
@@ -14,6 +14,7 @@ export default class ProjectNBO extends NamedBusinessObject {
         this.bd_in_lecture_period = aBDinLecture;
         this.bd_preferred_in_lecture_period = aBDpreferredInLecture;
         this.special_room = aRoom;
+        this.project_type_id = aProjectTypeId;
     }
 
     setState(aState) {
@@ -94,6 +95,10 @@ export default class ProjectNBO extends NamedBusinessObject {
 
     getSpecialRoom() {
         return this.special_room;
+    }
+    
+    getProjectTypeId() {
+        return this.project_type_id;
     }
 
        /** Gibt ein Array der PersonNBOs von den gegebenen JSON Strukturen zurück
