@@ -711,6 +711,21 @@ class ProjectListOperations(Resource):
         else:
             return '', 500
 
+@projectTool.route('/project_type_of_project/<int:project_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, project_id):
+        """Auslesen aller Project-Objekte eines bestimmten project_types"""
+        adm = ProjectAdministration()
+        project_type_of_project = adm.get_project_type_of_project(project_id)
+        
+        if project_type_of_project != []:
+            return project_type_of_project, 200
+        else:
+            return 'There is no Project with that Project_type', 500
+
+
 @projectTool.route('/project-type/<int:project_type_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('project_type_id', 'Dies ist die ID von ProjectType')
