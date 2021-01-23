@@ -142,9 +142,9 @@ class App extends React.Component {
                 </Route>
                 <Route path='/dozent/projektübersicht'>
                   <DocentView/>
-                  <DocentMeineProjekte/>
+                  
                 </Route>
-                <Route path='/dozent/teilnehmerliste'>
+                <Route path='/dozent/docentview'>
                   
                  
                   <DocentTeilnehmerliste/>
