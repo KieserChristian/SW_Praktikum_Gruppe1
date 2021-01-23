@@ -11,14 +11,16 @@ class ParticipationMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        cursor.execute("SELECT * from participation")
+        command=("SELECT * from participation")
+        cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, student) in tuples:
+        for (id, creation_date, student_id) in tuples:
             participation = Participation()
             participation.set_id(id)
             participation.set_creation_date(creation_date)
             participation.set_student_id(student)
+            participation.set_project_id(project)
             result.append(participation)
 
         self._cnx.commit()
@@ -78,6 +80,7 @@ class ParticipationMapper (Mapper):
             participation.set_id(id)
             participation.set_creation_date(creation_date)
             participation.set_student_id(student_id)
+            participation.set_project_id(project_id)
             print(participation.get_creation_date())
             result = participation
         except IndexError:
@@ -97,7 +100,7 @@ class ParticipationMapper (Mapper):
         for (maxid) in tuples:
             participation.set_id(maxid[0]+1)
 
-        command = "INSERT INTO participation (creation_date, participation_id, student_id) VALUES (CURRENT_TIMESTAMP, "+str(participation.get_id()) +", "+str(participation.get_student_id()) +")"
+        command = "INSERT INTO participation (creation_date, participation_id, student_id, project_id) VALUES (CURRENT_TIMESTAMP, "+str(participation.get_id()) +", "+str(participation.get_student_id()) +", "+str(participation.get_project_id()) +")"
         cursor.execute(command)
         self._cnx.commit()
         cursor.close()
@@ -126,6 +129,7 @@ class ParticipationMapper (Mapper):
         self._cnx.commit()
         cursor.close()
     
+
     def get_participations_of_student(self, student_id):
         result = []
         
@@ -137,7 +141,6 @@ class ParticipationMapper (Mapper):
         ON participation.student_id=student.student_id
         WHERE participation.student_id={0}
         """.format(student_id)
-        
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -145,6 +148,34 @@ class ParticipationMapper (Mapper):
             for(participation_id, student_id, name, matriculation_number) in tuples:
                 student_json = {"participation_id": participation_id, "student_id": student_id, "student_name": name, "matriculation_number": matriculation_number}
                 result.append(student_json)
+        except IndexError:
+            print("There was no object with this id")
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+        return result
+
+
+    def get_project_of_participation (self, participation_id):
+        result = []
+        
+        cursor = self._cnx.cursor()
+        command = """
+        SELECT participation.participation_id, project.project_id, project.name
+        FROM participation
+        INNER JOIN project
+        ON participation.project_id=project.project_id
+        WHERE participation.participation_id={0}
+        """.format(participation_id)
+        
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for(participation_id, project_id, name) in tuples:
+                project_json = {"participation_id": participation_id, "project_id": project_id, "project_name": name}
+                result.append(project_json)
         except IndexError:
             print("There was no object with this id")
             result = None

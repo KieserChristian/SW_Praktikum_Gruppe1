@@ -3,12 +3,11 @@ import PersonNBO from "./PersonNBO"
 
 export default class StudentNBO extends NamedBusinessObject {
 
-    constructor(aName, aMatriculationNumber, aCourseAbbreviation, aPerson_id) {
+    constructor(aMatriculationNumber, aCourseAbbreviation, aParticipationId){
         super();
-        this.name = aName;
-        this.matriculation_number = aMatriculationNumber
-        this.course_abbreviation = aCourseAbbreviation
-        this.person_id = aPerson_id
+        this.matriculation_number = aMatriculationNumber;
+        this.course_abbreviation = aCourseAbbreviation;
+        this.participation_id = aParticipationId;
     }
 
     setName(aName){
@@ -37,12 +36,12 @@ export default class StudentNBO extends NamedBusinessObject {
         return this.course_abbreviation;
     }
 
-    setPerson_id(aPerson_id){
-        this.person_id= aPerson_id;
+    setParticipationId(aParticipationId) {
+        this.participation_id = aParticipationId;
     }
 
-    getPerson_id(){
-        return this.person_id
+    getParticipationId() {
+        return this.participation_id;
     }
     
     static fromJSON(student) {

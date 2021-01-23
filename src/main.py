@@ -50,7 +50,8 @@ automat = api.model('Automat', {
 """Participation, Grading, Module, Project, ProjectType, Semester, Person & Student sind BusinessObjects"""
 
 participation = api.inherit('Participation', bo, {
-    "student_id": fields.Integer(attribute='_student_id')
+    "student_id": fields.Integer(attribute='_student_id'),
+    'project_id': fields.Integer(attribute='_project_id')
 })
 
 grading = api.inherit('Grading', bo, {
@@ -244,31 +245,14 @@ class StudentOperations(Resource):
     #@secured
     def delete(self, student_id):
         """Löschen eines bestimmten Student-Objekts, welches durch die student_id in dem URI bestimmt wird."""
-
         adm = ProjectAdministration()
         stud = adm.get_student_by_id(student_id)
-
         if stud is not None:
             adm.delete_student(stud)
             return 'gelöscht', 200
         else:
             return 'There was no student object with this id', 500
 
-    @projectTool.marshal_with(student)
-    @projectTool.expect(student, validate=True)
-    #@secured
-    def put(self, student_id):
-        """Update eines bestimmten Student-Objekts"""
-
-        adm = ProjectAdministration()
-        stud = Student.from_dict(api.payload)
-
-        if stud is not None:
-            stud.set_id(student_id)
-            adm.save_student(stud)
-            return stud, 200
-        else:
-            return '', 500
 
 @projectTool.route('/student/<int:student_id>/projects')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -307,12 +291,27 @@ class StudentListOperations(Resource):
         """Anlegen eines neuen Student-Objekts"""
         adm = ProjectAdministration()
         proposal = Student.from_dict(api.payload)
-
+        print(proposal)
         if proposal is not None:
             stud = adm.create_student(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email(), proposal.get_matriculation_number(), proposal.get_course_abbreviation())
             return stud, 200       
         else:
             return '', 500 
+
+    @projectTool.marshal_with(student)
+    @projectTool.expect(student, validate=True)
+    #@secured
+    def put(self):
+        """Update eines bestimmten Student-Objekts"""
+
+        adm = ProjectAdministration()
+        stud = Student.from_dict(api.payload)
+
+        if stud is not None:
+            adm.save_student(stud)
+            return stud, 200
+        else:
+            return '', 500
 
 @projectTool.route('/student-by-matriculation-number/<string:matriculation_number>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -342,7 +341,7 @@ class StudentByNameOperations(Resource):
         stud = adm.get_student_by_name(name)
         return stud
 
-@projectTool.route('/state')
+@projectTool.route('/state/<int:state_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('state_id', 'Dies ist die ID von State')
 class StateOperations(Resource):
@@ -360,9 +359,12 @@ class StateOperations(Resource):
         """Löschen eines bestimmten State-Objekts, welches durch die state_id in dem URI bestimmt wird."""
 
         adm = ProjectAdministration()
-        stud = adm.get_student_by_id(student_id)
-        adm.delete_student(stud)
-        return 'gelöscht', 200
+        stat = adm.get_state_by_id(state_id)
+        if stat is not None:
+            adm.delete_state(stat)
+            return 'gelöscht', 200
+        else:
+            return 'There was some error', 500
 
 @projectTool.route('/state/project')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -463,7 +465,7 @@ class SemesterRelatedProjectOperations(Resource):
         else:
             return 'Semester not found', 500
 
-@projectTool.route('/role')
+@projectTool.route('/role/<int:role_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('role_id', 'Dies ist die ID von Role')
 class RoleOperations(Resource):
@@ -711,6 +713,21 @@ class ProjectListOperations(Resource):
         else:
             return '', 500
 
+@projectTool.route('/project_type_of_project/<int:project_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, project_id):
+        """Auslesen aller Project-Objekte eines bestimmten project_types"""
+        adm = ProjectAdministration()
+        project_type_of_project = adm.get_project_type_of_project(project_id)
+        
+        if project_type_of_project != []:
+            return project_type_of_project, 200
+        else:
+            return 'There is no Project with that Project_type', 500
+
+
 @projectTool.route('/project-type/<int:project_type_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('project_type_id', 'Dies ist die ID von ProjectType')
@@ -934,6 +951,20 @@ class ParticipationListOperations(Resource):
             return participationofstudent, 200
         else:
             return 'There is no Participation for that Student', 500
+
+@projectTool.route('/project_of_participation/<int:participation_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ParticipationListOperations(Resource):
+    #@secured
+    def get(self, participation_id):
+        """Auslesen aller Participation-Objekte"""
+        adm = ProjectAdministration()
+        project_of_participation = adm.get_project_of_participation(participation_id)
+        
+        if project_of_participation != []:
+            return project_of_participation, 200
+        else:
+            return 'There is no Project for that Participation', 500
 
 if __name__ == '__main__':
     app.run(debug=True)

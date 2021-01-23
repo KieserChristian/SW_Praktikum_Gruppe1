@@ -8,7 +8,8 @@ class Student(Person, NamedBusinessObject):
 
     def __init__(self):
         super().__init__()
-        self._matriculation_number = 0
+        super().__init__()
+        self._matriculation_number = ""
         self._course_abbreviation = ""
         self._person = 0
 

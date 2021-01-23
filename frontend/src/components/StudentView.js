@@ -65,7 +65,7 @@ class StudentView extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { error, loadingInProgress, projectFilter, filteredProjects } = this.state;
+    const { error, loadingInProgress, projects, projectFilter, filteredProjects } = this.state;
     return (
       <div className={classes.root}>
       <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
@@ -96,8 +96,11 @@ class StudentView extends React.Component {
             Hier können Sie sich von angemeldeten Projekten abmelden:
           </Typography>
           { 
+          projects.length > 0 ?
             filteredProjects.map(project =>
               <StudentProjectEntry key={project.getId()} project={project}/>)
+              :
+              null
           }
         </Grid>
       </Paper>

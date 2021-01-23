@@ -31,20 +31,16 @@ class RoleMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT role_id, creation_date, name FROM role WHERE name={} ORDER BY role_id".format(id)
+        command = "SELECT role_id, creation_date, static_attribute FROM role WHERE role_id={} ORDER BY role_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        try:
-            (id, creation_date, name) = tuples[0]
+        for (id, creation_date, static_attribute) in tuples:
             role = Role()
             role.set_id(id)
             role.set_creation_date(creation_date)
-            role.set_name(name)
+            role.set_static_attribute(static_attribute)
             result = role
-        except IndexError:
-            print("There was no object with this id")
-            result = None
 
         self._cnx.commit()
         cursor.close()

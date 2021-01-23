@@ -18,6 +18,8 @@ class ProjectDetailsDialog extends Component {
             ProjectNBOs: props.project,
             module: null,
             numberSws: null,
+            numberEcts:null,
+            projectType: null,
         }
     }
 
@@ -76,7 +78,7 @@ class ProjectDetailsDialog extends Component {
     
     render() {
         const { openInfo } = this.props;
-        const { ProjectNBOs , module, numberSws} = this.state;
+        const { ProjectNBOs , module, projectType, numberSws, numberEcts} = this.state;
         return (
             <Dialog open={openInfo} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" style={{color: 'white', backgroundColor: '#4caf50'}}><b>{ProjectNBOs.getName()}</b></DialogTitle>
@@ -84,21 +86,25 @@ class ProjectDetailsDialog extends Component {
                 <DialogContentText>
                     {module?
                         <b>Modul: {module.getName()}</b> 
-                    :null}
+                    :"Test(Modulname)"}
                 </DialogContentText>
                 <DialogContentText>
-                <b>Projekttyp:</b> 
+                    {projectType?
+                        <b>Projekttyp: {projectType.getName()}</b> 
+                    :"Test(Projekttyp)"}
                 </DialogContentText>
                 <DialogContentText>
                 <b>Kapazität: {ProjectNBOs.getCapacity()} Plätze</b> 
                 </DialogContentText>
                 <DialogContentText>
-                <b>ECTS:</b> 
+                {numberEcts?
+                        <b>ECTS:: {numberEcts.getNumberEcts()}</b> 
+                    :"Test(5ECTS)"}
                 </DialogContentText>
                 <DialogContentText>
                     {numberSws?
                         <b>{numberSws.getNumberSws()}</b> 
-                    :null}
+                    :"Test(10SWS)"}
                 </DialogContentText>
                 <DialogContentText>
                 <b>Kurzbeschreibung:</b> {ProjectNBOs.getShortDescription()}

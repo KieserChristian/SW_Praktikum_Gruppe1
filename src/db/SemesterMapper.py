@@ -126,13 +126,11 @@ class SemesterMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE semester " + "SET name=%s WHERE semester_id={}".format(semester.get_id())
-        #command = "UPDATE semester " + "SET name=" + str(semester.get_name()) + " WHERE semester_id={}".format(semester.get_id())
         data = (semester.get_name())
         cursor.execute(command, data)
 
         self._cnx.commit()
         cursor.close()
-        return semester
 
     """delete semester""" 
 

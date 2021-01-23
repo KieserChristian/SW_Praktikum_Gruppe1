@@ -36,7 +36,6 @@ class ProjectAdministration():
     def create_person(self, creation_date, name, google_id, email):
         """Eine Person anlegen"""
         person = Person()
-        person.set_creation_date(creation_date)
         person.set_name(name)
         person.set_google_id(google_id)
         person.set_email(email)
@@ -87,7 +86,6 @@ class ProjectAdministration():
     def create_student(self, creation_date, name, google_id, email, matriculation_number, course_abbreviation):
         """Einen Studenten anlegen"""
         student = Student()
-        student.set_creation_date(creation_date)
         student.set_name(name)
         student.set_google_id(google_id)
         student.set_email(email)
@@ -107,12 +105,6 @@ class ProjectAdministration():
         """Den gewählten Studenten löschen"""
         """Und die zugehörigen Teilnahmen löschen"""
         with StudentMapper() as mapper:
-            participations = self.get_participations_of_student(student)
-
-            if not (participations is None):
-                for p in participations:
-                    self.delete_participation(p)
-
             mapper.delete(student)
     
     def get_student_by_id(self, id):
@@ -296,6 +288,11 @@ class ProjectAdministration():
         with ParticipationMapper() as mapper:
             return mapper.get_participations_of_student(student)
 
+    def get_project_of_participation(self, participation):
+        """Ein Projekt einer Teilnahme auslesen"""
+        with ParticipationMapper() as mapper:
+            return mapper.get_project_of_participation(participation)
+
     def get_participations_by_project_id(self, project):
         """Die Teilnehmerliste eines bestimmten Projekts ausgeben"""
         with ParticipationMapper() as mapper:
@@ -426,6 +423,21 @@ class ProjectAdministration():
         """Alle Projekte des gegebenen Student auslesen"""
         with ProjectMapper() as mapper:
             return mapper.find_by_id(student.get_id())
+
+    def get_project_type_of_project(self, project_id):
+        """Den Projekttyp eines Projekts auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.get_project_type_of_project(project_id)
+
+    def get_module_of_project(self, module):
+        """Das Modul eines Projekts auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.get_module_of_project(module)
+
+    def get_state_of_project(self, state):
+        """Den Zustand eines Projekts auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.get_state_of_project(state)
     
     def get_projects_by_state_id(self):
         """Alle Projekte, die sich in einem bestimmten Zustand befinden, ausgeben"""
