@@ -44,9 +44,10 @@ export default class ProjectAdminAPI {
     #updateModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;  */
        
     // Participation related
-    #getParticipationByIdURL = () => `${this.#projectServerBaseURL}/participations`;
+    #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
+    #getParticipationByIdURL = (participationId) => `${this.#projectServerBaseURL}/participation/{participation}`;
     #addParticipationToProjectURL = () => `${this.#projectServerBaseURL}/participations`;
-
+    #getParticipationsOfStudentURL = (participationId) => `${this.#projectServerBaseURL}/participation-of-student/${participationId}`;
     // Person related
 
     // Project related
@@ -312,4 +313,27 @@ export default class ProjectAdminAPI {
         })
       })
     }
+
+    getParticipationsOfStudent(studentId) {
+      return this.#fetchAdvanced(this.#getParticipationsOfStudentURL(studentId))
+      .then((responseJSON) => {
+        let responseParticipationsOfStudent = ParticipationBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(responseParticipationsOfStudent);
+        })
+      })
+    }
+
+    getAllParticipations() {
+      return this.#fetchAdvanced(this.#getAllParticipationsURL())
+      .then((responseJSON) => {
+        let ParticipationBOs = ParticipationBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(ParticipationBOs);
+        })
+      })
+    }
+
+    
 }
+

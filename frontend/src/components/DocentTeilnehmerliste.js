@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withStyles, Grid, Button, Paper, Typography} from '@material-ui/core';
 import DocentTeilnehmerlisteGrading from './DocentTeilnehmerlisteGrading';
 
+
 /* DocentTeilnehmerliste ist eine Component, welche in der DocentView.js gerendert wird.
    Hier werden die Studenten eines Projektes angezeigt, welche mithilfe der DocentTeilnehmerlisteGrading befüllt werden.
 */
@@ -20,10 +21,12 @@ class DocentTeilnehmerliste extends React.Component {
     } 
   }
 
-  getParticipationById = () => {
-    ProjectAdminAPI.getAPI().getParticipationById().then(participationBOs => {
+  getAllParticipations = () => {
+    ProjectAdminAPI.getAPI().getAllParticipations().then(participationBOs => {
         this.setState({
           participations: participationBOs,
+          loadingProgress: false,
+          error: null
         });
 
     }).catch(e => {
@@ -40,7 +43,7 @@ class DocentTeilnehmerliste extends React.Component {
   }
 
   componentDidMount() {
-    this.getParticipationById();
+    this.getAllParticipations();
 
 }
   render() {

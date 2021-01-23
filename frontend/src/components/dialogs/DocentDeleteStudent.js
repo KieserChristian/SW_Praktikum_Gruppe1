@@ -9,7 +9,7 @@ class DocentDeleteStudent extends React.Component {
         this.state = {
             deletingInProgress: false,
             deletingError: null,
-            ParticipationBOs: props.participation
+            ParticipationsOfStudent: null
         };
     }
 
@@ -24,7 +24,7 @@ class DocentDeleteStudent extends React.Component {
 
     render() {
         const { classes, show } = this.props;
-        const { deletingInProgress, deletingError, ParticipationBOs } = this.state;
+        const { deletingInProgress, deletingError, ParticipationBOs, ParticipationsOfStudent } = this.state;
         return (
             <Dialog open={show} onClose={this.handleClose}>
                 <DialogTitle id="alert-dialog-title">
@@ -32,7 +32,7 @@ class DocentDeleteStudent extends React.Component {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Möchten Sie den Student "{ParticipationBOs.getStudentId()}" wirklich löschen?
+                        Möchten Sie den Student "{ParticipationsOfStudent.getStudentId()}" wirklich löschen?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

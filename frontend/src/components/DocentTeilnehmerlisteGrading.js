@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DocentProjectGrading from './dialogs/DocentProjectGrading';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DocentDeleteStudent from './dialogs/DocentDeleteStudent';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
 
 
 
@@ -20,6 +21,7 @@ class DocentTeilnehmerlisteGrading extends React.Component {
         this.state = {
             ParticipationBOs: props.participation,
             openDialogRegistration: false,
+            participationsOfStudent: null
         };
     }
 
@@ -49,17 +51,46 @@ class DocentTeilnehmerlisteGrading extends React.Component {
             showDialog: false
         });
     }
+    getParticipationOfStudent = () => {
+        ProjectAdminAPI.getAPI().getParticipationOfStudent(this.state.ParticipationBOs.getId())
+        .then(participationsOfStudentAPI => {
+            this.setState({
+            participationsOfStudent: participationsOfStudentAPI,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            participationsOfStudent: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
+
+    componentDidMount() {
+        this.getParticipationsOfStudent();
+    }
 
     render() {
         const { classes } = this.props;
-        const { error, ParticipationBOs, openDialogRegistration, showDialog} = this.state;
+        const { error, ParticipationBOs, participationsOfStudent, openDialogRegistration, showDialog} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
 
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
-                                    { ParticipationBOs.getStudentId() }
+                                    <b>{ ParticipationBOs.getStudentId() }</b>
+                                </Typography>
+                                <Typography className={classes.heading} >
+                                    {participationsOfStudent?
+                                        <b>{participationsOfStudent.getStudentId()}</b> 
+                                    :null}
                                 </Typography>
                             </Grid>
                             <Grid item>
