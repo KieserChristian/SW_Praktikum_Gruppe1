@@ -46,8 +46,10 @@ export default class ProjectAdminAPI {
     // Participation related
     #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
     #getParticipationByIdURL = (participationId) => `${this.#projectServerBaseURL}/participation/{participation}`;
-    #addParticipationToProjectURL = () => `${this.#projectServerBaseURL}/participations`;
     #getParticipationsOfStudentURL = (participationId) => `${this.#projectServerBaseURL}/participation-of-student/${participationId}`;
+    #addParticipationToProjectURL = (projectId) => `${this.#projectServerBaseURL}/project_of_participation/${projectId}`;
+    #addParticipationURL = () => `${this.#projectServerBaseURL}/participation`;
+
     // Person related
 
     // Project related
@@ -64,7 +66,7 @@ export default class ProjectAdminAPI {
     // Semester related
 
     // Student related
-    #getStudentByIdURL = (studentId) => `${this.#projectServerBaseURL}/person/student/§{student_id}`;
+    #getStudentByEmailURL = (email) => `${this.#projectServerBaseURL}/student/${email}`;
 
     static getAPI() {
         if (this.#api == null) {
@@ -170,18 +172,40 @@ export default class ProjectAdminAPI {
 
     //Participation
 
-    addParticipationToProject(newPar) {
-      return this.#fetchAdvanced(this.#addParticipationToProjectURL(), {
+    addParticipationToProject(projectId) {
+      return this.#fetchAdvanced(this.#addParticipationToProjectURL(projectId), {
         method: 'POST',
         headers: {
           'Accept': 'application/json, text/plain',
           'Content-type': 'application/json',
         },
-        body: JSON.stringify(newPar)
+        body: JSON.stringify(projectId)
+      })
+    }
+
+    addParticipation(participationBO) {
+      return this.#fetchAdvanced(this.#addParticipationURL(), {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(participationBO)
       }).then((responseJSON) => {
         let participationBO = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function(resolve) {
           resolve(participationBO);
+        })
+      })
+    }
+
+    //Student
+
+    getStudentByEmail(email) {
+      return this.#fetchAdvanced(this.#getStudentByEmailURL(email)).then((responseJSON) => {
+        let studentNBO = StudentNBO.fromJSON(responseJSON);
+        return new Promise(function(resolve) {
+          resolve(studentNBO)
         })
       })
     }

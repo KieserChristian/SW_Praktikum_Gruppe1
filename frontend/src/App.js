@@ -112,6 +112,7 @@ class App extends React.Component {
   // Die gesamte Applikation rendern
   render() {
     const { currentUser, appError, authError, authLoading } = this.state;
+    if(currentUser){console.log(currentUser.email)}
     return(
 			<ThemeProvider theme={Theme}>
 				{/* Global CSS reset and browser normalization. CssBaseline kickstarts an elegant, consistent, and simple baseline to build upon. */}
@@ -131,7 +132,7 @@ class App extends React.Component {
                 </Route>
                 <Route path='/student/projektübersicht'>
                   <StudentView/>
-                  <StudentAvailableProjectsView/>
+                  <StudentAvailableProjectsView currentUserEmail={currentUser.email} />
                 </Route>
                 <Route path='/student/leistungsübersicht'>
                   <StudentGradingView/>
