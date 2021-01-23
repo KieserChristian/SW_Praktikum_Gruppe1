@@ -32,7 +32,7 @@ class DocentDeleteStudent extends React.Component {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Möchten Sie den Student "{ParticipationsOfStudent.getStudentId()}" wirklich löschen?
+                        Möchten Sie den Student wirklich löschen?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

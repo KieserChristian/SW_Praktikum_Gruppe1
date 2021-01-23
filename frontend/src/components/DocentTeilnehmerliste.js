@@ -22,8 +22,9 @@ class DocentTeilnehmerliste extends React.Component {
   }
 
   getAllParticipations = () => {
-    ProjectAdminAPI.getAPI().getAllParticipations().then(participationBOs => {
-        this.setState({
+    ProjectAdminAPI.getAPI().getAllParticipations()
+    .then(participationBOs => {
+          this.setState({
           participations: participationBOs,
           loadingProgress: false,
           error: null
@@ -45,7 +46,7 @@ class DocentTeilnehmerliste extends React.Component {
   componentDidMount() {
     this.getAllParticipations();
 
-}
+  }
   render() {
     const { classes } = this.props;
     const { participations} = this.state;
@@ -55,11 +56,11 @@ class DocentTeilnehmerliste extends React.Component {
             <Grid container spacing={1} justify='flex-start' alignItems='center'>
                 <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">Teilnehmerliste</Button>
             </Grid>
-            <Grid>
+            <Grid item>
             {
             participations.length > 0 ? 
               participations.map(participation =>
-                <DocentTeilnehmerlisteGrading key={participation.getStudentId()} participation={participation}/>)
+                <DocentTeilnehmerlisteGrading key={participation.getId()} participation={participation}/>)
                 :
                 null
             }

@@ -51,8 +51,8 @@ class DocentTeilnehmerlisteGrading extends React.Component {
             showDialog: false
         });
     }
-    getParticipationOfStudent = () => {
-        ProjectAdminAPI.getAPI().getParticipationOfStudent(this.state.ParticipationBOs.getId())
+    getParticipationsOfStudent = () => {
+        ProjectAdminAPI.getAPI().getParticipationsOfStudent(this.state.ParticipationBOs.getId())
         .then(participationsOfStudentAPI => {
             this.setState({
             participationsOfStudent: participationsOfStudentAPI,
@@ -89,8 +89,8 @@ class DocentTeilnehmerlisteGrading extends React.Component {
                                 </Typography>
                                 <Typography className={classes.heading} >
                                     {participationsOfStudent?
-                                        <b>{participationsOfStudent.getStudentId()}</b> 
-                                    :null}
+                                        <b>{participationsOfStudent.getId()}</b> 
+                                    :"2"}
                                 </Typography>
                             </Grid>
                             <Grid item>
