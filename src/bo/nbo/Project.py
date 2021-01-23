@@ -10,6 +10,11 @@ der Klasse Automat. Für eine nähere Erläuterung siehe Automat.py."""
 
 class Project(NamedBusinessObject, Automat):
 
+    transdisciplinary = ProjectType("Transdiziplinäres Projekt" ,10,20)   
+    interdisciplinary = ProjectType("Interdisziplinäres Projekt",5,10)
+    subject_specific = ProjectType("Fachspezifisches Projekt", 3,5)
+
+
     def __init__(self):
         super().__init__()
         self._capacity = 0
@@ -21,6 +26,8 @@ class Project(NamedBusinessObject, Automat):
         self._bd_in_lecture_period = 0
         self._bd_preferred_in_lecture_period = 0
         self._special_room = ""
+        self._project_type = ""
+        self._state = "" 
         self._project_type_id = None # Fremdschlüsselbeziehung zu einem Projekttyp
         self._module_id = None #Fremdschlüsselbeziehung zu einem Modul
         self._state_id = None #Fremdschlüsselbeziehung zu einem Zustand
@@ -105,6 +112,15 @@ class Project(NamedBusinessObject, Automat):
         """Auslesen des Fremdschlüssels zum Projekttyp"""
         return self._project_type_id
 
+    def set_project_type(self, project_type):
+        """Setzen eines   Projecttyp"""
+        self._project_type = project_type
+    
+    def get_project_type(self):
+        """Auslesen des Projekttyp"""
+        return self._project_type_id
+
+
     def set_module_id(self, module):
         """Setzen eines Fremdschlüssels zu einem Modul"""
         self._module_id = module
@@ -121,6 +137,13 @@ class Project(NamedBusinessObject, Automat):
         """Auslesen des Fremdschlüssels zum State"""
         return self._state_id
 
+    def set_state(self, state):
+        """Setzen eines State"""
+        self._state = state
+    
+    def get_state_id(self):
+        """Auslesen des State"""
+        return self._state_id
 
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projektinstanz"""
@@ -142,7 +165,9 @@ class Project(NamedBusinessObject, Automat):
                                                                     self.get_special_room(),
                                                                     self.get_project_type_id(),
                                                                     self.get_module_id(),
-                                                                    self.get_state_id())
+                                                                    self.get_state_id(),
+                                                                    self.get_state(),
+                                                                    self.get_project_type())
 
     @staticmethod
     def from_dict(dictionary=dict()):

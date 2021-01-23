@@ -1,14 +1,30 @@
 from datetime import datetime
 from bo.nbo.NamedBusinessObject import NamedBusinessObject
+import so.Role as Role
 
 """Realisierung der Personenklasse für die beteiligten Akteure im Projektverwaltungstool"""
 
-class Person(NamedBusinessObject):
+class Person(NamedBusinessObject, Role):
+
+    student = Role("Student")
+    docent  = Role ("Dozent")
+    admin = Role("Admin")
 
     def __init__(self):
         super().__init__()
         self._google_id = ""
         self._email = ""
+        self._student_id = 0
+        self.permission= 0
+
+    def set_role_converter(self, role_id):
+        self._permission = role_id
+
+    def get_permission(self):
+        return self._permission
+
+
+        
 
     def set_google_id(self, google_id):
         """Externe Google ID setzen"""
@@ -21,6 +37,14 @@ class Person(NamedBusinessObject):
     def set_email(self, email):
         """Mailadresse setzen"""
         self._email = email
+
+    def get_email(self):
+        """Mailadresse auslesen"""
+        return self._email
+
+    def set_email(self, student_id):
+        """Student in Person setzen"""
+        self._email = student_id
 
     def get_email(self):
         """Mailadresse auslesen"""
@@ -43,15 +67,16 @@ class Person(NamedBusinessObject):
 
     @staticmethod
     def from_tuples (tuples=list()):
-        """Umwandeln eines DB tuples in ein Python Objekt (Person())"""
+        """Umwandeln eines DB tuples mit neuem User (erstanmeldung?) in ein Python Objekt (Person())"""
         result = []
-        for (id, creation_date, name, google_id, email) in tuples:
+        for (user_id, creation_date, name, google_id, email,role_id) in tuples:
             person = Person()
-            person.set_id(id)
+            person.set_id(user_id)
             person.set_creation_date(creation_date)
             person.set_name(name)
             person.set_google_id(google_id)
             person.set_email(email)
+            person.set_permission(role_id)
             result.append(person)
         return result
 

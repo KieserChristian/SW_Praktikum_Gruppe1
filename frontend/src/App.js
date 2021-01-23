@@ -144,7 +144,7 @@ class App extends React.Component {
                   <DocentMeineProjekte/>
                 </Route>
                 <Route path='/dozent/teilnehmerliste'>
-                  
+                 
                  
                   <DocentTeilnehmerliste/>
                 </Route>

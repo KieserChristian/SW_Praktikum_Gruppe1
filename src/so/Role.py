@@ -1,29 +1,37 @@
 from datetime import datetime
+import bo.nbo.Person as Person 
  
 """Realisierung der Rollenklasse für die Berechtigungen von Personen"""
 
 class Role():
+    
 
-    student = "Student"
-    dozent = "Dozent"
-    admin = "Admin"
+  
 
     def __init__(self):
         self._id = 0
+        self._role_id = 0
         self._creation_date = datetime.now()
         self._static_attribute = ""
+      
 
     def set_static_attribute(self, static_attribute):
         """Setzen eines statischen Attributs"""
         self._static_attribute = static_attribute
 
-    def get_static_attribute(self, static_attribute):
+    def get_static_attribute(self):
         """Auslesen eines statischen Attributs"""
         return self._static_attribute
     
     def set_id(self, value):
         """ID setzen"""
         self._id = value
+
+    def set_role_id (self, role_id):
+        self._role_id = role_id
+
+    def get_role_id(self):
+        return self._role_id
 
     def get_id(self):
         """Auslesen der ID"""

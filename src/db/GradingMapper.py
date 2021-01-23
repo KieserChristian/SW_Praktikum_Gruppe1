@@ -20,7 +20,7 @@ class GradingMapper (Mapper):
             grading.set_id(id)
             grading.set_creation_date(creation_date)
             grading.set_grade(grade)
-            grading.set_participation_id(participation)
+            grading.set_participation_id(participation_id)
             result.append(grading)
 
         self._cnx.commit()

@@ -8,8 +8,9 @@ class Student(Person, NamedBusinessObject):
 
     def __init__(self):
         super().__init__()
-        self._matriculation_number = ""
+        self._matriculation_number = 0
         self._course_abbreviation = ""
+        self._person = 0
 
     def set_matriculation_number(self, matriculation_number):
         """Immatrikulationsnummer setzen"""
@@ -27,15 +28,22 @@ class Student(Person, NamedBusinessObject):
         """Studiengangkürzel auslesen"""
         return self._course_abbreviation
 
+    
+    def set_person(self, person_id):
+        self._person = person_id
+
+    def get_person(self):
+        return self._person
+
     def to_dict(self):
         """Umwandeln von Student() in ein Python dictionary dict()"""
         result = {
             """id, creation_date, name, google_id und email sind bereits in der Person-Klasse in der to_dict-Methode definiert, daher hier auskommentiert."""
-            """ "id": self.get_id(),
+            "id": self.get_id(),
             "creation_date": self.get_creation_date(),
             "name": self.get_name(),
             "google_id": self.get_google_id(),
-            "email": self.get_email(), """
+            "email": self.get_email(), 
             "matriculation_number": self.get_matriculation_number(),
             "course_abbreviation": self.get_course_abbreviation()
         }
@@ -56,4 +64,23 @@ class Student(Person, NamedBusinessObject):
         student.set_email(dictionary["email"])
         student.set_matriculation_number(dictionary["matriculation_number"])
         student.set_course_abbreviation(dictionary["course_abbreviation"])
+        student.set_person(dictionary["person_id"])
         return student
+
+    @staticmethod
+    def from_tuples(tuples=list()):
+        """Umwandeln eines DB tuple in eine Person (Pythonobjekt)"""
+        result = []
+        for (id, creation_date, name, google_id, email, matriculation_number, course_abbreviation, person_id) in tuples:
+            student = Student()
+            student.set_id(id)
+            student.set_creation_date(creation_date)
+            student.set_name(name)
+            student.set_google_id(google_id)
+            student.set_email(email)
+            student.set_matriculation_number(matriculation_number)
+            student.set_course_abbreviation(course_abbreviation)
+            student.set_person(person_id)
+        return result
+
+        

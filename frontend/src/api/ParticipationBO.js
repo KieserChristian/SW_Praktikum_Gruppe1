@@ -4,6 +4,7 @@ export default class ParticipationBO extends BusinessObject{
 
     constructor() {
         super();
+        this.student_id = null
     }
 
     static fromJSON(participation) {
