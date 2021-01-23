@@ -8,3 +8,4 @@
  export {default as PersonNBO} from "./PersonNBO";
  export {default as ProjectNBO} from "./ProjectNBO";
  export {default as StudentNBO} from "./StudentNBO";
+ export {default as ParticipationBO} from "./ParticipationBO";

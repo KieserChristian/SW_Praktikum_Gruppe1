@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import {Link} from 'react-router-dom';
 
 
 class DocentMeineProjekte extends React.Component {
@@ -50,30 +51,31 @@ class DocentMeineProjekte extends React.Component {
                     <TableCell style={{width: '100%', paddingBottom: 0, paddingTop: 0, backgroundColor: colors.grey[100]}} colSpan={10}>
                             <Box margin={1}>
                                 <Table size="small" aria-label="purchases">
-                                    <TableHead >
+                                    <TableHead style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">
                                         <TableRow>
                                             <TableCell>
 
                                             </TableCell>
-                                                <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projekt Butto</TableCell>
+                                                <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projekt </TableCell>
                                                 <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projektyp</TableCell>
-                                                <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Status</TableCell>
+                                                <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">ECTS</TableCell>
+                                                
                                         </TableRow>
         
                                     </TableHead>
                                         <TableBody style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
-                                     
-                                                <Button
-                                                    type="submit"
-                                                    variant="contained"
-                                                    color="primary"
-                                                    href="DocentMyProjectTeilnehmer.js" 
-                                                >    
-                                                    Teilnehmerliste
-                                                </Button>
-    
-                                            
-                                            
+                                        <Link to='/dozent/teilnehmerliste'> 
+                                            <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} color="primary" variant="contained">Teilnehmerliste</Button>
+
+                                                    
+                                                  
+                                                   
+                                                   
+                                                   
+                                                
+                                        </Link>    
+                                                                                    
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
                                             <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
                                             <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
                                         </TableBody>

@@ -32,7 +32,7 @@ class DocentView extends React.Component {
                 <Grid className={classes.projects} container spacing={1} justify="flex-start" alignItems="center">
                     <Grid item>
                       <Typography>
-                        Bewertungsliste
+                        
                       </Typography>
                        
                     </Grid>

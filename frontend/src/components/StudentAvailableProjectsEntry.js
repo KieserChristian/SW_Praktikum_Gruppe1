@@ -134,6 +134,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                     openRegistration={openDialogRegistration}
                                     onCloseProp={this.closeDialogRegistration}
                                     project={ProjectNBOs}
+                                    currentUserEmail={this.props.currentUserEmail}
                                 />
                                     <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogRegistration}>
                                         Anmelden
