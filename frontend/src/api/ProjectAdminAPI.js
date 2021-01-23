@@ -67,6 +67,7 @@ export default class ProjectAdminAPI {
 
     // Student related
     #getStudentByEmailURL = (email) => `${this.#projectServerBaseURL}/student/${email}`;
+    #getAllStudentsURL = () => `${this.#projectServerBaseURL}/students`;
 
     static getAPI() {
         if (this.#api == null) {
@@ -199,6 +200,36 @@ export default class ProjectAdminAPI {
       })
     }
 
+    getParticipationById(participationId) {
+      return this.#fetchAdvanced(this.#getParticipationByIdURL(participationId))
+      .then((responseJSON) => {
+        let responseParticipationBO = ParticipationBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(responseParticipationBO);
+        })
+      })
+    }
+
+    getParticipationsOfStudent(studentId) {
+      return this.#fetchAdvanced(this.#getParticipationsOfStudentURL(studentId))
+      .then((responseJSON) => {
+        let responseParticipationsOfStudent = ParticipationBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(responseParticipationsOfStudent);
+        })
+      })
+    }
+
+    getAllParticipations() {
+      return this.#fetchAdvanced(this.#getAllParticipationsURL())
+      .then((responseJSON) => {
+        let ParticipationBOs = ParticipationBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(ParticipationBOs);
+        })
+      })
+    }
+
     //Student
 
     getStudentByEmail(email) {
@@ -206,6 +237,16 @@ export default class ProjectAdminAPI {
         let studentNBO = StudentNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
           resolve(studentNBO)
+        })
+      })
+    }
+
+    getAllStudents() {
+      return this.#fetchAdvanced(this.#getAllStudentsURL())
+      .then((responseJSON) => {
+        let StudentNBOs = StudentNBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(StudentNBOs);
         })
       })
     }
@@ -337,36 +378,6 @@ export default class ProjectAdminAPI {
       })
     }
     */
-    
-    getParticipationById(participationId) {
-      return this.#fetchAdvanced(this.#getParticipationByIdURL(participationId))
-      .then((responseJSON) => {
-        let responseParticipationBO = ParticipationBO.fromJSON(responseJSON)[0];
-        return new Promise(function (resolve) {
-          resolve(responseParticipationBO);
-        })
-      })
-    }
-
-    getParticipationsOfStudent(studentId) {
-      return this.#fetchAdvanced(this.#getParticipationsOfStudentURL(studentId))
-      .then((responseJSON) => {
-        let responseParticipationsOfStudent = ParticipationBO.fromJSON(responseJSON)[0];
-        return new Promise(function (resolve) {
-          resolve(responseParticipationsOfStudent);
-        })
-      })
-    }
-
-    getAllParticipations() {
-      return this.#fetchAdvanced(this.#getAllParticipationsURL())
-      .then((responseJSON) => {
-        let ParticipationBOs = ParticipationBO.fromJSON(responseJSON);
-        return new Promise(function (resolve) {
-          resolve(ParticipationBOs);
-        })
-      })
-    }
 
     
 }

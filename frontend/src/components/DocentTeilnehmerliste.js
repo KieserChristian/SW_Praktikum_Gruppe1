@@ -15,10 +15,54 @@ class DocentTeilnehmerliste extends React.Component {
     super(props);
 
     this.state = {
+      students: [],
+      projects: [],
       participations: [],
       error: null,
       loadingProgress: false,
     } 
+  }
+
+  getAllStudents = () => {
+    ProjectAdminAPI.getAPI().getAllStudents()
+    .then(studentNBOs => {
+        this.setState({
+        students: studentNBOs,
+        loadingProgress: false,
+        error: null
+      });
+    }).catch(e => {
+      this.setState({
+        students: [],
+        loadingInProgress: false,
+        error: e
+      })
+    });
+    this.setState({
+    loadingInProgress: true,
+    error: null
+    });
+  }
+
+  getAllProjects = () => {
+    ProjectAdminAPI.getAPI().getAllProjects()
+    .then(projectNBOs => {
+        this.setState({
+        projects: projectNBOs,
+        loadingProgress: false,
+        error: null
+      });
+    }).catch(e => {
+      this.setState({
+        projects: [],
+        loadingInProgress: false,
+        error: e
+      })
+    });
+    this.setState({
+    loadingInProgress: true,
+    error: null
+    });
   }
 
   getAllParticipations = () => {
@@ -44,12 +88,12 @@ class DocentTeilnehmerliste extends React.Component {
   }
 
   componentDidMount() {
-    this.getAllParticipations();
+    this.getAllStudents();
 
   }
   render() {
     const { classes } = this.props;
-    const { participations} = this.state;
+    const { participations, students} = this.state;
     return (
         <div>
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
@@ -58,9 +102,9 @@ class DocentTeilnehmerliste extends React.Component {
             </Grid>
             <Grid item>
             {
-            participations.length > 0 ? 
-              participations.map(participation =>
-                <DocentTeilnehmerlisteGrading key={participation.getId()} participation={participation}/>)
+            students.length > 0 ? 
+              students.map(student =>
+                <DocentTeilnehmerlisteGrading key={student.getId()} student={student}/>)
                 :
                 null
             }

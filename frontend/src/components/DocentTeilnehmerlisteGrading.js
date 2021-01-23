@@ -19,9 +19,11 @@ class DocentTeilnehmerlisteGrading extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            StudentNBOs: props.student,
             ParticipationBOs: props.participation,
+            ProjectNBOs: props.project,
             openDialogRegistration: false,
-            participationsOfStudent: null
+            participationsOfStudent: null,
         };
     }
 
@@ -72,25 +74,20 @@ class DocentTeilnehmerlisteGrading extends React.Component {
         });
     }
 
-    componentDidMount() {
-        this.getParticipationsOfStudent();
-    }
-
     render() {
         const { classes } = this.props;
-        const { error, ParticipationBOs, participationsOfStudent, openDialogRegistration, showDialog} = this.state;
+        const { error, ParticipationBOs, participationsOfStudent, openDialogRegistration, showDialog, numberEcts, ProjectNBOs, StudentNBOs} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
 
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
-                                    <b>{ ParticipationBOs.getStudentId() }</b>
+                                    <b>{ StudentNBOs.getName() }</b>
+                                    
                                 </Typography>
                                 <Typography className={classes.heading} >
-                                    {participationsOfStudent?
-                                        <b>{participationsOfStudent.getId()}</b> 
-                                    :"2"}
+                                Matr.Nr.: { StudentNBOs.getMatriculationNumber() }
                                 </Typography>
                             </Grid>
                             <Grid item>

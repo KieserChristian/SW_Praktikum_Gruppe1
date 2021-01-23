@@ -134,9 +134,13 @@ class ParticipationMapper (Mapper):
         result = []
         
         cursor = self._cnx.cursor()
-        command = 
-        "SELECT participation.participation_id, student.student_id, student.name, student.matriculation_number FROM participation INNER JOIN student ON participation.student_id=student.student_id WHERE participation.student_id={0}.format(student_id)
-        
+        command = """
+        SELECT participation.participation_id, student.student_id, student.name, student.matriculation_number
+        FROM participation
+        INNER JOIN student
+        ON participation.student_id=student.student_id
+        WHERE participation.student_id={0}
+        """.format(student_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
