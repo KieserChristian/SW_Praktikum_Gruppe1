@@ -4,7 +4,7 @@ from datetime import datetime
 
 class Role():
 
-    student = "Student"
+    student = "Student"d 
     dozent = "Dozent"
     admin = "Admin"
 
