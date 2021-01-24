@@ -23,6 +23,8 @@ import AdminNavigation from './components/AdminNavigation';
 import DocentTeilnehmerliste from './components/DocentTeilnehmerliste';
 import DocentMeineProjekte from "./components/DocentMeineProjekte";
 import DocentProjectCreation from './components/DocentProjectCreation';
+import AdminEingereichteProjekte from './components/AdminEingereichteProjekte';
+
 
 
 
@@ -156,9 +158,10 @@ class App extends React.Component {
                   <AdminNavigation/>
                 </Route>
 
-                <Route path='/admin'>
-                  <AdminNavigation/>
-                </Route>                          
+                <Route path='/admin/projektübersicht'>
+                  <AdminEingereichteProjekte/>
+                </Route>
+                         
 								</>
 								:
 								// else show the sign in page

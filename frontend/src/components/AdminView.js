@@ -36,6 +36,16 @@ export default function MenuListComposition() {
             <Paper className={classes.paper}>
                 <MenuItem>Nutzerübersicht</MenuItem>
                 <MenuItem>Projekteübersicht</MenuItem>
+                <React.Fragment>
+                                
+                                   
+                  <Link to='/admin/eingereichteprojekte'>
+                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}}>
+                        Projekteübersicht
+                    </Button>
+                  </Link>
+                             
+                </React.Fragment>
             </Paper>
           </Grid>
         </MenuList>
