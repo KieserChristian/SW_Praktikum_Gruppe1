@@ -6,7 +6,9 @@ import bo.nbo.Person as Person
 class Role():
     
 
-  
+    student = "Student" 
+    dozent = "Dozent"
+    admin = "Admin"
 
     def __init__(self):
         self._id = 0
