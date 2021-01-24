@@ -44,7 +44,11 @@ export default class ProjectAdminAPI {
     #updateModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;  */
        
     // Participation related
-    #addParticipationToProjectURL = () => `${this.#projectServerBaseURL}/participations`;
+    #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
+    #getParticipationByIdURL = (participationId) => `${this.#projectServerBaseURL}/participation/{participation}`;
+    #getParticipationsOfStudentURL = (participationId) => `${this.#projectServerBaseURL}/participation-of-student/${participationId}`;
+    #addParticipationToProjectURL = (projectId) => `${this.#projectServerBaseURL}/project_of_participation/${projectId}`;
+    #addParticipationURL = () => `${this.#projectServerBaseURL}/participation`;
 
     // Person related
     #getAllPersonsURL = () => `${this.#projectServerBaseURL}/persons`;
@@ -63,7 +67,8 @@ export default class ProjectAdminAPI {
     // Semester related
 
     // Student related
-    #getStudentByIdURL = (studentId) => `${this.#projectServerBaseURL}/person/student/§{student_id}`;
+    #getStudentByEmailURL = (email) => `${this.#projectServerBaseURL}/student/${email}`;
+    #getAllStudentsURL = () => `${this.#projectServerBaseURL}/students`;
 
     static getAPI() {
         if (this.#api == null) {
@@ -181,18 +186,80 @@ export default class ProjectAdminAPI {
 
     //Participation
 
-    addParticipationToProject(newPar) {
-      return this.#fetchAdvanced(this.#addParticipationToProjectURL(), {
+    addParticipationToProject(projectId) {
+      return this.#fetchAdvanced(this.#addParticipationToProjectURL(projectId), {
         method: 'POST',
         headers: {
           'Accept': 'application/json, text/plain',
           'Content-type': 'application/json',
         },
-        body: JSON.stringify(newPar)
+        body: JSON.stringify(projectId)
+      })
+    }
+
+    addParticipation(participationBO) {
+      return this.#fetchAdvanced(this.#addParticipationURL(), {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(participationBO)
       }).then((responseJSON) => {
         let participationBO = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function(resolve) {
           resolve(participationBO);
+        })
+      })
+    }
+
+    getParticipationById(participationId) {
+      return this.#fetchAdvanced(this.#getParticipationByIdURL(participationId))
+      .then((responseJSON) => {
+        let responseParticipationBO = ParticipationBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(responseParticipationBO);
+        })
+      })
+    }
+
+    getParticipationsOfStudent(studentId) {
+      return this.#fetchAdvanced(this.#getParticipationsOfStudentURL(studentId))
+      .then((responseJSON) => {
+        let responseParticipationsOfStudent = ParticipationBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(responseParticipationsOfStudent);
+        })
+      })
+    }
+
+    getAllParticipations() {
+      return this.#fetchAdvanced(this.#getAllParticipationsURL())
+      .then((responseJSON) => {
+        let ParticipationBOs = ParticipationBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(ParticipationBOs);
+        })
+      })
+    }
+
+    //Student
+
+    getStudentByEmail(email) {
+      return this.#fetchAdvanced(this.#getStudentByEmailURL(email)).then((responseJSON) => {
+        let studentNBO = StudentNBO.fromJSON(responseJSON);
+        return new Promise(function(resolve) {
+          resolve(studentNBO)
+        })
+      })
+    }
+
+    getAllStudents() {
+      return this.#fetchAdvanced(this.#getAllStudentsURL())
+      .then((responseJSON) => {
+        let StudentNBOs = StudentNBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(StudentNBOs);
         })
       })
     }
@@ -324,5 +391,7 @@ export default class ProjectAdminAPI {
       })
     }
     */
+
     
 }
+

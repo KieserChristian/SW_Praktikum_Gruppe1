@@ -112,6 +112,7 @@ class App extends React.Component {
   // Die gesamte Applikation rendern
   render() {
     const { currentUser, appError, authError, authLoading } = this.state;
+    if(currentUser){console.log(currentUser.email)}
     return(
 			<ThemeProvider theme={Theme}>
 				{/* Global CSS reset and browser normalization. CssBaseline kickstarts an elegant, consistent, and simple baseline to build upon. */}
@@ -131,7 +132,7 @@ class App extends React.Component {
                 </Route>
                 <Route path='/student/projektübersicht'>
                   <StudentView/>
-                  <StudentAvailableProjectsView/>
+                  <StudentAvailableProjectsView currentUserEmail={currentUser.email} />
                 </Route>
                 <Route path='/student/leistungsübersicht'>
                   <StudentGradingView/>
@@ -141,16 +142,24 @@ class App extends React.Component {
                 </Route>
                 <Route path='/dozent/projektübersicht'>
                   <DocentView/>
-                  <DocentMeineProjekte/>
+                  
+                </Route>
+                <Route path='/dozent/docentview'>
+                  
+                 
                   <DocentTeilnehmerliste/>
-                  <DocentBewertungsListe/>
                 </Route>
                 <Route path='/dozent/neuesprojekt'>
                   <DocentProjectCreation/>
                 </Route>
                 <Route path='/admin'>
                   <AdminNavigation/>
-                </Route>                          
+                </Route>
+
+                <Route path='/admin/projektübersicht'>
+                  <AdminView/>
+                </Route>
+                        
 								</>
 								:
 								// else show the sign in page

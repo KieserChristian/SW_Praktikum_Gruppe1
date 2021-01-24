@@ -2,10 +2,11 @@ import NamedBusinessObject from "./NamedBusinessObject"
 
 export default class StudentNBO extends NamedBusinessObject {
 
-    constructor(aMatriculationNumber, aCourseAbbreviation){
+    constructor(aMatriculationNumber, aCourseAbbreviation, aParticipationId){
         super();
-        this.matriculation_number = aMatriculationNumber
-        this.course_abbreviation = aCourseAbbreviation
+        this.matriculation_number = aMatriculationNumber;
+        this.course_abbreviation = aCourseAbbreviation;
+        this.participation_id = aParticipationId;
     }
 
     setMatriculationNumber (aMatriculationNumber){
@@ -22,6 +23,14 @@ export default class StudentNBO extends NamedBusinessObject {
 
     getCourseAbbreviation(){
         return this.course_abbreviation;
+    }
+
+    setParticipationId(aParticipationId) {
+        this.participation_id = aParticipationId;
+    }
+
+    getParticipationId() {
+        return this.participation_id;
     }
     
     static fromJSON(student) {

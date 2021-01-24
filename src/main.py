@@ -347,7 +347,7 @@ class StudentByNameOperations(Resource):
         stud = adm.get_student_by_name(name)
         return stud
 
-@projectTool.route('/state')
+@projectTool.route('/state/<int:state_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('state_id', 'Dies ist die ID von State')
 class StateOperations(Resource):
@@ -365,9 +365,12 @@ class StateOperations(Resource):
         """Löschen eines bestimmten State-Objekts, welches durch die state_id in dem URI bestimmt wird."""
 
         adm = ProjectAdministration()
-        stud = adm.get_student_by_id(student_id)
-        adm.delete_student(stud)
-        return 'gelöscht', 200
+        stat = adm.get_state_by_id(state_id)
+        if stat is not None:
+            adm.delete_state(stat)
+            return 'gelöscht', 200
+        else:
+            return 'There was some error', 500
 
 @projectTool.route('/state/project')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -468,7 +471,7 @@ class SemesterRelatedProjectOperations(Resource):
         else:
             return 'Semester not found', 500
 
-@projectTool.route('/role')
+@projectTool.route('/role/<int:role_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('role_id', 'Dies ist die ID von Role')
 class RoleOperations(Resource):
