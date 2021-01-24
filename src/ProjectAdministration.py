@@ -131,6 +131,11 @@ class ProjectAdministration():
         """Den Student mit seinem Studiengangskürzel auslesen"""
         with StudentMapper() as mapper:
             return mapper.find_by_course(course_abbreviation)
+    
+    def get_student_by_google_id(self, google_id):
+        """Den Student mit seiner Google-Mail-Adresse auslesen"""
+        with StudentMapper() as mapper:
+            return mapper.find_by_google_id(google_id)
 
     """
     Semester-Methoden
