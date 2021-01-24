@@ -83,7 +83,13 @@ project = api.inherit('Project', bo, nbo, automat, {
     'bd_preferred_in_lecture_period': fields.Integer(attribute='_bd_preferred_in_lecture_periode',
                                 description='Bevorzugte Blocktage in der Vorlesungszeit'),
     'special_room': fields.String(attribute='_special_room',
-                                description='Bevorzugte oder spezielle Räume für das Projekt')
+                                description='Bevorzugte oder spezielle Räume für das Projekt'),
+    'project_type_id': fields.Integer(attribute='_project_type_id',
+                                description='Projekttyp des Projekts'),
+    'module_id': fields.Integer(attribute='_module_id',
+                                description='Modul des Projekts'),
+    'state_id': fields.Integer(attribute='_state_id',
+                                description='Zustand des Projekts')
 })
 
 project_type = api.inherit('ProjectType', bo, nbo, {
@@ -723,6 +729,34 @@ class ProjectListOperations(Resource):
             return project_type_of_project, 200
         else:
             return 'There is no Project with that Project_type', 500
+
+@projectTool.route('/module_of_project/<int:project_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, project_id):
+        """Auslesen aller Project-Objekte eines bestimmten project_types"""
+        adm = ProjectAdministration()
+        module_of_project = adm.get_module_of_project(project_id)
+        
+        if module_of_project != []:
+            return module_of_project, 200
+        else:
+            return 'There is no Project with that module', 500
+
+@projectTool.route('/state_of_project/<int:project_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, project_id):
+        """Auslesen aller Project-Objekte eines bestimmten project_types"""
+        adm = ProjectAdministration()
+        state_of_project = adm.get_state_of_project(project_id)
+        
+        if state_of_project != []:
+            return state_of_project, 200
+        else:
+            return 'There is no Project with that state', 500
 
 
 @projectTool.route('/project-type/<int:project_type_id>')

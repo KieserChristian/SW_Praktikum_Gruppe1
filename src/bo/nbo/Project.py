@@ -97,17 +97,17 @@ class Project(NamedBusinessObject, Automat):
         """Spezieller Raum auslesen"""
         return self._special_room
 
-    def set_project_type_id(self, project_type):
+    def set_project_type_id(self, project_type_id):
         """Setzen eines Fremdschlüssels zu einem Projecttyp"""
-        self._project_type_id = project_type
+        self._project_type_id = project_type_id
     
     def get_project_type_id(self):
         """Auslesen des Fremdschlüssels zum Projekttyp"""
         return self._project_type_id
 
-    def set_module_id(self, module):
+    def set_module_id(self, module_id):
         """Setzen eines Fremdschlüssels zu einem Modul"""
-        self._module_id = module
+        self._module_id = module_id
 
     def get_module_id(self):
         """"Auslesen des Fremdschlüssels zum Modul"""
