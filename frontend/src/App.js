@@ -156,9 +156,10 @@ class App extends React.Component {
                   <AdminNavigation/>
                 </Route>
 
-                <Route path='/admin'>
-                  <AdminNavigation/>
-                </Route>                          
+                <Route path='/admin/projektübersicht'>
+                  <AdminView/>
+                </Route>
+                        
 								</>
 								:
 								// else show the sign in page
