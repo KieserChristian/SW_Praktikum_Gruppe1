@@ -23,7 +23,7 @@ import AdminNavigation from './components/AdminNavigation';
 import DocentTeilnehmerliste from './components/DocentTeilnehmerliste';
 import DocentMeineProjekte from "./components/DocentMeineProjekte";
 import DocentProjectCreation from './components/DocentProjectCreation';
-
+import AdminUserView from './components/AdminUserView';
 
 
 
@@ -159,6 +159,9 @@ class App extends React.Component {
                 </Route>
 
                 <Route path='/admin/projektübersicht'>
+                  <AdminView/>
+                </Route>
+                <Route path='/admin/nutzerübersicht'>
                   <AdminView/>
                 </Route>
                         

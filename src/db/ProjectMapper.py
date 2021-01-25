@@ -229,12 +229,12 @@ class ProjectMapper (Mapper):
         return result
 
 
-    def get_module_of_project(self, module):
+    def get_module_of_project(self, module_id):
         result = []
         
         cursor = self._cnx.cursor()
         command = """
-        SELECT project.project_id, project.project_name, module.module_id, module.name
+        SELECT project.project_id, project.name, module.module_id, module.name
         FROM project
         INNER JOIN module
         ON project.module_id=module.module_id
@@ -257,12 +257,12 @@ class ProjectMapper (Mapper):
         return result
 
 
-    def get_state_of_project(self, state):
+    def get_state_of_project(self, state_id):
         result = []
         
         cursor = self._cnx.cursor()
         command = """
-        SELECT project.project_id, project.project_name, state.state_id, state.state_name
+        SELECT project.project_id, project.name, state.state_id, state.state_name
         FROM project
         INNER JOIN state
         ON project.state_id=state.state_id

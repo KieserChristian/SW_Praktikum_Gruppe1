@@ -51,6 +51,7 @@ export default class ProjectAdminAPI {
     #addParticipationURL = () => `${this.#projectServerBaseURL}/participation`;
 
     // Person related
+    #getAllPersonsURL = () => `${this.#projectServerBaseURL}/persons`;
 
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
@@ -87,6 +88,18 @@ export default class ProjectAdminAPI {
       }
       return res.json();
     })
+
+    //Person
+    
+    getAllPersons() {
+      return this.#fetchAdvanced(this.#getAllPersonsURL())
+      .then((responseJSON) => {
+        let PersonNBOs = PersonNBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(PersonNBOs);
+        })
+      })
+    }
 
     //Project
 
