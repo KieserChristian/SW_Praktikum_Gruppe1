@@ -4,25 +4,16 @@ import NamedBusinessObject from "./NamedBusinessObject"
 
 export default class PersonNBO extends NamedBusinessObject {
 
-    constructor(aEmail,aGoogleId) {
+    constructor(aGoogleId) {
         super();
-        this.email = aEmail;
         this.google_id = aGoogleId;
     }
 
-    setEmail(aEmail) {
-        this.email = aEmail;
-    }
-
-    getEmail () {
-        return this.email;
-    }
-
-    setGoogleID (aGoogleId) {
+    setGoogleId (aGoogleId) {
         this.google_id = aGoogleId;
     }
 
-    getGoogleID () {
+    getGoogleId () {
         return this.google_id;
     }
 

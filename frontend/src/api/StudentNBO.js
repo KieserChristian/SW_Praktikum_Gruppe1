@@ -1,6 +1,6 @@
-import NamedBusinessObject from "./NamedBusinessObject"
+import PersonNBO from './PersonNBO';
 
-export default class StudentNBO extends NamedBusinessObject {
+export default class StudentNBO extends PersonNBO {
 
     constructor(aMatriculationNumber, aCourseAbbreviation, aParticipationId){
         super();
