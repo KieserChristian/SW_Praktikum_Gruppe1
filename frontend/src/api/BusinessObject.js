@@ -2,6 +2,7 @@
 export default class BusinessOject {
     constructor() {
         this.id =0;
+        this.creation_date = ''
     }
 
     /** Setzen der ID des BOs @ param aid - neue id des Bos 

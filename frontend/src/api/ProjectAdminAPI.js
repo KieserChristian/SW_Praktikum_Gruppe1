@@ -66,7 +66,7 @@ export default class ProjectAdminAPI {
     // Semester related
 
     // Student related
-    #getStudentByEmailURL = (email) => `${this.#projectServerBaseURL}/student/${email}`;
+    #getStudentByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/student-by-google-id/${googleId}`;
     #getAllStudentsURL = () => `${this.#projectServerBaseURL}/students`;
 
     static getAPI() {
@@ -173,17 +173,6 @@ export default class ProjectAdminAPI {
 
     //Participation
 
-    addParticipationToProject(projectId) {
-      return this.#fetchAdvanced(this.#addParticipationToProjectURL(projectId), {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json, text/plain',
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(projectId)
-      })
-    }
-
     addParticipation(participationBO) {
       return this.#fetchAdvanced(this.#addParticipationURL(), {
         method: 'POST',
@@ -232,8 +221,8 @@ export default class ProjectAdminAPI {
 
     //Student
 
-    getStudentByEmail(email) {
-      return this.#fetchAdvanced(this.#getStudentByEmailURL(email)).then((responseJSON) => {
+    getStudentByGoogleId(googleId) {
+      return this.#fetchAdvanced(this.#getStudentByGoogleIdURL(googleId)).then((responseJSON) => {
         let studentNBO = StudentNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
           resolve(studentNBO)
