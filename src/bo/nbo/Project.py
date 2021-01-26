@@ -8,7 +8,7 @@ from datetime import datetime
 """Projekte sind Automaten, daher erbt die Klasse Project das Attribut current_state sowie die Methoden aus
 der Klasse Automat. Für eine nähere Erläuterung siehe Automat.py."""
 
-class Project(NamedBusinessObject, Automat):
+class Project(Automat):
 
     def __init__(self):
         super().__init__()
@@ -23,7 +23,7 @@ class Project(NamedBusinessObject, Automat):
         self._special_room = ""
         self._project_type_id = None # Fremdschlüsselbeziehung zu einem Projekttyp
         self._module_id = None #Fremdschlüsselbeziehung zu einem Modul
-        self._state_id = None #Fremdschlüsselbeziehung zu einem Zustand
+        self._person_id = None #Fremdschlüsselbeziehung zu einer Person
 
     def set_capacity(self, capacity):
         """Kapazität setzen"""
@@ -97,38 +97,39 @@ class Project(NamedBusinessObject, Automat):
         """Spezieller Raum auslesen"""
         return self._special_room
 
-    def set_project_type_id(self, project_type):
+    def set_project_type_id(self, project_type_id):
         """Setzen eines Fremdschlüssels zu einem Projecttyp"""
-        self._project_type_id = project_type
+        self._project_type_id = project_type_id
     
     def get_project_type_id(self):
         """Auslesen des Fremdschlüssels zum Projekttyp"""
         return self._project_type_id
 
-    def set_module_id(self, module):
+    def set_module_id(self, module_id):
         """Setzen eines Fremdschlüssels zu einem Modul"""
-        self._module_id = module
+        self._module_id = module_id
 
     def get_module_id(self):
         """"Auslesen des Fremdschlüssels zum Modul"""
         return self._module_id
 
-    def set_state_id(self, state_id):
-        """Setzen eines Fremdschlüssels zu einem State"""
-        self._state_id = state_id
-    
-    def get_state_id(self):
-        """Auslesen des Fremdschlüssels zum State"""
-        return self._state_id
+    def set_person_id(self, person_id):
+        """Setzen eines Fremdschlüssels zu einer Person"""
+        self._person_id = person_id
+
+    def get_person_id(self):
+        """"Auslesen des Fremdschlüssels zur Person"""
+        return self._person_id
+
 
 
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Projektinstanz"""
-        return  "Projekt: {} {}, Momentaner Zustand: {}, Anzahl der Plätze: {}, Externe Partner: {}," \
+        return  "Projekt: {}, Momentaner Zustand: {}, Anzahl der Plätze: {}, Externe Partner: {}," \
                 "Kurzbeschreibung: {}, Wöchentliche Veranstalung: {}," \
                 "Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Vorlesungszeit: {}," \
                 "Anzahl der Blocktage in der Prüfungszeit: {}, Präferierte Blocktage in der Vorlesungszeit: {}," \
-                "Erforderlichkeit eines besonderen Raums: {}, Projekttyp des Projekts: {}, Modul des Projekts: {}, Zustand des Projekts: {}".format(self.get_id(), 
+                "Erforderlichkeit eines besonderen Raums: {}, Projekttyp des Projekts: {}, Modul des Projekts: {}, Person des Projekts: {}".format(self.get_id(), 
                                                                     self.get_name(),
                                                                     self.get_state(), 
                                                                     self.get_capacity(),
@@ -142,7 +143,7 @@ class Project(NamedBusinessObject, Automat):
                                                                     self.get_special_room(),
                                                                     self.get_project_type_id(),
                                                                     self.get_module_id(),
-                                                                    self.get_state_id())
+                                                                    self.get_person_id())
 
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -161,7 +162,7 @@ class Project(NamedBusinessObject, Automat):
         project.set_bd_in_lecture_period(dictionary["bd_in_lecture_period"])
         project.set_bd_preferred_in_lecture_period(dictionary["bd_preferred_in_lecture_period"])
         project.set_special_room(dictionary["special_room"])
-        project.get_project_type_id(dictionary["project_type_id"])
-        project.get_module_id(dictionary["module_id"])
-        project.get_state_id(dictionary["state_id"])
+        project.set_project_type_id(dictionary["project_type_id"])
+        project.set_module_id(dictionary["module_id"])
+        project.set_person_id(dictionary["person_id"])
         return project

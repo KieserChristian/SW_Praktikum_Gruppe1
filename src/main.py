@@ -83,7 +83,13 @@ project = api.inherit('Project', bo, nbo, automat, {
     'bd_preferred_in_lecture_period': fields.Integer(attribute='_bd_preferred_in_lecture_periode',
                                 description='Bevorzugte Blocktage in der Vorlesungszeit'),
     'special_room': fields.String(attribute='_special_room',
-                                description='Bevorzugte oder spezielle Räume für das Projekt')
+                                description='Bevorzugte oder spezielle Räume für das Projekt'),
+    'project_type_id': fields.Integer(attribute='_project_type_id',
+                                description='Projekttyp des Projekts'),
+    'module_id': fields.Integer(attribute='_module_id',
+                                description='Modul des Projekts'),
+    'person_id': fields.Integer(attribute='_person_id',
+                                description='Person des Projekts')
 })
 
 project_type = api.inherit('ProjectType', bo, nbo, {
@@ -184,24 +190,6 @@ class PersonByNameOperations(Resource):
         adm = ProjectAdministration()
         pers = adm.get_person_by_name(name)
         return pers
-
-@projectTool.route('/person/<int:person_id>/projects')
-@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('person_id', 'Dies ist die ID von Person')
-class PersonRelatedProjectOperations(Resource):
-    @projectTool.marshal_with(project)
-    #@secured
-    def get(self, person_id):
-        """Auslesen aller Project-Objekte eines bestimmten Person-Objekts, welches durch die ID von Person bestimmt wird."""
-
-        adm = ProjectAdministration()
-        pers = adm.get_person_by_id(person_id)
-        
-        if pers is not None:
-            project_list = adm.get_projects_of_person(pers)
-            return project_list
-        else:
-            return "Person not found", 500
 
 @projectTool.route('/persons')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -722,7 +710,7 @@ class ProjectListOperations(Resource):
         proj = Project.from_dict(api.payload)
 
         if proj is not None:
-            proj = adm.create_project(proj.get_name(), proj.get_id(), proj.get_external_partners(), proj.get_capacity(), proj.get_weekly_flag(), proj.get_bd_preferred_in_lecture_period(), proj.get_bd_in_lecture_period(), proj.get_bd_in_exam_period(), proj.get_bd_before_lecture_period(), proj.get_short_description(), proj.get_special_room(), proj.get_state())
+            proj = adm.create_project(proj.get_name(), proj.get_id(), proj.get_external_partners(), proj.get_capacity(), proj.get_weekly_flag(), proj.get_bd_preferred_in_lecture_period(), proj.get_bd_in_lecture_period(), proj.get_bd_in_exam_period(), proj.get_bd_before_lecture_period(), proj.get_short_description(), proj.get_special_room(), proj.get_project_type_id(), proj.get_module_id(), proj.get_person_id())
             return proj, 200
         else:
             return '', 500
@@ -740,6 +728,49 @@ class ProjectListOperations(Resource):
             return project_type_of_project, 200
         else:
             return 'There is no Project with that Project_type', 500
+
+@projectTool.route('/module_of_project/<int:project_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, project_id):
+        """Auslesen aller Project-Objekte eines bestimmten modules"""
+        adm = ProjectAdministration()
+        module_of_project = adm.get_module_of_project(project_id)
+        
+        if module_of_project != []:
+            return module_of_project, 200
+        else:
+            return 'There is no Project with that module', 500
+
+@projectTool.route('/projects_by_person/<int:person_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectRelatedPersonOperations(Resource):
+    #@secured
+    def get(self, person_id):
+        """Auslesen aller Project-Objekte eines bestimmten Person-Objekts, welches durch die ID von Person bestimmt wird."""
+
+        adm = ProjectAdministration()
+        projects_by_person = adm.get_projects_by_person(person_id)
+        
+        if projects_by_person != []:
+            return projects_by_person
+        else:
+            return "Person not found", 500
+
+@projectTool.route('/state_of_project/<int:project_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, project_id):
+        """Auslesen aller Project-Objekte eines bestimmten states"""
+        adm = ProjectAdministration()
+        state_of_project = adm.get_state_of_project(project_id)
+        
+        if state_of_project != []:
+            return state_of_project, 200
+        else:
+            return 'There is no Project with that state', 500
 
 
 @projectTool.route('/project-type/<int:project_type_id>')

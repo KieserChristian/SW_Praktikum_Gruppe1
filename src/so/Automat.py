@@ -1,4 +1,5 @@
 from so.State import State
+from bo.nbo.NamedBusinessObject import NamedBusinessObject
 from datetime import datetime
 
 """Realisierung der Hilfsklasse Automat für die Modellierung von Zuständen für Projekte"""
@@ -12,18 +13,19 @@ Projekte sind Automaten und jegliche Methoden und Attribute werden auch nur übe
 Die Klasse Automat ist somit eher als Hilfsklasse anzusehen ähnlich wie die abstrakten Basisklassen 
 BusinessObject und NamedBusinessObject."""
 
-class Automat():
+class Automat(NamedBusinessObject):
 
-    def __init__(self, initial_state):
+    def __init__(self):
         """Beim Erzeugen des Objekts (Projekt) wird der Zustand automatisch auf neu gesetzt"""
-        self._current_state = initial_state
-
-    def set_state(self, state):
-        self._current_state = state
+        super().__init__()
+        self._current_state = "New"
 
     def get_state(self):
         return self._current_state
 
-    def is_in_state(self, state):
-        """Überprüfung, ob der momentane Zustand mit dem übertragenen Attribut übereinstimmt. Falls ja, gibt er True aus, falls nein, gibt er False aus."""
-        return state == self._current_state
+    def set_state(self, state):
+        self._current_state = state
+
+    #def is_in_state(self, state):
+    #    """Überprüfung, ob der momentane Zustand mit dem übertragenen Attribut übereinstimmt. Falls ja, gibt er True aus, falls nein, gibt er False aus."""
+    #    return state == self._current_state
