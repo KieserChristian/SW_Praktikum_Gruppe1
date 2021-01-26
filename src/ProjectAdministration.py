@@ -368,7 +368,7 @@ class ProjectAdministration():
     Project-Methoden
     """
 
-    def create_project(self, name:str, id, external_partners:str, capacity:int, weekly_flag:bool, bd_preferred_in_lecture_period:int, bd_in_lecture_period:int, bd_in_exam_period:int, bd_before_lecture_period:int, short_description:str, special_room:str, project_type_id:int, module_id:int, state_id:int):
+    def create_project(self, name:str, id, external_partners:str, capacity:int, weekly_flag:bool, bd_preferred_in_lecture_period:int, bd_in_lecture_period:int, bd_in_exam_period:int, bd_before_lecture_period:int, short_description:str, special_room:str, project_type_id:int, module_id:int, person_id:int):
         """Ein Projekt anlegen"""
 
         project = Project()
@@ -385,7 +385,7 @@ class ProjectAdministration():
         project.set_special_room(special_room)
         project.set_project_type_id(project_type_id)
         project.set_module_id(module_id)
-        project.set_state_id(state_id)
+        project.set_person_id(person_id)
 
         with ProjectMapper() as mapper:
             return mapper.insert(project)
@@ -416,10 +416,10 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             return mapper.find_by_name(name)
     
-    def get_projects_of_person(self, person):
+    def get_projects_by_person(self, person_id):
         """Alle Projekte der gegebenen Person auslesen"""
         with ProjectMapper() as mapper:
-            return mapper.find_by_id(person.get_id())
+            return mapper.get_projects_by_person(person_id)
     
     def get_projects_of_student(self, student):
         """Alle Projekte des gegebenen Student auslesen"""
@@ -431,10 +431,10 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             return mapper.get_project_type_of_project(project_id)
 
-    def get_module_of_project(self, module_id):
+    def get_module_of_project(self, project_id):
         """Das Modul eines Projekts auslesen"""
         with ProjectMapper() as mapper:
-            return mapper.get_module_of_project(module_id)
+            return mapper.get_module_of_project(project_id)
 
     def get_state_of_project(self, state_id):
         """Den Zustand eines Projekts auslesen"""

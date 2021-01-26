@@ -26,7 +26,7 @@ class ProjectMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type, module, state) in tuples:
+        for (id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type, module, person) in tuples:
             project = Project()
             project.set_id(id)
             project.set_creation_date(creation_date)
@@ -43,7 +43,7 @@ class ProjectMapper (Mapper):
             project.set_special_room(special_room)
             project.set_project_type_id(project_type)
             project.set_module_id(module)
-            project.set_state_id(state)
+            project.set_person_id(person)
             result.append(project)
 
         self._cnx.commit()
@@ -62,12 +62,12 @@ class ProjectMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT project_id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, state_id FROM project WHERE project_id={} ORDER BY project_id".format(id)
+        command = "SELECT project_id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, person_id FROM project WHERE project_id={} ORDER BY project_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try: 
-            (id, creation_date, name, current_state, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, state_id) = tuples[0]
+            (id, creation_date, name, current_state, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, person_id) = tuples[0]
             project = Project()
             project.set_id(id)
             project.set_creation_date(creation_date)
@@ -84,7 +84,7 @@ class ProjectMapper (Mapper):
             project.set_special_room(special_room)
             project.set_project_type_id(project_type_id)
             project.set_module_id(module_id)
-            project.set_state_id(state_id)
+            project.set_person_id(person_id)
             result = project
         except IndexError:
             print("There was no object with this id")
@@ -105,11 +105,11 @@ class ProjectMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT project_id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, state_id FROM project WHERE name LIKE '{}' ORDER BY name".format(name)
+        command = "SELECT project_id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, person_id FROM project WHERE name LIKE '{}' ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, current_state, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, modul_id, state_id) in tuples:
+        for (id, creation_date, name, current_state, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, modul_id, person_id) in tuples:
             project = Project()
             project.set_id(id)
             project.set_creation_date(creation_date)
@@ -126,7 +126,7 @@ class ProjectMapper (Mapper):
             project.set_special_room(special_room)
             project.set_project_type_id(project_type_id)
             project.set_module_id(module_id)
-            project.set_state_id(state_id)
+            project.set_person_id(person_id)
             result.append(project)
 
         self._cnx.commit()
@@ -161,8 +161,8 @@ class ProjectMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 project.set_id(1)
 
-        command = "INSERT INTO project (project_id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, state_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        data = (project.get_id(), project.get_creation_date(), project.get_name(), project.get_state(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room(), project.get_project_type_id(), project.get_module_id(), project.get_state_id())
+        command = "INSERT INTO project (project_id, creation_date, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, person_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        data = (project.get_id(), project.get_creation_date(), project.get_name(), project.get_state(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room(), project.get_project_type_id(), project.get_module_id(), project.get_person_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -178,8 +178,8 @@ class ProjectMapper (Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE project " + "SET creation_date=%s, name=%s, current_state=%s, capacity=%s, external_partners=%s, short_description=%s, weekly_flag=%s, bd_before_lecture_period=%s, bd_in_lecture_period=%s, bd_in_exam_period=%s, bd_preferred_in_lecture_period=%s, special_room=%s, project_type_id=%s, module_id=%s, state_id=%s WHERE project_id={}".format(project.get_id())
-        data = (project.get_creation_date(), project.get_name(), project.get_state(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room(), project.get_project_type_id(), project.get_module_id(), project.get_state_id())
+        command = "UPDATE project " + "SET creation_date=%s, name=%s, current_state=%s, capacity=%s, external_partners=%s, short_description=%s, weekly_flag=%s, bd_before_lecture_period=%s, bd_in_lecture_period=%s, bd_in_exam_period=%s, bd_preferred_in_lecture_period=%s, special_room=%s, project_type_id=%s, module_id=%s, person_id=%s WHERE project_id={}".format(project.get_id())
+        data = (project.get_creation_date(), project.get_name(), project.get_state(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room(), project.get_project_type_id(), project.get_module_id(), project.get_person_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -229,7 +229,7 @@ class ProjectMapper (Mapper):
         return result
 
 
-    def get_module_of_project(self, module_id):
+    def get_module_of_project(self, project_id):
         result = []
         
         cursor = self._cnx.cursor()
@@ -238,16 +238,44 @@ class ProjectMapper (Mapper):
         FROM project
         INNER JOIN module
         ON project.module_id=module.module_id
-        WHERE project.module_id={0}
-        """.format(module_id)
+        WHERE project.project_id={0}
+        """.format(project_id)
         
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            for(project_id, name, module_id, name) in tuples:
-                module_json = {"project_id": project_id, "project_name": name, "module_id": module_id, "module_name": name}
+            for(project_id, project_name, module_id, module_name) in tuples:
+                module_json = {"project_id": project_id, "project_name": project_name, "module_id": module_id, "module_name": module_name}
                 result.append(module_json)
+        except IndexError:
+            print("There was no object with this id")
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+        return result
+
+
+    def get_projects_by_person(self, person_id):
+        result = []
+        
+        cursor = self._cnx.cursor()
+        command = """
+        SELECT project.project_id, project.name, person.person_id, person.name
+        FROM project
+        INNER JOIN person
+        ON project.person_id=person.person_id
+        WHERE project.person_id={0}
+        """.format(person_id)
+        
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for(project_id, project_name, person_id, person_name) in tuples:
+                person_json = {"project_id": project_id, "project_name": project_name, "person_id": person_id, "person_name": person_name}
+                result.append(person_json)
         except IndexError:
             print("There was no object with this id")
             result = None
