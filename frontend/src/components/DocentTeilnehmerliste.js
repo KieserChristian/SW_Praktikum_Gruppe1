@@ -113,6 +113,11 @@ class DocentTeilnehmerliste extends React.Component {
 
           
         </Paper>
+            <Link to='/dozent/bewertungsliste'>
+                <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}}>
+                         Bewertungsliste generieren
+                 </Button>
+            </Link>
         </div>
     );
   }

@@ -12,7 +12,7 @@ import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import ProjectNBO from '../api/ProjectNBO';
 
-class DocentBewertungsListe extends React.Component {
+class Docent BewertungsListe extends React.Component {
 
     constructor(props) {
         super(props);
