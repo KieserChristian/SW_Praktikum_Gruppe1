@@ -20,9 +20,11 @@ class StudentAvailableProjectsEntry extends React.Component {
             ProjectNBOs: props.project,
             openDialogInfo: false,
             openDialogRegistration: false,
-            numberEcts: null,
-            projectType: null,
+           
         };
+        console.log(this.state.ProjectNBOs.getId())
+        console.log(this.state.ProjectNBOs)
+        console.log(this.state.ProjectNBOs.getProjectTypeId())
     }    
 
     openDialogInfo = () => {
@@ -45,29 +47,8 @@ class StudentAvailableProjectsEntry extends React.Component {
             openDialogRegistration: false})
     }
 
-    getNumberEctsByProject = () => {
-        ProjectAdminAPI.getAPI().getNumberEctsByProject(this.state.ProjectNBOs.getId())
-        .then(numberEctsAPI => {
-            this.setState({
-            numberEcts: numberEctsAPI,
-            loadingProgress: false,
-            error: null
-          });
-        }).catch(e => {
-          this.setState({
-            numberEcts: null,
-            loadingInProgress: false,
-            error: e
-          })
-        });
-        this.setState({
-        loadingInProgress: true,
-        error: null
-        });
-    }
-
-    getProjectTypeByProject = () => {
-        ProjectAdminAPI.getAPI().getProjectTypeByProject(this.state.ProjectNBOs.getId())
+    getProjectTypeOfProject = () => {
+        ProjectAdminAPI.getAPI().getProjectTypeOfProject(this.state.ProjectNBOs.getId())
         .then(projectTypeAPI => {
             this.setState({
             projectType: projectTypeAPI,
@@ -85,16 +66,17 @@ class StudentAvailableProjectsEntry extends React.Component {
         loadingInProgress: true,
         error: null
         });
+
     }
 
+
     componentDidMount() {
-        this.getNumberEctsByProject();
-        this.getProjectTypeByProject();
+        this.getProjectTypeOfProject();
     }
 
     render() {
         const { classes } = this.props;
-        const { error, ProjectNBOs, numberEcts, projectType, openDialogInfo, openDialogRegistration} = this.state;
+        const { error, ProjectNBOs, projectType, openDialogInfo, openDialogRegistration} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
@@ -115,8 +97,8 @@ class StudentAvailableProjectsEntry extends React.Component {
                                     <b>{ ProjectNBOs.getName() }</b>
                                 </Typography>
                                 <Typography>
-                                    {numberEcts?
-                                        <b>{numberEcts.getNumberEcts()}</b> 
+                                    {projectType?
+                                        <b>{projectType.getNumberEcts()}</b> 
                                     :"Test(5ECTS)"}
                                 </Typography>
                                 <Typography>

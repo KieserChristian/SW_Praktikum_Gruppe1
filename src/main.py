@@ -715,7 +715,7 @@ class ProjectListOperations(Resource):
         else:
             return '', 500
 
-@projectTool.route('/project_type_of_project/<int:project_id>')
+@projectTool.route('/project-type-of-project/<int:project_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjectListOperations(Resource):
     #@secured

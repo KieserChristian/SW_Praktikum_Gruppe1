@@ -55,14 +55,12 @@ export default class ProjectAdminAPI {
 
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
-    #getNumberEctsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-ects-by-project/${projectId}`;
-    #getNumberSwsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-sws-by-project/${projectId}`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
-    #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/{project_id}`
+    #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`
 
     // ProjectType related
-    #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project/project-type/§{project_type_id}`;
-    #getProjectTypeByProjectURL = (projectId) => `${this.#projectServerBaseURL}/project-type-by-project/${projectId}`;
+    #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project-type/${projectTypeId}`;
+    #getProjectTypeOfProjectURL = (projectId) => `${this.#projectServerBaseURL}/project-type-of-project/${projectId}`;
 
     // Semester related
 
@@ -123,24 +121,6 @@ export default class ProjectAdminAPI {
       })
     }
 
-    getNumberEctsByProject(projectId) {
-      return this.#fetchAdvanced(this.#getNumberEctsByProjectURL(projectId)).then((responseJSON) => {
-          let responseNumberEcts = ProjectTypeNBO.fromJSON(responseJSON)[0];
-          return new Promise(function (resolve) {
-              resolve(responseNumberEcts)
-          })
-      })
-  };
-
-  getNumberSwsByProject(projectId) {
-    return this.#fetchAdvanced(this.#getNumberSwsByProjectURL(projectId)).then((responseJSON) => {
-        let responseNumberSws = ProjectTypeNBO.fromJSON(responseJSON)[0];
-        return new Promise(function (resolve) {
-            resolve(responseNumberSws)
-        })
-    })
-  };
-
     //ProjectType
 
     getProjectTypeById(projectTypeId) {
@@ -153,8 +133,8 @@ export default class ProjectAdminAPI {
       })
     }
 
-    getProjectTypeByProject(projectId) {
-      return this.#fetchAdvanced(this.#getProjectTypeByProjectURL(projectId)).then((responseJSON) => {
+    getProjectTypeOfProject(projectId) {
+      return this.#fetchAdvanced(this.#getProjectTypeOfProjectURL(projectId)).then((responseJSON) => {
           let responseProjectType = ProjectTypeNBO.fromJSON(responseJSON)[0];
           return new Promise(function (resolve) {
               resolve(responseProjectType)
