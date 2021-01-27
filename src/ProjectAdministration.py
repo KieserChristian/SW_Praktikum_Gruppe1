@@ -446,6 +446,11 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             return mapper.get_state_of_project(state_id)
     
+    def get_projects_by_state(self, current_state):
+        """Alle Projekte eines bestimmten Zustands auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.get_projects_by_state(current_state)
+    
     def get_projects_by_state_id(self):
         """Alle Projekte, die sich in einem bestimmten Zustand befinden, ausgeben"""
         with ProjectMapper() as mapper:
@@ -541,7 +546,7 @@ class ProjectAdministration():
         """Einen Projekttyp anhand seines Namen auslesen"""
         with ProjectTypeMapper() as mapper:
             return mapper.find_by_name(name)
-    
+
     """
     State-Methoden
     """

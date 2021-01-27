@@ -758,17 +758,17 @@ class ProjectRelatedPersonOperations(Resource):
         else:
             return "Person not found", 500
 
-@projectTool.route('/state_of_project/<int:project_id>')
+@projectTool.route('/projects_by_state/<string:current_state>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjectListOperations(Resource):
+    @projectTool.marshal_with(project)
     #@secured
-    def get(self, project_id):
+    def get(self, current_state):
         """Auslesen aller Project-Objekte eines bestimmten states"""
         adm = ProjectAdministration()
-        state_of_project = adm.get_state_of_project(project_id)
-        
-        if state_of_project != []:
-            return state_of_project, 200
+        projects_by_state = adm.get_projects_by_state(current_state)
+        if projects_by_state != []:
+            return projects_by_state, 200
         else:
             return 'There is no Project with that state', 500
 

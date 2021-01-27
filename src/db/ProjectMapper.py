@@ -285,28 +285,33 @@ class ProjectMapper (Mapper):
         return result
 
 
-    def get_state_of_project(self, state_id):
+    def get_projects_by_state(self, current_state):
         result = []
         
         cursor = self._cnx.cursor()
-        command = """
-        SELECT project.project_id, project.name, state.state_id, state.state_name
-        FROM project
-        INNER JOIN state
-        ON project.state_id=state.state_id
-        WHERE project.state_id={0}
-        """.format(state_id)
-        
+        command = " SELECT * from project WHERE project.current_state = '{}'".format(current_state)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        try:
-            for(project_id, name, state_id, state_name) in tuples:
-                module_json = {"project_id": project_id, "project_name": name, "state_id": state_id, "state_name": state_name}
-                result.append(state_json)
-        except IndexError:
-            print("There was no object with this id")
-            result = None
+        for (id, creation_date, name, current_state, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, person_id) in tuples:
+            project = Project()
+            project.set_id(id)
+            project.set_creation_date(creation_date)
+            project.set_name(name)
+            project.set_state(current_state)
+            project.set_capacity(capacity)
+            project.set_external_partners(external_partners)
+            project.set_short_description(short_description)
+            project.set_weekly_flag(weekly_flag)
+            project.set_bd_before_lecture_period(bd_before_lecture_period)
+            project.set_bd_in_lecture_period(bd_in_lecture_period)
+            project.set_bd_in_exam_period(bd_in_exam_period)
+            project.set_bd_preferred_in_lecture_period(bd_preferred_in_lecture_period)
+            project.set_special_room(special_room)
+            project.set_project_type_id(project_type_id)
+            project.set_module_id(module_id)
+            project.set_person_id(person_id)
+            result.append(project)
 
         self._cnx.commit()
         cursor.close()
