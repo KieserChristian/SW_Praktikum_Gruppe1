@@ -92,7 +92,7 @@ class DocentProjectCreation extends React.Component {
         this.setState({current_state: event.target.value})
     }
 
-    handleSubmit = (event) => {
+    /*handleSubmit = (event) => {
         alert(` ${this.state.name.value}`,` ${this.state.weekly_flag}` );
 
         fetchAdvanced("http://127.0.0.1:5000/project/projects", {
@@ -106,7 +106,7 @@ class DocentProjectCreation extends React.Component {
         event.preventDefault();  /** Javascript Event preventDefault übernimmt im DOM die Aufgabe des Aufrufs return false;, 
                                  um die ursprüngliche Aktion des Browsers bei einem HTML-Element außer Kraft zu setzen.*/ 
         
-    }
+    //}
 
     render() {
         
