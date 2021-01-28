@@ -57,7 +57,8 @@ export default class ProjectAdminAPI {
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
-    #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`
+    #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
+    #getAvailableProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/available_projects_for_student/${studentId}`;
 
     // ProjectType related
     #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project-type/${projectTypeId}`;
@@ -118,6 +119,16 @@ export default class ProjectAdminAPI {
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
           resolve(ProjectNBOs);
+        })
+      })
+    }
+
+    getAvailableProjectsOfStudent(studentId) {
+      return this.#fetchAdvanced(this.#getAvailableProjectsOfStudentURL(studentId))
+      .then((responseJSON) => {
+        let responseProject = ProjectNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(responseProject)
         })
       })
     }

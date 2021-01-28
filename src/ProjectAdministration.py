@@ -456,10 +456,10 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             return mapper.find_by_id(state.get_id())
 
-    def get_projects_by_availibility_for_student(self, student_id):
+    def get_available_projects_for_student(self, student_id):
         """Alle Projekte, die genehmigt sind und noch nicht vom Student angemeldet"""
         with ProjectMapper() as mapper:
-            return mapper.get_projects_by_availibility_for_student(student_id)
+            return mapper.get_available_projects_for_student(student_id)
     
     def add_person_to_project(self, person, project):
         """Eine Person einem Projekt hinzufügen"""
