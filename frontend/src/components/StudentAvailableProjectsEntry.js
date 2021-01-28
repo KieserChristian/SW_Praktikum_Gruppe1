@@ -47,8 +47,8 @@ class StudentAvailableProjectsEntry extends React.Component {
             openDialogRegistration: false})
     }
 
-    getProjectTypeOfProject = () => {
-        ProjectAdminAPI.getAPI().getProjectTypeOfProject(this.state.ProjectNBOs.getId())
+    getProjectTypeById = () => {
+        ProjectAdminAPI.getAPI().getProjectTypeById(this.state.ProjectNBOs.getProjectTypeId())
         .then(projectTypeAPI => {
             this.setState({
             projectType: projectTypeAPI,
@@ -69,9 +69,8 @@ class StudentAvailableProjectsEntry extends React.Component {
 
     }
 
-
     componentDidMount() {
-        this.getProjectTypeOfProject();
+        this.getProjectTypeById();
     }
 
     render() {
@@ -86,6 +85,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                     openInfo={openDialogInfo}
                                     onCloseProp={this.closeDialogInfo}
                                     project={ProjectNBOs}
+                                    propProjectType={projectType}
                                 />
                                 <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={this.openDialogInfo}>
                                 <InfoIcon/>
@@ -94,17 +94,12 @@ class StudentAvailableProjectsEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
-                                    <b>{ ProjectNBOs.getName() }</b>
+                                    <b>Projektname: {ProjectNBOs.getName()}</b>
                                 </Typography>
-                                <Typography>
+                                <Typography className={classes.heading}>
                                     {projectType?
-                                        <b>{projectType.getNumberEcts()}</b> 
+                                        <b>ECTS: {projectType.getNumberEcts()}</b> 
                                     :"Test(5ECTS)"}
-                                </Typography>
-                                <Typography>
-                                    {projectType?
-                                        <b>{projectType.getName()}</b> 
-                                    :"Test(ProjektTyp)"}
                                 </Typography>
                                 <Typography className={classes.heading}>
                                     Kapazität: {ProjectNBOs.getCapacity()} Plätze

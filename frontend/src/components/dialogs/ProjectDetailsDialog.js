@@ -19,7 +19,7 @@ class ProjectDetailsDialog extends Component {
             module: null,
             numberSws: null,
             numberEcts:null,
-            projectType: null,
+            ProjectType: this.props.propProjectType,
         }
     }
 
@@ -45,30 +45,8 @@ class ProjectDetailsDialog extends Component {
         });
     }
 
-    getProjectTypeOfProject = (projectId) => {
-        ProjectAdminAPI.getAPI().getProjectTypeOfProject(this.state.ProjectNBOs.getId())
-        .then(projectTypeAPI => {
-            this.setState({
-            projectType: projectTypeAPI,
-            loadingProgress: false,
-            error: null
-          });
-        }).catch(e => {
-          this.setState({
-            projectType: null,
-            loadingInProgress: false,
-            error: e
-          })
-        });
-        this.setState({
-        loadingInProgress: true,
-        error: null
-        });
-    }
-
     componentDidMount() {
         this.getModuleByProject();
-        this.getProjectTypeOfProject();
     }
 
     onDialogClose =()=>{
@@ -78,7 +56,7 @@ class ProjectDetailsDialog extends Component {
     
     render() {
         const { openInfo } = this.props;
-        const { ProjectNBOs , module, projectType} = this.state;
+        const { ProjectNBOs , module, ProjectType} = this.state;
         return (
             <Dialog open={openInfo} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" style={{color: 'white', backgroundColor: '#4caf50'}}><b>{ProjectNBOs.getName()}</b></DialogTitle>
@@ -89,21 +67,21 @@ class ProjectDetailsDialog extends Component {
                     :"Test(Modulname)"}
                 </DialogContentText>
                 <DialogContentText>
-                    {projectType?
-                        <b>Projekttyp: {projectType.getName()}</b> 
+                    {ProjectType?
+                        <b>Projekttyp: {ProjectType.getName()}</b> 
                     :"Test(Projekttyp)"}
                 </DialogContentText>
                 <DialogContentText>
                 <b>Kapazität: {ProjectNBOs.getCapacity()} Plätze</b> 
                 </DialogContentText>
                 <DialogContentText>
-                {projectType?
-                        <b>ECTS:: {projectType.getNumberEcts()}</b> 
+                {ProjectType?
+                        <b>ECTS: {ProjectType.getNumberEcts()}</b> 
                     :"Test(5ECTS)"}
                 </DialogContentText>
                 <DialogContentText>
-                    {projectType?
-                        <b>{projectType.getNumberSws()}</b> 
+                    {ProjectType?
+                        <b>SWS: {ProjectType.getNumberSws()}</b> 
                     :"Test(10SWS)"}
                 </DialogContentText>
                 <DialogContentText>
