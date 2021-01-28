@@ -318,6 +318,36 @@ class ProjectMapper (Mapper):
         return result
 
 
+    def get_projects_by_availibility_for_student(self, student_id):
+            result = []
+            cursor = self._cnx.cursor()
+            command = "SELECT * FROM project WHERE project.project_id NOT IN (SELECT participation.project_id FROM student LEFT JOIN participation ON student.student_id = participation.student_id WHERE student.student_id = {}) and project.current_state = 'Genehmigt' ".format(student_id)
+            cursor.execute(command)
+            tuples = cursor.fetchall()
+
+            for (id, creation_date, name, current_state, capacity, external_partners,short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, person_id) in tuples:
+                project = Project()
+                project.set_id(id)
+                project.set_creation_date(creation_date)
+                project.set_name(name)
+                project.set_state(current_state)
+                project.set_capacity(capacity)
+                project.set_external_partners(external_partners)
+                project.set_short_description(short_description)
+                project.set_weekly_flag(weekly_flag)
+                project.set_bd_before_lecture_period(bd_before_lecture_period)
+                project.set_bd_in_lecture_period(bd_in_lecture_period)
+                project.set_bd_in_exam_period(bd_in_exam_period)
+                project.set_bd_preferred_in_lecture_period(bd_preferred_in_lecture_period)
+                project.set_special_room(special_room)
+                project.set_project_type_id(project_type_id)
+                project.set_module_id(module_id)
+                project.set_person_id(person_id)
+                result.append(project)
+
+            self._cnx.commit()
+            cursor.close()
+            return result
 """Insert Methode Getestet """
 
 # if (__name__ == "__main__"):

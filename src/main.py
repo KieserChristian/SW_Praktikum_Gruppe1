@@ -772,6 +772,21 @@ class ProjectListOperations(Resource):
         else:
             return 'There is no Project with that state', 500
 
+@projectTool.route('/projects_by_availibility_for_student/<int:student_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('student_id', 'Dies ist die ID von Student')
+class ProjectListOperations(Resource):
+    @projectTool.marshal_with(project)
+    #@secured
+    def get(self, student_id):
+        """Auslesen aller genehmigten Project-Objekte für einen bestimmten Student"""
+        adm = ProjectAdministration()
+        projects_by_availibility_for_student = adm.get_projects_by_availibility_for_student(student_id)
+        if projects_by_availibility_for_student != []:
+            return projects_by_availibility_for_student, 200
+        else:
+            return 'There are no Projects for that student', 500
+
 
 @projectTool.route('/project-type/<int:project_type_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
