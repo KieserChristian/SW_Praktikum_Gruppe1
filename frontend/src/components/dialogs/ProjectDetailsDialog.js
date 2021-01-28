@@ -24,8 +24,8 @@ class ProjectDetailsDialog extends Component {
     }
 
 
-    getModuleByProject = () => {
-        ProjectAdminAPI.getAPI().getModuleByProject(this.state.ProjectNBOs.getId())
+    getModuleById = () => {
+        ProjectAdminAPI.getAPI().getModuleById(this.state.ProjectNBOs.getModuleId())
         .then(moduleNBO => {
             this.setState({
             module: moduleNBO,
@@ -46,7 +46,7 @@ class ProjectDetailsDialog extends Component {
     }
 
     componentDidMount() {
-        this.getModuleByProject();
+        this.getModuleById();
     }
 
     onDialogClose =()=>{

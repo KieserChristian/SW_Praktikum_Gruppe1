@@ -42,6 +42,7 @@ export default class ProjectAdminAPI {
     #saveModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;
     #deleteModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;
     #updateModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;  */
+    #getModuleByIdURL = (moduleId) => `${this.#projectServerBaseURL}/module/${moduleId}`;
        
     // Participation related
     #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
@@ -163,6 +164,16 @@ export default class ProjectAdminAPI {
           })
       })
     };
+
+    getModuleById(moduleId) {
+      return this.#fetchAdvanced(this.#getProjectTypeByIdURL(moduleId))
+      .then((responseJSON) => {
+        let ModuleNBOs = ModuleNBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(ModuleNBOs);
+        })
+      })
+    }
 
     //Participation
 
