@@ -12,16 +12,27 @@ class AdminView extends React.Component {
     }
   }
 
-  getAllProjects = () => {
-    ProjectAdminAPI.getAPI().getAllProjects().then(NewProjectNBOs =>
+  getProjectsByStateNew = () => {
+    ProjectAdminAPI.getAPI().getProjectsByCurrentState("Neu")
+    .then(projectBOs => {
+      console.log(projectBOs);
       this.setState({
-        projects:NewProjectNBOs
+        projects: projectBOs,
+        error: null,
+        loadingInProgress: false
       })
-    );
+    }).catch(e => {
+      console.log(e);
+    });
+    this.setState({
+    loadingInProgress: true,
+    error: null
+    });
   }
 
   componentDidMount() {
-    this.getAllProjects();
+    /*this.getAllProjects();*/
+    this.getProjectsByStateNew();
   }
 
 
@@ -30,6 +41,26 @@ class AdminView extends React.Component {
     return(
       <div> 
         <Paper>
+          <Grid>
+            <Button>
+              Eingereichte Projekte
+            </Button>
+          </Grid>
+          <Grid>
+            <Typography>
+              Hier können Sie eingereichte Projekte genehmigen oder ablehnen:
+            </Typography>
+            {
+            projects.length > 0 ?
+              projects.map (project => 
+                <div>{project.getName()}</div>
+                )
+              :
+              "Test"
+            }
+          </Grid>
+        </Paper>
+                <Paper>
           <Grid>
             <Button>
               Eingereichte Projekte
