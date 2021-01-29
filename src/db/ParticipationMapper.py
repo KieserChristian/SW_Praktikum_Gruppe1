@@ -130,23 +130,25 @@ class ParticipationMapper (Mapper):
         cursor.close()
     
 
-    def get_participations_of_student(self, student_id):
+    def get_participations_by_student(self, student_id):
         result = []
         
         cursor = self._cnx.cursor()
         command = """
-        SELECT participation.participation_id, student.student_id, student.name, student.matriculation_number
+        SELECT project.project_id, project.name, project.current_state, project.capacity, project.external_partners, project.short_description, project.weekly_flag, project.bd_before_lecture_period, project.bd_in_lecture_period, project.bd_in_exam_period, project.bd_preferred_in_lecture_period, project.special_room, project.project_type_id, project.module_id
         FROM participation
         INNER JOIN student
         ON participation.student_id=student.student_id
-        WHERE participation.student_id={0}
+        INNER JOIN project
+        ON participation.project_id=project.project_id
+        WHERE participation.student_id={}
         """.format(student_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            for(participation_id, student_id, name, matriculation_number) in tuples:
-                student_json = {"participation_id": participation_id, "student_id": student_id, "student_name": name, "matriculation_number": matriculation_number}
+            for(project_id, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id) in tuples:
+                student_json = {"project_id": project_id, "project_name": name, "current_state": current_state, "capacity": capacity, "external_partners": external_partners, "short_description": short_description, "weekly_flag": weekly_flag, "bd_before_lecture_period": bd_before_lecture_period, "bd_in_lecture_period": bd_in_lecture_period, "bd_in_exam_period": bd_in_exam_period, "bd_preferred_in_lecture_period": bd_preferred_in_lecture_period, "special_room": special_room, "project_type_id": project_type_id, "module_id": module_id}
                 result.append(student_json)
         except IndexError:
             print("There was no object with this id")

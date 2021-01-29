@@ -998,17 +998,17 @@ class ParticipationListOperations(Resource):
             return '', 500
 
 
-@projectTool.route('/participationofstudent/<int:student_id>')
+@projectTool.route('/participation_by_student/<int:student_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ParticipationListOperations(Resource):
     #@secured
     def get(self, student_id):
-        """Auslesen aller Participation-Objekte"""
+        """Auslesen aller Participation-Objekte/Projekte eines bestimmten Students """
         adm = ProjectAdministration()
-        participationofstudent = adm.get_participations_of_student(student_id)
+        participation_by_student = adm.get_participations_by_student(student_id)
         
-        if participationofstudent != []:
-            return participationofstudent, 200
+        if participation_by_student != []:
+            return participation_by_student, 200
         else:
             return 'There is no Participation for that Student', 500
 

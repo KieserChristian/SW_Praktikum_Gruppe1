@@ -161,7 +161,7 @@ class App extends React.Component {
                   <AdminView/>
                 </Route>
                 <Route path='/admin/nutzerübersicht'>
-                  <AdminView/>
+                  <AdminUserView/>
                 </Route>
                         
 								</>
