@@ -57,6 +57,7 @@ export default class ProjectAdminAPI {
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
     #getNumberEctsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-ects-by-project/${projectId}`;
     #getNumberSwsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-sws-by-project/${projectId}`;
+    #getProjectsByPersonURL = (personId) => `${this.#projectServerBaseURL}/projects-by-person/${personId}`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
     #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/{project_id}`
 
@@ -115,6 +116,16 @@ export default class ProjectAdminAPI {
 
     getProjectById(projectId) {
       return this.#fetchAdvanced(this.#getProjectByIdURL(projectId))
+      .then((responseJSON) => {
+        let ProjectNBOs = ProjectNBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(ProjectNBOs);
+        })
+      })
+    }
+
+    getProjectsByPerson(personId) {
+      return this.#fetchAdvanced(this.#getProjectsByPersonURL(personId))
       .then((responseJSON) => {
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {

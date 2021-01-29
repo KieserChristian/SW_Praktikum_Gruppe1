@@ -17,7 +17,7 @@ class DocentMeineProjekte extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            StudentNBOs: props.student,
+            PersonNBOs: props.person,
             ProjectNBOs: props.project,
             numberEcts: null,
             projectType: null,
@@ -25,26 +25,6 @@ class DocentMeineProjekte extends React.Component {
     }
 
 
-    getParticipationsOfStudent = () => {
-        ProjectAdminAPI.getAPI().getParticipationsOfStudent(this.state.ParticipationBOs.getId())
-        .then(participationsOfStudentAPI => {
-            this.setState({
-            participationsOfStudent: participationsOfStudentAPI,
-            loadingProgress: false,
-            error: null
-          });
-        }).catch(e => {
-          this.setState({
-            participationsOfStudent: null,
-            loadingInProgress: false,
-            error: e
-          })
-        });
-        this.setState({
-        loadingInProgress: true,
-        error: null
-        });
-    }
 
     getProjectTypeByProject = () => {
         ProjectAdminAPI.getAPI().getProjectTypeByProject(this.state.ProjectNBOs.getId())
@@ -67,35 +47,12 @@ class DocentMeineProjekte extends React.Component {
         });
     }
 
-    getNumberEctsByProject = () => {
-        ProjectAdminAPI.getAPI().getNumberEctsByProject(this.state.ProjectNBOs.getId())
-        .then(numberEctsAPI => {
-            this.setState({
-            numberEcts: numberEctsAPI,
-            loadingProgress: false,
-            error: null
-          });
-        }).catch(e => {
-          this.setState({
-            numberEcts: null,
-            loadingInProgress: false,
-            error: e
-          })
-        });
-        this.setState({
-        loadingInProgress: true,
-        error: null
-        });
-    }
 
-    componentDidMount() {
-        this.getNumberEctsByProject();
-        this.getProjectTypeByProject();
-    }
+
 
     render() {
         const { classes } = this.props;
-        const { error, ParticipationBOs, participationsOfStudent, numberEcts, ProjectNBOs, StudentNBOs, projectType} = this.state;
+        const { error, PersonNBOs, numberEcts, ProjectNBOs, StudentNBOs, projectType} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
@@ -105,16 +62,7 @@ class DocentMeineProjekte extends React.Component {
                                     { ProjectNBOs.getName() }
                                     
                                 </Typography>
-                                <Typography className={classes.heading} >
-                                    {numberEcts?
-                                        <b>{numberEcts.getNumberEcts()}</b> 
-                                    :"Test(5ECTS)"}
-                                </Typography>
-                                <Typography>
-                                    {projectType?
-                                        <b>{projectType.getName()}</b> 
-                                    :"Test(ProjektTyp)"}
-                                </Typography>
+                               
                             </Grid>
                             <Grid item>
                             <React.Fragment>
