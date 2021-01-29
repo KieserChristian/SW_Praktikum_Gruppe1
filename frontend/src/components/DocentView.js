@@ -69,7 +69,7 @@ class DocentView extends React.Component {
 
   componentDidMount() {
 
-    this.getProjectsByPerson();
+    this.getAllProjects();
 
   }
   render() {

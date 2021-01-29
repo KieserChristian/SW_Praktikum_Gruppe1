@@ -59,6 +59,10 @@ class DocentMeineProjekte extends React.Component {
 
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
+                                    { ProjectNBOs.getPersonId() }
+                                    
+                                </Typography>
+                                <Typography className={classes.heading} >
                                     { ProjectNBOs.getName() }
                                     
                                 </Typography>
