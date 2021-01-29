@@ -131,6 +131,11 @@ class ProjectAdministration():
         """Den Student mit seinem Studiengangskürzel auslesen"""
         with StudentMapper() as mapper:
             return mapper.find_by_course(course_abbreviation)
+    
+    def get_student_by_google_id(self, google_id):
+        """Den Student mit seiner Google-Mail-Adresse auslesen"""
+        with StudentMapper() as mapper:
+            return mapper.find_by_google_id(google_id)
 
     """
     Semester-Methoden
@@ -441,10 +446,20 @@ class ProjectAdministration():
         with ProjectMapper() as mapper:
             return mapper.get_state_of_project(state_id)
     
+    def get_projects_by_state(self, current_state):
+        """Alle Projekte eines bestimmten Zustands auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.get_projects_by_state(current_state)
+    
     def get_projects_by_state_id(self):
         """Alle Projekte, die sich in einem bestimmten Zustand befinden, ausgeben"""
         with ProjectMapper() as mapper:
             return mapper.find_by_id(state.get_id())
+
+    def get_available_projects_for_student(self, student_id):
+        """Alle Projekte, die genehmigt sind und noch nicht vom Student angemeldet"""
+        with ProjectMapper() as mapper:
+            return mapper.get_available_projects_for_student(student_id)
     
     def add_person_to_project(self, person, project):
         """Eine Person einem Projekt hinzufügen"""
@@ -536,7 +551,7 @@ class ProjectAdministration():
         """Einen Projekttyp anhand seines Namen auslesen"""
         with ProjectTypeMapper() as mapper:
             return mapper.find_by_name(name)
-    
+
     """
     State-Methoden
     """

@@ -20,9 +20,11 @@ class StudentAvailableProjectsEntry extends React.Component {
             ProjectNBOs: props.project,
             openDialogInfo: false,
             openDialogRegistration: false,
-            numberEcts: null,
-            projectType: null,
+           
         };
+        console.log(this.state.ProjectNBOs.getId())
+        console.log(this.state.ProjectNBOs)
+        console.log(this.state.ProjectNBOs.getProjectTypeId())
     }    
 
     openDialogInfo = () => {
@@ -45,29 +47,8 @@ class StudentAvailableProjectsEntry extends React.Component {
             openDialogRegistration: false})
     }
 
-    getNumberEctsByProject = () => {
-        ProjectAdminAPI.getAPI().getNumberEctsByProject(this.state.ProjectNBOs.getId())
-        .then(numberEctsAPI => {
-            this.setState({
-            numberEcts: numberEctsAPI,
-            loadingProgress: false,
-            error: null
-          });
-        }).catch(e => {
-          this.setState({
-            numberEcts: null,
-            loadingInProgress: false,
-            error: e
-          })
-        });
-        this.setState({
-        loadingInProgress: true,
-        error: null
-        });
-    }
-
-    getProjectTypeByProject = () => {
-        ProjectAdminAPI.getAPI().getProjectTypeByProject(this.state.ProjectNBOs.getId())
+    getProjectTypeById = () => {
+        ProjectAdminAPI.getAPI().getProjectTypeById(this.state.ProjectNBOs.getProjectTypeId())
         .then(projectTypeAPI => {
             this.setState({
             projectType: projectTypeAPI,
@@ -85,16 +66,16 @@ class StudentAvailableProjectsEntry extends React.Component {
         loadingInProgress: true,
         error: null
         });
+
     }
 
     componentDidMount() {
-        this.getNumberEctsByProject();
-        this.getProjectTypeByProject();
+        this.getProjectTypeById();
     }
 
     render() {
         const { classes } = this.props;
-        const { error, ProjectNBOs, numberEcts, projectType, openDialogInfo, openDialogRegistration} = this.state;
+        const { error, ProjectNBOs, projectType, openDialogInfo, openDialogRegistration} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
@@ -104,6 +85,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                     openInfo={openDialogInfo}
                                     onCloseProp={this.closeDialogInfo}
                                     project={ProjectNBOs}
+                                    propProjectType={projectType}
                                 />
                                 <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={this.openDialogInfo}>
                                 <InfoIcon/>
@@ -112,17 +94,12 @@ class StudentAvailableProjectsEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
-                                    <b>{ ProjectNBOs.getName() }</b>
+                                    <b>Projektname: {ProjectNBOs.getName()}</b>
                                 </Typography>
-                                <Typography>
-                                    {numberEcts?
-                                        <b>{numberEcts.getNumberEcts()}</b> 
-                                    :"Test(5ECTS)"}
-                                </Typography>
-                                <Typography>
+                                <Typography className={classes.heading}>
                                     {projectType?
-                                        <b>{projectType.getName()}</b> 
-                                    :"Test(ProjektTyp)"}
+                                        <b>ECTS: {projectType.getNumberEcts()}</b> 
+                                    :"Test(5ECTS)"}
                                 </Typography>
                                 <Typography className={classes.heading}>
                                     Kapazität: {ProjectNBOs.getCapacity()} Plätze

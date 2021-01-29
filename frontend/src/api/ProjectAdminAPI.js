@@ -42,6 +42,7 @@ export default class ProjectAdminAPI {
     #saveModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;
     #deleteModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;
     #updateModuleURL = (moduleId) => `${this.#projectServerBaseURL}/modules`;  */
+    #getModuleByIdURL = (moduleId) => `${this.#projectServerBaseURL}/module/${moduleId}`;
        
     // Participation related
     #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
@@ -59,16 +60,17 @@ export default class ProjectAdminAPI {
     #getNumberSwsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-sws-by-project/${projectId}`;
     #getProjectsByPersonURL = (personId) => `${this.#projectServerBaseURL}/projects-by-person/${personId}`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
-    #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/{project_id}`
+    #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
+    #getAvailableProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/available_projects_for_student/${studentId}`;
 
     // ProjectType related
-    #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project/project-type/§{project_type_id}`;
-    #getProjectTypeByProjectURL = (projectId) => `${this.#projectServerBaseURL}/project-type-by-project/${projectId}`;
+    #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project-type/${projectTypeId}`;
+    #getProjectTypeOfProjectURL = (projectId) => `${this.#projectServerBaseURL}/project-type-of-project/${projectId}`;
 
     // Semester related
 
     // Student related
-    #getStudentByEmailURL = (email) => `${this.#projectServerBaseURL}/student/${email}`;
+    #getStudentByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/student-by-google-id/${googleId}`;
     #getAllStudentsURL = () => `${this.#projectServerBaseURL}/students`;
 
     static getAPI() {
@@ -134,23 +136,15 @@ export default class ProjectAdminAPI {
       })
     }
 
-    getNumberEctsByProject(projectId) {
-      return this.#fetchAdvanced(this.#getNumberEctsByProjectURL(projectId)).then((responseJSON) => {
-          let responseNumberEcts = ProjectTypeNBO.fromJSON(responseJSON)[0];
-          return new Promise(function (resolve) {
-              resolve(responseNumberEcts)
-          })
-      })
-  };
-
-  getNumberSwsByProject(projectId) {
-    return this.#fetchAdvanced(this.#getNumberSwsByProjectURL(projectId)).then((responseJSON) => {
-        let responseNumberSws = ProjectTypeNBO.fromJSON(responseJSON)[0];
-        return new Promise(function (resolve) {
-            resolve(responseNumberSws)
+    getAvailableProjectsOfStudent(studentId) {
+      return this.#fetchAdvanced(this.#getAvailableProjectsOfStudentURL(studentId))
+      .then((responseJSON) => {
+        let responseProject = ProjectNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(responseProject)
         })
-    })
-  };
+      })
+    }
 
     //ProjectType
 
@@ -164,8 +158,8 @@ export default class ProjectAdminAPI {
       })
     }
 
-    getProjectTypeByProject(projectId) {
-      return this.#fetchAdvanced(this.#getProjectTypeByProjectURL(projectId)).then((responseJSON) => {
+    getProjectTypeOfProject(projectId) {
+      return this.#fetchAdvanced(this.#getProjectTypeOfProjectURL(projectId)).then((responseJSON) => {
           let responseProjectType = ProjectTypeNBO.fromJSON(responseJSON)[0];
           return new Promise(function (resolve) {
               resolve(responseProjectType)
@@ -195,18 +189,17 @@ export default class ProjectAdminAPI {
       })
     };
 
-    //Participation
-
-    addParticipationToProject(projectId) {
-      return this.#fetchAdvanced(this.#addParticipationToProjectURL(projectId), {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json, text/plain',
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(projectId)
+    getModuleById(moduleId) {
+      return this.#fetchAdvanced(this.#getProjectTypeByIdURL(moduleId))
+      .then((responseJSON) => {
+        let ModuleNBOs = ModuleNBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(ModuleNBOs);
+        })
       })
     }
+
+    //Participation
 
     addParticipation(participationBO) {
       return this.#fetchAdvanced(this.#addParticipationURL(), {
@@ -256,8 +249,8 @@ export default class ProjectAdminAPI {
 
     //Student
 
-    getStudentByEmail(email) {
-      return this.#fetchAdvanced(this.#getStudentByEmailURL(email)).then((responseJSON) => {
+    getStudentByGoogleId(googleId) {
+      return this.#fetchAdvanced(this.#getStudentByGoogleIdURL(googleId)).then((responseJSON) => {
         let studentNBO = StudentNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
           resolve(studentNBO)

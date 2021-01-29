@@ -101,7 +101,7 @@ class StudentAvailableProjectsView extends React.Component {
               </Typography>
               {
               projects.length > 0 ? 
-                projects.map(project =>
+                filteredProjects.map(project =>
                   <StudentAvailableProjectsEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project}/>)
                   :
                   null

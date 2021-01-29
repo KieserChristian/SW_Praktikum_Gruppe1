@@ -18,7 +18,7 @@ class Automat(NamedBusinessObject):
     def __init__(self):
         """Beim Erzeugen des Objekts (Projekt) wird der Zustand automatisch auf neu gesetzt"""
         super().__init__()
-        self._current_state = "New"
+        self._current_state = "Neu"
 
     def get_state(self):
         return self._current_state
