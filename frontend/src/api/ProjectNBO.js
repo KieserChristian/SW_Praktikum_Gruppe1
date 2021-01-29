@@ -2,7 +2,7 @@ import NamedBusinessObject from "./NamedBusinessObject"
 
 export default class ProjectNBO extends NamedBusinessObject {
 
-    constructor (aState, aCapacity, aPartner, aDescription, aFlag, aBDbeforeLecture, aBDinExam, aBDinLecture, aBDpreferredInLecture, aRoom, aProjectTypeId, aModuleId) {
+    constructor (aState, aCapacity, aPartner, aDescription, aFlag, aBDbeforeLecture, aBDinExam, aBDinLecture, aBDpreferredInLecture, aRoom, aProjectTypeId, aModuleId, aPersonId) {
         super ();
         this.current_state = aState;
         this.capacity = aCapacity;
@@ -15,6 +15,8 @@ export default class ProjectNBO extends NamedBusinessObject {
         this.bd_preferred_in_lecture_period = aBDpreferredInLecture;
         this.special_room = aRoom;
         this.project_type_id = aProjectTypeId;
+
+        this.person_id = aPersonId;
         this.module_id = aModuleId;
     }
 
@@ -102,6 +104,10 @@ export default class ProjectNBO extends NamedBusinessObject {
         return this.project_type_id;
     }
 
+    getPersonId() {
+        return this.person_id;
+
+    }
     getModuleId() {
         return this.module_id;
     }

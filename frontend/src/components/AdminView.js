@@ -60,26 +60,6 @@ class AdminView extends React.Component {
             }
           </Grid>
         </Paper>
-                <Paper>
-          <Grid>
-            <Button>
-              Eingereichte Projekte
-            </Button>
-          </Grid>
-          <Grid>
-            <Typography>
-              Hier können Sie eingereichte Projekte genehmigen oder ablehnen:
-            </Typography>
-            {
-            projects.length > 0 ?
-              projects.map (project => 
-                <div>{project.getName()}</div>
-                )
-              :
-              "Test"
-            }
-          </Grid>
-        </Paper>
       </div>
     )
         
