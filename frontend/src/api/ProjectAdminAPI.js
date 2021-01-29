@@ -166,7 +166,7 @@ export default class ProjectAdminAPI {
     };
 
     getModuleById(moduleId) {
-      return this.#fetchAdvanced(this.#getProjectTypeByIdURL(moduleId))
+      return this.#fetchAdvanced(this.#getModuleByIdURL(moduleId))
       .then((responseJSON) => {
         let ModuleNBOs = ModuleNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {

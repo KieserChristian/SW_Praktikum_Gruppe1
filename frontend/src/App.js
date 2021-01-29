@@ -119,6 +119,7 @@ class App extends React.Component {
 				<CssBaseline />
 				<Router basename={process.env.PUBLIC_URL}>
 					<Container maxWidth='md'>
+            <Header/>
 						{ 
 							// Is a user signed in?
 							currentUser ?
