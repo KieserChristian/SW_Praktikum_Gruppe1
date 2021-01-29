@@ -15,36 +15,16 @@ class DocentView extends React.Component {
     super(props);
 
     this.state = {
-      students: [],
+      persons: [],
       projects: [],
       error: null,
       loadingProgress: false,
     } 
   }
 
-  getAllStudents = () => {
-    ProjectAdminAPI.getAPI().getAllStudents()
-    .then(studentNBOs => {
-        this.setState({
-        students: studentNBOs,
-        loadingProgress: false,
-        error: null
-      });
-    }).catch(e => {
-      this.setState({
-        students: [],
-        loadingInProgress: false,
-        error: e
-      })
-    });
-    this.setState({
-    loadingInProgress: true,
-    error: null
-    });
-  }
 
-  getAllProjects = () => {
-    ProjectAdminAPI.getAPI().getAllProjects()
+  getProjectsByPerson = (personId) => {
+    ProjectAdminAPI.getAPI().getProjectsByPerson(personId)
     .then(projectNBOs => {
         this.setState({
         projects: projectNBOs,
@@ -64,14 +44,37 @@ class DocentView extends React.Component {
     });
   }
 
+  getAllProjects = () => {
+    ProjectAdminAPI.getAPI().getAllProjects()
+    .then(projectNBOs => {
+        this.setState({
+        projects: projectNBOs,
+        filteredProjects: [...projectNBOs],
+        loadingProgress: false,
+        error: null
+      });
+    }).catch(e => {
+      this.setState({
+        projects: [],
+        loadingInProgress: false,
+        error: e
+      })
+    });
+    this.setState({
+    loadingInProgress: true,
+    error: null
+    });
+  }
+  
 
   componentDidMount() {
+
     this.getAllProjects();
 
   }
   render() {
     const { classes } = this.props;
-    const { projects, students} = this.state;
+    const { projects} = this.state;
     return (
         <div>
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
@@ -80,12 +83,13 @@ class DocentView extends React.Component {
             </Grid>
             <Grid item>
             {
-            projects.length > 0 ? 
+             projects.length > 0 ? 
               projects.map(project =>
-                <DocentMeineProjekte key={project.getId()} project={project}/>)
-                :
-                null
+               <DocentMeineProjekte key={project.getId()} project={project}/>)
+               :
+               null
             }
+
 
             </Grid>
 

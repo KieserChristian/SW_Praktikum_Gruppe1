@@ -455,6 +455,11 @@ class ProjectAdministration():
         """Alle Projekte, die sich in einem bestimmten Zustand befinden, ausgeben"""
         with ProjectMapper() as mapper:
             return mapper.find_by_id(state.get_id())
+
+    def get_available_projects_for_student(self, student_id):
+        """Alle Projekte, die genehmigt sind und noch nicht vom Student angemeldet"""
+        with ProjectMapper() as mapper:
+            return mapper.get_available_projects_for_student(student_id)
     
     def add_person_to_project(self, person, project):
         """Eine Person einem Projekt hinzufügen"""

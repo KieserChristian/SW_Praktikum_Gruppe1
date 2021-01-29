@@ -56,8 +56,12 @@ export default class ProjectAdminAPI {
 
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
+    #getNumberEctsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-ects-by-project/${projectId}`;
+    #getNumberSwsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-sws-by-project/${projectId}`;
+    #getProjectsByPersonURL = (personId) => `${this.#projectServerBaseURL}/projects-by-person/${personId}`;
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
-    #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`
+    #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
+    #getAvailableProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/available_projects_for_student/${studentId}`;
 
     // ProjectType related
     #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project-type/${projectTypeId}`;
@@ -118,6 +122,26 @@ export default class ProjectAdminAPI {
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
           resolve(ProjectNBOs);
+        })
+      })
+    }
+
+    getProjectsByPerson(personId) {
+      return this.#fetchAdvanced(this.#getProjectsByPersonURL(personId))
+      .then((responseJSON) => {
+        let ProjectNBOs = ProjectNBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(ProjectNBOs);
+        })
+      })
+    }
+
+    getAvailableProjectsOfStudent(studentId) {
+      return this.#fetchAdvanced(this.#getAvailableProjectsOfStudentURL(studentId))
+      .then((responseJSON) => {
+        let responseProject = ProjectNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(responseProject)
         })
       })
     }
