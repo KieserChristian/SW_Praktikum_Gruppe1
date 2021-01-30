@@ -2,9 +2,8 @@ import { Paper,Grid,Button, Typography } from '@material-ui/core';
 import React from 'react';
 import ProjectAdminAPI from '../api/ProjectAdminAPI'
 import ProjectNBO from '../api/ProjectNBO';
-import InfoIcon from '@material-ui/icons/Info';
 
-class AdminView extends React.Component {
+class AdminStateNewView extends React.Component {
 
   constructor (props){
     super(props);
@@ -13,8 +12,8 @@ class AdminView extends React.Component {
     }
   }
 
-  getAllProjects = () => {
-    ProjectAdminAPI.getAPI().getAllProjects()
+  getProjectsByStateNew = () => {
+    ProjectAdminAPI.getAPI().getProjectsByCurrentState("Neu")
     .then(projectBOs => {
       console.log(projectBOs);
       this.setState({
@@ -32,7 +31,8 @@ class AdminView extends React.Component {
   }
 
   componentDidMount() {
-    this.getAllProjects();
+    /*this.getAllProjects();*/
+    this.getProjectsByStateNew();
   }
 
 
@@ -43,17 +43,16 @@ class AdminView extends React.Component {
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
           <Grid container spacing={1} justify='flex-start' alignItems='center'>
             <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">
-              Alle Projekte
+              Eingereichte Projekte
             </Button>
           </Grid>
           <Grid style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
             <Typography>
-              Hier können Sie alle Projekte einsehen oder bearbeiten:
+              Hier können Sie eingereichte Projekte genehmigen oder ablehnen:
             </Typography>
             {
             projects.length > 0 ?
               projects.map (project => 
-                
                 <div>{project.getName()}</div>
                 )
               :
@@ -72,4 +71,4 @@ class AdminView extends React.Component {
 
 }
 
-export default AdminView;
+export default AdminStateNewView;
