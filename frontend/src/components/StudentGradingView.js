@@ -16,26 +16,94 @@ class StudentGradingView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            projects: [],
             gradings: [],
             error: null,
+            module: null,
         } 
     }
 
-    getAllGradings = () => {
+/*     getAllGradings = () => {
         ProjectAdminAPI.getAPI().getAllGradings().then(gradingBOs => {
             this.setState({
                 gradings: gradingBOs,
             })
         })
+    } */
+
+/*     getModuleById = () => {
+        ProjectAdminAPI.getAPI().getModuleById()
+        .then(moduleNBO => {
+            this.setState({
+            module: moduleNBO,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            module: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
     }
+
+    getAllProjects = () => {
+        ProjectAdminAPI.getAPI().getAllProjects().then(projectNBOs => {
+          this.setState({
+            projects: projectNBOs,
+            filteredProjects: [...projectNBOs],
+            loadingInProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            projects: [],
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
+
+    getProjectTypeById = () => {
+        ProjectAdminAPI.getAPI().getProjectTypeById()
+        .then(projectTypeAPI => {
+            this.setState({
+            projectType: projectTypeAPI,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            projectType: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    } */
+    
    
     componentDidMount() {
-        this.getAllGradings()
+        //this.getAllGradings();
+/*         this.getAllProjects();
+        this.getProjectTypeById(); */
     }
 
     render() {
         const { classes } = this.props;
-        const { gradings } = this.state;
+        const { gradings, module, projects, projectType } = this.state;
 
         return(
         <div className={classes.root}>
@@ -51,8 +119,9 @@ class StudentGradingView extends React.Component {
                                 <Table size="small" aria-label="purchases">
                                     <TableHead >
                                         <TableRow>
-                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">EDV-Nummer</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Projekt</TableCell>
                                             <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Modul</TableCell>
+                                            <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">EDV-Nummer</TableCell>
                                             <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Semester</TableCell>
                                             <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Note</TableCell>
                                             <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">ECTS</TableCell>
@@ -60,18 +129,20 @@ class StudentGradingView extends React.Component {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
-                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
-                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
-                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
-                                        {gradings.length > 0 ? 
-                                                gradings.map(grading =>
-                                                    <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{grading.getGrade()}</TableCell>
-                                                    )
+                                        {projects.length > 0 ? 
+                                                projects.map(project =>
+                                                    <TableRow>
+                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{project.getName()} </TableCell>
+                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Test</TableCell>
+                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Test</TableCell>
+                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
+                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
+                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
+                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align='center'>Test</TableCell>
+                                                    </TableRow>)
                                                     :
                                                     null
                                         }
-                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align='center'>Test</TableCell>
-                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align='center'>Test</TableCell>
                                     </TableBody>
                                 </Table>
                             </Box>
