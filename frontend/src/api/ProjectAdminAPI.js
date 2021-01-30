@@ -48,6 +48,7 @@ export default class ProjectAdminAPI {
     #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
     #getParticipationByIdURL = (participationId) => `${this.#projectServerBaseURL}/participation/{participation}`;
     #getParticipationsOfStudentURL = (participationId) => `${this.#projectServerBaseURL}/participation-of-student/${participationId}`;
+    #getParticipationsByStudentURL = (studentId) => `${this.#projectServerBaseURL}/participation_by_student/${studentId}`
     #addParticipationToProjectURL = (projectId) => `${this.#projectServerBaseURL}/project_of_participation/${projectId}`;
     #addParticipationURL = () => `${this.#projectServerBaseURL}/participation`;
 
@@ -225,6 +226,16 @@ export default class ProjectAdminAPI {
         let participationBO = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function(resolve) {
           resolve(participationBO);
+        })
+      })
+    }
+
+    getParticipationsByStudent(studentId) {
+      return this.#fetchAdvanced(this.#getParticipationsByStudentURL(studentId))
+      .then((responseJSON) => {
+        let responseParticipation = ParticipationBO.fromJSON(responseJSON);
+        return new Promise(function(resolve) {
+          resolve(responseParticipation);
         })
       })
     }
