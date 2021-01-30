@@ -26,7 +26,11 @@ class AdminUserView extends React.Component {
                 users: PersonNBOs
             })
         );
-    } 
+    }
+
+    componentDidMount() {
+        this.getAllPersons();
+    }
 
     /*Anzeigen*/
     render(){
