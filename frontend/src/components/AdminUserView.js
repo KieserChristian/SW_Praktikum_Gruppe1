@@ -37,27 +37,27 @@ class AdminUserView extends React.Component {
         const {users}=this.state;
         return(
             <div>
-                <Paper>
-                    <Grid>
-                        <Button>
-                            Alle Nutzer
-                        </Button>
-                    </Grid>
-                    <Grid>
-                        <Typography>
-                            Hier sehen Sie alle Nutzer und deren Rollen:
-                        </Typography>
-                        {/*Durchstich*/
-                        users.length > 0 ?
-                            users.map (person =>
-                                /*getName kommt von PersonNBO*/
-                                <div>{person.getName()}</div>
+            <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
+                <Grid container spacing={1} justify='flex-start' alignItems='center'>
+                    <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">
+                        Alle Nutzer
+                    </Button>
+                </Grid>
+                <Grid style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
+                    <Typography>
+                    Hier sehen Sie alle Nutzer und deren Rollen:
+                    </Typography>
+                    {/*Durchstich*/
+                    users.length > 0 ?
+                        users.map (person =>
+                        /*getName kommt von PersonNBO*/
+                    <div>{person.getName()}</div>
                                 )
                             :
                             null
-                        }
-                    </Grid>
-                </Paper>
+                    }
+                </Grid>
+            </Paper>
             </div>
         )
 

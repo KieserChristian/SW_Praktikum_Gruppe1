@@ -295,10 +295,10 @@ class ProjectAdministration():
         with ParticipationMapper() as mapper:
             return mapper.find_all()
     
-    def get_participations_by_student(self, student):
-        """Alle Teilnahmen des Studenten auslesen"""
+    """def get_participations_by_student(self, student):
+        Alle Teilnahmen des Studenten auslesen
         with ParticipationMapper() as mapper:
-            return mapper.get_participations_by_student(student)
+            return mapper.get_participations_by_student(student)"""
 
     def get_project_of_participation(self, participation):
         """Ein Projekt einer Teilnahme auslesen"""
@@ -467,6 +467,11 @@ class ProjectAdministration():
         """Alle Projekte, die genehmigt sind und noch nicht vom Student angemeldet"""
         with ProjectMapper() as mapper:
             return mapper.get_available_projects_for_student(student_id)
+    
+    def get_registered_projects_of_student(self, student):
+        """Alle Teilnahmen des Studenten auslesen"""
+        with ProjectMapper() as mapper:
+            return mapper.get_registered_projects_of_student(student)
     
     def add_person_to_project(self, person, project):
         """Eine Person einem Projekt hinzufügen"""

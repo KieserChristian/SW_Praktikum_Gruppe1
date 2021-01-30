@@ -789,6 +789,20 @@ class ProjectListOperations(Resource):
         else:
             return 'There are no projects for that student', 500
 
+@projectTool.route('/registered_projects_of_student/<int:student_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, student_id):
+        """Auslesen aller Projekt-Objekte/Projekte eines bestimmten Students"""
+        adm = ProjectAdministration()
+        registered_projects_of_student = adm.get_registered_projects_of_student(student_id)
+        
+        if registered_projects_of_student != []:
+            return registered_projects_of_student, 200
+        else:
+            return 'There is no Participation for that Student', 500
+
 
 @projectTool.route('/project-type/<int:project_type_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -1010,19 +1024,19 @@ class ParticipationOperations(Resource):
         adm.delete_participation_by_student(student_id)
         return 'gelöscht', 200
 
-@projectTool.route('/participation_by_student/<int:student_id>')
+"""@projectTool.route('/participation_by_student/<int:student_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ParticipationListOperations(Resource):
     #@secured
     def get(self, student_id):
-        """Auslesen aller Participation-Objekte/Projekte eines bestimmten Students """
+        Auslesen aller Participation-Objekte/Projekte eines bestimmten Students
         adm = ProjectAdministration()
         participation_by_student = adm.get_participations_by_student(student_id)
         
         if participation_by_student != []:
             return participation_by_student, 200
         else:
-            return 'There is no Participation for that Student', 500
+            return 'There is no Participation for that Student', 500"""
 
 @projectTool.route('/project_of_participation/<int:participation_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')

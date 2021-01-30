@@ -140,11 +140,11 @@ class ParticipationMapper (Mapper):
         cursor.close()
     
 
-    def get_participations_by_student(self, student_id):
+    """def get_participations_by_student(self, student_id):
         result = []
         
         cursor = self._cnx.cursor()
-        command = """
+        command = 
         SELECT project.project_id, project.name, project.current_state, project.capacity, project.external_partners, project.short_description, project.weekly_flag, project.bd_before_lecture_period, project.bd_in_lecture_period, project.bd_in_exam_period, project.bd_preferred_in_lecture_period, project.special_room, project.project_type_id, project.module_id
         FROM participation
         INNER JOIN student
@@ -152,7 +152,7 @@ class ParticipationMapper (Mapper):
         INNER JOIN project
         ON participation.project_id=project.project_id
         WHERE participation.student_id={}
-        """.format(student_id)
+        .format(student_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
@@ -166,7 +166,7 @@ class ParticipationMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
-        return result
+        return result"""
 
 
     def get_project_of_participation (self, participation_id):
