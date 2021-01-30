@@ -151,7 +151,7 @@ export default class ProjectAdminAPI {
     getAvailableProjectsOfStudent(studentId) {
       return this.#fetchAdvanced(this.#getAvailableProjectsOfStudentURL(studentId))
       .then((responseJSON) => {
-        let responseProject = ProjectNBO.fromJSON(responseJSON)[0];
+        let responseProject = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
           resolve(responseProject)
         })
