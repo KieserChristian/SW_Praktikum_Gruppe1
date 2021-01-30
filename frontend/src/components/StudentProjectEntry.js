@@ -12,7 +12,7 @@ class StudentProjectEntry extends React.Component {
         super(props);
 
         this.state = {
-            ProjectNBOs: props.project,
+            projectNBO: props.project,
             openDialogInfo: false,
             showDialog: false
         };
@@ -42,7 +42,7 @@ class StudentProjectEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { ProjectNBOs, showDialog, openDialogInfo } = this.state;
+        const { projectNBO, showDialog, openDialogInfo } = this.state;
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>
@@ -51,7 +51,7 @@ class StudentProjectEntry extends React.Component {
                             <ProjectDetailsDialog
                             openInfo={openDialogInfo}
                             onCloseProp={this.closeDialogInfo}
-                            project={ProjectNBOs}
+                            project={projectNBO}
                             />
                             <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
                                 <InfoIcon/>
@@ -60,10 +60,10 @@ class StudentProjectEntry extends React.Component {
                     </Grid>   
                     <Grid style={{marginBottom: 10, marginTop: 10}}> 
                         <Typography className={classes.heading}>
-                            <b>{ ProjectNBOs.getName() }</b> 
+                            <b>{ projectNBO.getName() }</b> 
                         </Typography>
                         <Typography>
-                            Kapazität: { ProjectNBOs.getCapacity()} Plätze
+                            Kapazität: { projectNBO.getCapacity()} Plätze
                         </Typography>
                     </Grid>
                     <Grid>
@@ -71,7 +71,7 @@ class StudentProjectEntry extends React.Component {
                             <StudentProjectCancellation 
                             show={showDialog} 
                             close={this.closeDialog} 
-                            project={ProjectNBOs}
+                            project={projectNBO}
                             />
                             <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.handleClick}>
                                 Abmelden

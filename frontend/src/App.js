@@ -133,7 +133,7 @@ class App extends React.Component {
                   <StudentNavigation/>
                 </Route>
                 <Route path='/student/projektübersicht'>
-                  <StudentView/>
+                  <StudentView currentUserEmail = {currentUser.email}/>
                   <StudentAvailableProjectsView currentUserEmail={currentUser.email} />
                 </Route>
                 <Route path='/student/leistungsübersicht'>

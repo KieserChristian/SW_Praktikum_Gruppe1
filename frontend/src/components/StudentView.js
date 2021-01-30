@@ -16,7 +16,8 @@ class StudentView extends React.Component {
       filteredProjects: [],
       projectFilter: '',
       error: null,
-      loadingInProgress: false
+      loadingInProgress: false,
+      currentUserEmail: props.currentUserEmail
     } 
   }
 
@@ -100,7 +101,7 @@ class StudentView extends React.Component {
             filteredProjects.map(project =>
               <StudentProjectEntry key={project.getId()} project={project}/>)
               :
-              null
+              'Sie haben sich für keine Projekte angemeldet'
           }
         </Grid>
       </Paper>
