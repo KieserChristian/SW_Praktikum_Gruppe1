@@ -15,17 +15,17 @@ class ProjectDetailsDialog extends Component {
     constructor (props) {
         super(props)
         this.state = {
-            ProjectNBOs: props.project,
+            projectNBO: props.project,
             module: null,
             numberSws: null,
-            numberEcts:null,
+            numberEcts: null,
             ProjectType: this.props.propProjectType,
         }
     }
 
 
     getModuleById = () => {
-        ProjectAdminAPI.getAPI().getModuleById(this.state.ProjectNBOs.getModuleId())
+        ProjectAdminAPI.getAPI().getModuleById(this.state.projectNBO.getModuleId())
         .then(moduleNBO => {
             this.setState({
             module: moduleNBO,
@@ -56,10 +56,10 @@ class ProjectDetailsDialog extends Component {
     
     render() {
         const { openInfo } = this.props;
-        const { ProjectNBOs , module, ProjectType} = this.state;
+        const { projectNBO, module, ProjectType} = this.state;
         return (
             <Dialog open={openInfo} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title" style={{color: 'white', backgroundColor: '#4caf50'}}><b>{ProjectNBOs.getName()}</b></DialogTitle>
+            <DialogTitle id="form-dialog-title" style={{color: 'white', backgroundColor: '#4caf50'}}><b>{projectNBO.getName()}</b></DialogTitle>
             <DialogContent>
                 <DialogContentText>
                     {module?
@@ -72,7 +72,7 @@ class ProjectDetailsDialog extends Component {
                     :"Test(Projekttyp)"}
                 </DialogContentText>
                 <DialogContentText>
-                <b>Kapazität: {ProjectNBOs.getCapacity()} Plätze</b> 
+                <b>Kapazität: {projectNBO.getCapacity()} Plätze</b> 
                 </DialogContentText>
                 <DialogContentText>
                 {ProjectType?
@@ -85,7 +85,7 @@ class ProjectDetailsDialog extends Component {
                     :"Test(10SWS)"}
                 </DialogContentText>
                 <DialogContentText>
-                <b>Kurzbeschreibung:</b> {ProjectNBOs.getShortDescription()}
+                <b>Kurzbeschreibung:</b> {projectNBO.getShortDescription()}
                 </DialogContentText>
                 <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.onDialogClose} >close</Button>        
             </DialogContent>

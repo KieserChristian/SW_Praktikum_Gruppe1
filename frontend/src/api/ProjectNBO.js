@@ -15,7 +15,6 @@ export default class ProjectNBO extends NamedBusinessObject {
         this.bd_preferred_in_lecture_period = aBDpreferredInLecture;
         this.special_room = aRoom;
         this.project_type_id = aProjectTypeId;
-
         this.person_id = aPersonId;
         this.module_id = aModuleId;
     }

@@ -20,12 +20,18 @@ class StudentAvailableProjectsView extends React.Component {
       projectFilter: '',
       error: null,
       loadingProgress: false,
+      currentUserEmail: props.currentUserEmail
     } 
   }
 
-  getAllProjects = () => {
-    ProjectAdminAPI.getAPI().getAllProjects()
+  getAvailableProjectsOfStudent = async() => {
+    let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
+    //console.log(student)
+    //console.log(student[0].getId())
+    //console.log(ProjectAdminAPI.getAPI().getAvailableProjectsOfStudent(student[0].getId()))
+    ProjectAdminAPI.getAPI().getAvailableProjectsOfStudent(student[0].getId())
     .then(projectNBOs => {
+      //console.log(projectNBOs)
         this.setState({
         projects: projectNBOs,
         filteredProjects: [...projectNBOs],
@@ -45,8 +51,8 @@ class StudentAvailableProjectsView extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.getAllProjects();
+  componentDidMount = () => {
+    this.getAvailableProjectsOfStudent();
   }
 
   filterProjects = event => {
@@ -104,7 +110,7 @@ class StudentAvailableProjectsView extends React.Component {
                 filteredProjects.map(project =>
                   <StudentAvailableProjectsEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project}/>)
                   :
-                  null
+                  'Es stehen keine Projekte zur Anmeldung zur Verfügung'
               }
           </Grid>
         </Paper>

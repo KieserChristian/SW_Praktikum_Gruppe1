@@ -15,11 +15,10 @@ class StudentProjectRegistration extends Component {
         super(props)
 
         this.state = {
-            ProjectNBOs: props.project,
+            projectNBO: props.project,
             currentUserEmail: props.currentUserEmail,
             loadingInProgress: null,
-            addingError: null,
-            studentNBO: ''
+            addingError: null
         };
         //console.log(props.currentUserEmail)
     }
@@ -32,7 +31,7 @@ class StudentProjectRegistration extends Component {
         let newParticipation = new ParticipationBO();
         let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
         //console.log(student)
-        newParticipation.setProjectId(this.state.ProjectNBOs.getId());
+        newParticipation.setProjectId(this.state.projectNBO.getId());
         //console.log(this.state.ProjectNBOs.getId())
         newParticipation.setStudentId(student[0].getId());
         //console.log(newParticipation);
@@ -58,13 +57,13 @@ class StudentProjectRegistration extends Component {
 
     render() {
         const {openRegistration} = this.props;
-        const {ProjectNBOs} = this.state;
+        const {projectNBO} = this.state;
         return(
             <Dialog open={openRegistration}>
                 <DialogTitle id="alert-dialog-title">Sicherheitswarnung</DialogTitle>
             <DialogContent id="alert-dialog-description">
                 <DialogContentText id="alert-dialog-description">
-                Möchten Sie sich zu dem Projekt <b>"{ProjectNBOs.getName()}"</b> wirklich anmelden?
+                Möchten Sie sich zu dem Projekt <b>"{projectNBO.getName()}"</b> wirklich anmelden?
                 </DialogContentText>    
             </DialogContent>
             <DialogActions>

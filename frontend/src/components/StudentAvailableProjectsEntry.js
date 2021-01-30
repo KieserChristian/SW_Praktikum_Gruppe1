@@ -17,14 +17,14 @@ class StudentAvailableProjectsEntry extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ProjectNBOs: props.project,
+            projectNBO: props.project,
             openDialogInfo: false,
             openDialogRegistration: false,
            
         };
-        console.log(this.state.ProjectNBOs.getId())
-        console.log(this.state.ProjectNBOs)
-        console.log(this.state.ProjectNBOs.getProjectTypeId())
+        //console.log(this.state.projectNBO)
+        //console.log(this.state.projectNBO.getId())
+        //console.log(this.state.projectNBO.getProjectTypeId())
     }    
 
     openDialogInfo = () => {
@@ -48,7 +48,7 @@ class StudentAvailableProjectsEntry extends React.Component {
     }
 
     getProjectTypeById = () => {
-        ProjectAdminAPI.getAPI().getProjectTypeById(this.state.ProjectNBOs.getProjectTypeId())
+        ProjectAdminAPI.getAPI().getProjectTypeById(this.state.projectNBO.getProjectTypeId())
         .then(projectTypeAPI => {
             this.setState({
             projectType: projectTypeAPI,
@@ -66,7 +66,6 @@ class StudentAvailableProjectsEntry extends React.Component {
         loadingInProgress: true,
         error: null
         });
-
     }
 
     componentDidMount() {
@@ -75,7 +74,8 @@ class StudentAvailableProjectsEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { error, ProjectNBOs, projectType, openDialogInfo, openDialogRegistration} = this.state;
+        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration} = this.state;
+        //console.log(projectNBO)
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
@@ -84,7 +84,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                 <ProjectDetailsDialog
                                     openInfo={openDialogInfo}
                                     onCloseProp={this.closeDialogInfo}
-                                    project={ProjectNBOs}
+                                    project={projectNBO}
                                     propProjectType={projectType}
                                 />
                                 <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={this.openDialogInfo}>
@@ -94,7 +94,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
-                                    <b>Projektname: {ProjectNBOs.getName()}</b>
+                                    <b>Projektname: {projectNBO.getName()}</b>
                                 </Typography>
                                 <Typography className={classes.heading}>
                                     {projectType?
@@ -102,7 +102,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                     :"Test(5ECTS)"}
                                 </Typography>
                                 <Typography className={classes.heading}>
-                                    Kapazität: {ProjectNBOs.getCapacity()} Plätze
+                                    Kapazität: {projectNBO.getCapacity()} Plätze
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -110,7 +110,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                 <StudentProjectRegistration
                                     openRegistration={openDialogRegistration}
                                     onCloseProp={this.closeDialogRegistration}
-                                    project={ProjectNBOs}
+                                    project={projectNBO}
                                     currentUserEmail={this.props.currentUserEmail}
                                 />
                                     <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogRegistration}>
