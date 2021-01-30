@@ -33,12 +33,13 @@ class ProjectAdministration():
     """
     Person-Methoden
     """
-    def create_person(self, creation_date, name, google_id, email):
+    def create_person(self, creation_date, name, google_id, email, role_id):
         """Eine Person anlegen"""
         person = Person()
         person.set_name(name)
         person.set_google_id(google_id)
         person.set_email(email)
+        person.set_role_id(role_id)
         person.set_id(1)
 
         with PersonMapper() as mapper:
@@ -83,12 +84,13 @@ class ProjectAdministration():
     Student-Methoden
     """
 
-    def create_student(self, creation_date, name, google_id, email, matriculation_number, course_abbreviation):
+    def create_student(self, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation):
         """Einen Studenten anlegen"""
         student = Student()
         student.set_name(name)
         student.set_google_id(google_id)
         student.set_email(email)
+        student.set_role_id(role_id)
         student.set_matriculation_number(matriculation_number)
         student.set_course_abbreviation(course_abbreviation)
         student.set_id(1)
@@ -277,6 +279,11 @@ class ProjectAdministration():
         """Und die zugehörige Bewertung löschen"""
         with ParticipationMapper() as mapper:
             return mapper.delete(participation)
+
+    def delete_participation_by_student(self, student_id):
+        """Eine Teilnahme anhand der Student_ID löschen"""
+        with ParticipationMapper() as mapper:
+            return mapper.delete_participation_by_student(student_id)
           
     def get_participation_by_id(self, id):
         """Eine Teilnahme anhand ihrer ID auslesen"""

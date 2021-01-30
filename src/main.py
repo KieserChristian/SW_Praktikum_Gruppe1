@@ -105,7 +105,9 @@ person = api.inherit('Person', bo, nbo, {
     'google_id': fields.String(attribute='_google_id',
                                 description='Externe Google-ID der Person'),
     'email': fields.String(attribute='_email',
-                                description='E-Mail-Adresse der Person')
+                                description='E-Mail-Adresse der Person'),
+    'role_id': fields.Integer(attribute='_role_id',
+                                description='Rolle der Person')
 })
 
 student = api.inherit('Student', bo, nbo, person, {
@@ -212,7 +214,7 @@ class PersonListOperations(Resource):
         proposal = Person.from_dict(api.payload)
 
         if proposal is not None:
-            pers = adm.create_person(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email())
+            pers = adm.create_person(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email(), proposal.get_role_id())
             return pers, 200
         else:
             return '', 500
@@ -281,7 +283,7 @@ class StudentListOperations(Resource):
         proposal = Student.from_dict(api.payload)
         print(proposal)
         if proposal is not None:
-            stud = adm.create_student(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email(), proposal.get_matriculation_number(), proposal.get_course_abbreviation())
+            stud = adm.create_student(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email(), proposal.get_role_id(), proposal.get_matriculation_number(), proposal.get_course_abbreviation())
             return stud, 200       
         else:
             return '', 500 
@@ -954,7 +956,6 @@ class ParticipationOperations(Resource):
         else:
             return 'There is no participation object with that id', 500
     
-
 @projectTool.route('/participation')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ParticipationListOperations(Resource):
@@ -997,6 +998,17 @@ class ParticipationListOperations(Resource):
         else:
             return '', 500
 
+@projectTool.route('/participations/<int:student_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('student_id', 'Dies ist die ID von Student')
+class ParticipationOperations(Resource):
+    @projectTool.marshal_list_with(participation)
+    #@secured
+    def delete(self, student_id):
+        """Löschen eines bestimmten Participation-Objektes, welches durch die student_id in dem URI bestimmt wird."""
+        adm = ProjectAdministration()
+        adm.delete_participation_by_student(student_id)
+        return 'gelöscht', 200
 
 @projectTool.route('/participation_by_student/<int:student_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')

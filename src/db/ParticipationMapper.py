@@ -70,12 +70,12 @@ class ParticipationMapper (Mapper):
 
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT participation_id, creation_date, student_id FROM participation WHERE participation_id={}".format(id)
+        command = "SELECT participation_id, creation_date, student_id, project_id FROM participation WHERE participation_id={}".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
         try:
-            (id, creation_date, student_id) = tuples[0]
+            (id, creation_date, student_id, project_id) = tuples[0]
             participation = Participation()
             participation.set_id(id)
             participation.set_creation_date(creation_date)
@@ -124,6 +124,16 @@ class ParticipationMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "DELETE FROM participation WHERE participation_id={}".format(participation.get_id())
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+
+    def delete_participation_by_student(self, student_id):
+
+        cursor = self._cnx.cursor()
+        print(student_id)
+        command = "DELETE FROM participation WHERE student_id={}".format(student_id)
         cursor.execute(command)
 
         self._cnx.commit()

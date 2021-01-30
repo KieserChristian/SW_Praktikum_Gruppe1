@@ -36,7 +36,8 @@ class Student(Person, NamedBusinessObject):
             "creation_date": self.get_creation_date(),
             "name": self.get_name(),
             "google_id": self.get_google_id(),
-            "email": self.get_email(), """
+            "email": self.get_email(), 
+            "role_id": self.get_role_id()"""
             "matriculation_number": self.get_matriculation_number(),
             "course_abbreviation": self.get_course_abbreviation()
         }
@@ -44,7 +45,7 @@ class Student(Person, NamedBusinessObject):
     
     def __str__(self):
         """Erzeugen einer einfachen textuellen Repräsentation der jeweiligen Studenteninstanz"""
-        return "Student: {} {}, Google-ID: {}, E-Mail: {}, Matrikelnummer: {}, Studiengangkürzel: {}".format(self.get_id(), self.get_name(), self.get_google_id(), self.get_email(), self.get_matriculation_number(), self.get_course_abbreviation())
+        return "Student: {} {}, Google-ID: {}, E-Mail: {}, Rolle:{}, Matrikelnummer: {}, Studiengangkürzel: {}".format(self.get_id(), self.get_name(), self.get_google_id(), self.get_email(), self.get_role_id(), self.get_matriculation_number(), self.get_course_abbreviation())
 
     @staticmethod
     def from_dict(dictionary=dict()):
@@ -55,6 +56,7 @@ class Student(Person, NamedBusinessObject):
         student.set_name(dictionary["name"])
         student.set_google_id(dictionary["google_id"])
         student.set_email(dictionary["email"])
+        student.set_role_id(dictionary["role_id"])
         student.set_matriculation_number(dictionary["matriculation_number"])
         student.set_course_abbreviation(dictionary["course_abbreviation"])
         return student
