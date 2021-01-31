@@ -137,7 +137,7 @@ class App extends React.Component {
                   <StudentAvailableProjectsView currentUserEmail={currentUser.email} />
                 </Route>
                 <Route path='/student/leistungsübersicht'>
-                  <StudentGradingView/>
+                  <StudentGradingView currentUserEmail = {currentUser.email}/>
                 </Route>
                 <Route path='/dozent'>
                   <DocentNavigation/>
