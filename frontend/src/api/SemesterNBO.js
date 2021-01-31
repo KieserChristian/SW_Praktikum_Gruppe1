@@ -1,32 +1,24 @@
-/* import NamedBusinessObject from './NamedBusinessObject';
-
-// Repräsentiert ein Semester
+import NamedBusinessObject from './NamedBusinessObject';
 
 export default class SemesterBO extends NamedBusinessObject {
 
-    constructor(aName) {
-        super(aName);
+    constructor() {
+        super();
     }
 
-
-    // Returns an Array of Semester from a given JSON structure
-
-    static fromJSON(semesters) {
+    static fromJSON(semester) {
         let result = [];
 
-        if (Array.isArray(semesters)) {
-            semesters.forEach((sem) => {
-                Object.setPrototypeOf(sem, SemesterBO.prototype)
-                result.push(sem)
+        if (Array.isArray(semester)) {
+            semester.forEach((s) => {
+                Object.setPrototypeOf(s, SemesterBO.prototype);
+                result.push(s);
             })
-
         } else {
-
-            let sem = articles
-            Object.setPrototypeOf(sem, SemesterBO.prototype)
-            result.push(sem)
+            let s = semester;
+            Object.setPrototypeOf(s, SemesterBO.prototype);
+            result.push(s)
         }
-
         return result;
         }
-} */
+}
