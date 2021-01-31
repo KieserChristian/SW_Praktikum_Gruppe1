@@ -48,7 +48,7 @@ export default class ProjectAdminAPI {
     #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
     #getParticipationByIdURL = (participationId) => `${this.#projectServerBaseURL}/participation/{participation}`;
     #getParticipationsOfStudentURL = (participationId) => `${this.#projectServerBaseURL}/participation-of-student/${participationId}`;
-    #getParticipationsByStudentURL = (studentId) => `${this.#projectServerBaseURL}/participation_by_student/${studentId}`
+    #getParticipationsByStudentURL = (studentId) => `${this.#projectServerBaseURL}/participation_by_student/${studentId}`;
     #addParticipationToProjectURL = (projectId) => `${this.#projectServerBaseURL}/project_of_participation/${projectId}`;
     #addParticipationURL = () => `${this.#projectServerBaseURL}/participation`;
 
@@ -63,7 +63,7 @@ export default class ProjectAdminAPI {
     //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
     #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
     #getProjectsByCurrentState = (currentState) => `${this.#projectServerBaseURL}/projects_by_state/${currentState}`;
-
+    #getRegisteredProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/registered_projects_of_student/${studentId}`;
     #getAvailableProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/available_projects_for_student/${studentId}`;
 
     // ProjectType related
@@ -154,7 +154,17 @@ export default class ProjectAdminAPI {
       .then((responseJSON) => {
         let responseProject = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
-          resolve(responseProject)
+          resolve(responseProject);
+        })
+      })
+    }
+
+    getRegisteredProjectsOfStudent(studentId) {
+      return this.#fetchAdvanced(this.#getRegisteredProjectsOfStudentURL(studentId))
+      .then((responseJSON) => {
+        let responseProject = ProjectNBO.fromJSON(responseJSON);
+        return new Promise(function(resolve) {
+          resolve (responseProject);
         })
       })
     }

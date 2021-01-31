@@ -21,8 +21,12 @@ class StudentView extends React.Component {
     } 
   }
 
-  getAllProjects = () => {
-    ProjectAdminAPI.getAPI().getAllProjects().then(projectNBOs => {
+  getRegisteredProjectsOfStudent = async() => {
+    let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
+    //console.log(student)
+    console.log(ProjectAdminAPI.getAPI().getRegisteredProjectsOfStudent(student[0].getId()))
+    ProjectAdminAPI.getAPI().getRegisteredProjectsOfStudent(student[0].getId())
+    .then(projectNBOs => {
       this.setState({
         projects: projectNBOs,
         filteredProjects: [...projectNBOs],
@@ -43,7 +47,7 @@ class StudentView extends React.Component {
   }
 
   componentDidMount() {
-    this.getAllProjects();
+    this.getRegisteredProjectsOfStudent();
   }
 
   filterProjects = event => {
@@ -101,7 +105,7 @@ class StudentView extends React.Component {
             filteredProjects.map(project =>
               <StudentProjectEntry key={project.getId()} project={project}/>)
               :
-              'Sie haben sich für keine Projekte angemeldet'
+              <Typography>Sie haben sich für keine Projekte angemeldet.</Typography>
           }
         </Grid>
       </Paper>

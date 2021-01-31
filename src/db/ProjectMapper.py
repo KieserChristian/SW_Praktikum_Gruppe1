@@ -336,7 +336,7 @@ class ProjectMapper (Mapper):
 
         try:
             for(project_id, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id) in tuples:
-                student_json = {"project_id": project_id, "project_name": name, "current_state": current_state, "capacity": capacity, "external_partners": external_partners, "short_description": short_description, "weekly_flag": weekly_flag, "bd_before_lecture_period": bd_before_lecture_period, "bd_in_lecture_period": bd_in_lecture_period, "bd_in_exam_period": bd_in_exam_period, "bd_preferred_in_lecture_period": bd_preferred_in_lecture_period, "special_room": special_room, "project_type_id": project_type_id, "module_id": module_id}
+                student_json = {"project_id": project_id, "name": name, "current_state": current_state, "capacity": capacity, "external_partners": external_partners, "short_description": short_description, "weekly_flag": weekly_flag, "bd_before_lecture_period": bd_before_lecture_period, "bd_in_lecture_period": bd_in_lecture_period, "bd_in_exam_period": bd_in_exam_period, "bd_preferred_in_lecture_period": bd_preferred_in_lecture_period, "special_room": special_room, "project_type_id": project_type_id, "module_id": module_id}
                 result.append(student_json)
         except IndexError:
             print("There was no object with this id")

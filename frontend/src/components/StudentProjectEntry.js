@@ -16,6 +16,7 @@ class StudentProjectEntry extends React.Component {
             openDialogInfo: false,
             showDialog: false
         };
+        //console.log(this.props.projectNBO)
     }
 
     handleClick = () => {
@@ -60,10 +61,14 @@ class StudentProjectEntry extends React.Component {
                     </Grid>   
                     <Grid style={{marginBottom: 10, marginTop: 10}}> 
                         <Typography className={classes.heading}>
-                            <b>{ projectNBO.getName() }</b> 
+                            <b>{projectNBO.getName()}</b>
+                            {console.log(projectNBO)}
+                            {console.log(projectNBO.getName())}
                         </Typography>
-                        <Typography>
-                            Kapazität: { projectNBO.getCapacity()} Plätze
+                        <Typography className={classes.heading}>
+                            Kapazität: {projectNBO.getCapacity()} Plätze
+                            {console.log(projectNBO)}
+                            {console.log(projectNBO.getCapacity())}
                         </Typography>
                     </Grid>
                     <Grid>
