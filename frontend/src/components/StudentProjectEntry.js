@@ -1,4 +1,5 @@
 import React from 'react';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import { withStyles, Typography, Grid } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
@@ -14,7 +15,8 @@ class StudentProjectEntry extends React.Component {
         this.state = {
             projectNBO: props.project,
             openDialogInfo: false,
-            showDialog: false
+            showDialog: false,
+            projectType: null
         };
         //console.log(this.props.projectNBO)
     }
@@ -41,9 +43,34 @@ class StudentProjectEntry extends React.Component {
             openDialogInfo: false})
     }
 
+    getProjectTypeById = () => {
+        ProjectAdminAPI.getAPI().getProjectTypeById(this.state.projectNBO.getProjectTypeId())
+        .then(projectTypeNBO => {
+            this.setState({
+            projectType: projectTypeNBO,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            projectType: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
+
+    componentDidMount() {
+        this.getProjectTypeById();
+    }
+
     render() {
         const { classes } = this.props;
-        const { projectNBO, showDialog, openDialogInfo } = this.state;
+        const { projectNBO, projectType, showDialog, openDialogInfo } = this.state;
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>
@@ -53,6 +80,7 @@ class StudentProjectEntry extends React.Component {
                             openInfo={openDialogInfo}
                             onCloseProp={this.closeDialogInfo}
                             project={projectNBO}
+                            propProjectType={projectType}
                             />
                             <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
                                 <InfoIcon/>

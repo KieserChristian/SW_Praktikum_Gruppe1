@@ -20,6 +20,7 @@ class StudentAvailableProjectsEntry extends React.Component {
             projectNBO: props.project,
             openDialogInfo: false,
             openDialogRegistration: false,
+            projectType: null
            
         };
         //console.log(this.state.projectNBO)
@@ -49,9 +50,9 @@ class StudentAvailableProjectsEntry extends React.Component {
 
     getProjectTypeById = () => {
         ProjectAdminAPI.getAPI().getProjectTypeById(this.state.projectNBO.getProjectTypeId())
-        .then(projectTypeAPI => {
+        .then(projectTypeNBO => {
             this.setState({
-            projectType: projectTypeAPI,
+            projectType: projectTypeNBO,
             loadingProgress: false,
             error: null
           });

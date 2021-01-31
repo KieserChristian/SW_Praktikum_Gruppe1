@@ -23,8 +23,9 @@ class ProjectDetailsDialog extends Component {
         }
     }
 
-
     getModuleById = () => {
+        //console.log(this.state.projectNBO)
+        //console.log(this.state.projectNBO.getModuleId())
         ProjectAdminAPI.getAPI().getModuleById(this.state.projectNBO.getModuleId())
         .then(moduleNBO => {
             this.setState({
@@ -53,7 +54,6 @@ class ProjectDetailsDialog extends Component {
         this.props.onCloseProp()
     }
 
-    
     render() {
         const { openInfo } = this.props;
         const { projectNBO, module, ProjectType} = this.state;
@@ -62,30 +62,40 @@ class ProjectDetailsDialog extends Component {
             <DialogTitle id="form-dialog-title" style={{color: 'white', backgroundColor: '#4caf50'}}><b>{projectNBO.getName()}</b></DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    {module?
-                        <b>Modul: {module.getName()}</b> 
-                    :"Test(Modulname)"}
+                { module ?
+                    <b>Modul: {module.getName()}</b> 
+                    :
+                    'Modul: keine Angabe'}
                 </DialogContentText>
                 <DialogContentText>
-                    {ProjectType?
-                        <b>Projekttyp: {ProjectType.getName()}</b> 
-                    :"Test(Projekttyp)"}
+                { ProjectType ?
+                    <b>Projekttyp: {ProjectType.getName()}</b> 
+                    :
+                    'Projekttyp: keine Angabe'}
                 </DialogContentText>
                 <DialogContentText>
-                <b>Kapazität: {projectNBO.getCapacity()} Plätze</b> 
+                { projectNBO ?
+                    <b>Kapazität: {projectNBO.getCapacity()} Plätze</b>
+                    :
+                    'Kapazität: keine Angabe'}
                 </DialogContentText>
                 <DialogContentText>
-                {ProjectType?
-                        <b>ECTS: {ProjectType.getNumberEcts()}</b> 
-                    :"Test(5ECTS)"}
+                { ProjectType ?
+                    <b>Anzahl ECTS: {ProjectType.getNumberEcts()}</b> 
+                    :
+                    'Anzahl ECTS: keine Angabe'}
                 </DialogContentText>
                 <DialogContentText>
-                    {ProjectType?
-                        <b>SWS: {ProjectType.getNumberSws()}</b> 
-                    :"Test(10SWS)"}
+                { ProjectType ?
+                    <b>Anzahl SWS: {ProjectType.getNumberSws()}</b> 
+                    :
+                    'Anzahl SWS: keine Angabe'}
                 </DialogContentText>
                 <DialogContentText>
-                <b>Kurzbeschreibung:</b> {projectNBO.getShortDescription()}
+                { projectNBO ?
+                    <b>Kurzbeschreibung: {projectNBO.getShortDescription()}</b>
+                    :
+                    'Kurzbeschreibung: keine Angabe'}
                 </DialogContentText>
                 <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.onDialogClose} >close</Button>        
             </DialogContent>
