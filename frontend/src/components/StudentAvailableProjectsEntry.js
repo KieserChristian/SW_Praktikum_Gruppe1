@@ -79,8 +79,8 @@ class StudentAvailableProjectsEntry extends React.Component {
         //console.log(projectNBO)
         return (
             <div className={classes.root}>
-                        <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
-                            <Grid>
+                        <Grid className={classes.project} container spacing={1} xs={12}>
+                            <Grid xs={3}> 
                             <React.Fragment>
                                 <ProjectDetailsDialog
                                     openInfo={openDialogInfo}
@@ -93,7 +93,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                 </IconButton>
                             </React.Fragment>
                             </Grid>
-                            <Grid item style={{marginBottom: 10, marginTop: 10}}>
+                            <Grid item style={{marginBottom: 10, marginTop: 10}} xs={6}>
                                 <Typography className={classes.heading} >
                                     <b>Projektname: {projectNBO.getName()}</b>
                                 </Typography>
@@ -106,7 +106,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                     Kapazität: {projectNBO.getCapacity()} Plätze
                                 </Typography>
                             </Grid>
-                            <Grid item>
+                            <Grid item xs={3}>
                             <React.Fragment>
                                 <StudentProjectRegistration
                                     openRegistration={openDialogRegistration}
