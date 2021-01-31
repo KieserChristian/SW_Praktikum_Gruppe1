@@ -3,10 +3,14 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
 import { makeStyles, createStyles, createMuiTheme, Theme } from '@material-ui/core/styles';
-import { withStyles, Button, List, ListItem, ListItemSecondaryAction, Typography, Input, Grid } from '@material-ui/core';
+import { withStyles, Button, List, ListItem, ListItemSecondaryAction, Typography, Input, Grid, InputAdornment } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import ProjectAdminAPI from '../api/ProjectAdminAPI'
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
+import AdminUserEntry from './AdminUserEntry';
 
 /*Klassendefinition*/
 class AdminUserView extends React.Component {
@@ -49,10 +53,10 @@ class AdminUserView extends React.Component {
                     </Typography>
                     {/*Durchstich*/
                     users.length > 0 ?
-                        users.map (person =>
+                        users.map(person =>
                         /*getName kommt von PersonNBO*/
-                    <div>{person.getName()}</div>
-                                )
+                    /*<div>{person.getName()}</div>*/
+                    <AdminUserEntry key={person.getGoogleId()} person={person}/>)
                             :
                             null
                     }

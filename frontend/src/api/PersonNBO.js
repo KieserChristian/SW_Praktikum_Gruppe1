@@ -4,9 +4,10 @@ import NamedBusinessObject from "./NamedBusinessObject"
 
 export default class PersonNBO extends NamedBusinessObject {
 
-    constructor(aGoogleId) {
+    constructor(aGoogleId, Name) {
         super();
         this.google_id = aGoogleId;
+        this.name = Name
     }
 
     setGoogleId (aGoogleId) {
@@ -15,6 +16,14 @@ export default class PersonNBO extends NamedBusinessObject {
 
     getGoogleId () {
         return this.google_id;
+    }
+
+    setName(Name) {
+        this.name = Name;
+    }
+
+    getName(Name) {
+        return this.name;
     }
 
     /** Gibt ein Array der PersonNBOs von den gegebenen JSON Strukturen zurück
