@@ -94,6 +94,11 @@ class StudentProjectEntry extends React.Component {
                             {console.log(projectNBO.getName())}
                         </Typography>
                         <Typography className={classes.heading}>
+                                    {projectType?
+                                        <b>ECTS: {projectType.getNumberEcts()}</b> 
+                                    :"Test(5ECTS)"}
+                        </Typography>
+                        <Typography className={classes.heading}>
                             Kapazität: {projectNBO.getCapacity()} Plätze
                             {console.log(projectNBO)}
                             {console.log(projectNBO.getCapacity())}
