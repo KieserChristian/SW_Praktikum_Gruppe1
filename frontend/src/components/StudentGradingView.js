@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import StudentGradingEntry from './StudentGradingEntry';
 
 class StudentGradingView extends React.Component {
 
@@ -17,93 +18,42 @@ class StudentGradingView extends React.Component {
         super(props);
         this.state = {
             projects: [],
-            gradings: [],
             error: null,
-            module: null,
+            currentUserEmail: props.currentUserEmail
         } 
-    }
-
-/*     getAllGradings = () => {
-        ProjectAdminAPI.getAPI().getAllGradings().then(gradingBOs => {
-            this.setState({
-                gradings: gradingBOs,
-            })
-        })
-    } */
-
-/*     getModuleById = () => {
-        ProjectAdminAPI.getAPI().getModuleById()
-        .then(moduleNBO => {
-            this.setState({
-            module: moduleNBO,
-            loadingProgress: false,
-            error: null
-          });
-        }).catch(e => {
-          this.setState({
-            module: null,
-            loadingInProgress: false,
-            error: e
-          })
-        });
-        this.setState({
-        loadingInProgress: true,
-        error: null
-        });
-    }
-
-    getAllProjects = () => {
-        ProjectAdminAPI.getAPI().getAllProjects().then(projectNBOs => {
-          this.setState({
-            projects: projectNBOs,
-            filteredProjects: [...projectNBOs],
-            loadingInProgress: false,
-            error: null
-          });
-        }).catch(e => {
-          this.setState({
-            projects: [],
-            loadingInProgress: false,
-            error: e
-          })
-        });
-        this.setState({
-        loadingInProgress: true,
-        error: null
-        });
-    }
-
-    getProjectTypeById = () => {
-        ProjectAdminAPI.getAPI().getProjectTypeById()
-        .then(projectTypeAPI => {
-            this.setState({
-            projectType: projectTypeAPI,
-            loadingProgress: false,
-            error: null
-          });
-        }).catch(e => {
-          this.setState({
-            projectType: null,
-            loadingInProgress: false,
-            error: e
-          })
-        });
-        this.setState({
-        loadingInProgress: true,
-        error: null
-        });
-    } */
+    }   
     
-   
+    getRegisteredProjectsOfStudent = async() => {
+      let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
+      //console.log(student)
+      console.log(ProjectAdminAPI.getAPI().getRegisteredProjectsOfStudent(student[0].getId()))
+      ProjectAdminAPI.getAPI().getRegisteredProjectsOfStudent(student[0].getId())
+      .then(projectNBOs => {
+        this.setState({
+          projects: projectNBOs,
+          filteredProjects: [...projectNBOs],
+          loadingInProgress: false,
+          error: null
+        });
+      }).catch(e => {
+        this.setState({
+          projects: [],
+          loadingInProgress: false,
+          error: e
+        })
+      });
+      this.setState({
+      loadingInProgress: true,
+      error: null
+      });
+    }   
     componentDidMount() {
-        //this.getAllGradings();
-/*         this.getAllProjects();
-        this.getProjectTypeById(); */
+      this.getRegisteredProjectsOfStudent();
     }
 
     render() {
-        const { classes } = this.props;
-        const { gradings, module, projects, projectType } = this.state;
+        const {classes} = this.props;
+        const {projects} = this.state;
 
         return(
         <div className={classes.root}>
@@ -131,18 +81,12 @@ class StudentGradingView extends React.Component {
                                     <TableBody style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
                                         {projects.length > 0 ? 
                                                 projects.map(project =>
-                                                    <TableRow>
-                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">{project.getName()} </TableCell>
-                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Test</TableCell>
-                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="center">Test</TableCell>
-                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
-                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
-                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">Test</TableCell>
-                                                        <TableCell style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align='center'>Test</TableCell>
-                                                    </TableRow>)
-                                                    :
+                                                  <StudentGradingEntry
+                                                  propproject={project}
+                                                  />                               
+                                                 ) :
                                                     null
-                                        }
+                                        }             
                                     </TableBody>
                                 </Table>
                             </Box>
