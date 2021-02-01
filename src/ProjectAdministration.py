@@ -305,10 +305,10 @@ class ProjectAdministration():
         with ParticipationMapper() as mapper:
             return mapper.get_project_of_participation(participation)
 
-    def get_participations_by_project_id(self, project):
+    def get_participations_by_project(self, project_id):
         """Die Teilnehmerliste eines bestimmten Projekts ausgeben"""
         with ParticipationMapper() as mapper:
-            return mapper.find_by_id(project.get_id())
+            return mapper.get_participations_by_project(project_id)
 
     def add_student_to_participation(self, student, participation):
         """Ein Student einer Teilnahme hinzufügen"""
@@ -380,7 +380,7 @@ class ProjectAdministration():
     Project-Methoden
     """
 
-    def create_project(self, name:str, id, external_partners:str, capacity:int, weekly_flag:bool, bd_preferred_in_lecture_period:int, bd_in_lecture_period:int, bd_in_exam_period:int, bd_before_lecture_period:int, short_description:str, special_room:str, project_type_id:int, module_id:int, person_id:int):
+    def create_project(self, name:str, id, external_partners:str, capacity:int, weekly_flag:bool, bd_preferred_in_lecture_period:int, bd_in_lecture_period:int, bd_in_exam_period:int, bd_before_lecture_period:int, short_description:str, special_room:str, project_type_id:int, module_id:int, person_id:int, semester_id:int):
         """Ein Projekt anlegen"""
 
         project = Project()
@@ -398,6 +398,7 @@ class ProjectAdministration():
         project.set_project_type_id(project_type_id)
         project.set_module_id(module_id)
         project.set_person_id(person_id)
+        project.set_semester_id(semester_id)
 
         with ProjectMapper() as mapper:
             return mapper.insert(project)

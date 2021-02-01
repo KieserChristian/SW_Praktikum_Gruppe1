@@ -89,7 +89,9 @@ project = api.inherit('Project', bo, nbo, automat, {
     'module_id': fields.Integer(attribute='_module_id',
                                 description='Modul des Projekts'),
     'person_id': fields.Integer(attribute='_person_id',
-                                description='Person des Projekts')
+                                description='Person des Projekts'),
+    'semester_id': fields.Integer(attribute='_semester_id',
+                                description='Semester des Projekts')
 })
 
 project_type = api.inherit('ProjectType', bo, nbo, {
@@ -671,25 +673,6 @@ class ProjectOperations(Resource):
             return proj, 200
         else:
             return 'There was an error with that project object', 500
-    
-
-@projectTool.route('/project/participation')
-@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('project_id', 'Dies ist die ID von Project')
-class ProjectRelatedParticipationOperations(Resource):
-    @projectTool.marshal_with(participation)
-    #@secured
-    def get(self, project_id):
-        """Auslesen aller Participation-Objekte bezüglich eines bestimmten Project-Objekts"""
-        adm = ProjectAdministration()
-        """Zunächst wird die ID des Project benötigt"""
-        proj = adm.get_project_by_id(project_id)
-
-        if proj is not None:
-            participation_list = adm.get_participations_by_project_id(project.get_id())
-            return participation_list
-        else:
-            return 'Project not found', 500
 
 @projectTool.route('/projects')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -712,7 +695,7 @@ class ProjectListOperations(Resource):
         proj = Project.from_dict(api.payload)
 
         if proj is not None:
-            proj = adm.create_project(proj.get_name(), proj.get_id(), proj.get_external_partners(), proj.get_capacity(), proj.get_weekly_flag(), proj.get_bd_preferred_in_lecture_period(), proj.get_bd_in_lecture_period(), proj.get_bd_in_exam_period(), proj.get_bd_before_lecture_period(), proj.get_short_description(), proj.get_special_room(), proj.get_project_type_id(), proj.get_module_id(), proj.get_person_id())
+            proj = adm.create_project(proj.get_name(), proj.get_id(), proj.get_external_partners(), proj.get_capacity(), proj.get_weekly_flag(), proj.get_bd_preferred_in_lecture_period(), proj.get_bd_in_lecture_period(), proj.get_bd_in_exam_period(), proj.get_bd_before_lecture_period(), proj.get_short_description(), proj.get_special_room(), proj.get_project_type_id(), proj.get_module_id(), proj.get_person_id(), proj.get_semester_id())
             return proj, 200
         else:
             return '', 500
@@ -1065,6 +1048,21 @@ class ParticipationListOperations(Resource):
             return project_of_participation, 200
         else:
             return 'There is no Project for that Participation', 500
+
+@projectTool.route('/participations_by_project/<int:project_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('project_id', 'Dies ist die ID von Project')
+class ParticipationRelatedProjectOperations(Resource):
+    #@secured
+    def get(self, project_id):
+        """Auslesen aller Participation-Objekte bezüglich eines bestimmten Project-Objekts"""
+        adm = ProjectAdministration()
+        participations_by_project = adm.get_participations_by_project(project_id)
+
+        if participations_by_project != []:
+            return participations_by_project, 200
+        else:
+            return 'There is no Participation for that Project', 500
 
 if __name__ == '__main__':
     app.run(debug=True)
