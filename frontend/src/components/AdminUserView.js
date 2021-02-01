@@ -19,7 +19,9 @@ class AdminUserView extends React.Component {
       super(props);
       this.state = {
           /*leere Liste für die anzuzeigenden Objekte erstellen*/
-        users: []
+        persons: [],
+        filteredPersons: [],
+        personFilter: '',
       } 
     }
 
@@ -27,7 +29,8 @@ class AdminUserView extends React.Component {
     getAllPersons = () => {
         ProjectAdminAPI.getAPI().getAllPersons().then(PersonNBOs =>
             this.setState({
-                users: PersonNBOs
+                persons: PersonNBOs,
+                filteredPersons: [...PersonNBOs]
             })
         );
     }
@@ -36,9 +39,27 @@ class AdminUserView extends React.Component {
         this.getAllPersons();
     }
 
+    filterPersons = event => {
+        const searchterm = event.target.value.toLowerCase();
+        this.setState({
+          filteredPersons: this.state.persons.filter(persons => {
+            let personNameContainsValue = persons.getName().toLowerCase().includes(searchterm);
+            return personNameContainsValue
+          }),
+          personFilter: searchterm
+        })
+    }
+    
+    clearPersonFilter = () => {
+        this.setState({
+          filteredPersons: [...this.state.persons],
+          personFilter: ''
+        })
+    }
+
     /*Anzeigen*/
     render(){
-        const {users}=this.state;
+        const { persons, personFilter, filteredPersons } = this.state;
         return(
             <div>
             <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
@@ -48,12 +69,26 @@ class AdminUserView extends React.Component {
                     </Button>
                 </Grid>
                 <Grid style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
+                    <TextField 
+                        autoFocus type='text' 
+                        value={personFilter} 
+                        onChange={this.filterPersons}
+                        InputProps={{
+                            endAdornment: <InputAdornment position='end'>
+                                <IconButton onClick={this.clearPersonFilter}>
+                                    <HighlightOffIcon/>
+                                </IconButton>
+                            </InputAdornment>
+                        }}
+                    />
+                </Grid>
+                <Grid>
                     <Typography>
                     Hier sehen Sie alle Nutzer und deren Rollen:
                     </Typography>
                     {/*Durchstich*/
-                    users.length > 0 ?
-                        users.map(person =>
+                    persons.length > 0 ?
+                        filteredPersons.map(person =>
                         /*getName kommt von PersonNBO*/
                     /*<div>{person.getName()}</div>*/
                     <AdminUserEntry key={person.getGoogleId()} person={person}/>)
