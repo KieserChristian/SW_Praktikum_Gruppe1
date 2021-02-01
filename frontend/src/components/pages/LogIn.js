@@ -1,7 +1,5 @@
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
-// import { Link as RouterLink } from 'react-router-dom'
-import React, { Component } from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 
@@ -31,7 +29,7 @@ class LogIn extends React.Component {
                     <Button
                         size= "large"
                         variant="contained"
-                        color="secondary">
+                        color="primary">
                         Dozent
                     </Button>
                 </Link>
@@ -39,7 +37,7 @@ class LogIn extends React.Component {
                     <Button
                         size= "large"
                         variant="contained"
-                        color="default">
+                        color="primary">
                         Admin
                     </Button>
                 </Link>

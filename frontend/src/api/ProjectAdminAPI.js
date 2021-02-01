@@ -47,10 +47,12 @@ export default class ProjectAdminAPI {
     // Participation related
     #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
     #getParticipationByIdURL = (participationId) => `${this.#projectServerBaseURL}/participation/{participation}`;
+    //#getParticipationsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/participations-by-project/${projectId}`
     #getParticipationsOfStudentURL = (participationId) => `${this.#projectServerBaseURL}/participation-of-student/${participationId}`;
     #getParticipationsByStudentURL = (studentId) => `${this.#projectServerBaseURL}/participation_by_student/${studentId}`;
     #addParticipationToProjectURL = (projectId) => `${this.#projectServerBaseURL}/project_of_participation/${projectId}`;
     #addParticipationURL = () => `${this.#projectServerBaseURL}/participation`;
+    #deleteParticipationURL = (participationId) => `${this.#projectServerBaseURL}/participation/${participationId}`
 
     // Person related
     #getAllPersonsURL = () => `${this.#projectServerBaseURL}/persons`;
@@ -276,6 +278,27 @@ export default class ProjectAdminAPI {
         let ParticipationBOs = ParticipationBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(ParticipationBOs);
+        })
+      })
+    }
+
+    /* getParticipationsByProject(projectId) {
+      return this.#fetchAdvanced(this.#getParticipationsByProjectURL(projectId))
+      .then((responseJSON) => {
+        let responseParticipation = ParticipationBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(responseParticipation);
+        })
+      })
+    } */
+
+    deleteParticipation(participationId) {
+      return this.#fetchAdvanced(this.#deleteParticipationURL(participationId), {
+        method: 'DELETE'
+      }).then((responseJSON) => {
+        let responseParticipation = ParticipationBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(responseParticipation);
         })
       })
     }
