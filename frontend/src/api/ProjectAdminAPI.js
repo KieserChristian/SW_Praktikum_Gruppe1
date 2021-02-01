@@ -30,6 +30,7 @@ export default class ProjectAdminAPI {
     #updateGradingURL = (gradingBO) => `${this.#projectServerBaseURL}/gradings`;
     #addGradingToParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
     #removeGradingFromParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
+    #getGradingByParticipationURL = (participationId) => `${this.#projectServerBaseURL}/grading_by_participation/${participationId}`
 
     #getModuleByProjectURL = (projectId) => `${this.#projectServerBaseURL}/module-by-project/${projectId}`;
 
@@ -47,7 +48,7 @@ export default class ProjectAdminAPI {
     // Participation related
     #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
     #getParticipationByIdURL = (participationId) => `${this.#projectServerBaseURL}/participation/{participation}`;
-    //#getParticipationsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/participations-by-project/${projectId}`
+    #getParticipationsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/participations_by_project/${projectId}`
     #getParticipationsOfStudentURL = (participationId) => `${this.#projectServerBaseURL}/participation-of-student/${participationId}`;
     #getParticipationsByStudentURL = (studentId) => `${this.#projectServerBaseURL}/participation_by_student/${studentId}`;
     #addParticipationToProjectURL = (projectId) => `${this.#projectServerBaseURL}/project_of_participation/${projectId}`;
@@ -73,6 +74,7 @@ export default class ProjectAdminAPI {
     #getProjectTypeOfProjectURL = (projectId) => `${this.#projectServerBaseURL}/project-type-of-project/${projectId}`;
 
     // Semester related
+    #getSemesterByIdURL = (semesterId) => `${this.#projectServerBaseURL}/semester/${semesterId}`;
 
     // Student related
     #getStudentByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/student-by-google-id/${googleId}`;
@@ -282,7 +284,7 @@ export default class ProjectAdminAPI {
       })
     }
 
-    /* getParticipationsByProject(projectId) {
+    getParticipationsByProject(projectId) {
       return this.#fetchAdvanced(this.#getParticipationsByProjectURL(projectId))
       .then((responseJSON) => {
         let responseParticipation = ParticipationBO.fromJSON(responseJSON);
@@ -290,7 +292,7 @@ export default class ProjectAdminAPI {
           resolve(responseParticipation);
         })
       })
-    } */
+    }
 
     deleteParticipation(participationId) {
       return this.#fetchAdvanced(this.#deleteParticipationURL(participationId), {
@@ -320,6 +322,30 @@ export default class ProjectAdminAPI {
         let StudentNBOs = StudentNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(StudentNBOs);
+        })
+      })
+    }
+
+    //Semester
+
+    getSemesterById(semesterId) {
+      return this.#fetchAdvanced(this.#getSemesterByIdURL())
+      .then((responseJSON) => {
+        let SemesterNBOs = SemesterNBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(SemesterNBOs);
+        })
+      })
+    }
+
+    //Grading
+
+    getGradingByParticipation(participationId) {
+      return this.#fetchAdvanced(this.#getGradingByParticipationURL(participationId))
+      .then((responseJSON) => {
+        let responseGrading = GradingBO.fromJSON(responseJSON);
+        return new Promise(function (resolve) {
+          resolve(responseGrading);
         })
       })
     }
