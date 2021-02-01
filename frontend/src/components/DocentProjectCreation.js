@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import { withStyles, Grid, Button, Paper, Typography, FormRow} from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,44 +8,22 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+
 import Checkbox from '@material-ui/core/Checkbox';
+/* import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder' */
 import TextField from '@material-ui/core/TextField';
+
 
 
 class DocentProjectCreation extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            Projektname:"",
-            Sprache: "",
-            BetreuendeProf:"(Google_ID?)",
-
-        }
-    }
-
-    handleProjekttitelChange = (event) => {
-        this.setState
-            ({ Projekttitel: event.target.value })
-
-    }
-    handleInhaltChange = (event) => {
-        this.setState({Inhalt: event.target.value})
-    }
-    handleSpracheChange = (event) => {
-        this.setState({Sprache: event.target.value})
-    }
-    handleProjektartChange= (event) => {
-        this.setState({Projektart: event.target.value})
-    }
-    handleBetrProfChange = (event) => {
-        this.setState({betrProf: event.target.value})
-    }
-    handleExtKoopChange = (event) => {
-        this.setState({extKoop: event.target.value})
-    }
-    handleSubmit = (event) => {
-        alert(`${this.state.name} ${this.state.Inhalt} ${this.state.Sprache} ${this.state.Projekttitel}`)
     }
 
     render() {
@@ -57,45 +34,14 @@ class DocentProjectCreation extends React.Component {
                 Projekte Fakultät 3</h1>
                 </Grid>
                 <Grid>
-                    
-{/*                 <Grid container spacing={2}>
-                    <Grid item xs={6} elevation={0}>
-                    <Paper style={{backgroundColor: '#eeeeee'}}>
-                        <p><b>Art des Projekts</b></p>
-                        <p><Checkbox/>Fachspezifisches Projekt (3 SWS/5 ECTS)</p>
-                        <p><Checkbox/>Zugleich Wahlfach nach alter SPO / <br/>
-                           Zugleich im MINOR - Programm                     
-                        </p>
-                        <p>Interdisziplinäres Projekt (5 SWS/10 ECTS)</p>
-                        <p>Transdisziplinäres Projekt
-                           (10 SWS/20 ECTS; Laufzeit: 2 Semester)
-                        </p>
-                    </Paper>
-                    </Grid>
-                    <Grid item xs={6}>
-                    <Paper style={{backgroundColor: '#eeeeee'}}>
-                        <p><b>Kategorie des Projekts</b></p>
-                        <p>-</p>
-                        <p>Nummer:<br/></p>
-                        <p>Titel:<br/><br/></p>
-                        <p>-<br/></p>
-                        <p>-<br/></p>                      
-                    </Paper>
-                    </Grid>
-                    <Grid item xs={12} elevation={0}>
-                    <Paper style={{backgroundColor: '#eeeeee'}}>
-                        Sprache: deutsch / englisch
-                    </Paper>
-                    </Grid>
-                </Grid> */}
-                <form onSubmit={this.handleSubmitPost.bind(this)}>              
+
                 <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: colors.grey[100]}} colSpan={10}>
                             <Box margin={1}>
-                                <Table size="small" aria-label="expand row">
+                            <Table size="small" aria-label="expand row">
                                     <TableHead>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                                            <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Projekttypen</b></TableCell>
+                                            <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Art des Projekts</b></TableCell>
                                             <TableCell><b>Kategorie des Projekts</b></TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -108,22 +54,14 @@ class DocentProjectCreation extends React.Component {
                                             </TableCell>
                                             <TableCell>
                                             <p>-</p>
-                                            <p>Id:<br/><input type="number" value = {this.state.Projekttitel} onChange={this.handleProjekttitelChange}/></p> 
-                                            <p>Name:<br/><br/></p><input type="text" value = {this.state.Projekttitel} onChange={this.handleProjekttitelChange}/> 
+                                            <p>Nummer:<br/></p>
+                                            <p>Titel:<br/><br/></p>
                                             </TableCell>
                                         </TableRow>
 
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                                 <Checkbox/>Fachspezifisches Projekt (3 SWS/5 ECTS)
-                                            </TableCell>
-                                            <TableCell>
-                                            -
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                                            <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <Checkbox/>Interdisziplinäres Projekt (5 SWS/ 10ECTS)
                                             </TableCell>
                                             <TableCell>
                                             -
@@ -140,20 +78,20 @@ class DocentProjectCreation extends React.Component {
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                                 Sprache: <Checkbox/> deutsch <Checkbox/>englisch
-                                                <select value={this.state.sprache} onChange={this.handleSpracheChange}>
-                                                    <option
-                                                        value ="Deutsch"> Deutsch
-                                                    </option>
-                                                    <option
-                                                        value = "Englisch">Englisch
-                                                    </option>
-                                                </select>
                                             </TableCell>
                                         </TableRow>
 
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                                 <b>Projekttitel:</b>
+                                                <form noValidate autoComplete="off">
+                                                    <TextField
+                                                        id="filled-secondary"
+                                                        label=""
+                                                        variant="filled"
+                                                        color="secondary"
+                                                    />
+                                                </form>
                                             </TableCell>
                                             <TableCell>
                                             </TableCell>
@@ -161,9 +99,15 @@ class DocentProjectCreation extends React.Component {
 
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <b>Betreuende(r) ProfessorInnen (GoogleId):
-                                                    <input type="text" value="" > </input>
-                                                </b>
+                                                <b>Betreuende(r) ProfessorInnen:</b>
+                                                <form noValidate autoComplete="off">
+                                                    <TextField
+                                                        id="filled-secondary"
+                                                        label=""
+                                                        variant="filled"
+                                                        color="secondary"
+                                                    />
+                                                </form>
                                             </TableCell>
                                             <TableCell>
                                             </TableCell>
@@ -171,23 +115,40 @@ class DocentProjectCreation extends React.Component {
 
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <b>Externer Kooperationspartner:
-                                                    <input type = "text" ></input></b> 
+                                                <b>Externer Kooperationspartner:</b>
+                                                <form noValidate autoComplete="off">
+                                                    <TextField
+                                                        id="filled-secondary"
+                                                        label=""
+                                                        variant="filled"
+                                                        color="secondary"
+                                                    />
+                                                </form>
                                             </TableCell>
                                             <TableCell>
                                             </TableCell>
                                         </TableRow>
+
 
                                     </TableBody>
                                 </Table>
                             </Box>
-
                             <Box margin={1}>
                             <Table size="small" aria-label="expand row">
                             <TableHead>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                                            <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Inhalt (Kurzbeschreibung):
-                                                <input type="textarea" value="Kurzbeschreibung"> </input> "</b></TableCell>
+                                            <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Inhalt (Kurzbeschreibung):</b>
+                                            <form noValidate autoComplete="off">
+                                                    <TextField
+                                                        id="outlined-multiline-static"
+                                                        label=""
+                                                        multiline
+                                                        rows={6}
+                                                        defaultValue=""
+                                                        variant="outlined"
+                                                    />
+                                                </form>
+                                            </TableCell>
                                         </TableRow>
                                     </TableHead>
                             </Table>
@@ -212,7 +173,7 @@ class DocentProjectCreation extends React.Component {
                                         <Checkbox/>Nein
                                     </TableCell>
                                 </TableRow>
-
+                                
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         <Checkbox/>Blocktage vor Beginn der Vorlesungszeit
@@ -246,22 +207,19 @@ class DocentProjectCreation extends React.Component {
                                         <Checkbox/>Besonderer Raum notwendig
                                     </TableCell>
                                 </TableRow>
-
                             </TableBody>
                             </Table>
                             </Box>
 
                     </TableCell>    
                 </TableRow>
-                </form> 
+
                 </Grid>
-                <form handleClick={this.OnSubmit}>
                 <Grid>
                     <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}}>
                         Absenden
                     </Button>
                 </Grid>
-                </form> 
             </Paper>
             </div>
 
