@@ -803,6 +803,20 @@ class ProjectListOperations(Resource):
         else:
             return 'There is no Participation for that Student', 500
 
+@projectTool.route('/graded_projects_of_student/<int:student_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, student_id):
+        """Auslesen aller Projekt-Objekte/Projekte eines bestimmten Students"""
+        adm = ProjectAdministration()
+        graded_projects_of_student = adm.get_graded_projects_of_student(student_id)
+        
+        if graded_projects_of_student != []:
+            return graded_projects_of_student, 200
+        else:
+            return 'There is no graded Project for that Student', 500
+
 
 @projectTool.route('/project-type/<int:project_type_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')

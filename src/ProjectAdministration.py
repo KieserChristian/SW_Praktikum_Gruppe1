@@ -472,6 +472,11 @@ class ProjectAdministration():
         """Alle Teilnahmen des Studenten auslesen"""
         with ProjectMapper() as mapper:
             return mapper.get_registered_projects_of_student(student)
+
+    def get_graded_projects_of_student(self, student_id):
+        "Alle benoteten Projekte ienes bestimmten Studenten ausgeben"
+        with ProjectMapper() as mapper:
+            return mapper.get_graded_projects_of_student(student_id)
     
     def add_person_to_project(self, person, project):
         """Eine Person einem Projekt hinzufügen"""
