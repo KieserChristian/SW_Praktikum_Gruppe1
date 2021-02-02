@@ -341,9 +341,9 @@ export default class ProjectAdminAPI {
     //Semester
 
     getSemesterById(semesterId) {
-      return this.#fetchAdvanced(this.#getSemesterByIdURL())
+      return this.#fetchAdvanced(this.#getSemesterByIdURL(semesterId))
       .then((responseJSON) => {
-        let SemesterNBOs = SemesterNBO.fromJSON(responseJSON);
+        let SemesterNBOs = SemesterNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
           resolve(SemesterNBOs);
         })

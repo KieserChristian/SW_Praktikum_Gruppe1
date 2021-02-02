@@ -1,6 +1,6 @@
 import NamedBusinessObject from './NamedBusinessObject';
 
-export default class SemesterBO extends NamedBusinessObject {
+export default class SemesterNBO extends NamedBusinessObject {
 
     constructor() {
         super();
@@ -11,12 +11,12 @@ export default class SemesterBO extends NamedBusinessObject {
 
         if (Array.isArray(semester)) {
             semester.forEach((s) => {
-                Object.setPrototypeOf(s, SemesterBO.prototype);
+                Object.setPrototypeOf(s, SemesterNBO.prototype);
                 result.push(s);
             })
         } else {
             let s = semester;
-            Object.setPrototypeOf(s, SemesterBO.prototype);
+            Object.setPrototypeOf(s, SemesterNBO.prototype);
             result.push(s)
         }
         return result;

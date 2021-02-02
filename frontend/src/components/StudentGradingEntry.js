@@ -14,6 +14,7 @@ class StudentGradingEntry extends React.Component {
       project: props.project,
       module: null,
       projectType: null,
+      semester: null,
       grading: null,
       loadingInProgress: false,
       error: null
@@ -63,6 +64,7 @@ class StudentGradingEntry extends React.Component {
   }
 
   getSemesterById = () => {
+    console.log(this.state.project.getSemesterId())
     ProjectAdminAPI.getAPI().getSemesterById(this.state.project.getSemesterId())
     .then(semesterNBO => {
       this.setState ({
