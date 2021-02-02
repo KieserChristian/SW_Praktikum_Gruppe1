@@ -3,6 +3,7 @@ import React from 'react';
 import ProjectAdminAPI from '../api/ProjectAdminAPI'
 import ProjectNBO from '../api/ProjectNBO';
 import InfoIcon from '@material-ui/icons/Info';
+import AdminViewEntry from './AdminViewEntry'
 
 class AdminView extends React.Component {
 
@@ -53,9 +54,8 @@ class AdminView extends React.Component {
             {
             projects.length > 0 ?
               projects.map (project => 
-                
-                <div>{project.getName()}</div>
-                )
+                <AdminViewEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project}/>)
+
               :
               "Test"
             }
