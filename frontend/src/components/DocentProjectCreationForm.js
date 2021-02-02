@@ -2,6 +2,7 @@ import React from 'react';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import { withRouter } from 'react-router-dom';
 import { withStyles, Grid, Button, Paper, Typography, FormRow} from '@material-ui/core';
+import ProjectNBO from '../api/ProjectNBO';
 
 
 class DocentProjectCreation extends React.Component {
@@ -11,9 +12,10 @@ class DocentProjectCreation extends React.Component {
         this.state = {
                 Projektname:"",
                 ProjektId:"",
+                creation_date: new Date,
                 external_partners:"",
                 capacity:"",
-                weekly_flag: "true,false",
+                weekly_flag: "",
                 bd_preferred_in_lecture_period:"",
                 bd_in_lecture_period:"",
                 bd_in_exam_period:"",
@@ -30,12 +32,9 @@ class DocentProjectCreation extends React.Component {
 
     }
     handleInputChange = (event) =>  {
-        let name = event.target.name;
-        let value = event.target.value;
-      
-        this.setState({
-            [name]: value
-        });
+ 
+      this.state.Projektname = event.target.value
+   
 
     }
     handleProjektNameChange = (event) => {
@@ -92,21 +91,31 @@ class DocentProjectCreation extends React.Component {
         this.setState({current_state: event.target.value})
     }
 
-    /*handleSubmit = (event) => {
-        alert(` ${this.state.name.value}`,` ${this.state.weekly_flag}` );
+    handleSubmit = (event) => {
+       this.state.name = event.target.value
+    } 
 
-        fetchAdvanced("http://127.0.0.1:5000/project/projects", {
-            method: "POST",
-
-            body: JSON.stringify(this.state)
-        }).then(function(response) {
-            console.log(response)
-            return response.json();
+    addProject = () => {
+        let newProject = new ProjectNBO(this.state.projektname, this.state.ProjektId);
+        ProjectAdminAPI.getAPI().addCustomer(newProject).then(project => {
+          // Backend call sucessfull
+          // reinit the dialogs state for a new empty customer
+          this.setState(this.baseState);
+          this.props.onClose(project); // call the parent with the customer object from backend
+        }).catch(e =>
+          this.setState({
+            updatingInProgress: false,    // disable loading indicator 
+            updatingError: e              // show error message
+          })
+        );
+    
+        // set loading to true
+        this.setState({
+          updatingInProgress: true,       // show loading indicator
+          updatingError: null             // disable error message
         });
-        event.preventDefault();  /** Javascript Event preventDefault übernimmt im DOM die Aufgabe des Aufrufs return false;, 
-                                 um die ursprüngliche Aktion des Browsers bei einem HTML-Element außer Kraft zu setzen.*/ 
-        
-    //}
+      }
+    
 
     render() {
         
@@ -118,7 +127,7 @@ class DocentProjectCreation extends React.Component {
                     <h1>Anmeldung<br/>
                     Projekte Fakultät 3 </h1>
                 </Grid>
-                    <form onSubmit={this.handleSubmit}>
+                    <form type= "Submit" action = "" method = "POST" onSubmit={this.handleSubmit}>
                         
                         
                         <div>    
@@ -142,7 +151,7 @@ class DocentProjectCreation extends React.Component {
                         </div>
                     <div>
                         <label>Weekly Flag</label>
-                        <input type="checkbox" name="weekly_flag" checked= {this.state.weekly_flag} value = {this.state.name} onChange= {this.handleInputChange}/>
+                        <input type="number" name="weekly_flag" placeholder="1 = ja 0 = nein" checked= {this.state.weekly_flag}  onChange= {this.handleInputChange}/>
                         
                     </div>
                         <div>
@@ -191,15 +200,8 @@ class DocentProjectCreation extends React.Component {
                         <label>Special Room</label>
                         <input type="text" value = {this.state.value} onChange={this.handelSpecial_RoomChange}/>
                     </div>
-                    <div>
-                        <label>Projektype</label>
-                        <select value={this.state.Projektart} onChange={this.handleProjektTypChange}>
-                            <option value="Fachspezifisches Projekt">Fachspezifisches Projekt (3 SWS/5 ECTS)</option>
-                           
-                            <option value="Interdisziplinäres Projekt">Interdisziplinäres Projekt (5 SWS/ 10ECTS)</option>
-                            <option value="Transdisziplinäres Projekt">Transdisziplinäres Projekt (10 SWS/ 20ECTS; Laufzeit 2 Semester</option>
-                        </select> 
-                    </div>
+   
+          
                     <div>
                         <label>Projecttyp Id</label>
                         <input type="number" placeholder= "1 FP, 2 IP,3 TP" value = {this.state.value} onChange={this.handleProjecttyp_IdChange}/>
@@ -212,6 +214,9 @@ class DocentProjectCreation extends React.Component {
                     <div>
                         <label>Current State</label>
                         <input type="text" placeholder="default new" disabled/>
+                    </div>
+                    <div>
+                        person
                     </div>
                         
 
