@@ -1,4 +1,5 @@
 import React from 'react';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import { withStyles, Typography, Grid } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
@@ -13,6 +14,7 @@ class AdminUserEntry extends React.Component {
         super(props);
         this.state = {
             personNBO: props.person,
+            role: [],
             openDialogInfo: false,
             showDialog: false,
             openDialogDeletion: false
@@ -51,9 +53,35 @@ class AdminUserEntry extends React.Component {
             openDialogDeletion: false})
     }
 
+    getRoleByPerson = (personId) => {
+        ProjectAdminAPI.getAPI().getRoleByPerson(this.state.personNBO.getId())
+        .then(roleNBO => {
+            this.setState({
+            role: roleNBO.getStaticAttribute(),
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            role: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
+
+    componentDidMount() {
+        this.getRoleByPerson();
+    }
+
     render() {
         const { classes } = this.props;
-        const { error, personNBO, showDialog, openDialogInfo, openDialogDeletion } = this.state;
+        const { error, personNBO, role, showDialog, openDialogInfo, openDialogDeletion } = this.state;
+        console.log(role)
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>
@@ -62,8 +90,13 @@ class AdminUserEntry extends React.Component {
                             <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
                                 <PersonIcon/>
                             </IconButton>
+                            <Typography className={classes.secondaryHeading}>
+                            {role? 
+                                <b>{role}</b>
+                            :"Rolle"}
+                            </Typography>
                         </React.Fragment>
-                    </Grid>   
+                    </Grid>
                     <Grid style={{marginBottom: 10, marginTop: 10}}> 
                         <Typography className={classes.heading}>
                             <b>{personNBO.getName()}</b>
@@ -99,6 +132,11 @@ const styles = theme => ({
       fontSize: theme.typography.pxToRem(15),
       flexBasis: '33.33%',
       flexShrink: 0,
+    },
+
+    secondaryHeading: {
+        fontSize: theme.typography.pxToRem(10),
+        color: theme.palette.text.secondary,
     }
 });
 

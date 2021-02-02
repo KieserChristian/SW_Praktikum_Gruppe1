@@ -10,6 +10,7 @@ import ModuleNBO from "./ModuleNBO";
 import GradingBO from "./GradingBO";
 import ParticipationBO from "./ParticipationBO";
 import SemesterNBO from "./SemesterNBO";
+import RoleNBO from "./RoleNBO";
 
 export default class ProjectAdminAPI {
 
@@ -58,6 +59,7 @@ export default class ProjectAdminAPI {
     // Person related
     #getAllPersonsURL = () => `${this.#projectServerBaseURL}/persons`;
     #deletePersonURL = (personId) => `${this.#projectServerBaseURL}/person/${personId}`;
+    #getRoleByPersonURL = (personId) => `${this.#projectServerBaseURL}/role_by_person/${personId}`;
 
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
@@ -119,6 +121,17 @@ export default class ProjectAdminAPI {
         let responsePerson = PersonNBO.fromJSON(responseJSON)[0];
         return new Promise(function(resolve) {
           resolve(responsePerson);
+        })
+      })
+    }
+
+    getRoleByPerson(personId) {
+      return this.#fetchAdvanced(this.#getRoleByPersonURL(personId))
+      .then((responseJSON) => {
+        let RoleNBOs = RoleNBO.fromJSON(responseJSON)[0];
+        console.log(RoleNBOs)
+        return new Promise(function (resolve) {
+          resolve(RoleNBOs);
         })
       })
     }
