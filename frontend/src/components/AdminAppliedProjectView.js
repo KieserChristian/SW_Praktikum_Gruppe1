@@ -2,8 +2,9 @@ import { Paper,Grid,Button, Typography } from '@material-ui/core';
 import React from 'react';
 import ProjectAdminAPI from '../api/ProjectAdminAPI'
 import ProjectNBO from '../api/ProjectNBO';
+import AdminAppliedProjectEntry from './AdminAppliedProjectEntry'
 
-class AdminStateNewView extends React.Component {
+class AdminAppliedProjectView extends React.Component {
 
   constructor (props){
     super(props);
@@ -53,8 +54,8 @@ class AdminStateNewView extends React.Component {
             {
             projects.length > 0 ?
               projects.map (project => 
-                <div>{project.getName()}</div>
-                )
+                <AdminAppliedProjectEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project}/>)
+                
               :
               "Test"
             }
@@ -71,4 +72,4 @@ class AdminStateNewView extends React.Component {
 
 }
 
-export default AdminStateNewView;
+export default AdminAppliedProjectView;

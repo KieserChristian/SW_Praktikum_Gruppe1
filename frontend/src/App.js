@@ -24,7 +24,7 @@ import DocentTeilnehmerliste from './components/DocentTeilnehmerliste';
 import DocentMeineProjekte from "./components/DocentMeineProjekte";
 import DocentProjectCreationForm from './components/DocentProjectCreationForm';
 import AdminUserView from './components/AdminUserView';
-import AdminStateNewView from './components/AdminStateNewView';
+import AdminAppliedProjectView from './components/AdminAppliedProjectView';
 
 
 /*
@@ -159,7 +159,7 @@ class App extends React.Component {
                 </Route>
 
                 <Route path='/admin/projektübersicht'>
-                  <AdminStateNewView/>
+                  <AdminAppliedProjectView/>
                   <AdminView/>
                 </Route>
                 <Route path='/admin/nutzerübersicht'>

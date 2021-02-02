@@ -4,6 +4,7 @@ import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import {withStyles } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import LoadingProgress from './dialogs/LoadingProgress';
 
 class StudentGradingEntry extends React.Component {
 
@@ -13,6 +14,8 @@ class StudentGradingEntry extends React.Component {
       project: props.project,
       module: null,
       projectType: null,
+      grading: null,
+      loadingInProgress: false,
       error: null
     } 
   }
@@ -21,7 +24,9 @@ class StudentGradingEntry extends React.Component {
     ProjectAdminAPI.getAPI().getModuleById(this.state.project.getModuleId())
     .then(moduleNBO => {
       this.setState({
-        module: moduleNBO
+        module: moduleNBO,
+        loadingInProgress: false,
+        error: null
       });
     }).catch(e => {
       this.setState({
@@ -56,19 +61,57 @@ class StudentGradingEntry extends React.Component {
     error: null
     });
   }
+
+  getSemesterById = () => {
+    ProjectAdminAPI.getAPI().getSemesterById(this.state.project.getSemesterId())
+    .then(semesterNBO => {
+      this.setState ({
+        semester: semesterNBO,
+        loadingInProgress: false,
+        error: null
+      })
+    }).catch (e => {
+      this.setState ({
+        semester: null,
+        loadingInProgress: false,
+        error: e
+      })
+    });
+    this.setState ({
+      loadingInProgress: true,
+      error: null
+    })
+  }
+
+  /* getGradingOfParticipation = async() => {
+    //console.log(this.state.project)
+    //console.log(this.state.project.getId())
+    //console.log(ProjectAdminAPI.getAPI().getParticipationsByProject(this.state.project.getId()))
+    let participation = await ProjectAdminAPI.getAPI().getParticipationsByProject(this.state.project.getId())
+    console.log(participation)
+    ProjectAdminAPI.getAPI().getGradingByParticipation(participation[0].getId())
+    .then(gradingBO => {
+      this.setState({
+        grading: gradingBO,
+        error: null
+      })
+    }) 
+  } */
   
   componentDidMount() {
     this.getModuleById();
-    this.getProjectTypeById();       
+    this.getProjectTypeById();
+    this.getSemesterById(); 
+    //this.getGradingOfParticipation();      
   }
 
   render() {
     const { classes } = this.props;
-    const { module, project, projectType } = this.state;
+    const { module, project, projectType, semester, grading } = this.state;
     return (
       <TableRow>
         <TableCell style={{width: '14,3%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">
-          {project.getName()} 
+          { project.getName() } 
         </TableCell>
         <TableCell style={{width: '14,3%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">
           { module ?
@@ -83,22 +126,28 @@ class StudentGradingEntry extends React.Component {
             'k.A.'}
         </TableCell>
         <TableCell style={{width: '14,3%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">
-          SemesterTest
-        </TableCell>
-        <TableCell style={{width: '14,3', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">
-          NoteTest
-        </TableCell>
-        <TableCell style={{width: '14,3%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">
-        { projectType ?
-            projectType.getNumberEcts()
+          { semester ?
+            semester.getName()
             :
             'k.A.'}
         </TableCell>
+        <TableCell style={{width: '14,3', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">
+          { grading ?
+              grading.getGrade()
+              :
+              'k.A.'}
+        </TableCell>
+        <TableCell style={{width: '14,3%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">
+          { projectType ?
+              projectType.getNumberEcts()
+              :
+              'k.A.'}
+        </TableCell>
         <TableCell style={{width: '14,3%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align='left'>
-        { projectType ?
-            projectType.getNumberSws()
-            :
-            'k.A.'}  
+          { projectType ?
+              projectType.getNumberSws()
+              :
+              'k.A.'}  
         </TableCell>
       </TableRow>
     );
