@@ -22,7 +22,7 @@ export default class PersonNBO extends NamedBusinessObject {
         this.name = Name;
     }
 
-    getName(Name) {
+    getName() {
         return this.name;
     }
 

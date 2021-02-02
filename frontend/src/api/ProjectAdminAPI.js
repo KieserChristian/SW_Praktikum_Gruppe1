@@ -56,6 +56,7 @@ export default class ProjectAdminAPI {
 
     // Person related
     #getAllPersonsURL = () => `${this.#projectServerBaseURL}/persons`;
+    #deletePersonURL = (personId) => `${this.#projectServerBaseURL}/person/${personId}`;
 
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
@@ -105,6 +106,17 @@ export default class ProjectAdminAPI {
         let PersonNBOs = PersonNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(PersonNBOs);
+        })
+      })
+    }
+
+    deletePerson(personId) {
+      return this.#fetchAdvanced(this.#deletePersonURL(personId), {
+        method: 'DELETE'
+      }).then((responseJSON) => {
+        let responsePerson = PersonNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(responsePerson);
         })
       })
     }

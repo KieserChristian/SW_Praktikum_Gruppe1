@@ -4,17 +4,18 @@ import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import CancelIcon from '@material-ui/icons/Cancel';
 import EditIcon from '@material-ui/icons/Edit';
+import AdminUserDeletion from './dialogs/AdminUserDeletion';
 
 
 class AdminUserEntry extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             personNBO: props.person,
             openDialogInfo: false,
-            showDialog: false
+            showDialog: false,
+            openDialogDeletion: false
         };
     }
 
@@ -40,9 +41,19 @@ class AdminUserEntry extends React.Component {
             openDialogInfo: false})
     }
 
+    openDialogDeletion = () => {
+        this.setState({
+            openDialogDeletion: true})
+    }
+
+    closeDialogDeletion = () => {
+        this.setState({
+            openDialogDeletion: false})
+    }
+
     render() {
         const { classes } = this.props;
-        const { personNBO, showDialog, openDialogInfo } = this.state;
+        const { error, personNBO, showDialog, openDialogInfo, openDialogDeletion } = this.state;
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>
@@ -56,8 +67,6 @@ class AdminUserEntry extends React.Component {
                     <Grid style={{marginBottom: 10, marginTop: 10}}> 
                         <Typography className={classes.heading}>
                             <b>{personNBO.getName()}</b>
-                            {console.log(personNBO)}
-                            {console.log(personNBO.getName())}
                         </Typography>
                     </Grid>
                     <Grid>
@@ -65,9 +74,15 @@ class AdminUserEntry extends React.Component {
                             <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
                                 <EditIcon/>
                             </IconButton>
-                            <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
-                                <CancelIcon/>
-                            </IconButton>
+                            <AdminUserDeletion
+                                openDeletion={openDialogDeletion}
+                                onCloseProp={this.closeDialogDeletion}
+                                person={personNBO}
+                                onDelete={this.props.onDelete}
+                            />
+                                <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogDeletion}>
+                                    <CancelIcon/>
+                                </IconButton>
                         </React.Fragment>
                     </Grid>
                 </Grid>
