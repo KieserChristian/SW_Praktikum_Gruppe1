@@ -18,13 +18,12 @@ class PersonMapper (Mapper):
         cursor.execute("SELECT * FROM person")
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email, role_id) in tuples:
+        for (id, creation_date, name, google_id, role_id) in tuples:
             person = Person()
             person.set_id(id)
             person.set_creation_date(creation_date)
             person.set_name(name)
             person.set_google_id(google_id)
-            person.set_email(email)
             person.set_role_id
             result.append(person)
 
@@ -41,17 +40,16 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, creation_date, name, google_id, email, role_id FROM person WHERE person_id='{}' ORDER BY person_id".format(id)
+        command = "SELECT person_id, creation_date, name, google_id, role_id FROM person WHERE person_id='{}' ORDER BY person_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email, role_id) in tuples:
+        for (id, creation_date, name, google_id, role_id) in tuples:
             person = Person()
             person.set_id(id)
             person.set_creation_date(creation_date)
             person.set_name(name)
             person.set_google_id(google_id)
-            person.set_email(email)
             person.set_role_id(role_id)
             result = person
 
@@ -69,17 +67,16 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, creation_date, name, google_id, email, role_id FROM person WHERE name='{}' ORDER BY name".format(name)
+        command = "SELECT person_id, creation_date, name, google_id, role_id FROM person WHERE name='{}' ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email, role_id) in tuples:
+        for (id, creation_date, name, google_id, role_id) in tuples:
             person = Person()
             person.set_id(id)
             person.set_creation_date(creation_date)
             person.set_name(name)
             person.set_google_id(google_id)
-            person.set_email(email)
             person.set_role_id(role_id)
             result = person
 
@@ -96,17 +93,16 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, creation_date, name, google_id, email, role_id FROM person WHERE google_id='{}' ORDER BY google_id".format(google_id)
+        command = "SELECT person_id, creation_date, name, google_id, role_id FROM person WHERE google_id='{}' ORDER BY google_id".format(google_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email) in tuples:
+        for (id, creation_date, name, google_id) in tuples:
             person = Person()
             person.set_id(id)
             person.set_creation_date(creation_date)
             person.set_name(name)
             person.set_google_id(google_id)
-            person.set_email(email)
             person.set_role_id(role_id)
             result = person
 
@@ -115,32 +111,6 @@ class PersonMapper (Mapper):
 
         return result
 
-    def find_by_email(self, email):
-        """Auslesen einer Person durch die E-Mail-Adresse
-
-        :param  email
-        :return Person-Objekt, das der übergebenen E-Mail-Adresse entspricht
-        """
-        result = []
-        cursor = self._cnx.cursor()
-        command = "SELECT person_id, creation_date, name, google_id, email, role_id FROM person WHERE email='{}' ORDER BY email".format(email)
-        cursor.execute(command)
-        tuples = cursor.fetchall()
-
-        for (id, creation_date, name, google_id, email) in tuples:
-            person = Person()
-            person.set_id(id)
-            person.set_creation_date(creation_date)
-            person.set_name(name)
-            person.set_google_id(google_id)
-            person.set_email(email)
-            person.set_role_id(role_id)
-            result = person
-
-        self._cnx.commit()
-        cursor.close()
-
-        return result
 
     def insert(self, person):
         """Einfügen eines Person-Objekts in die Datenbank.
@@ -166,8 +136,8 @@ class PersonMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 person.set_id(1)
 
-        command = "INSERT INTO person (person_id, creation_date, name, google_id, email, role_id) VALUES (%s,%s,%s,%s,%s,%s)"
-        data = (person.get_id(), person.get_creation_date(), person.get_name(), person.get_google_id(), person.get_email(), person.get_role_id())
+        command = "INSERT INTO person (person_id, creation_date, name, google_id, role_id) VALUES (%s,%s,%s,%s,%s)"
+        data = (person.get_id(), person.get_creation_date(), person.get_name(), person.get_google_id(), person.get_role_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -182,8 +152,8 @@ class PersonMapper (Mapper):
         cursor = self._cnx.cursor()
         print(person.get_creation_date())
 
-        command = "UPDATE person " + "SET creation_date=%s, name=%s, google_id=%s, email=%s, role_id=%s WHERE person_id=%s"
-        data = (person.get_creation_date(), person.get_name(), person.get_google_id(), person.get_email(), person.get_role_id(), person.get_id())
+        command = "UPDATE person " + "SET creation_date=%s, name=%s, google_id=%s, role_id=%s WHERE person_id=%s"
+        data = (person.get_creation_date(), person.get_name(), person.get_google_id(), person.get_role_id(), person.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()

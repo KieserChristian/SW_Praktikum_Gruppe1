@@ -18,13 +18,12 @@ class StudentMapper (Mapper):
         cursor.execute("SELECT * FROM student")
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation) in tuples:
+        for (id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
             student.set_creation_date(creation_date)
             student.set_name(name)
             student.set_google_id(google_id)
-            student.set_email(email)
             student.set_role_id(role_id)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
@@ -43,17 +42,16 @@ class StudentMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation FROM student WHERE student_id='{}' ORDER BY student_id".format(id)
+        command = "SELECT student_id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation FROM student WHERE student_id='{}' ORDER BY student_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation) in tuples:
+        for (id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
             student.set_creation_date(creation_date)
             student.set_name(name)
             student.set_google_id(google_id)
-            student.set_email(email)
             student.set_role_id(role_id)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
@@ -73,17 +71,16 @@ class StudentMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation FROM student WHERE name='{}' ORDER BY name".format(name)
+        command = "SELECT student_id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation FROM student WHERE name='{}' ORDER BY name".format(name)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation) in tuples:
+        for (id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
             student.set_creation_date(creation_date)
             student.set_name(name)
             student.set_google_id(google_id)
-            student.set_email(email)
             student.set_role_id(role_id)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
@@ -102,17 +99,16 @@ class StudentMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation FROM student WHERE google_id='{}' ORDER BY google_id".format(google_id)
+        command = "SELECT student_id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation FROM student WHERE google_id='{}' ORDER BY google_id".format(google_id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation) in tuples:
+        for (id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
             student.set_creation_date(creation_date)
             student.set_name(name)
             student.set_google_id(google_id)
-            student.set_email(email)
             student.set_role_id(role_id)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
@@ -123,34 +119,6 @@ class StudentMapper (Mapper):
 
         return result
 
-    def find_by_email(self, email):
-        """Auslesen eines Studenten durch die E-Mail-Adresse
-
-        :param  email
-        :return Student-Objekt, das der übergebenen E-Mail-Adresse entspricht
-        """
-        result = []
-        cursor = self._cnx.cursor()
-        command = "SELECT student_id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation FROM student WHERE email='{}' ORDER BY email".format(email)
-        cursor.execute(command)
-        tuples = cursor.fetchall()
-
-        for (id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation) in tuples:
-            student = Student()
-            student.set_id(id)
-            student.set_creation_date(creation_date)
-            student.set_name(name)
-            student.set_google_id(google_id)
-            student.set_email(email)
-            student.set_role_id(role_id)
-            student.set_matriculation_number(matriculation_number)
-            student.set_course_abbreviation(course_abbreviation)
-            result = student
-
-        self._cnx.commit()
-        cursor.close()
-
-        return result
 
     def find_by_matriculation_number(self, matriculation_number):
         """Auslesen eines Studenten durch die Matrikelnummer
@@ -160,17 +128,16 @@ class StudentMapper (Mapper):
         """      
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation FROM student WHERE matriculation_number='{}' ORDER BY matriculation_number".format(matriculation_number)
+        command = "SELECT student_id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation FROM student WHERE matriculation_number='{}' ORDER BY matriculation_number".format(matriculation_number)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation) in tuples:
+        for (id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
             student.set_creation_date(creation_date)
             student.set_name(name)
             student.set_google_id(google_id)
-            student.set_email(email)
             student.set_role_id(role_id)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
@@ -189,17 +156,16 @@ class StudentMapper (Mapper):
         """          
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT student_id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation FROM student WHERE course_abbreviation='{}' ORDER BY course_abbreviation".format(course_abbreviation)
+        command = "SELECT student_id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation FROM student WHERE course_abbreviation='{}' ORDER BY course_abbreviation".format(course_abbreviation)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, email, matriculation_number, course_abbreviation) in tuples:
+        for (id, creation_date, name, google_id, matriculation_number, course_abbreviation) in tuples:
             student = Student()
             student.set_id(id)
             student.set_creation_date(creation_date)
             student.set_name(name)
             student.set_google_id(google_id)
-            student.set_email(email)
             student.set_role_id(role_id)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
@@ -234,8 +200,8 @@ class StudentMapper (Mapper):
                 davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
                 student.set_id(1)
 
-        command = "INSERT INTO student (student_id, creation_date, name, google_id, email, role_id, matriculation_number, course_abbreviation) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-        data = (student.get_id(), student.get_creation_date(), student.get_name(), student.get_google_id(), student.get_email(), student.get_role_id(), student.get_matriculation_number(), student.get_course_abbreviation())
+        command = "INSERT INTO student (student_id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+        data = (student.get_id(), student.get_creation_date(), student.get_name(), student.get_google_id(), student.get_role_id(), student.get_matriculation_number(), student.get_course_abbreviation())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -249,8 +215,8 @@ class StudentMapper (Mapper):
         """       
         cursor = self._cnx.cursor()
 
-        command = "UPDATE student " + "SET creation_date=%s, name=%s, google_id=%s, email=%s, role_id=%s, matriculation_number=%s, course_abbreviation=%s WHERE student_id=%s"
-        data = (student. get_creation_date(), student.get_name(), student.get_google_id(), student.get_email(), student.get_role_id(), student.get_matriculation_number(), student.get_course_abbreviation(), student.get_id())
+        command = "UPDATE student " + "SET creation_date=%s, name=%s, google_id=%s, role_id=%s, matriculation_number=%s, course_abbreviation=%s WHERE student_id=%s"
+        data = (student. get_creation_date(), student.get_name(), student.get_google_id(), student.get_role_id(), student.get_matriculation_number(), student.get_course_abbreviation(), student.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()
