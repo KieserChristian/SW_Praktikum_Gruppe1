@@ -64,7 +64,7 @@ class StudentGradingEntry extends React.Component {
   }
 
   getSemesterById = () => {
-    console.log(this.state.project.getSemesterId())
+    //console.log(this.state.project.getSemesterId())
     ProjectAdminAPI.getAPI().getSemesterById(this.state.project.getSemesterId())
     .then(semesterNBO => {
       this.setState ({
@@ -85,26 +85,27 @@ class StudentGradingEntry extends React.Component {
     })
   }
 
-  /* getGradingOfParticipation = async() => {
-    //console.log(this.state.project)
-    //console.log(this.state.project.getId())
-    //console.log(ProjectAdminAPI.getAPI().getParticipationsByProject(this.state.project.getId()))
+  getGradingOfParticipation = async() => {
+    console.log(this.state.project)
+    console.log(this.state.project.getId())
+    console.log(ProjectAdminAPI.getAPI().getParticipationsByProject(this.state.project.getId()))
     let participation = await ProjectAdminAPI.getAPI().getParticipationsByProject(this.state.project.getId())
     console.log(participation)
-    ProjectAdminAPI.getAPI().getGradingByParticipation(participation[0].getId())
+    console.log(ProjectAdminAPI.getAPI().getGradingByParticipation(participation.getId()))
+    ProjectAdminAPI.getAPI().getGradingByParticipation(participation.getId())
     .then(gradingBO => {
       this.setState({
         grading: gradingBO,
         error: null
       })
     }) 
-  } */
+  }
   
   componentDidMount() {
     this.getModuleById();
     this.getProjectTypeById();
     this.getSemesterById(); 
-    //this.getGradingOfParticipation();      
+    this.getGradingOfParticipation();      
   }
 
   render() {
@@ -135,7 +136,7 @@ class StudentGradingEntry extends React.Component {
         </TableCell>
         <TableCell style={{width: '14,3', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={1} padding="none" align="left">
           { grading ?
-              grading.getGrade()
+              grading[0].getGrade()
               :
               'k.A.'}
         </TableCell>

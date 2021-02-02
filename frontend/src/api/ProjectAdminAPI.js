@@ -299,7 +299,7 @@ export default class ProjectAdminAPI {
     getParticipationsByProject(projectId) {
       return this.#fetchAdvanced(this.#getParticipationsByProjectURL(projectId))
       .then((responseJSON) => {
-        let responseParticipation = ParticipationBO.fromJSON(responseJSON);
+        let responseParticipation = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
           resolve(responseParticipation);
         })

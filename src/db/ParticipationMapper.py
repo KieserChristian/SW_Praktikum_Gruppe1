@@ -215,7 +215,7 @@ class ParticipationMapper (Mapper):
 
         try:
             for(participation_id, student_id, project_id) in tuples:
-                participation_json = {"participation_id": participation_id, "student_id": student_id, "project_id": project_id}
+                participation_json = {"id": participation_id, "student_id": student_id, "project_id": project_id}
                 result.append(participation_json)
         except IndexError:
             print("There was no object with this id")
