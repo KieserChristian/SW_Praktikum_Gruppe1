@@ -71,9 +71,7 @@ export default class ProjectAdminAPI {
     #getProjectsByCurrentState = (currentState) => `${this.#projectServerBaseURL}/projects_by_state/${currentState}`;
     #getRegisteredProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/registered_projects_of_student/${studentId}`;
     #getAvailableProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/available_projects_for_student/${studentId}`;
-    #addProjectURL = (projectId) => `${this.#projectServerBaseURL}/projects/${projectId}`;
-    #updateProjectURL = (projectId) => `${this.#projectServerBaseURL}/projects/${projectId}`;
-    #deleteProjectURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
+    #addProjectURL = () => `${this.#projectServerBaseURL}/projects`;
 
     // ProjectType related
     #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project-type/${projectTypeId}`;
@@ -201,51 +199,21 @@ export default class ProjectAdminAPI {
       })
     }
 
-    updateProject(projectNBO) {
-      return this.#fetchAdvanced(this.#updateProjectURL(projectNBO.get_Id()),{
-        method: 'PUT',
+    addProject(projectNBO) {
+      return this.#fetchAdvanced(this.#addProjectURL(), {
+        method: 'POST',
         headers: {
           'Accept': 'application/json, text',
           'Content-type': 'application/json',
         },
-        body: JSON.stringify(projectNBO) 
-      }).then((responseJSON) => {
-        let responseProjectNBO = ProjectNBO.fromJSON(responseJSON)[0];
-        return new Promise(function (resolve) {
-          resolve(responseProjectNBO);
-        })
-      })
-    }
-
-    deleteProject(projectId) {
-      return this.#fetchAdvanced(this.#deleteProjectURL(projectId), {
-        method: 'DELETE',
-
-      }).then((responseJSON) => {
-        let responseProjectNBO = ProjectNBO.fromJSON(responseJSON)[0];
-        return new Promise(function (resolve) {
-          resolve(responseProjectNBO);
-        })
-      })
-    }
-
-    addProject(projectNBO) {
-      return this.#fetchAdvanced(this.#addProjectURL(), {
-        method: `POST`,
-        headers: {
-          'Accept': 'application/json, text',
-          'Content-type': 'application/json',          
-        },
         body: JSON.stringify(projectNBO)
       }).then((responseJSON) => {
-        let responseProjectNBO = ProjectNBO.fromJSON(responseJSON)[0];
-        return new Promise(function (resolve) {
-          resolve(responseProjectNBO);
+        let projectNBO = ProjectNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(projectNBO);
         })
       })
     }
-
-
 
     //ProjectType
 

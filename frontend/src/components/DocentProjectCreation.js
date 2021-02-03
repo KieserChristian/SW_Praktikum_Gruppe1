@@ -1,4 +1,6 @@
 import React from 'react';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
+import ProjectNBO from '../api/ProjectNBO';
 import { withRouter } from 'react-router-dom';
 import { withStyles, Grid, Button, Paper, Typography, FormRow} from '@material-ui/core';
 import Table from '@material-ui/core/Table';
@@ -24,9 +26,70 @@ class DocentProjectCreation extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            projectName: "",
+            currentState: "",
+            capacity: "",
+            externalPartners: "",
+            shortDescription: "",
+            weeklyFlag: false,
+            bdBeforeLecturePeriod: "",
+            bdInLecturePeriod: "",
+            bdInExamPeriod: "",
+            bdPreferredInLecturePeriod: "",
+            specialRoom: "",
+            projectType: null,
+            projectModule: "",
+            semester: "",
+            docent: "",
+/*             language: null, */
+        };
+        this.baseState = this.state;
     }
 
+
+    addProject = async() => {
+        let newProject = await new ProjectNBO(this.state.projectName, this.state.currentState, this.state.capacity,
+            this.state.externalPartners, this.state.shortDescription, this.state.bdBeforeLecturePeriod, this.state.bdInLecturePeriod,
+            this.state.bdInExamPeriod, this.state.bdPreferredInLecturePeriod, this.state.specialRoom, this.state.projectModule, this.state.semester,
+            this.state.docent);
+        //newProject.setProjectId();
+        //console.log()
+        ProjectAdminAPI.getAPI().addProject(newProject).then(project => {
+            this.setState(this.baseState);
+            //this.props.onClose(project);
+        }).catch(e =>
+            this.setState({
+                loadingInProgress: false,
+                addingError: e
+            })
+        );
+        this.setState({
+            loadingInProgress: true,
+            addingError: null
+        });
+    }
+
+
+    handleChange = (event) => {
+        const value = event.target.value;
+    
+        let error = false;
+        if (value.trim().length === 0) {
+          error = true;
+        }
+    
+        this.setState({
+          [event.target.id]: event.target.value
+        });
+      }
+
+
+
+
     render() {
+        const {projectName, capacity, externalPartners, shortDescription, bdBeforeLecturePeriod,
+            bdInLecturePeriod, bdInExamPeriod, bdPreferredInLecturePeriod, specialRoom, projectModule, semester, docent} = this.state;
         return(
             <div>
             <Paper style={{paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
@@ -42,42 +105,22 @@ class DocentProjectCreation extends React.Component {
                                     <TableHead>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Art des Projekts</b></TableCell>
-                                            <TableCell><b>Kategorie des Projekts</b></TableCell>
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody style={{width: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                                            <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <p><Checkbox/>Fachspezifisches Projekt (3 SWS/5 ECTS)</p>
-                                                <p><Checkbox/>Zugleich Wahlfach nach alter SPO
-                                                            Zugleich im MINOR - Programm</p>
-                                            </TableCell>
-                                            <TableCell>
-                                            <p>-</p>
-                                            <p>Nummer:<br/></p>
-                                            <p>Titel:<br/><br/></p>
-                                            </TableCell>
-                                        </TableRow>
-
+                                    <TableBody style={{width: '50%'}}>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                                 <Checkbox/>Fachspezifisches Projekt (3 SWS/5 ECTS)
                                             </TableCell>
-                                            <TableCell>
-                                            -
+                                        </TableRow>
+                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                            <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                                <Checkbox/>Interdisziplinäres Projekt (5 SWS/10 ECTS)
                                             </TableCell>
                                         </TableRow>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                                 <Checkbox/>Transdisziplinäres Projekt (10 SWS/20 ECTS; Laufzeit: 2 Semester)
-                                            </TableCell>
-                                            <TableCell>
-                                            -
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                                            <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                Sprache: <Checkbox/> deutsch <Checkbox/>englisch
                                             </TableCell>
                                         </TableRow>
 
@@ -86,10 +129,12 @@ class DocentProjectCreation extends React.Component {
                                                 <b>Projekttitel:</b>
                                                 <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="filled-secondary"
+                                                        id="projectName"
                                                         label=""
                                                         variant="filled"
                                                         color="secondary"
+                                                        onChange={this.handleChange}
+                                                        value={projectName}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -99,13 +144,51 @@ class DocentProjectCreation extends React.Component {
 
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <b>Betreuende(r) ProfessorInnen:</b>
+                                                <b>Modul:</b>
                                                 <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="filled-secondary"
+                                                        id="projectModule"
                                                         label=""
                                                         variant="filled"
                                                         color="secondary"
+                                                        onChange={this.handleChange}
+                                                        value={projectModule}
+                                                    />
+                                                </form>
+                                            </TableCell>
+                                            <TableCell>
+                                            </TableCell>
+                                        </TableRow>
+
+                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                            <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                                <b>Semester:</b>
+                                                <form noValidate autoComplete="off">
+                                                    <TextField
+                                                        id="semester"
+                                                        label=""
+                                                        variant="filled"
+                                                        color="secondary"
+                                                        onChange={this.handleChange}
+                                                        value={semester}
+                                                    />
+                                                </form>
+                                            </TableCell>
+                                            <TableCell>
+                                            </TableCell>
+                                        </TableRow>
+
+                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                            <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                                <b>Betreuende(r) ProfessorIn:</b>
+                                                <form noValidate autoComplete="off">
+                                                    <TextField
+                                                        id="docent"
+                                                        label=""
+                                                        variant="filled"
+                                                        color="secondary"
+                                                        onChange={this.handleChange}
+                                                        value={docent}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -118,10 +201,12 @@ class DocentProjectCreation extends React.Component {
                                                 <b>Externer Kooperationspartner:</b>
                                                 <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="filled-secondary"
+                                                        id="externalPartners"
                                                         label=""
                                                         variant="filled"
                                                         color="secondary"
+                                                        onChange={this.handleChange}
+                                                        value={externalPartners}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -140,12 +225,14 @@ class DocentProjectCreation extends React.Component {
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Inhalt (Kurzbeschreibung):</b>
                                             <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="outlined-multiline-static"
+                                                        id="shortDescription"
                                                         label=""
                                                         multiline
                                                         rows={6}
                                                         defaultValue=""
                                                         variant="outlined"
+                                                        onChange={this.handleChange}
+                                                        value={shortDescription}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -161,50 +248,101 @@ class DocentProjectCreation extends React.Component {
                                         <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Raum-/Ressourcenplanung:</b></TableCell>
                                     </TableRow>
                             </TableHead>
-                            <TableBody style={{width: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                            <TableBody style={{width: '50%'}}>
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        Wöchentliche Termine (Präsenzzeit / studentische Gruppenmeetings)
+                                        Kapazität:
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="capacity"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                                onChange={this.handleChange}
+                                                value={capacity}
+                                            />
+                                        </form>
                                     </TableCell>
-                                    <TableCell>
-                                        <Checkbox/>Ja
-                                    </TableCell>
-                                    <TableCell>
-                                        <Checkbox/>Nein
+                                </TableRow>
+
+                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                        <Checkbox/>Wöchentliche Termine (Präsenzzeit / studentische Gruppenmeetings)
                                     </TableCell>
                                 </TableRow>
                                 
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        <Checkbox/>Blocktage vor Beginn der Vorlesungszeit
-                                    </TableCell>
-                                    <TableCell>
-                                        Anzahl: Tage
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        <Checkbox/>Blocktage in der Prüfungszeit <b>(nur inter-/trans. Projekte!!!)</b>
-                                    </TableCell>
-                                    <TableCell>
-                                        Anzahl: Tage
+                                        Anzahl Blocktage vor Beginn der Vorlesungszeit:
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="bdBeforeLecturePeriod"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                                onChange={this.handleChange}
+                                                value={bdBeforeLecturePeriod}
+                                            />
+                                        </form>
                                     </TableCell>
                                 </TableRow>
 
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        <Checkbox/>Blocktage (Samstage) in der Vorlesungszeit
+                                        Anzahl Blocktage in der Prüfungszeit <b>(nur inter-/trans. Projekte!)</b>:
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="bdInLecturePeriod"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                                onChange={this.handleChange}
+                                                value={bdInLecturePeriod}
+                                            />
+                                        </form>
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                        Anzahl Blocktage in der Vorlesungszeit (Samstage):
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="bdInExamPeriod"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                                onChange={this.handleChange}
+                                                value={bdInExamPeriod}
+                                            />
+                                        </form>
                                         <p>Präferierte Tage:</p>
-                                    </TableCell>
-                                    <TableCell>
-                                        Anzahl: Tage
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="bdPreferredInLecturePeriod"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                                onChange={this.handleChange}
+                                                value={bdPreferredInLecturePeriod}
+                                            />
+                                        </form>
                                     </TableCell>
                                 </TableRow>
 
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        <Checkbox/>Besonderer Raum notwendig
+                                        Besonderer Raum:
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="specialRoom"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                                onChange={this.handleChange}
+                                                value={specialRoom}
+                                            />
+                                        </form>
                                     </TableCell>
                                 </TableRow>
                             </TableBody>
@@ -216,7 +354,7 @@ class DocentProjectCreation extends React.Component {
 
                 </Grid>
                 <Grid>
-                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}}>
+                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.addProject}>
                         Absenden
                     </Button>
                 </Grid>
