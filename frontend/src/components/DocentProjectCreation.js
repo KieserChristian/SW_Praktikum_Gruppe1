@@ -45,8 +45,8 @@ class DocentProjectCreation extends React.Component {
     }
 
 
-    addProject = () => {
-        let newProject = new ProjectNBO(this.state.name, this.state.currentState, this.state.capacity,
+    addProject = async() => {
+        let newProject = await new ProjectNBO(this.state.name, this.state.currentState, this.state.capacity,
             this.state.externalPartners, this.state.shortDescription, this.state.bdPreferredInLecturePeriod);
         //newProject.setProjectId();
         //console.log()
@@ -100,42 +100,22 @@ class DocentProjectCreation extends React.Component {
                                     <TableHead>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Art des Projekts</b></TableCell>
-                                            <TableCell><b>Kategorie des Projekts</b></TableCell>
                                         </TableRow>
                                     </TableHead>
-                                    <TableBody style={{width: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                    <TableBody style={{width: '50%'}}>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <p><Checkbox/>Fachspezifisches Projekt (3 SWS/5 ECTS)</p>
-                                                <p><Checkbox/>Zugleich Wahlfach nach alter SPO
-                                                            Zugleich im MINOR - Programm</p>
-                                            </TableCell>
-                                            <TableCell>
-                                            <p>-</p>
-                                            <p>Nummer:<br/></p>
-                                            <p>Titel:<br/><br/></p>
+                                                <Checkbox/>Fachspezifisches Projekt (3 SWS/5 ECTS)
                                             </TableCell>
                                         </TableRow>
-
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                                 <Checkbox/>Interdisziplinäres Projekt (5 SWS/10 ECTS)
-                                            </TableCell>
-                                            <TableCell>
-                                            -
                                             </TableCell>
                                         </TableRow>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                                 <Checkbox/>Transdisziplinäres Projekt (10 SWS/20 ECTS; Laufzeit: 2 Semester)
-                                            </TableCell>
-                                            <TableCell>
-                                            -
-                                            </TableCell>
-                                        </TableRow>
-                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                                            <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                Sprache: <Checkbox/> deutsch <Checkbox/>englisch
                                             </TableCell>
                                         </TableRow>
 
@@ -158,7 +138,39 @@ class DocentProjectCreation extends React.Component {
 
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <b>Betreuende(r) ProfessorInnen:</b>
+                                                <b>Modul:</b>
+                                                <form noValidate autoComplete="off">
+                                                    <TextField
+                                                        id="filled-secondary"
+                                                        label=""
+                                                        variant="filled"
+                                                        color="secondary"
+                                                    />
+                                                </form>
+                                            </TableCell>
+                                            <TableCell>
+                                            </TableCell>
+                                        </TableRow>
+
+                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                            <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                                <b>Semester:</b>
+                                                <form noValidate autoComplete="off">
+                                                    <TextField
+                                                        id="filled-secondary"
+                                                        label=""
+                                                        variant="filled"
+                                                        color="secondary"
+                                                    />
+                                                </form>
+                                            </TableCell>
+                                            <TableCell>
+                                            </TableCell>
+                                        </TableRow>
+
+                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                            <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                                <b>Betreuende(r) ProfessorIn:</b>
                                                 <form noValidate autoComplete="off">
                                                     <TextField
                                                         id="filled-secondary"
@@ -220,50 +232,89 @@ class DocentProjectCreation extends React.Component {
                                         <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Raum-/Ressourcenplanung:</b></TableCell>
                                     </TableRow>
                             </TableHead>
-                            <TableBody style={{width: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                            <TableBody style={{width: '50%'}}>
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        Wöchentliche Termine (Präsenzzeit / studentische Gruppenmeetings)
+                                        Kapazität:
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="filled-secondary"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                            />
+                                        </form>
                                     </TableCell>
-                                    <TableCell>
-                                        <Checkbox/>Ja
-                                    </TableCell>
-                                    <TableCell>
-                                        <Checkbox/>Nein
+                                </TableRow>
+
+                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                        <Checkbox/>Wöchentliche Termine (Präsenzzeit / studentische Gruppenmeetings)
                                     </TableCell>
                                 </TableRow>
                                 
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        <Checkbox/>Blocktage vor Beginn der Vorlesungszeit
-                                    </TableCell>
-                                    <TableCell>
-                                        Anzahl: Tage
-                                    </TableCell>
-                                </TableRow>
-
-                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        <Checkbox/>Blocktage in der Prüfungszeit <b>(nur inter-/trans. Projekte!!!)</b>
-                                    </TableCell>
-                                    <TableCell>
-                                        Anzahl: Tage
+                                        Anzahl Blocktage vor Beginn der Vorlesungszeit:
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="filled-secondary"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                            />
+                                        </form>
                                     </TableCell>
                                 </TableRow>
 
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        <Checkbox/>Blocktage (Samstage) in der Vorlesungszeit
+                                        Anzahl Blocktage in der Prüfungszeit <b>(nur inter-/trans. Projekte!)</b>:
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="filled-secondary"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                            />
+                                        </form>
+                                    </TableCell>
+                                </TableRow>
+
+                                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+                                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
+                                        Anzahl Blocktage in der Vorlesungszeit (Samstage):
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="filled-secondary"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                            />
+                                        </form>
                                         <p>Präferierte Tage:</p>
-                                    </TableCell>
-                                    <TableCell>
-                                        Anzahl: Tage
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="filled-secondary"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                            />
+                                        </form>
                                     </TableCell>
                                 </TableRow>
 
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        <Checkbox/>Besonderer Raum notwendig
+                                        Besonderer Raum:
+                                        <form noValidate autoComplete="off">
+                                            <TextField
+                                                id="filled-secondary"
+                                                label=""
+                                                variant="filled"
+                                                color="secondary"
+                                            />
+                                        </form>
                                     </TableCell>
                                 </TableRow>
                             </TableBody>
