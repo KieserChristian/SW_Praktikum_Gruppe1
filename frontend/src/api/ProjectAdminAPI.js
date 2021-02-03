@@ -10,6 +10,7 @@ import ModuleNBO from "./ModuleNBO";
 import GradingBO from "./GradingBO";
 import ParticipationBO from "./ParticipationBO";
 import SemesterNBO from "./SemesterNBO";
+import RoleNBO from "./RoleNBO";
 
 export default class ProjectAdminAPI {
 
@@ -57,6 +58,8 @@ export default class ProjectAdminAPI {
 
     // Person related
     #getAllPersonsURL = () => `${this.#projectServerBaseURL}/persons`;
+    #deletePersonURL = (personId) => `${this.#projectServerBaseURL}/person/${personId}`;
+    #getRoleByPersonURL = (personId) => `${this.#projectServerBaseURL}/role_by_person/${personId}`;
 
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
@@ -108,6 +111,28 @@ export default class ProjectAdminAPI {
         let PersonNBOs = PersonNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(PersonNBOs);
+        })
+      })
+    }
+
+    deletePerson(personId) {
+      return this.#fetchAdvanced(this.#deletePersonURL(personId), {
+        method: 'DELETE'
+      }).then((responseJSON) => {
+        let responsePerson = PersonNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(responsePerson);
+        })
+      })
+    }
+
+    getRoleByPerson(personId) {
+      return this.#fetchAdvanced(this.#getRoleByPersonURL(personId))
+      .then((responseJSON) => {
+        let RoleNBOs = RoleNBO.fromJSON(responseJSON)[0];
+        console.log(RoleNBOs)
+        return new Promise(function (resolve) {
+          resolve(RoleNBOs);
         })
       })
     }
@@ -304,7 +329,7 @@ export default class ProjectAdminAPI {
     getParticipationsByProject(projectId) {
       return this.#fetchAdvanced(this.#getParticipationsByProjectURL(projectId))
       .then((responseJSON) => {
-        let responseParticipation = ParticipationBO.fromJSON(responseJSON);
+        let responseParticipation = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
           resolve(responseParticipation);
         })
@@ -346,9 +371,9 @@ export default class ProjectAdminAPI {
     //Semester
 
     getSemesterById(semesterId) {
-      return this.#fetchAdvanced(this.#getSemesterByIdURL())
+      return this.#fetchAdvanced(this.#getSemesterByIdURL(semesterId))
       .then((responseJSON) => {
-        let SemesterNBOs = SemesterNBO.fromJSON(responseJSON);
+        let SemesterNBOs = SemesterNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
           resolve(SemesterNBOs);
         })

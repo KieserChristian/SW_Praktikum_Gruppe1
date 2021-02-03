@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import ProjectAdminAPI from '../../api/ProjectAdminAPI';
 
 class StudentProjectCancellation extends React.Component {
 
@@ -17,7 +18,30 @@ class StudentProjectCancellation extends React.Component {
         this.props.close();
     }  
 
+    deleteParticipationOfProject = async() => {
+        let participation = await ProjectAdminAPI.getAPI().getParticipationsByProject(this.state.projectNBO.getId())
+        console.log(participation)
+        ProjectAdminAPI.getAPI().deleteParticipation(participation.getId())
+        .then(participation => {
+            this.props.close(participation);
+            this.setState ({
+                deletingInProgress: false,
+                deletingError: null
+            });
+        }).catch (e =>
+            this.setState ({
+                deletingInProgress: false,
+                deletingError: e
+            })
+        );
+        this.setState ({
+            deletingInProgress: true,
+            deletingError: null
+        });
+    }
+
     cancellationAlert =()=>{
+        this.deleteParticipationOfProject();
         alert("Abmeldung erfolgreich!");
         this.handleClose()
     }

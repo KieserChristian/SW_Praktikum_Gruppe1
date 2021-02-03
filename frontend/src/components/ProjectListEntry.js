@@ -7,14 +7,7 @@ import ProjectForm from './dialogs/ProjectForm';
 import ProjectDeleteDialog from './dialogs/ProjectDeleteDialog';
 
 
-/**
- * Renders a CustomerBO object within a expandable/collapsible CustomerListEntry with the customer manipulation
- * functions. If expanded, it renders a AccountList.
- * 
- * @see See [AccountList](#accountlist)
- * 
- * @author [Christoph Kunz](https://github.com/christophkunz)
- */
+
 class ProjectListEntry extends Component {
 
     constructor(props) {

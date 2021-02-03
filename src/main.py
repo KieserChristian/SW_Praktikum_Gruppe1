@@ -106,8 +106,6 @@ semester = api.inherit('Semester', bo, nbo)
 person = api.inherit('Person', bo, nbo, {
     'google_id': fields.String(attribute='_google_id',
                                 description='Externe Google-ID der Person'),
-    'email': fields.String(attribute='_email',
-                                description='E-Mail-Adresse der Person'),
     'role_id': fields.Integer(attribute='_role_id',
                                 description='Rolle der Person')
 })
@@ -216,7 +214,7 @@ class PersonListOperations(Resource):
         proposal = Person.from_dict(api.payload)
 
         if proposal is not None:
-            pers = adm.create_person(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email(), proposal.get_role_id())
+            pers = adm.create_person(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_role_id())
             return pers, 200
         else:
             return '', 500
@@ -285,7 +283,7 @@ class StudentListOperations(Resource):
         proposal = Student.from_dict(api.payload)
         print(proposal)
         if proposal is not None:
-            stud = adm.create_student(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_email(), proposal.get_role_id(), proposal.get_matriculation_number(), proposal.get_course_abbreviation())
+            stud = adm.create_student(proposal.get_creation_date(), proposal.get_name(), proposal.get_google_id(), proposal.get_role_id(), proposal.get_matriculation_number(), proposal.get_course_abbreviation())
             return stud, 200       
         else:
             return '', 500 
@@ -526,21 +524,17 @@ class RoleListOperations(Resource):
         else:
             return '', 500
 
-@projectTool.route('/role/person')
+@projectTool.route('/role_by_person/<int:person_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@projectTool.param('role_id', 'Dies ist die ID von Role')
 class RoleRelatedPersonOperations(Resource):
-    @projectTool.marshal_with(person)
     #@secured
-    def get(self, role_id):
-        """Auslesen aller Personen-Objekte bezüglich eines bestimmten Role-Objekts"""
+    def get(self, person_id):
+        """Auslesen der Rolle eines bestimmten Personen-Objekts"""
         adm = ProjectAdministration()
-        """Zunächst wird die ID der Role benötigt"""
-        rol = adm.get_role_by_id(role_id)
+        role_by_person = adm.get_role_by_person(person_id)
 
-        if rol is not None:
-            person_list = adm.get_persons_by_role_id(role.get_id())
-            return person_list, 200
+        if role_by_person != []:
+            return role_by_person, 200
         else:
             return 'Role not found', 500
 

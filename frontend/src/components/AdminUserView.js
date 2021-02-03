@@ -57,6 +57,16 @@ class AdminUserView extends React.Component {
         })
     }
 
+    removePerson = (personId) => {
+        console.log(this.state.filteredPersons[0])
+        console.log(personId)
+        let newPersons= this.state.filteredPersons.filter(person => person.getGoogleId()!== personId)
+        console.log(newPersons.length)
+        this.setState({
+            filteredPersons: this.state.filteredPersons.filter(person => person.getGoogleId()!== personId)
+        })
+    }
+
     /*Anzeigen*/
     render(){
         const { persons, personFilter, filteredPersons } = this.state;
@@ -91,7 +101,7 @@ class AdminUserView extends React.Component {
                         filteredPersons.map(person =>
                         /*getName kommt von PersonNBO*/
                     /*<div>{person.getName()}</div>*/
-                    <AdminUserEntry key={person.getGoogleId()} person={person}/>)
+                    <AdminUserEntry key={person.getGoogleId()} person={person} onDelete={() => this.removePerson(person.getGoogleId())}/>)
                             :
                             null
                     }

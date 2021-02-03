@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, Button, TextField, InputAdornment, IconButton, Grid, Typography } from '@material-ui/core';
+import { withStyles,  Button, TextField, InputAdornment, IconButton, Grid, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import ClearIcon from '@material-ui/icons/Clear'
 import { withRouter } from 'react-router-dom';
@@ -11,13 +11,7 @@ import ProjectForm from './dialogs/ProjectForm';
 import ProjectListEntry from './ProjectListEntry';
 
 
-/**
- * Controlls a list of ProjectListEntrys to create a accordion for each customer.
- *
- * @see See [CustomerListEntry](#customerlistentry)
- *
- * @author [Christoph Kunz](https://github.com/christophkunz)
- */
+
 class ProjectList extends Component {
 
     constructor(props) {
@@ -27,7 +21,7 @@ class ProjectList extends Component {
         let expandedId = null;
   
         if (this.props.location.expandProject) {
-        expandedId = this.props.location.expandProject.getId();
+            expandedId = this.props.location.expandProject.getId();
         }
   
         // Init an empty state
@@ -56,7 +50,7 @@ class ProjectList extends Component {
                     this.setState({
                         projects: [],
                         loadingInProgress: false,
-                        errror: e
+                        error: e
                     })
                 );
 
@@ -147,7 +141,7 @@ class ProjectList extends Component {
                 let CurrentStateContainsValue = project.getCurrentState().toLowerCase().includes(value);
                 let CapacityContainsValue = project.getCapacity().toLowerCase().includes(value);
                 let External_PartnersContainsValue = project.getExternal_Partners().toLowerCase().includes(value);
-                let Short_descriptionContainsValue = project.getShort_Description().toLowerCase().includes(value);
+                let ShortdescriptionContainsValue = project.getShortDescription().toLowerCase().includes(value);
                 let Weekly_FlagContainsValue = project.getWeekly_Flag().toLowerCase().includes(value);
                 let Bd_Before_Lecture_PeriodContainsValue = project.getBd_before_lecture_Periode().toLowerCase().includes(value);
                 let Bd_In_Exam_PeriodContainsValue = project.getBd_In_Exam_Period().toLowerCase().includes(value);
@@ -157,7 +151,7 @@ class ProjectList extends Component {
                 let Project_Type_Id = project.getProject_Type_Id().toLowerCase().includes(value);
 
                 return CurrentStateContainsValue || CapacityContainsValue  ||  External_PartnersContainsValue ||
-                Short_descriptionContainsValue ||Weekly_FlagContainsValue || Bd_Before_Lecture_PeriodContainsValue ||Bd_In_Exam_PeriodContainsValue
+                ShortdescriptionContainsValue ||Weekly_FlagContainsValue || Bd_Before_Lecture_PeriodContainsValue ||Bd_In_Exam_PeriodContainsValue
                 ||Bd_In_Lecture_PeriodContainsValue ||Bd_Preferred__In_Lecture_PeriodContainsValue || special_room || Project_Type_Id 
 
             }),
@@ -176,7 +170,7 @@ class ProjectList extends Component {
 
     render() {
         const { classes } = this.props;
-        const { filteredProjects, projectFilter, expandedProjectID, loadingInProgress, error, showProjectForm } = this.state;
+        const { filteredProjects, projectFilter, expandedProjectId, loadingProgress, error, showProjectForm } = this.state;
         return(
             <div className={classes.root}>
                 <Grid className={classes.projectFilter} container spacing={1} justify='flex-start' alignItems='center'>

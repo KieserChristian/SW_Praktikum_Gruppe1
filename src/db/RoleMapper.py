@@ -14,11 +14,11 @@ class RoleMapper (Mapper):
         cursor.execute("SELECT * from role")
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name) in tuples:
+        for (id, creation_date, static_attribute) in tuples:
             role = Role()
             role.set_id(id)
             role.set_creation_date(creation_date)
-            role.set_name(name)
+            role.set_static_attribute(static_attribute)
             result.append(role)
 
         self._cnx.commit()
@@ -57,8 +57,8 @@ class RoleMapper (Mapper):
         for (maxid) in tuples:
             role.set_id(maxid[0]+1)
 
-        command = "INSERT INTO role (role_id, name) VALUES (%s,%s)"
-        data = (role.get_id(), role.get_name())
+        command = "INSERT INTO role (role_id, static_attributeS) VALUES (%s,%s)"
+        data = (role.get_id(), role.get_static_attribute())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -70,8 +70,8 @@ class RoleMapper (Mapper):
        
         cursor = self._cnx.cursor()
 
-        command = "UPDATE role " + "SET name=%s WHERE role_id=%s"
-        data = (role.get_name(), role.get_id())
+        command = "UPDATE role " + "SET static_attribute=%s WHERE role_id={}".format(role.get_id())
+        data = (role.get_static_attribute())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -87,3 +87,31 @@ class RoleMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
+
+
+    def get_role_by_person(self, person_id):
+        result = []
+        
+        cursor = self._cnx.cursor()
+        command = """
+        SELECT role.role_id, role.static_attribute, person.person_id, person.name
+        FROM person
+        INNER JOIN role
+        ON person.role_id=role.role_id
+        WHERE person.person_id={}
+        """.format(person_id)
+        
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for(role_id, static_attribute, person_id, person_name) in tuples:
+                person_json = {"role_id": role_id, "static_attribute": static_attribute, "person_id": person_id, "person_name": person_name}
+                result.append(person_json)
+        except IndexError:
+            print("There was no object with this id")
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+        return result
