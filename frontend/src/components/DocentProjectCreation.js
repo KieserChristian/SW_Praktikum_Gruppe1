@@ -1,4 +1,6 @@
 import React from 'react';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
+import ProjectNBO from '../api/ProjectNBO';
 import { withRouter } from 'react-router-dom';
 import { withStyles, Grid, Button, Paper, Typography, FormRow} from '@material-ui/core';
 import Table from '@material-ui/core/Table';
@@ -24,7 +26,63 @@ class DocentProjectCreation extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            name: "",
+            currentState: "",
+            capacity: "",
+            externalPartners: "",
+            shortDescription: "",
+            weeklyFlag: false,
+            bdBeforeLecturePeriod: false,
+            bdInLecturePeriod: false,
+            bdInExamPeriod: false,
+            bdPreferredInLecturePeriod: "",
+            specialRoom: null,
+            projectType: null,
+/*             language: null, */
+        };
+        this.baseState = this.state;
     }
+
+
+    addProject = () => {
+        let newProject = new ProjectNBO(this.state.name, this.state.currentState, this.state.capacity,
+            this.state.externalPartners, this.state.shortDescription, this.state.bdPreferredInLecturePeriod);
+        //newProject.setProjectId();
+        //console.log()
+        ProjectAdminAPI.getAPI().addProject(newProject).then(project => {
+            this.setState(this.baseState);
+            //this.props.onClose(project);
+        }).catch(e =>
+            this.setState({
+                loadingInProgress: false,
+                addingError: e
+            })
+        );
+        this.setState({
+            loadingInProgress: true,
+            addingError: null
+        });
+    }
+
+
+    handleChange = (event) => {
+        const value = event.target.value;
+    
+        let error = false;
+        if (value.trim().length === 0) {
+          error = true;
+        }
+    
+        this.setState({
+          [event.target.id]: event.target.value,
+          [event.target.id + 'ValidationFailed']: error,
+          [event.target.id + 'Edited']: true
+        });
+      }
+
+
+
 
     render() {
         return(
@@ -61,7 +119,7 @@ class DocentProjectCreation extends React.Component {
 
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <Checkbox/>Fachspezifisches Projekt (3 SWS/5 ECTS)
+                                                <Checkbox/>Interdisziplinäres Projekt (5 SWS/10 ECTS)
                                             </TableCell>
                                             <TableCell>
                                             -
@@ -90,6 +148,7 @@ class DocentProjectCreation extends React.Component {
                                                         label=""
                                                         variant="filled"
                                                         color="secondary"
+                                                        onChange={this.handleChange}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -216,7 +275,7 @@ class DocentProjectCreation extends React.Component {
 
                 </Grid>
                 <Grid>
-                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}}>
+                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.addProject}>
                         Absenden
                     </Button>
                 </Grid>
