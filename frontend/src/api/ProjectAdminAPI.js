@@ -73,7 +73,7 @@ export default class ProjectAdminAPI {
     #getAvailableProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/available_projects_for_student/${studentId}`;
     #addProjectURL = (projectId) => `${this.#projectServerBaseURL}/projects/${projectId}`;
     #updateProjectURL = (projectId) => `${this.#projectServerBaseURL}/projects/${projectId}`;
-    #deleteProjectURL = (projectId) => `${this.#projectServerBaseURL}/projects/${projectId}`;
+    #deleteProjectURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
 
     // ProjectType related
     #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project-type/${projectTypeId}`;
