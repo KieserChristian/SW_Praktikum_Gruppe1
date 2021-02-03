@@ -27,18 +27,21 @@ class DocentProjectCreation extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: "",
+            projectName: "",
             currentState: "",
             capacity: "",
             externalPartners: "",
             shortDescription: "",
             weeklyFlag: false,
-            bdBeforeLecturePeriod: false,
-            bdInLecturePeriod: false,
-            bdInExamPeriod: false,
+            bdBeforeLecturePeriod: "",
+            bdInLecturePeriod: "",
+            bdInExamPeriod: "",
             bdPreferredInLecturePeriod: "",
-            specialRoom: null,
+            specialRoom: "",
             projectType: null,
+            projectModule: "",
+            semester: "",
+            docent: "",
 /*             language: null, */
         };
         this.baseState = this.state;
@@ -46,8 +49,10 @@ class DocentProjectCreation extends React.Component {
 
 
     addProject = async() => {
-        let newProject = await new ProjectNBO(this.state.name, this.state.currentState, this.state.capacity,
-            this.state.externalPartners, this.state.shortDescription, this.state.bdPreferredInLecturePeriod);
+        let newProject = await new ProjectNBO(this.state.projectName, this.state.currentState, this.state.capacity,
+            this.state.externalPartners, this.state.shortDescription, this.state.bdBeforeLecturePeriod, this.state.bdInLecturePeriod,
+            this.state.bdInExamPeriod, this.state.bdPreferredInLecturePeriod, this.state.specialRoom, this.state.projectModule, this.state.semester,
+            this.state.docent);
         //newProject.setProjectId();
         //console.log()
         ProjectAdminAPI.getAPI().addProject(newProject).then(project => {
@@ -75,9 +80,7 @@ class DocentProjectCreation extends React.Component {
         }
     
         this.setState({
-          [event.target.id]: event.target.value,
-          [event.target.id + 'ValidationFailed']: error,
-          [event.target.id + 'Edited']: true
+          [event.target.id]: event.target.value
         });
       }
 
@@ -85,6 +88,8 @@ class DocentProjectCreation extends React.Component {
 
 
     render() {
+        const {projectName, capacity, externalPartners, shortDescription, bdBeforeLecturePeriod,
+            bdInLecturePeriod, bdInExamPeriod, bdPreferredInLecturePeriod, specialRoom, projectModule, semester, docent} = this.state;
         return(
             <div>
             <Paper style={{paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
@@ -124,11 +129,12 @@ class DocentProjectCreation extends React.Component {
                                                 <b>Projekttitel:</b>
                                                 <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="filled-secondary"
+                                                        id="projectName"
                                                         label=""
                                                         variant="filled"
                                                         color="secondary"
                                                         onChange={this.handleChange}
+                                                        value={projectName}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -141,10 +147,12 @@ class DocentProjectCreation extends React.Component {
                                                 <b>Modul:</b>
                                                 <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="filled-secondary"
+                                                        id="projectModule"
                                                         label=""
                                                         variant="filled"
                                                         color="secondary"
+                                                        onChange={this.handleChange}
+                                                        value={projectModule}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -157,10 +165,12 @@ class DocentProjectCreation extends React.Component {
                                                 <b>Semester:</b>
                                                 <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="filled-secondary"
+                                                        id="semester"
                                                         label=""
                                                         variant="filled"
                                                         color="secondary"
+                                                        onChange={this.handleChange}
+                                                        value={semester}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -173,10 +183,12 @@ class DocentProjectCreation extends React.Component {
                                                 <b>Betreuende(r) ProfessorIn:</b>
                                                 <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="filled-secondary"
+                                                        id="docent"
                                                         label=""
                                                         variant="filled"
                                                         color="secondary"
+                                                        onChange={this.handleChange}
+                                                        value={docent}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -189,10 +201,12 @@ class DocentProjectCreation extends React.Component {
                                                 <b>Externer Kooperationspartner:</b>
                                                 <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="filled-secondary"
+                                                        id="externalPartners"
                                                         label=""
                                                         variant="filled"
                                                         color="secondary"
+                                                        onChange={this.handleChange}
+                                                        value={externalPartners}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -211,12 +225,14 @@ class DocentProjectCreation extends React.Component {
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}><b>Inhalt (Kurzbeschreibung):</b>
                                             <form noValidate autoComplete="off">
                                                     <TextField
-                                                        id="outlined-multiline-static"
+                                                        id="shortDescription"
                                                         label=""
                                                         multiline
                                                         rows={6}
                                                         defaultValue=""
                                                         variant="outlined"
+                                                        onChange={this.handleChange}
+                                                        value={shortDescription}
                                                     />
                                                 </form>
                                             </TableCell>
@@ -238,10 +254,12 @@ class DocentProjectCreation extends React.Component {
                                         Kapazität:
                                         <form noValidate autoComplete="off">
                                             <TextField
-                                                id="filled-secondary"
+                                                id="capacity"
                                                 label=""
                                                 variant="filled"
                                                 color="secondary"
+                                                onChange={this.handleChange}
+                                                value={capacity}
                                             />
                                         </form>
                                     </TableCell>
@@ -258,10 +276,12 @@ class DocentProjectCreation extends React.Component {
                                         Anzahl Blocktage vor Beginn der Vorlesungszeit:
                                         <form noValidate autoComplete="off">
                                             <TextField
-                                                id="filled-secondary"
+                                                id="bdBeforeLecturePeriod"
                                                 label=""
                                                 variant="filled"
                                                 color="secondary"
+                                                onChange={this.handleChange}
+                                                value={bdBeforeLecturePeriod}
                                             />
                                         </form>
                                     </TableCell>
@@ -272,10 +292,12 @@ class DocentProjectCreation extends React.Component {
                                         Anzahl Blocktage in der Prüfungszeit <b>(nur inter-/trans. Projekte!)</b>:
                                         <form noValidate autoComplete="off">
                                             <TextField
-                                                id="filled-secondary"
+                                                id="bdInLecturePeriod"
                                                 label=""
                                                 variant="filled"
                                                 color="secondary"
+                                                onChange={this.handleChange}
+                                                value={bdInLecturePeriod}
                                             />
                                         </form>
                                     </TableCell>
@@ -286,19 +308,23 @@ class DocentProjectCreation extends React.Component {
                                         Anzahl Blocktage in der Vorlesungszeit (Samstage):
                                         <form noValidate autoComplete="off">
                                             <TextField
-                                                id="filled-secondary"
+                                                id="bdInExamPeriod"
                                                 label=""
                                                 variant="filled"
                                                 color="secondary"
+                                                onChange={this.handleChange}
+                                                value={bdInExamPeriod}
                                             />
                                         </form>
                                         <p>Präferierte Tage:</p>
                                         <form noValidate autoComplete="off">
                                             <TextField
-                                                id="filled-secondary"
+                                                id="bdPreferredInLecturePeriod"
                                                 label=""
                                                 variant="filled"
                                                 color="secondary"
+                                                onChange={this.handleChange}
+                                                value={bdPreferredInLecturePeriod}
                                             />
                                         </form>
                                     </TableCell>
@@ -309,10 +335,12 @@ class DocentProjectCreation extends React.Component {
                                         Besonderer Raum:
                                         <form noValidate autoComplete="off">
                                             <TextField
-                                                id="filled-secondary"
+                                                id="specialRoom"
                                                 label=""
                                                 variant="filled"
                                                 color="secondary"
+                                                onChange={this.handleChange}
+                                                value={specialRoom}
                                             />
                                         </form>
                                     </TableCell>
