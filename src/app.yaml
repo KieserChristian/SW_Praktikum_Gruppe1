@@ -1,0 +1,3 @@
+#Zeigt der Google App Engine welche python version wir verwenden
+runtime: python37
+service: backend
