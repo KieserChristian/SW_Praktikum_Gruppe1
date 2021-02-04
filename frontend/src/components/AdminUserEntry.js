@@ -6,6 +6,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import CancelIcon from '@material-ui/icons/Cancel';
 import EditIcon from '@material-ui/icons/Edit';
 import AdminUserDeletion from './dialogs/AdminUserDeletion';
+import AdminUserUpdate from './dialogs/AdminUserUpdate';
 
 
 class AdminUserEntry extends React.Component {
@@ -15,7 +16,7 @@ class AdminUserEntry extends React.Component {
         this.state = {
             personNBO: props.person,
             role: [],
-            openDialogInfo: false,
+            openDialogUpdate: false,
             showDialog: false,
             openDialogDeletion: false
         };
@@ -33,14 +34,14 @@ class AdminUserEntry extends React.Component {
         });
     }
 
-    openDialogInfo = () => {
+    openDialogUpdate = () => {
         this.setState({
-            openDialogInfo: true})
+            openDialogUpdate: true})
     }
 
-    closeDialogInfo = () => {
+    closeDialogUpdate = () => {
         this.setState({
-            openDialogInfo: false})
+            openDialogUpdate: false})
     }
 
     openDialogDeletion = () => {
@@ -80,7 +81,7 @@ class AdminUserEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { error, personNBO, role, showDialog, openDialogInfo, openDialogDeletion } = this.state;
+        const { error, personNBO, role, showDialog, openDialogUpdate, openDialogDeletion } = this.state;
         console.log(role)
         return (
             <div className={classes.root}>
@@ -104,9 +105,15 @@ class AdminUserEntry extends React.Component {
                     </Grid>
                     <Grid>
                         <React.Fragment>
-                            <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
-                                <EditIcon/>
-                            </IconButton>
+                            <AdminUserUpdate
+                                openUpdate={openDialogUpdate}
+                                onCloseProp={this.closeDialogUpdate}
+                                person={personNBO}
+                                onUpdate={this.props.onUpdate}
+                            />
+                                <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogUpdate}>
+                                    <EditIcon/>
+                                </IconButton>
                             <AdminUserDeletion
                                 openDeletion={openDialogDeletion}
                                 onCloseProp={this.closeDialogDeletion}

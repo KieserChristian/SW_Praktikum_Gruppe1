@@ -51,7 +51,7 @@ class AdminUserDeletion extends Component {
                 <DialogTitle id="alert-dialog-title">Sicherheitswarnung</DialogTitle>
             <DialogContent id="alert-dialog-description">
                 <DialogContentText id="alert-dialog-description">
-                Möchten Sie sich den User <b>"{personNBO.getName()}"</b> wirklich löschen?
+                Möchten Sie den User <b>"{personNBO.getName()}"</b> wirklich löschen?
                 </DialogContentText>    
             </DialogContent>
             <DialogActions>
