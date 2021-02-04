@@ -359,6 +359,20 @@ class StudentByGoogleMailOperations(Resource):
         stud = adm.get_student_by_google_id(google_id)
         return stud
 
+@projectTool.route('/students_by_project/<int:project_id>')
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProjectListOperations(Resource):
+    #@secured
+    def get(self, project_id):
+        """Auslesen aller Studneten eines bestimmten Projekts"""
+        adm = ProjectAdministration()
+        students_by_project = adm.get_students_by_project(project_id)
+        
+        if students_by_project != []:
+            return students_by_project, 200
+        else:
+            return 'There are no Students for that Project', 500
+
 @projectTool.route('/state/<int:state_id>')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 @projectTool.param('state_id', 'Dies ist die ID von State')
