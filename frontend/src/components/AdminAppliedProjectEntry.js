@@ -72,7 +72,7 @@ class AdminAppliedProjectEntry extends React.Component {
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} xs={12}>
-                            <Grid xs={3}> 
+                            <Grid item style={{marginBottom: 10, marginTop: 10, }} xs={3}> 
                             <React.Fragment>
                                 <ProjectDetailsDialog
                                     openInfo={openDialogInfo}
@@ -98,7 +98,7 @@ class AdminAppliedProjectEntry extends React.Component {
                                     Kapazität: {projectNBO.getCapacity()} Plätze
                                 </Typography>
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item style={{marginBottom: 10, marginTop: 10, position:'relative', left:'70%'}} xs={6}>
                             <React.Fragment>
                                 <StudentProjectRegistration
                                     openRegistration={openDialogRegistration}
