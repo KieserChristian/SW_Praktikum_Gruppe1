@@ -97,7 +97,7 @@ class PersonMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id) in tuples:
+        for (id, creation_date, name, google_id,role_id) in tuples:
             person = Person()
             person.set_id(id)
             person.set_creation_date(creation_date)
@@ -171,3 +171,12 @@ class PersonMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
+
+# """find_by_google_id getestet"""
+#
+# if (__name__ == "__main__"):
+#
+#     with PersonMapper() as mapper:
+#         result = mapper.find_by_google_id("tinaklein@freenet.de")
+#         for p in result:
+#             print(p)

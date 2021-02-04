@@ -50,7 +50,15 @@ clearProjectFilter = () => {
       projectFilter: ''
     })
 }
-
+removeProject = (projectId) => {
+  console.log(this.state.filteredProjects[0])
+  console.log(projectId)
+  let newProjects= this.state.filteredProjects.filter(project => project.getId()!== projectId)
+  console.log(newProjects.length)
+  this.setState({
+      filteredProjects: this.state.filteredProjects.filter(project => project.getId()!== projectId)
+  })
+}
 
   render(){
     const {projects, projectFilter, filteredProjects}=this.state;
@@ -83,7 +91,7 @@ clearProjectFilter = () => {
             {
             projects.length > 0 ?
               filteredProjects.map (project => 
-                <AdminAppliedProjectEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project}/>)
+                <AdminAppliedProjectEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project} onDelete={() => this.removeProject(project.getId())}/>)
                 
               :
               "Test"
