@@ -60,6 +60,7 @@ export default class ProjectAdminAPI {
     #getAllPersonsURL = () => `${this.#projectServerBaseURL}/persons`;
     #deletePersonURL = (personId) => `${this.#projectServerBaseURL}/person/${personId}`;
     #getRoleByPersonURL = (personId) => `${this.#projectServerBaseURL}/role_by_person/${personId}`;
+    #getPersonByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/person-by-google-id/${googleId}`;
 
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
@@ -137,6 +138,15 @@ export default class ProjectAdminAPI {
       })
     }
 
+    getPersonByGoogleId(googleId) {
+      return this.#fetchAdvanced(this.#getPersonByGoogleIdURL(googleId)).then((responseJSON) => {
+        let personNBO = PersonNBO.fromJSON(responseJSON);
+        return new Promise(function(resolve) {
+          resolve(personNBO)
+        })
+      })
+    }
+
     //Project
 
     getAllProjects() {
@@ -172,9 +182,9 @@ export default class ProjectAdminAPI {
     getProjectsByPerson(personId) {
       return this.#fetchAdvanced(this.#getProjectsByPersonURL(personId))
       .then((responseJSON) => {
-        let ProjectNBOs = ProjectNBO.fromJSON(responseJSON)[0];
+        let responseProject = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
-          resolve(ProjectNBOs);
+          resolve(responseProject);
         })
       })
     }
