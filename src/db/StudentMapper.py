@@ -234,3 +234,32 @@ class StudentMapper (Mapper):
 
         self._cnx.commit()
         cursor.close()
+
+
+    def get_students_by_project(self, project_id):
+        result = []
+        
+        cursor = self._cnx.cursor()
+        command = """
+        SELECT student.student_id, student.name, student.google_id, student.matriculation_number,student.course_abbreviation
+        FROM participation
+        INNER JOIN student
+        ON participation.student_id=student.student_id
+        INNER JOIN project
+        ON participation.project_id=project.project_id
+        WHERE participation.project_id={}
+        """.format(project_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        try:
+            for(student_id, name, google_id, matriculation_number, course_abbreviation) in tuples:
+                student_json = {"id": student_id, "name": name, "google_id": google_id, "matriculation_number": matriculation_number, "course_abbreviation": course_abbreviation}
+                result.append(student_json)
+        except IndexError:
+            print("There was no object with this id")
+            result = None
+
+        self._cnx.commit()
+        cursor.close()
+        return result
