@@ -6,6 +6,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
 import StudentProjectRegistration from './dialogs/StudentProjectRegistration';
+import AdminProjectDeletion from './dialogs/AdminProjectDeletion'
 
 
 class AdminAppliedProjectEntry extends React.Component {
@@ -20,6 +21,18 @@ class AdminAppliedProjectEntry extends React.Component {
            
         };
     }    
+
+    handleClick = () => {
+        this.setState({
+            showDialog: true
+        });
+    }
+
+    closeDialog = () => {
+        this.setState({
+            showDialog: false
+        });
+    }
 
     openDialogInfo = () => {
         this.setState({
@@ -41,6 +54,15 @@ class AdminAppliedProjectEntry extends React.Component {
             openDialogRegistration: false})
     }
 
+    openDialogDeletion = () => {
+        this.setState({
+            openDialogDeletion: true})
+    }
+
+    closeDialogDeletion = () => {
+        this.setState({
+            openDialogDeletion: false})
+    }   
     getProjectTypeById = () => {
         ProjectAdminAPI.getAPI().getProjectTypeById(this.state.projectNBO.getProjectTypeId())
         .then(projectTypeNBO => {
@@ -68,7 +90,7 @@ class AdminAppliedProjectEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration} = this.state;
+        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration, openDialogDeletion} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} xs={12}>
@@ -111,13 +133,13 @@ class AdminAppliedProjectEntry extends React.Component {
                                     </Button>
                             </React.Fragment>
                             <React.Fragment>
-                                <StudentProjectRegistration
-                                    openRegistration={openDialogRegistration}
-                                    onCloseProp={this.closeDialogRegistration}
+                                <AdminProjectDeletion
+                                    openDeletion={openDialogDeletion}
+                                    onCloseProp={this.closeDialogDeletion}
                                     project={projectNBO}
-                                    currentUserEmail={this.props.currentUserEmail}
+                                    onDelete={this.props.onDelete}
                                 />
-                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.openDialogRegistration}>
+                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.openDialogDeletion}>
                                         Ablehnen
                                     </Button>
                             </React.Fragment>
