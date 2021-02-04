@@ -45,7 +45,7 @@ class Person(NamedBusinessObject):
     def from_tuples (tuples=list()):
         """Umwandeln eines DB tuples in ein Python Objekt (Person())"""
         result = []
-        for (id, creation_date, name, google_id) in tuples:
+        for (id, creation_date, name, google_id,role_id) in tuples:
             person = Person()
             person.set_id(id)
             person.set_creation_date(creation_date)

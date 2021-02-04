@@ -96,7 +96,7 @@ class AdminViewEntry extends React.Component {
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} xs={12}>
-                            <Grid xs={3}> 
+                            <Grid item style={{marginBottom: 10, marginTop: 10}}xs={3}> 
                             <React.Fragment>
                                 <ProjectDetailsDialog
                                     openInfo={openDialogInfo}
@@ -109,12 +109,12 @@ class AdminViewEntry extends React.Component {
                                 </IconButton>
                             </React.Fragment>
                             </Grid>
-                            <Grid item style={{marginBottom: 10, marginTop: 10}} xs={6}>
+                            <Grid item style={{marginBottom: 10, marginTop: 10, position: 'relative', left:'10%'}} xs={6}>
                                 <Typography className={classes.heading} >
                                     <b>Projektname: {projectNBO.getName()}</b>
                                 </Typography>
                             </Grid>
-                            <Grid>
+                            <Grid item style={{marginBottom: 10, marginTop: 10, position: 'relative', left:'18%'}}>
                         <React.Fragment>
                             <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
                                 <EditIcon/>

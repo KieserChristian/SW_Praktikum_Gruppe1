@@ -72,7 +72,7 @@ class ProjectAdministration():
     def get_person_by_google_id (self, google_id):
         """Die Person mit ihrer Google-ID ausgeben"""
         with PersonMapper() as mapper:
-            return mapper.find_by_id(google_id)
+            return mapper.find_by_google_id(google_id)
 
     def get_persons_by_role_id(self, role):
         """Alle Personen mit einer bestimmten Rolle ausgeben"""
