@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import GraphicEqIcon from '@material-ui/icons/GraphicEq';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import Profile from '../dialogs/Profile';
 
 
 class Header extends React.Component {
@@ -11,15 +12,16 @@ class Header extends React.Component {
   }
 
   render() {
-    const {classes} = this.props;
+    const {classes, currentUser} = this.props;
     return (
       <div className={classes.root}>
         <AppBar style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#3f51b5'}} position="static">
           <Toolbar>
-            <IconButton edge="false"  color="inherit" aria-label="menu" component={RouterLink} to={`/login`}>
+            <IconButton edge="false" color="inherit" aria-label="menu" component={RouterLink} to={`/login`}>
               <GraphicEqIcon />
               <div>&nbsp;Promato</div>
             </IconButton>
+            <Profile align='right' currentUser={currentUser}/>
           </Toolbar>
         </AppBar>
       </div>
