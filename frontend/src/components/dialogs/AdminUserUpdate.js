@@ -75,7 +75,7 @@ class AdminUserUpdate extends Component {
     handleChangeRole = (role) =>{
         //this.state.personNBO.setRole(role);
         const newRole = Object.assign(new PersonNBO(),this.state.personNBO);
-        newRole.setRole(role)
+        newRole.setRoleId(role)
         this.setState({personNBO:newRole})
     }
     
@@ -122,7 +122,7 @@ class AdminUserUpdate extends Component {
                                 fullWidth
                                 color="secondary"
                                 onChange={this.handleChangeRole}
-                                value={personNBO.getRole()} 
+                                value={personNBO.getRoleId()} 
                             />}
                         </form>
                 </Grid>
