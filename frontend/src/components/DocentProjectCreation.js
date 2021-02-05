@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
+import FormControl, { useFormControl } from '@material-ui/core/FormControl';
 
 
 import Checkbox from '@material-ui/core/Checkbox';
@@ -128,11 +128,12 @@ class DocentProjectCreation extends React.Component {
                                     <TableBody style={{width: '50%'}}>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                            <FormControl>
-                                                    <InputLabel id="demo-simple-select-label">Projekttyp</InputLabel>
+                                            <FormControl style={{minWidth: 415}}>
+                                                <InputLabel id="projectType">Projekttyp</InputLabel>
                                                     <Select
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
+                                                    labelId="projectType"
+                                                    id="projectType"
+                                                    margin= 'dense'
                                                     value={projectType}
                                                     onChange={this.handleChange}
                                                     >
@@ -185,7 +186,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="projectName"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={projectName}
                                                     />
@@ -203,7 +205,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="projectModule"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={projectModule}
                                                     />
@@ -221,7 +224,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="semester"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={semester}
                                                     />
@@ -239,7 +243,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="docent"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={docent}
                                                     />
@@ -257,7 +262,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="externalPartners"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={externalPartners}
                                                     />
@@ -284,6 +290,8 @@ class DocentProjectCreation extends React.Component {
                                                         rows={6}
                                                         defaultValue=""
                                                         variant="outlined"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={shortDescription}
                                                     />
@@ -306,11 +314,11 @@ class DocentProjectCreation extends React.Component {
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         Kapazität:
                                         <form noValidate autoComplete="off">
-                                            <TextField
+                                            <TextField style={{maxWidth: 60}}
                                                 id="capacity"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={capacity}
                                             />
@@ -334,11 +342,11 @@ class DocentProjectCreation extends React.Component {
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         Anzahl Blocktage vor Beginn der Vorlesungszeit:
                                         <form noValidate autoComplete="off">
-                                            <TextField
+                                            <TextField style={{maxWidth: 60}}
                                                 id="bdBeforeLecturePeriod"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={bdBeforeLecturePeriod}
                                             />
@@ -350,11 +358,11 @@ class DocentProjectCreation extends React.Component {
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         Anzahl Blocktage in der Prüfungszeit <b>(nur inter-/trans. Projekte!)</b>:
                                         <form noValidate autoComplete="off">
-                                            <TextField
+                                            <TextField style={{maxWidth: 60}}
                                                 id="bdInExamPeriod"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={bdInExamPeriod}
                                             />
@@ -366,22 +374,22 @@ class DocentProjectCreation extends React.Component {
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         Anzahl Blocktage in der Vorlesungszeit (Samstage):
                                         <form noValidate autoComplete="off">
-                                            <TextField
+                                            <TextField style={{maxWidth: 60}}
                                                 id="bdInLecturePeriod"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={bdInLecturePeriod}
                                             />
                                         </form>
                                         <p>Präferierte Tage:</p>
                                         <form noValidate autoComplete="off">
-                                            <TextField
+                                            <TextField style={{maxWidth: 60}}
                                                 id="bdPreferredInLecturePeriod"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={bdPreferredInLecturePeriod}
                                             />
@@ -397,7 +405,8 @@ class DocentProjectCreation extends React.Component {
                                                 id="specialRoom"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                fullWidth
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={specialRoom}
                                             />
