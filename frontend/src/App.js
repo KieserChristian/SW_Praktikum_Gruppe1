@@ -66,7 +66,7 @@ class App extends React.Component {
 				// SECURITY NOTE: As cookies can easily be modified, only put the
 				// token (which is verified server-side) in a cookie; do not add other
 				// user information.
-        document.cookie = `token=${token}; path=/; domain=;`;
+        document.cookie = `token=${token}; path=/;`;
 
         // Set the user not before the token arrived 
         this.setState({

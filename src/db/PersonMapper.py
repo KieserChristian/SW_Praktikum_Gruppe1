@@ -97,7 +97,8 @@ class PersonMapper (Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id,role_id) in tuples:
+        try:
+            (id, creation_date, name, google_id, role_id) = tuples[0]
             person = Person()
             person.set_id(id)
             person.set_creation_date(creation_date)
@@ -105,6 +106,8 @@ class PersonMapper (Mapper):
             person.set_google_id(google_id)
             person.set_role_id(role_id)
             result = person
+        except IndexError:
+            result = None
 
         self._cnx.commit()
         cursor.close()

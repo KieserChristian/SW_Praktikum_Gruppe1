@@ -1,4 +1,4 @@
-""" from flask import request
+from flask import request
 from google.auth.transport import requests
 import google.oauth2.id_token
 
@@ -6,7 +6,7 @@ from ProjectAdministration import ProjectAdministration
 
 
 def secured(function):
-    Decorator zur Google Firebase-basierten Authentifizierung von Benutzern
+    """Decorator zur Google Firebase-basierten Authentifizierung von Benutzern
 
     Da es sich bei diesem System um eine basale Fallstudie zu Lehrzwecken handelt, wurde hier
     bewusst auf ein ausgefeiltes Berechtigungskonzept verzichtet. Vielmehr soll dieses Decorator
@@ -16,7 +16,7 @@ def secured(function):
     POLICY: Die hier demonstrierte Policy ist, dass jeder, der einen durch Firebase akzeptierten
     Account besitzt, sich an diesem System anmelden kann. Bei jeder Anmeldung werden Klarname,
     Mail-Adresse sowie die Google User ID in unserem System gespeichert bzw. geupdated. Auf diese
-    Weise könnte dann für eine Erweiterung des Systems auf jene Daten zurückgegriffen werden.
+    Weise könnte dann für eine Erweiterung des Systems auf jene Daten zurückgegriffen werden."""
     
     firebase_request_adapter = requests.Request()
 
@@ -38,30 +38,30 @@ def secured(function):
                     id_token, firebase_request_adapter)
 
                 if claims is not None:
-                    adm = BankAdministration()
+                    adm = ProjectAdministration()
 
                     google_id = claims.get("user_id")
-                    email = claims.get("email")
+                    #email = claims.get("email")
                     name = claims.get("name")
 
-                    user = adm.get_user_by_google_id(google_id)
-                    if user is not None:
-                        Fall: Der Benutzer ist unserem System bereits bekannt.
+                    person = adm.get_person_by_google_id(google_id)
+                    if person is not None:
+                        """Fall: Der Benutzer ist unserem System bereits bekannt.
                         Wir gehen davon aus, dass die google_id sich nicht ändert.
                         Wohl aber können sich der zugehörige Klarname (name) und die
                         E-Mail-Adresse ändern. Daher werden diese beiden Daten sicherheitshalber
-                        in unserem System geupdated.
-                        user.set_name(name)
-                        user.set_email(email)
-                        adm.save_user(user)
+                        in unserem System geupdated."""
+                        person.set_name(name)
+                        #user.set_email(email)
+                        adm.save_person(person)
                     else:
-                        Fall: Der Benutzer war bislang noch nicht eingelogged. 
+                        """Fall: Der Benutzer war bislang noch nicht eingelogged. 
                         Wir legen daher ein neues User-Objekt an, um dieses ggf. später
-                        nutzen zu können.
+                        nutzen zu können."""
                         
-                        user = adm.create_user(name, email, google_id)
+                        #person = adm.create_person(name, google_id, 0, 0 )
 
-                    print(request.method, request.path, "angefragt durch:", name, email)
+                    print(request.method, request.path, "angefragt durch:", name)
 
                     objects = function(*args, **kwargs)
                     return objects
@@ -75,4 +75,4 @@ def secured(function):
 
         return '', 401  # UNAUTHORIZED !!!
 
-    return wrapper """
+    return wrapper
