@@ -61,6 +61,7 @@ export default class ProjectAdminAPI {
     #deletePersonURL = (personId) => `${this.#projectServerBaseURL}/person/${personId}`;
     #updatePersonURL = (personId) => `${this.#projectServerBaseURL}/person`;
     #getRoleByPersonURL = (personId) => `${this.#projectServerBaseURL}/role_by_person/${personId}`;
+    #addPersonURL = () => `${this.#projectServerBaseURL}/persons`;
     #getPersonByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/person-by-google-id/${googleId}`;
 
     // Project related
@@ -68,7 +69,6 @@ export default class ProjectAdminAPI {
     #getNumberEctsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-ects-by-project/${projectId}`;
     #getNumberSwsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-sws-by-project/${projectId}`;
     #getProjectsByPersonURL = (personId) => `${this.#projectServerBaseURL}/projects-by-person/${personId}`;
-    //#getAcceptedProjectsURL  = (projectId) => `${this.#projectServerBaseURL}/
     #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
     #getProjectsByCurrentState = (currentState) => `${this.#projectServerBaseURL}/projects_by_state/${currentState}`;
     #getRegisteredProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/registered_projects_of_student/${studentId}`;
@@ -76,6 +76,7 @@ export default class ProjectAdminAPI {
     #addProjectURL = () => `${this.#projectServerBaseURL}/projects`;
     #deleteProjectURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
     #updateProjectURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
+
     // ProjectType related
     #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project-type/${projectTypeId}`;
     #getProjectTypeOfProjectURL = (projectId) => `${this.#projectServerBaseURL}/project-type-of-project/${projectId}`;
@@ -86,6 +87,7 @@ export default class ProjectAdminAPI {
     // Student related
     #getStudentByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/student-by-google-id/${googleId}`;
     #getAllStudentsURL = () => `${this.#projectServerBaseURL}/students`;
+    #addStudentURL = () => `${this.#projectServerBaseURL}/students`;
 
     static getAPI() {
         if (this.#api == null) {
@@ -107,7 +109,23 @@ export default class ProjectAdminAPI {
     })
 
     //Person
-    
+
+    addPerson(personNBO) {
+      return this.#fetchAdvanced(this.#addPersonURL(), {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(personNBO)
+      }).then((responseJSON) => {
+        let personNBO = PersonNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(personNBO);
+        })
+      })
+    }  
+
     getAllPersons() {
       return this.#fetchAdvanced(this.#getAllPersonsURL(), {credentials: 'include'})
       .then((responseJSON) => {
@@ -404,6 +422,22 @@ export default class ProjectAdminAPI {
     }
 
     //Student
+
+    addStudent(studentNBO) {
+      return this.#fetchAdvanced(this.#addStudentURL(), {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(studentNBO)
+      }).then((responseJSON) => {
+        let studentNBO = StudentNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(studentNBO);
+        })
+      })
+    }
 
     getStudentByGoogleId(googleId) {
       return this.#fetchAdvanced(this.#getStudentByGoogleIdURL(googleId), {credentials: 'include'}).then((responseJSON) => {
