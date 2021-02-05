@@ -67,7 +67,7 @@ removeProject = (projectId) => {
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
           <Grid container spacing={1} justify='flex-start' alignItems='center'>
             <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">
-              Eingereichte Projekte
+              Alle eingereichten Projekte
             </Button>
           </Grid>
           <Grid style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
