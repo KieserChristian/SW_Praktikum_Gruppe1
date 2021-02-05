@@ -109,6 +109,7 @@ class AdminUserEntry extends React.Component {
                                 openUpdate={openDialogUpdate}
                                 onCloseProp={this.closeDialogUpdate}
                                 person={personNBO}
+                                role={role}
                                 onUpdate={this.props.onUpdate}
                             />
                                 <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogUpdate}>

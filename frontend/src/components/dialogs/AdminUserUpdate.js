@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
 class AdminUserUpdate extends Component {
     constructor (props) {
@@ -22,10 +23,13 @@ class AdminUserUpdate extends Component {
             personNBO: props.person,
             loadingInProgress: null,
             addingError: null,
-            /* personName: "",
+            personName: "",
             GoogleId: "",
-            role: "", */
+            role: "",
         };
+        //this.handleChangePersonName = this.handleChangePersonName.bind(this),
+        //this.handleChangeGoogleId = this.handleChangeGoogleId.bind(this),
+        //this.handleChangeRole = this.handleChangeRole.bind(this)
     }
 
     onDialogClose = () => {
@@ -53,61 +57,75 @@ class AdminUserUpdate extends Component {
         alert("Daten erfolgreich geändert!");
         this.onDialogClose();
     } 
+
+    handleChangePersonName = (personName) =>{
+        //this.state.personNBO.setName(personName);
+        const newPerson = Object.assign(new PersonNBO(),this.state.personNBO);
+        newPerson.setName(personName)
+        this.setState({personNBO:newPerson})
+    }
+
+    handleChangeGoogleId = (GoogleId) =>{
+        //this.state.personNBO.setGoogleId(GoogleId);
+        const newGoogleId = Object.assign(new PersonNBO(),this.state.personNBO);
+        newGoogleId.setGoogleId(GoogleId)
+        this.setState({personNBO:newGoogleId})
+    }
+
+    handleChangeRole = (role) =>{
+        //this.state.personNBO.setRole(role);
+        const newRole = Object.assign(new PersonNBO(),this.state.personNBO);
+        newRole.setRole(role)
+        this.setState({personNBO:newRole})
+    }
     
     render() {
         const {openUpdate} = this.props;
-        const {personNBO} = this.state;
+        const {personNBO, role, personName, GoogleId} = this.state;
         return(
             <Dialog open={openUpdate}>
                 <DialogTitle id="alert-dialog-title">Daten ändern</DialogTitle>
             <DialogContent id="alert-dialog-description">
 
-                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="center">
-                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                        <b>Name:</b>
+                <Grid style={{paddingBottom: 10, paddingTop: 10, paddingLeft: 10, paddingRight: 10, marginTop: 10, backgroundColor: '#e0e0e0'}} variant="contained" padding="dense" align="left">
                         <form noValidate autoComplete="off">
-                            {/*<TextField
+                            {<TextField
                                 id="personName"
-                                label=""
+                                label="Name"
                                 variant="filled"
+                                fullWidth
                                 color="secondary"
-                                onChange={this.handleChange}
-                                value={personName}
-                            /> */}
+                                onChange={this.handleChangePersonName}
+                                value={personNBO.getName()}
+                            />}
                         </form>
-                    </TableCell>
-                </TableRow>
-                <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                        <b>GoogleId:</b>
+                </Grid>
+                <Grid style={{paddingBottom: 10, paddingTop: 10, paddingLeft: 10, paddingRight:10, marginTop: 10, backgroundColor: '#e0e0e0'}} variant="contained" padding="dense" align="left">
                         <form noValidate autoComplete="off">
-                            {/* <TextField
+                            {<TextField
                                 id="GoogleId"
-                                label=""
+                                label="GoogleId"
                                 variant="filled"
+                                fullWidth
                                 color="secondary"
-                                onChange={this.handleChange}
-                                value={GoogleId}
-                            /> */}
+                                onChange={this.handleChangeGoogleId}
+                                value={personNBO.getGoogleId()}
+                            />}
                         </form>
-                    </TableCell>
-                </TableRow>
-                <TableRow style={{minwidth: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
-                    <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                        <b>Rolle:</b>
+                </Grid>
+                <Grid style={{paddingBottom: 10, paddingTop: 10, paddingLeft: 10, paddingRight: 10, marginTop: 10, backgroundColor: '#e0e0e0'}} variant="contained" padding="dense" align="left">
                         <form noValidate autoComplete="off">
-                            {/* {<TextField
+                            {<TextField
                                 id="Role"
-                                label=""
+                                label="Rolle"
                                 variant="filled"
+                                fullWidth
                                 color="secondary"
-                                onChange={this.handleChange}
-                                // value={role} */}
-                            {/* />} */}
+                                onChange={this.handleChangeRole}
+                                value={personNBO.getRole()} 
+                            />}
                         </form>
-                    </TableCell>
-
-                                        </TableRow>
+                </Grid>
 
                 <DialogContentText id="alert-dialog-description">
                 Möchten Sie die Daten des Users <b>"{personNBO.getName()}"</b> wirklich ändern?
