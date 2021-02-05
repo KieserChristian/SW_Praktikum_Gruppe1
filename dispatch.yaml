@@ -1,0 +1,10 @@
+dispatch:
+
+    - url: "sw-praktikum-gruppe1.ew.r.appspot.com/*"
+      service: frontend
+  
+    - url: "backend.sw-praktikum-gruppe1.ew.r.appspot.com/*"
+      service: backend
+
+    - url: "default.sw-praktikum-gruppe1.ew.r.appspot.com.com/*"
+      service: default

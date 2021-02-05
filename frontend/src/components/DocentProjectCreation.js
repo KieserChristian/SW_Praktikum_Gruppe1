@@ -10,6 +10,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl, { useFormControl } from '@material-ui/core/FormControl';
+
 
 import Checkbox from '@material-ui/core/Checkbox';
 /* import FormGroup from '@material-ui/core/FormGroup';
@@ -28,7 +33,7 @@ class DocentProjectCreation extends React.Component {
         super(props)
         this.state = {
             projectName: "",
-            currentState: "",
+            currentState: "Neu",
             capacity: "",
             externalPartners: "",
             shortDescription: "",
@@ -53,8 +58,20 @@ class DocentProjectCreation extends React.Component {
             this.state.externalPartners, this.state.shortDescription, this.state.bdBeforeLecturePeriod, this.state.bdInLecturePeriod,
             this.state.bdInExamPeriod, this.state.bdPreferredInLecturePeriod, this.state.specialRoom, this.state.projectModule, this.state.semester,
             this.state.docent);
+            newProject.setName(this.state.projectName)
+            newProject.setState(this.state.currentState)
+            newProject.setCapacity(this.state.capacity)
+            newProject.setExternalPartners(this.state.externalPartners)
+            newProject.setShortDescription(this.state.shortDescription)
+            newProject.setBDbeforeLecture(this.state.bdBeforeLecturePeriod)
+            newProject.setBDinLecture(this.state.bdInLecturePeriod)
+            newProject.setBDinExam(this.state.bdInExamPeriod)
+            newProject.setBDpreferredInLecture(this.state.bdPreferredInLecturePeriod)
+            newProject.setSpecialRoom(this.state.specialRoom)
+
+
         //newProject.setProjectId();
-        //console.log()
+        console.log(newProject)
         ProjectAdminAPI.getAPI().addProject(newProject).then(project => {
             this.setState(this.baseState);
             //this.props.onClose(project);
@@ -75,10 +92,11 @@ class DocentProjectCreation extends React.Component {
         const value = event.target.value;
     
         let error = false;
-        if (value.trim().length === 0) {
-          error = true;
+        if(typeof value === 'string'){
+            if (value.trim().length === 0) {
+            error = true;
+            }
         }
-    
         this.setState({
           [event.target.id]: event.target.value
         });
@@ -89,7 +107,7 @@ class DocentProjectCreation extends React.Component {
 
     render() {
         const {projectName, capacity, externalPartners, shortDescription, bdBeforeLecturePeriod,
-            bdInLecturePeriod, bdInExamPeriod, bdPreferredInLecturePeriod, specialRoom, projectModule, semester, docent} = this.state;
+            bdInLecturePeriod, bdInExamPeriod, bdPreferredInLecturePeriod, specialRoom, projectModule, semester, docent, projectType, weeklyFlag} = this.state;
         return(
             <div>
             <Paper style={{paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
@@ -110,17 +128,53 @@ class DocentProjectCreation extends React.Component {
                                     <TableBody style={{width: '50%'}}>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <Checkbox/>Fachspezifisches Projekt (3 SWS/5 ECTS)
+                                            <FormControl style={{minWidth: 415}}>
+                                                <InputLabel id="projectType">Projekttyp</InputLabel>
+                                                    <Select
+                                                    labelId="projectType"
+                                                    id="projectType"
+                                                    margin= 'dense'
+                                                    value={projectType}
+                                                    onChange={this.handleChange}
+                                                    >
+                                                    <MenuItem value={1}>Transdisziplinäres Projekt (10 SWS/20 ECTS; Laufzeit: 2 Semester)</MenuItem>
+                                                    <MenuItem value={2}>Interdisziplinäres Projekt (5 SWS/10 ECTS)</MenuItem>
+                                                    <MenuItem value={3}>Fachspezifisches Projekt (3 SWS/5 ECTS)</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+{/* 
+                                            <input
+                                                    type="checkbox"
+                                                    label="Fachspezifisches Projekt (3 SWS/5 ECTS)"
+                                                    defaultChecked={this.state.complete}
+                                                    ref="complete"
+                                                    onChange={this.handleChange}
+                                                />
+                                                Fachspezifisches Projekt (3 SWS/5 ECTS)
                                             </TableCell>
                                         </TableRow>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <Checkbox/>Interdisziplinäres Projekt (5 SWS/10 ECTS)
+                                            <input
+                                                    type="checkbox"
+                                                    label="Interdisziplinäres Projekt (5 SWS/10 ECTS)"
+                                                    defaultChecked={this.state.complete}
+                                                    ref="complete"
+                                                    onChange={this.handleChange}
+                                                />
+                                                Interdisziplinäres Projekt (5 SWS/10 ECTS)
                                             </TableCell>
                                         </TableRow>
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                                <Checkbox/>Transdisziplinäres Projekt (10 SWS/20 ECTS; Laufzeit: 2 Semester)
+                                            <input
+                                                    type="checkbox"
+                                                    label=" Transdisziplinäres Projekt (10 SWS/20 ECTS; Laufzeit: 2 Semester)"
+                                                    defaultChecked={this.state.complete}
+                                                    ref="complete"
+                                                    onChange={this.handleChange}
+                                                />
+                                                Transdisziplinäres Projekt (10 SWS/20 ECTS; Laufzeit: 2 Semester) */}
                                             </TableCell>
                                         </TableRow>
 
@@ -132,7 +186,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="projectName"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={projectName}
                                                     />
@@ -150,7 +205,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="projectModule"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={projectModule}
                                                     />
@@ -168,7 +224,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="semester"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={semester}
                                                     />
@@ -186,7 +243,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="docent"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={docent}
                                                     />
@@ -204,7 +262,8 @@ class DocentProjectCreation extends React.Component {
                                                         id="externalPartners"
                                                         label=""
                                                         variant="filled"
-                                                        color="secondary"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={externalPartners}
                                                     />
@@ -231,6 +290,8 @@ class DocentProjectCreation extends React.Component {
                                                         rows={6}
                                                         defaultValue=""
                                                         variant="outlined"
+                                                        fullWidth
+                                                        margin= 'dense'
                                                         onChange={this.handleChange}
                                                         value={shortDescription}
                                                     />
@@ -253,11 +314,11 @@ class DocentProjectCreation extends React.Component {
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         Kapazität:
                                         <form noValidate autoComplete="off">
-                                            <TextField
+                                            <TextField style={{maxWidth: 60}}
                                                 id="capacity"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={capacity}
                                             />
@@ -267,7 +328,13 @@ class DocentProjectCreation extends React.Component {
 
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
-                                        <Checkbox/>Wöchentliche Termine (Präsenzzeit / studentische Gruppenmeetings)
+                                        <input
+                                            type="checkbox"
+                                            label="Wöchentliche Termine (Präsenzzeit / studentische Gruppenmeetings)"
+                                            value={weeklyFlag}
+                                            ref="complete"
+                                            onChange={this.handleChange}
+                                        />Wöchentliche Termine (Präsenzzeit / studentische Gruppenmeetings)
                                     </TableCell>
                                 </TableRow>
                                 
@@ -275,11 +342,11 @@ class DocentProjectCreation extends React.Component {
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         Anzahl Blocktage vor Beginn der Vorlesungszeit:
                                         <form noValidate autoComplete="off">
-                                            <TextField
+                                            <TextField style={{maxWidth: 60}}
                                                 id="bdBeforeLecturePeriod"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={bdBeforeLecturePeriod}
                                             />
@@ -291,13 +358,13 @@ class DocentProjectCreation extends React.Component {
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         Anzahl Blocktage in der Prüfungszeit <b>(nur inter-/trans. Projekte!)</b>:
                                         <form noValidate autoComplete="off">
-                                            <TextField
-                                                id="bdInLecturePeriod"
+                                            <TextField style={{maxWidth: 60}}
+                                                id="bdInExamPeriod"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
-                                                value={bdInLecturePeriod}
+                                                value={bdInExamPeriod}
                                             />
                                         </form>
                                     </TableCell>
@@ -307,22 +374,22 @@ class DocentProjectCreation extends React.Component {
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         Anzahl Blocktage in der Vorlesungszeit (Samstage):
                                         <form noValidate autoComplete="off">
-                                            <TextField
-                                                id="bdInExamPeriod"
+                                            <TextField style={{maxWidth: 60}}
+                                                id="bdInLecturePeriod"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
-                                                value={bdInExamPeriod}
+                                                value={bdInLecturePeriod}
                                             />
                                         </form>
                                         <p>Präferierte Tage:</p>
                                         <form noValidate autoComplete="off">
-                                            <TextField
+                                            <TextField style={{maxWidth: 60}}
                                                 id="bdPreferredInLecturePeriod"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={bdPreferredInLecturePeriod}
                                             />
@@ -338,7 +405,8 @@ class DocentProjectCreation extends React.Component {
                                                 id="specialRoom"
                                                 label=""
                                                 variant="filled"
-                                                color="secondary"
+                                                fullWidth
+                                                margin= 'dense'
                                                 onChange={this.handleChange}
                                                 value={specialRoom}
                                             />

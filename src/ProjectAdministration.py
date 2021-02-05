@@ -137,6 +137,11 @@ class ProjectAdministration():
         with StudentMapper() as mapper:
             return mapper.find_by_google_id(google_id)
 
+    def get_students_by_project(self, project_id):
+        """Alle Teilnahmen des Studenten auslesen"""
+        with StudentMapper() as mapper:
+            return mapper.get_students_by_project(project_id)
+
     """
     Semester-Methoden
     """

@@ -59,8 +59,10 @@ export default class ProjectAdminAPI {
     // Person related
     #getAllPersonsURL = () => `${this.#projectServerBaseURL}/persons`;
     #deletePersonURL = (personId) => `${this.#projectServerBaseURL}/person/${personId}`;
+    #updatePersonURL = (personId) => `${this.#projectServerBaseURL}/person`;
     #getRoleByPersonURL = (personId) => `${this.#projectServerBaseURL}/role_by_person/${personId}`;
     #addPersonURL = () => `${this.#projectServerBaseURL}/persons`;
+    #getPersonByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/person-by-google-id/${googleId}`;
 
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
@@ -145,6 +147,17 @@ export default class ProjectAdminAPI {
       })
     }
 
+    updatePerson(personId) {
+      return this.#fetchAdvanced(this.#updatePersonURL(personId), {
+        method: 'PUT'
+      }).then((responseJSON) => {
+        let responsePerson = PersonNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(responsePerson);
+        })
+      })
+    }
+
     getRoleByPerson(personId) {
       return this.#fetchAdvanced(this.#getRoleByPersonURL(personId))
       .then((responseJSON) => {
@@ -152,6 +165,15 @@ export default class ProjectAdminAPI {
         console.log(RoleNBOs)
         return new Promise(function (resolve) {
           resolve(RoleNBOs);
+        })
+      })
+    }
+
+    getPersonByGoogleId(googleId) {
+      return this.#fetchAdvanced(this.#getPersonByGoogleIdURL(googleId)).then((responseJSON) => {
+        let personNBO = PersonNBO.fromJSON(responseJSON);
+        return new Promise(function(resolve) {
+          resolve(personNBO)
         })
       })
     }
@@ -191,9 +213,9 @@ export default class ProjectAdminAPI {
     getProjectsByPerson(personId) {
       return this.#fetchAdvanced(this.#getProjectsByPersonURL(personId))
       .then((responseJSON) => {
-        let ProjectNBOs = ProjectNBO.fromJSON(responseJSON)[0];
+        let responseProject = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
-          resolve(ProjectNBOs);
+          resolve(responseProject);
         })
       })
     }
