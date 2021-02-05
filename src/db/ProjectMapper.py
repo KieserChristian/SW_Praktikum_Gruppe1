@@ -265,7 +265,7 @@ class ProjectMapper (Mapper):
         
         cursor = self._cnx.cursor()
         command = """
-        SELECT project.project_id, project.name, person.person_id, person.name
+        SELECT project.project_id, project.name, person.person_id
         FROM project
         INNER JOIN person
         ON project.person_id=person.person_id
@@ -276,8 +276,8 @@ class ProjectMapper (Mapper):
         tuples = cursor.fetchall()
 
         try:
-            for(project_id, project_name, person_id, person_name) in tuples:
-                person_json = {"project_id": project_id, "project_name": project_name, "person_id": person_id, "person_name": person_name}
+            for(project_id, name, person_id) in tuples:
+                person_json = {"id": project_id, "name": name, "person_id": person_id}
                 result.append(person_json)
         except IndexError:
             print("There was no object with this id")

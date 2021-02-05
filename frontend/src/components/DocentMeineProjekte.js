@@ -1,9 +1,6 @@
 import React from 'react';
 import { Button, Grid, Typography, withStyles} from '@material-ui/core';
 import { withRouter, Link } from 'react-router-dom';
-import InfoIcon from '@material-ui/icons/Info';
-import IconButton from '@material-ui/core/IconButton';
-import DocentView from './DocentView';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
 
 
@@ -17,20 +14,18 @@ class DocentMeineProjekte extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            PersonNBOs: props.person,
             ProjectNBOs: props.project,
-            numberEcts: null,
             projectType: null,
         };
     }
 
 
 
-    getProjectTypeByProject = () => {
-        ProjectAdminAPI.getAPI().getProjectTypeByProject(this.state.ProjectNBOs.getId())
-        .then(projectTypeAPI => {
+    getProjectTypeById = () => {
+        ProjectAdminAPI.getAPI().getProjectTypeById(this.state.projectNBO.getProjectTypeId())
+        .then(projectTypeNBO => {
             this.setState({
-            projectType: projectTypeAPI,
+            projectType: projectTypeNBO,
             loadingProgress: false,
             error: null
           });
@@ -49,21 +44,31 @@ class DocentMeineProjekte extends React.Component {
 
 
 
+    componentDidMount() {
+    this.getProjectTypeById();
+    }
+
+
+
 
     render() {
         const { classes } = this.props;
-        const { error, PersonNBOs, numberEcts, ProjectNBOs, StudentNBOs, projectType} = this.state;
+        const { error, ProjectNBOs, projectType} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} justify='space-between' alignItems='center'>
 
                             <Grid item style={{marginBottom: 10, marginTop: 10}}>
                                 <Typography className={classes.heading} >
-                                    { ProjectNBOs.getPersonId() }
+                                    { ProjectNBOs.getName() }
                                     
                                 </Typography>
                                 <Typography className={classes.heading} >
-                                    { ProjectNBOs.getName() }
+                                    { projectType.getNumberEcts() }
+                                    
+                                </Typography>
+                                <Typography className={classes.heading} >
+                                    { projectType.getName() }
                                     
                                 </Typography>
                                
