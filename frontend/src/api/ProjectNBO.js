@@ -104,48 +104,21 @@ export default class ProjectNBO extends NamedBusinessObject {
         return this.project_type_id;
     }
 
-    setProjectTypeId(aProjectTypeId) {
-        this.project_type_id = aProjectTypeId;
-    }
-
     getPersonId() {
         return this.person_id;
-    }
 
-    setPersonId(aPersonId) {
-        this.person_id = aPersonId;
     }
-
     getModuleId() {
         return this.module_id;
-    }
-
-    setModuleId(aModuleId) {
-        this.module_id = aModuleId;
     }
 
     getSemesterId() {
         return this.semester_id;
     }
 
-    setSemesterId(aSemesterId) {
-        this.semester_id = aSemesterId;
-    }
-
-    setBDinExam(aBDinExam) {
-        this.bd_in_exam_period = aBDinExam;
-    }
-
-    setBDpreferredInLecture(aBDpreferredInLecture) {
-        this.bd_preferred_in_lecture_period = aBDpreferredInLecture;
-    }
-
-    setSpecialRoom(aRoom) {
-        this.special_room = aRoom;
-    }
-
-    // Gibt ein Array der PersonNBOs von den gegebenen JSON Strukturen zurück
-
+       /** Gibt ein Array der PersonNBOs von den gegebenen JSON Strukturen zurück
+     * 
+     */
     static fromJSON(project) {
         let result = [];
 
