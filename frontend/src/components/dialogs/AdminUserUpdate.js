@@ -5,6 +5,7 @@ import Dialog from '@material-ui/core/Dialog';
 import { default as DialogContent, default as DialogContentText, } from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PersonNBO from '../../api/PersonNBO';
+import RoleNBO from '../../api/RoleNBO';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,12 +21,12 @@ class AdminUserUpdate extends Component {
         super(props)
 
         this.state = {
-            personNBO: props.person,
+            personNBO: this.props.person,
+            roleNBO: this.props.role,
             loadingInProgress: null,
             addingError: null,
             personName: "",
             GoogleId: "",
-            role: "",
         };
         //this.handleChangePersonName = this.handleChangePersonName.bind(this),
         //this.handleChangeGoogleId = this.handleChangeGoogleId.bind(this),
@@ -74,14 +75,18 @@ class AdminUserUpdate extends Component {
 
     handleChangeRole = (role) =>{
         //this.state.personNBO.setRole(role);
-        const newRole = Object.assign(new PersonNBO(),this.state.personNBO);
-        newRole.setRoleId(role)
-        this.setState({personNBO:newRole})
+        /*const newRole = Object.assign(new RoleNBO(),this.state.roleNBO);
+        newRole.setStaticAttribute(role)*/
+        this.setState({roleNBO:role})
+    }
+
+    componentDidMount() {
+    
     }
     
     render() {
         const {openUpdate} = this.props;
-        const {personNBO, role, personName, GoogleId} = this.state;
+        const {personNBO, roleNBO, personName, GoogleId} = this.state;
         return(
             <Dialog open={openUpdate}>
                 <DialogTitle id="alert-dialog-title">Daten ändern</DialogTitle>
@@ -95,8 +100,8 @@ class AdminUserUpdate extends Component {
                                 variant="filled"
                                 fullWidth
                                 color="secondary"
-                                onChange={this.handleChangePersonName}
-                                value={personNBO.getName()}
+                                onChange={(e) => this.handleChangePersonName(e.target.value)}
+                                value={this.state.personNBO.getName()}
                             />}
                         </form>
                 </Grid>
@@ -108,8 +113,8 @@ class AdminUserUpdate extends Component {
                                 variant="filled"
                                 fullWidth
                                 color="secondary"
-                                onChange={this.handleChangeGoogleId}
-                                value={personNBO.getGoogleId()}
+                                onChange={(e) => this.handleChangeGoogleId(e.target.value)}
+                                value={this.state.personNBO.getGoogleId()}
                             />}
                         </form>
                 </Grid>
@@ -121,8 +126,8 @@ class AdminUserUpdate extends Component {
                                 variant="filled"
                                 fullWidth
                                 color="secondary"
-                                onChange={this.handleChangeRole}
-                                value={personNBO.getRoleId()} 
+                                onChange={(e) => this.handleChangeRole(e.target.value)}
+                                value={this.state.roleNBO} 
                             />}
                         </form>
                 </Grid>

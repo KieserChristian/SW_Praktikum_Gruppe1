@@ -109,7 +109,7 @@ export default class ProjectAdminAPI {
     //Person
     
     getAllPersons() {
-      return this.#fetchAdvanced(this.#getAllPersonsURL())
+      return this.#fetchAdvanced(this.#getAllPersonsURL(), {credentials: 'include'})
       .then((responseJSON) => {
         let PersonNBOs = PersonNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
@@ -120,7 +120,7 @@ export default class ProjectAdminAPI {
 
     deletePerson(personId) {
       return this.#fetchAdvanced(this.#deletePersonURL(personId), {
-        method: 'DELETE'
+        method: 'DELETE', credentials: 'include'
       }).then((responseJSON) => {
         let responsePerson = PersonNBO.fromJSON(responseJSON)[0];
         return new Promise(function(resolve) {
@@ -131,7 +131,7 @@ export default class ProjectAdminAPI {
 
     updatePerson(personId) {
       return this.#fetchAdvanced(this.#updatePersonURL(personId), {
-        method: 'PUT'
+        method: 'PUT', credentials: 'include'
       }).then((responseJSON) => {
         let responsePerson = PersonNBO.fromJSON(responseJSON)[0];
         return new Promise(function(resolve) {
@@ -141,7 +141,7 @@ export default class ProjectAdminAPI {
     }
 
     getRoleByPerson(personId) {
-      return this.#fetchAdvanced(this.#getRoleByPersonURL(personId))
+      return this.#fetchAdvanced(this.#getRoleByPersonURL(personId), {credentials: 'include'})
       .then((responseJSON) => {
         let RoleNBOs = RoleNBO.fromJSON(responseJSON)[0];
         console.log(RoleNBOs)
@@ -152,7 +152,7 @@ export default class ProjectAdminAPI {
     }
 
     getPersonByGoogleId(googleId) {
-      return this.#fetchAdvanced(this.#getPersonByGoogleIdURL(googleId)).then((responseJSON) => {
+      return this.#fetchAdvanced(this.#getPersonByGoogleIdURL(googleId), {credentials: 'include'}).then((responseJSON) => {
         let personNBO = PersonNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
           resolve(personNBO)
@@ -163,7 +163,7 @@ export default class ProjectAdminAPI {
     //Project
 
     getAllProjects() {
-      return this.#fetchAdvanced(this.#getAllProjectsURL())
+      return this.#fetchAdvanced(this.#getAllProjectsURL(), {credentials: 'include'})
       .then((responseJSON) => {
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
@@ -173,7 +173,7 @@ export default class ProjectAdminAPI {
     }
 
     getProjectById(projectId) {
-      return this.#fetchAdvanced(this.#getProjectByIdURL(projectId))
+      return this.#fetchAdvanced(this.#getProjectByIdURL(projectId), {credentials: 'include'})
       .then((responseJSON) => {
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
@@ -183,7 +183,7 @@ export default class ProjectAdminAPI {
     }
 
     getProjectsByCurrentState(currentState) {
-      return this.#fetchAdvanced(this.#getProjectsByCurrentState(currentState))
+      return this.#fetchAdvanced(this.#getProjectsByCurrentState(currentState), {credentials: 'include'})
       .then((responseJSON) => {
         let ProjectNBOs = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
@@ -193,7 +193,7 @@ export default class ProjectAdminAPI {
     }
 
     getProjectsByPerson(personId) {
-      return this.#fetchAdvanced(this.#getProjectsByPersonURL(personId))
+      return this.#fetchAdvanced(this.#getProjectsByPersonURL(personId), {credentials: 'include'})
       .then((responseJSON) => {
         let responseProject = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
@@ -203,7 +203,7 @@ export default class ProjectAdminAPI {
     }
 
     getAvailableProjectsOfStudent(studentId) {
-      return this.#fetchAdvanced(this.#getAvailableProjectsOfStudentURL(studentId))
+      return this.#fetchAdvanced(this.#getAvailableProjectsOfStudentURL(studentId), {credentials: 'include'})
       .then((responseJSON) => {
         let responseProject = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
@@ -213,7 +213,7 @@ export default class ProjectAdminAPI {
     }
 
     getRegisteredProjectsOfStudent(studentId) {
-      return this.#fetchAdvanced(this.#getRegisteredProjectsOfStudentURL(studentId))
+      return this.#fetchAdvanced(this.#getRegisteredProjectsOfStudentURL(studentId), {credentials: 'include'})
       .then((responseJSON) => {
         let responseProject = ProjectNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
@@ -224,7 +224,8 @@ export default class ProjectAdminAPI {
 
     addProject(projectNBO) {
       return this.#fetchAdvanced(this.#addProjectURL(), {
-        method: 'POST',
+        method: 'POST', 
+        credentials: 'include',
         headers: {
           'Accept': 'application/json, text',
           'Content-type': 'application/json',
@@ -241,6 +242,7 @@ export default class ProjectAdminAPI {
     updateProject(projectNBO) {
       return this.#fetchAdvanced(this.#updateProjectURL(projectNBO.get_Id()),{
         method: 'PUT',
+        credentials: 'include',
         headers: {
           'Accept': 'application/json, text',
           'Content-type': 'application/json',
@@ -257,6 +259,7 @@ export default class ProjectAdminAPI {
     deleteProject(projectId) {
       return this.#fetchAdvanced(this.#deleteProjectURL(projectId), {
         method: 'DELETE',
+        credentials: 'include'
 
       }).then((responseJSON) => {
         let responseProjectNBO = ProjectNBO.fromJSON(responseJSON)[0];
@@ -269,7 +272,7 @@ export default class ProjectAdminAPI {
     //ProjectType
 
     getProjectTypeById(projectTypeId) {
-      return this.#fetchAdvanced(this.#getProjectTypeByIdURL(projectTypeId))
+      return this.#fetchAdvanced(this.#getProjectTypeByIdURL(projectTypeId), {credentials: 'include'})
       .then((responseJSON) => {
         let ProjectTypeNBOs = ProjectTypeNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
@@ -279,7 +282,7 @@ export default class ProjectAdminAPI {
     }
 
     getProjectTypeOfProject(projectId) {
-      return this.#fetchAdvanced(this.#getProjectTypeOfProjectURL(projectId)).then((responseJSON) => {
+      return this.#fetchAdvanced(this.#getProjectTypeOfProjectURL(projectId), {credentials: 'include'}).then((responseJSON) => {
           let responseProjectType = ProjectTypeNBO.fromJSON(responseJSON)[0];
           return new Promise(function (resolve) {
               resolve(responseProjectType)
@@ -290,7 +293,7 @@ export default class ProjectAdminAPI {
     // Grading
 
     getAllGradings() {
-      return this.#fetchAdvanced(this.#getAllGradingsURL()).then((responseJSON) => {
+      return this.#fetchAdvanced(this.#getAllGradingsURL(), {credentials: 'include'}).then((responseJSON) => {
         let gradingBOs = GradingBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(gradingBOs)
@@ -301,7 +304,7 @@ export default class ProjectAdminAPI {
     //Module
     
     getModuleByProject(projectId) {
-      return this.#fetchAdvanced(this.#getModuleByProjectURL(projectId)).then((responseJSON) => {
+      return this.#fetchAdvanced(this.#getModuleByProjectURL(projectId), {credentials: 'include'}).then((responseJSON) => {
           let responseModule = ModuleNBO.fromJSON(responseJSON)[0];
           return new Promise(function (resolve) {
               resolve(responseModule)
@@ -310,7 +313,7 @@ export default class ProjectAdminAPI {
     };
 
     getModuleById(moduleId) {
-      return this.#fetchAdvanced(this.#getModuleByIdURL(moduleId))
+      return this.#fetchAdvanced(this.#getModuleByIdURL(moduleId), {credentials: 'include'})
       .then((responseJSON) => {
         let ModuleNBOs = ModuleNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
@@ -324,6 +327,7 @@ export default class ProjectAdminAPI {
     addParticipation(participationBO) {
       return this.#fetchAdvanced(this.#addParticipationURL(), {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Accept': 'application/json, text',
           'Content-type': 'application/json',
@@ -338,7 +342,7 @@ export default class ProjectAdminAPI {
     }
 
     getParticipationsByStudent(studentId) {
-      return this.#fetchAdvanced(this.#getParticipationsByStudentURL(studentId))
+      return this.#fetchAdvanced(this.#getParticipationsByStudentURL(studentId), {credentials: 'include'})
       .then((responseJSON) => {
         let responseParticipation = ParticipationBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
@@ -348,7 +352,7 @@ export default class ProjectAdminAPI {
     }
 
     getParticipationById(participationId) {
-      return this.#fetchAdvanced(this.#getParticipationByIdURL(participationId))
+      return this.#fetchAdvanced(this.#getParticipationByIdURL(participationId), {credentials: 'include'})
       .then((responseJSON) => {
         let responseParticipationBO = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
@@ -358,7 +362,7 @@ export default class ProjectAdminAPI {
     }
 
     getParticipationsOfStudent(studentId) {
-      return this.#fetchAdvanced(this.#getParticipationsOfStudentURL(studentId))
+      return this.#fetchAdvanced(this.#getParticipationsOfStudentURL(studentId), {credentials: 'include'})
       .then((responseJSON) => {
         let responseParticipationsOfStudent = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
@@ -368,7 +372,7 @@ export default class ProjectAdminAPI {
     }
 
     getAllParticipations() {
-      return this.#fetchAdvanced(this.#getAllParticipationsURL())
+      return this.#fetchAdvanced(this.#getAllParticipationsURL(), {credentials: 'include'})
       .then((responseJSON) => {
         let ParticipationBOs = ParticipationBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
@@ -378,7 +382,7 @@ export default class ProjectAdminAPI {
     }
 
     getParticipationsByProject(projectId) {
-      return this.#fetchAdvanced(this.#getParticipationsByProjectURL(projectId))
+      return this.#fetchAdvanced(this.#getParticipationsByProjectURL(projectId), {credentials: 'include'})
       .then((responseJSON) => {
         let responseParticipation = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
@@ -389,7 +393,8 @@ export default class ProjectAdminAPI {
 
     deleteParticipation(participationId) {
       return this.#fetchAdvanced(this.#deleteParticipationURL(participationId), {
-        method: 'DELETE'
+        method: 'DELETE',
+        credentials: 'include'
       }).then((responseJSON) => {
         let responseParticipation = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function(resolve) {
@@ -401,7 +406,7 @@ export default class ProjectAdminAPI {
     //Student
 
     getStudentByGoogleId(googleId) {
-      return this.#fetchAdvanced(this.#getStudentByGoogleIdURL(googleId)).then((responseJSON) => {
+      return this.#fetchAdvanced(this.#getStudentByGoogleIdURL(googleId), {credentials: 'include'}).then((responseJSON) => {
         let studentNBO = StudentNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
           resolve(studentNBO)
@@ -410,7 +415,7 @@ export default class ProjectAdminAPI {
     }
 
     getAllStudents() {
-      return this.#fetchAdvanced(this.#getAllStudentsURL())
+      return this.#fetchAdvanced(this.#getAllStudentsURL(), {credentials: 'include'})
       .then((responseJSON) => {
         let StudentNBOs = StudentNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
@@ -422,7 +427,7 @@ export default class ProjectAdminAPI {
     //Semester
 
     getSemesterById(semesterId) {
-      return this.#fetchAdvanced(this.#getSemesterByIdURL(semesterId))
+      return this.#fetchAdvanced(this.#getSemesterByIdURL(semesterId), {credentials: 'include'})
       .then((responseJSON) => {
         let SemesterNBOs = SemesterNBO.fromJSON(responseJSON)[0];
         return new Promise(function (resolve) {
@@ -434,7 +439,7 @@ export default class ProjectAdminAPI {
     //Grading
 
     getGradingByParticipation(participationId) {
-      return this.#fetchAdvanced(this.#getGradingByParticipationURL(participationId))
+      return this.#fetchAdvanced(this.#getGradingByParticipationURL(participationId), {credentials: 'include'})
       .then((responseJSON) => {
         let responseGrading = GradingBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {

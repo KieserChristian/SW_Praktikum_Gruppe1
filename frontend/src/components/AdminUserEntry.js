@@ -7,6 +7,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import EditIcon from '@material-ui/icons/Edit';
 import AdminUserDeletion from './dialogs/AdminUserDeletion';
 import AdminUserUpdate from './dialogs/AdminUserUpdate';
+import roleNBO from '../api/RoleNBO';
 
 
 class AdminUserEntry extends React.Component {
@@ -15,7 +16,7 @@ class AdminUserEntry extends React.Component {
         super(props);
         this.state = {
             personNBO: props.person,
-            role: [],
+            roleNBO: [],
             openDialogUpdate: false,
             showDialog: false,
             openDialogDeletion: false
@@ -58,7 +59,7 @@ class AdminUserEntry extends React.Component {
         ProjectAdminAPI.getAPI().getRoleByPerson(this.state.personNBO.getId())
         .then(roleNBO => {
             this.setState({
-            role: roleNBO.getStaticAttribute(),
+            roleNBO: roleNBO.getStaticAttribute(),
             loadingProgress: false,
             error: null
           });
@@ -81,8 +82,7 @@ class AdminUserEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { error, personNBO, role, showDialog, openDialogUpdate, openDialogDeletion } = this.state;
-        console.log(role)
+        const { error, personNBO, roleNBO, showDialog, openDialogUpdate, openDialogDeletion } = this.state;
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>
@@ -92,8 +92,8 @@ class AdminUserEntry extends React.Component {
                                 <PersonIcon/>
                             </IconButton>
                             <Typography className={classes.secondaryHeading}>
-                            {role? 
-                                <b>{role}</b>
+                            {roleNBO? 
+                                <b>{roleNBO}</b>
                             :"Rolle"}
                             </Typography>
                         </React.Fragment>
@@ -109,7 +109,7 @@ class AdminUserEntry extends React.Component {
                                 openUpdate={openDialogUpdate}
                                 onCloseProp={this.closeDialogUpdate}
                                 person={personNBO}
-                                role={role}
+                                role={roleNBO}
                                 onUpdate={this.props.onUpdate}
                             />
                                 <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogUpdate}>
