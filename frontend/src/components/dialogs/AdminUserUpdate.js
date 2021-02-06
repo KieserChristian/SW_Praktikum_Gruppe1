@@ -15,6 +15,11 @@ import { colors } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 class AdminUserUpdate extends Component {
     constructor (props) {
@@ -50,7 +55,7 @@ class AdminUserUpdate extends Component {
             loadingInProgress: true,
             addingError: null
         });
-        this.props.onUpdate()
+        //this.props.onUpdate()
     }
 
     updateAlert = (personNBO) => {
@@ -75,9 +80,9 @@ class AdminUserUpdate extends Component {
 
     handleChangeRole = (role) =>{
         //this.state.personNBO.setRole(role);
-        const newRole = Object.assign(new RoleNBO(),this.state.roleNBO);
-        newRole.setStaticAttribute(role)
-        this.setState({roleNBO:role})
+        const newRole = Object.assign(new PersonNBO(),this.state.personNBO);
+        newRole.setRoleId(role)
+        this.setState({personNBO:newRole})
     }
 
     componentDidMount() {
@@ -120,7 +125,7 @@ class AdminUserUpdate extends Component {
                 </Grid>
                 <Grid style={{paddingBottom: 10, paddingTop: 10, paddingLeft: 10, paddingRight: 10, marginTop: 10, backgroundColor: '#e0e0e0'}} variant="contained" padding="dense" align="left">
                         <form noValidate autoComplete="off">
-                            {<TextField
+{/*                             {<TextField
                                 id="Role"
                                 label="Rolle"
                                 variant="filled"
@@ -128,7 +133,19 @@ class AdminUserUpdate extends Component {
                                 color="secondary"
                                 onChange={(e) => this.handleChangeRole(e.target.value)}
                                 value={this.state.roleNBO} 
-                            />}
+                            />} */}
+                            <FormControl>
+                                <InputLabel id="Role">Rolle</InputLabel>
+                                <Select
+                                    labelId="Rolle"
+                                    id="Role"
+                                    value={this.state.personNBO.getRoleId()}
+                                    onChange={(e) => this.handleChangeRole(e.target.value)}
+                                >
+                                    <MenuItem value={2}>Dozent</MenuItem>
+                                    <MenuItem value={3}>Admin</MenuItem>
+                                </Select>
+                            </FormControl>
                         </form>
                 </Grid>
 
