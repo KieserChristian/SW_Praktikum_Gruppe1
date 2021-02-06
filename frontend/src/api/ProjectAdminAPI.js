@@ -557,7 +557,7 @@ export default class ProjectAdminAPI {
       })
     }
 
-/*
+
     getGrading(gradingId) {
         return this.#fetchAdvanced(this.#getGradingURL(gradingId)).then((responseJSON) => {
           let responseGradingBO = GradingBO.fromJSON(responseJSON)[0];
