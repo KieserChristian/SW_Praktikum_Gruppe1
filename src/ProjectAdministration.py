@@ -74,10 +74,10 @@ class ProjectAdministration():
         with PersonMapper() as mapper:
             return mapper.find_by_google_id(google_id)
 
-    def get_persons_by_role_id(self, role):
+    def get_person_by_role_id(self, role_id):
         """Alle Personen mit einer bestimmten Rolle ausgeben"""
         with PersonMapper() as mapper:
-            return mapper.find_by_id(role.get_id())
+            return mapper.find_by_role_id(role_id)
 
     """
     Student-Methoden

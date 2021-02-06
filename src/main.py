@@ -207,6 +207,20 @@ class PersonByGoogleMailOperations(Resource):
         pers = adm.get_person_by_google_id(google_id)
         return pers
 
+@projectTool.route('/person-by-role/<int:role_id>')    
+@projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@projectTool.param('role_id', 'Die Role ID der Person')
+class PersonByRoleIdOperations(Resource):
+    @projectTool.marshal_with(person)
+    #@secured
+    def get(self, role_id):
+        """Auslesen eines Student-Objekts, das durch die Google-Mail bestimmt wird.
+        Das auszulesende Objekt wird durch 'google_id' in dem URI bestimmt.
+        """
+        adm = ProjectAdministration()
+        pers = adm.get_person_by_role_id(role_id)
+        return pers
+
 @projectTool.route('/persons')
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PersonListOperations(Resource):
