@@ -18,15 +18,15 @@ class StudentMapper (Mapper):
         cursor.execute("SELECT * FROM student")
         tuples = cursor.fetchall()
 
-        for (id, creation_date, name, google_id, role_id, matriculation_number, course_abbreviation) in tuples:
+        for (id, creation_date, name, google_id, matriculation_number, course_abbreviation,role_id) in tuples:
             student = Student()
             student.set_id(id)
             student.set_creation_date(creation_date)
             student.set_name(name)
             student.set_google_id(google_id)
-            student.set_role_id(role_id)
             student.set_matriculation_number(matriculation_number)
             student.set_course_abbreviation(course_abbreviation)
+            student.set_role_id(role_id)
             result.append(student)
 
         self._cnx.commit()
@@ -263,3 +263,13 @@ class StudentMapper (Mapper):
         self._cnx.commit()
         cursor.close()
         return result
+
+
+"""find all getestet"""
+
+if (__name__ == "__main__"):
+
+     with StudentMapper() as mapper:
+         result = mapper.find_all()
+         for p in result:
+             print(p)

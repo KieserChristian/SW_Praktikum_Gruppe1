@@ -23,7 +23,7 @@ class AdminSwitchView extends React.Component {
                             <Link to='/admin/dozentOperationen'>
                                 <Button style={{ width: '25%', paddingBottom: 10, paddingCenter: 10, marginTop: 10, position: 'relative', left: '25%', color: 'white', backgroundColor: '#3f51b5' }} variant="contained"> <AccountBoxOutlinedIcon /> Dozent-Operationen</Button>
                             </Link>
-                            <Link to='/admin/nutzerübersicht'>
+                            <Link to='/admin/studentOperationen'>
                                 <Button style={{ width: '25%', paddingBottom: 10, paddingCenter: 10, marginTop: 10, position: 'relative', left: '25%', color: 'white', backgroundColor: '#3f51b5' }} variant="contained">Student-Operationen <SchoolOutlinedIcon /> </Button>
                             </Link>
                         </Grid>

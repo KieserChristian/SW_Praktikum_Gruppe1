@@ -28,6 +28,7 @@ import AdminUserView from './components/AdminUserView';
 import AdminAppliedProjectView from './components/AdminAppliedProjectView';
 import AdminSwitchView from './components/AdminSwitchView'
 import AdminSwitchDocentView from './components/AdminSwitchDocentView'
+import AdminSwitchStudentView from './components/AdminSwitchStudentView'
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
@@ -171,6 +172,10 @@ class App extends React.Component {
 
                 <Route path='/admin/dozentOperationen'>
                   <AdminSwitchDocentView/>
+                </Route>
+
+                <Route path='/admin/studentOperationen'>
+                  <AdminSwitchStudentView/>
                 </Route>
                         
 								</>
