@@ -91,6 +91,7 @@ export default class ProjectAdminAPI {
     #getStudentByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/student-by-google-id/${googleId}`;
     #getAllStudentsURL = () => `${this.#projectServerBaseURL}/students`;
     #addStudentURL = () => `${this.#projectServerBaseURL}/students`;
+    #getStudentsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/students-by-project/${projectId}`;
 
     static getAPI() {
         if (this.#api == null) {
@@ -461,6 +462,16 @@ export default class ProjectAdminAPI {
         })
       })
     }
+
+    getStudentsByProject(projectId) {
+      return this.#fetchAdvanced(this.#getStudentsByProjectURL(projectId)).then((responseJSON) => {
+        let studentNBO = StudentNBO.fromJSON(responseJSON);
+        return new Promise(function(resolve) {
+          resolve(studentNBO)
+        })
+      })
+    }
+
 
     getAllStudents() {
       return this.#fetchAdvanced(this.#getAllStudentsURL(), {credentials: 'include'})
