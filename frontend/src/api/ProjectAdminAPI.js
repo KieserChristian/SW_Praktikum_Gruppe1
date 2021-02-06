@@ -63,7 +63,7 @@ export default class ProjectAdminAPI {
     #getRoleByPersonURL = (personId) => `${this.#projectServerBaseURL}/role_by_person/${personId}`;
     #addPersonURL = () => `${this.#projectServerBaseURL}/persons`;
     #getPersonByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/person-by-google-id/${googleId}`;
-    #getPersonByRoleURL = (roleId) => `${this.#projectServerBaseURL}/person-by-google-id/${googleId}`;
+    #getPersonsByRoleURL = (roleId) => `${this.#projectServerBaseURL}/person-by-role/${roleId}`;
    
    
    
@@ -182,13 +182,13 @@ export default class ProjectAdminAPI {
       })
     }
 
-    getPersonByRole(roleId) {
-      return this.#fetchAdvanced(this.#getPersonByRoleURL(roleId), {credentials: 'include'})
+    getPersonsByRole(roleId) {
+      return this.#fetchAdvanced(this.#getPersonsByRoleURL(roleId), {credentials: 'include'})
       .then((responseJSON) => {
-        let PersonNBOs = PersonNBO.fromJSON(responseJSON)[0];
-        console.log(PersonNBOs)
+        let docentBOs = PersonNBO.fromJSON(responseJSON);
+        console.log(docentBOs)
         return new Promise(function (resolve) {
-          resolve(PersonNBOs);
+          resolve(docentBOs);
         })
       })
     }

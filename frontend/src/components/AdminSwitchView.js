@@ -20,7 +20,7 @@ class AdminSwitchView extends React.Component {
                     <Grid Container spacing={2}>
                         <Grid item xs={12} sm={12} style={{ paddingTop: 10, paddingBottom: 10, }} >
 
-                            <Link to='/admin/projektübersicht'>
+                            <Link to='/admin/dozentOperationen'>
                                 <Button style={{ width: '25%', paddingBottom: 10, paddingCenter: 10, marginTop: 10, position: 'relative', left: '25%', color: 'white', backgroundColor: '#3f51b5' }} variant="contained"> <AccountBoxOutlinedIcon /> Dozent-Operationen</Button>
                             </Link>
                             <Link to='/admin/nutzerübersicht'>

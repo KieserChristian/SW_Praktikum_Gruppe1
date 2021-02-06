@@ -212,7 +212,7 @@ class PersonByGoogleMailOperations(Resource):
 @projectTool.param('role_id', 'Die Role ID der Person')
 class PersonByRoleIdOperations(Resource):
     @projectTool.marshal_with(person)
-    #@secured
+    @secured
     def get(self, role_id):
         """Auslesen eines Student-Objekts, das durch die Google-Mail bestimmt wird.
         Das auszulesende Objekt wird durch 'google_id' in dem URI bestimmt.

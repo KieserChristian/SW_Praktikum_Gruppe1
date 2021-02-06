@@ -1,13 +1,14 @@
 import { Paper } from '@material-ui/core';
 import React from 'react';
 import ProjectAdminAPI from '../api/ProjectAdminAPI'
-import ProjectNBO from '../api/ProjectNBO';
+import PersonNBO from '../api/PersonNBO';
 import InfoIcon from '@material-ui/icons/Info';
 import AdminViewEntry from './AdminViewEntry'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import { withStyles, Button, List, ListItem, ListItemSecondaryAction, Typography, Input, Grid, InputAdornment } from '@material-ui/core';
+import AdminSwitchDocentEntry from './AdminSwitchDocentEntry'
 
 class AdminSwitchDocentView extends React.Component {
 
@@ -15,70 +16,60 @@ class AdminSwitchDocentView extends React.Component {
     super(props);
     this.state = {
       docents: [],
-      filtereddocents: [],
+      filteredDocents: [],
       docentFilter: '',
     }
   }
 
-  getAllDocents = () => {
-    ProjectAdminAPI.getAPI().getRoleByPerson("Genehmigt").then(projectBOs =>
+  getPersonsByRole = () => {
+    ProjectAdminAPI.getAPI().getPersonsByRole(2).then(docentBOs =>
       this.setState({
-        projects: projectBOs,
-        filteredProjects: [...projectBOs],
+        docents: docentBOs,
+        filteredDocents: [...docentBOs],
       })
     );
   }
 
   componentDidMount() {
-    this.getProjectsByStateAccepted();
+    this.getPersonsByRole();
   }
 
-  filterProjects = event => {
+  filterDocents = event => {
     const searchterm = event.target.value.toLowerCase();
     this.setState({
-      filteredProjects: this.state.projects.filter(projects => {
-        let projectNameContainsValue = projects.getName().toLowerCase().includes(searchterm);
-        return projectNameContainsValue
+      filteredDocents: this.state.docents.filter(docents => {
+        let docentNameContainsValue = docents.getName().toLowerCase().includes(searchterm);
+        return docentNameContainsValue
       }),
-      projectFilter: searchterm
+      docentFilter: searchterm
     })
   }
 
-  clearProjectFilter = () => {
+  clearDocentFilter = () => {
     this.setState({
-      filteredProjects: [...this.state.projects],
-      projectFilter: ''
-    })
-  }
-
-  removeProject = (projectId) => {
-    console.log(this.state.filteredProjects[0])
-    console.log(projectId)
-    let newProjects = this.state.filteredProjects.filter(project => project.getId() !== projectId)
-    console.log(newProjects.length)
-    this.setState({
-      filteredProjects: this.state.filteredProjects.filter(project => project.getId() !== projectId)
+      filteredDocents: [...this.state.docents],
+      docentFilter: ''
     })
   }
 
   render() {
-    const { projects, projectFilter, filteredProjects } = this.state;
+    const { docents, docentFilter, filteredDocents } = this.state;
     return (
       <div>
         <Paper style={{ paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15 }} elevation={0}>
           <Grid container spacing={1} justify='flex-start' alignItems='center'>
             <Button style={{ width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10 }} variant="contained">
-              Alle genehmigten Projekte
+              Alle Dozenten
             </Button>
           </Grid>
           <Grid style={{ width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10 }}>
             <TextField
               autoFocus type='text'
-              value={projectFilter}
-              onChange={this.filterProjects}
+              value={docentFilter}
+              onChange={this.filterDocents}
               InputProps={{
                 endAdornment: <InputAdornment position='end'>
-                  <IconButton onClick={this.clearProjectFilter}>
+                  <IconButton onClick={this.clearDocentFilter}>
                     <HighlightOffIcon />
                   </IconButton>
                 </InputAdornment>
@@ -87,12 +78,12 @@ class AdminSwitchDocentView extends React.Component {
           </Grid>
           <Grid style={{ width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10 }}>
             <Typography>
-              Hier können Sie alle Projekte einsehen oder bearbeiten:
+              Hier können Sie den Dozenten auswählen:
             </Typography>
             {
-              projects.length > 0 ?
-                filteredProjects.map(project =>
-                  <AdminViewEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project} onDelete={() => this.removeProject(project.getId())} />)
+              docents.length > 0 ?
+                filteredDocents.map(docents =>
+                  <AdminSwitchDocentEntry  key={docents.getId()} docents={docents} />)
 
                 :
                 "Test"
@@ -110,4 +101,4 @@ class AdminSwitchDocentView extends React.Component {
 
 }
 
-export default AdminView;
+export default AdminSwitchDocentView;
