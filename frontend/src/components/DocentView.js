@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withStyles, Grid, Button, Paper, Typography, InputAdornment, IconButton, TextField} from '@material-ui/core';
 import DocentMeineProjekte from './DocentMeineProjekte';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import DocentProjectEntry from './DocentProjectEntry';
 
 
 /* DocentTeilnehmerliste ist eine Component, welche in der DocentView.js gerendert wird.
@@ -133,7 +134,7 @@ class DocentView extends React.Component {
             {
              projects.length > 0 ? 
               filteredProjects.map(project =>
-               <DocentMeineProjekte key={project.getId()} project={project}/>)
+               <DocentProjectEntry key={project.getId()} project={project}/>)
                :
                <Typography>Sie haben keine Projekte angelegt</Typography>
             }
