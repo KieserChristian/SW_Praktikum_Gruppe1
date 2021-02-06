@@ -16,7 +16,8 @@ class StudentProjectEntry extends React.Component {
             projectNBO: props.project,
             openDialogInfo: false,
             showDialog: false,
-            projectType: null
+            projectType: null,
+            person: null
         };
         //console.log(this.props.projectNBO)
     }
@@ -64,13 +65,35 @@ class StudentProjectEntry extends React.Component {
         });
     }
 
+    getPersonById = () => {
+        ProjectAdminAPI.getAPI().getPersonById(this.state.projectNBO.getPersonId())
+        .then(personNBO => {
+            this.setState({
+            person: personNBO,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            person: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
+
     componentDidMount() {
         this.getProjectTypeById();
+        this.getPersonById();
     }
 
     render() {
         const { classes } = this.props;
-        const { projectNBO, projectType, showDialog, openDialogInfo } = this.state;
+        const { projectNBO, projectType, showDialog, openDialogInfo, person} = this.state;
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>
@@ -81,6 +104,7 @@ class StudentProjectEntry extends React.Component {
                             onCloseProp={this.closeDialogInfo}
                             project={projectNBO}
                             propProjectType={projectType}
+                            propPerson={person}
                             />
                             <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
                                 <InfoIcon/>

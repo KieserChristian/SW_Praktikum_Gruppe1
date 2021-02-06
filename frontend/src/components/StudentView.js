@@ -22,10 +22,10 @@ class StudentView extends React.Component {
   }
 
   getRegisteredProjectsOfStudent = async() => {
-    let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
+    //let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
     //console.log(student)
-    console.log(ProjectAdminAPI.getAPI().getRegisteredProjectsOfStudent(student[0].getId()))
-    ProjectAdminAPI.getAPI().getRegisteredProjectsOfStudent(student[0].getId())
+    //console.log(ProjectAdminAPI.getAPI().getRegisteredProjectsOfStudent(student[0].getId()))
+    ProjectAdminAPI.getAPI().getRegisteredProjectsOfStudent(5)
     .then(projectNBOs => {
       this.setState({
         projects: projectNBOs,

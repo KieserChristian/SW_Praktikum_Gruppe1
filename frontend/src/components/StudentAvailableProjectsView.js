@@ -25,11 +25,11 @@ class StudentAvailableProjectsView extends React.Component {
   }
 
   getAvailableProjectsOfStudent = async() => {
-    let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
+    //let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
     //console.log(student)
     //console.log(student[0].getId())
     //console.log(ProjectAdminAPI.getAPI().getAvailableProjectsOfStudent(student[0].getId()))
-    ProjectAdminAPI.getAPI().getAvailableProjectsOfStudent(student[0].getId())
+    ProjectAdminAPI.getAPI().getAvailableProjectsOfStudent(5)
     .then(projectNBOs => {
       //console.log(projectNBOs)
         this.setState({
@@ -108,7 +108,7 @@ class StudentAvailableProjectsView extends React.Component {
               {
               projects.length > 0 ? 
                 filteredProjects.map(project =>
-                  <StudentAvailableProjectsEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project}/>)
+                  <StudentAvailableProjectsEntry key={project.getId()} project={project}/>)
                   :
                   <Typography>Es stehen keine Projekte zur Anmeldung zur Verfügung.</Typography>
               }
