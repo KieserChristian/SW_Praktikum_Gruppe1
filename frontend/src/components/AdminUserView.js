@@ -22,6 +22,9 @@ class AdminUserView extends React.Component {
         persons: [],
         filteredPersons: [],
         personFilter: '',
+        students: [],
+        filteredStudents: [],
+        studentFilter: '',
       } 
     }
 
@@ -35,8 +38,18 @@ class AdminUserView extends React.Component {
         );
     }
 
+    getAllStudents = () => {
+        ProjectAdminAPI.getAPI().getAllStudents().then(StudentNBOs =>
+            this.setState({
+                students: StudentNBOs,
+                filteredStudents: [...StudentNBOs]
+            })
+        );
+    }
+
     componentDidMount() {
         this.getAllPersons();
+        this.getAllStudents();
     }
 
     filterPersons = event => {
@@ -67,9 +80,37 @@ class AdminUserView extends React.Component {
         })
     }
 
+    filterStudents = event => {
+        const searchterm = event.target.value.toLowerCase();
+        this.setState({
+          filteredStudents: this.state.students.filter(students => {
+            let studentNameContainsValue = students.getName().toLowerCase().includes(searchterm);
+            return studentNameContainsValue
+          }),
+          studentFilter: searchterm
+        })
+    }
+
+    clearStudentFilter = () => {
+        this.setState({
+          filteredStudents: [...this.state.students],
+          studentFilter: ''
+        })
+    }
+
+    removeStudent = (studentId) => {
+        console.log(this.state.filteredStudents[0])
+        console.log(studentId)
+        let newStudents= this.state.filteredStudents.filter(student => student.getGoogleId()!== studentId)
+        console.log(newStudents.length)
+        this.setState({
+            filteredStudents: this.state.filteredStudents.filter(student => student.getGoogleId()!== studentId)
+        })
+    }
+
     /*Anzeigen*/
     render(){
-        const { persons, personFilter, filteredPersons } = this.state;
+        const { persons, personFilter, filteredPersons, students, studentFilter, filteredStudents } = this.state;
         return(
             <div>
             <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
@@ -99,12 +140,17 @@ class AdminUserView extends React.Component {
                     {/*Durchstich*/
                     persons.length > 0 ?
                         filteredPersons.map(person =>
-                        /*getName kommt von PersonNBO*/
-                    /*<div>{person.getName()}</div>*/
-                    <AdminUserEntry key={person.getGoogleId()} person={person} onDelete={() => this.removePerson(person.getGoogleId())}/>)
+                    <AdminUserEntry onUpdate={() =>alert("updated")} key={person.getGoogleId()} person={person} onDelete={() => this.removePerson(person.getGoogleId())}/>)
                             :
                             null
                     }
+{/*                     {
+                    students.length > 0 ?
+                        filteredStudents.map(student =>
+                    <AdminUserEntry key={student.getGoogleId()} student={student} onDelete={() => this.removeStudent(student.getGoogleId())}/>)
+                        :
+                        null
+                    } */}
                 </Grid>
             </Paper>
             </div>

@@ -38,7 +38,7 @@ class AdminUserUpdate extends Component {
     }
 
     updatePerson = async(personNBO) => {
-        ProjectAdminAPI.getAPI().updatePerson(personNBO.getId()).then(person => {
+        ProjectAdminAPI.getAPI().updatePerson(personNBO).then(person => {
             this.props.onDialogClose(person);
         }).catch(e =>
             this.setState({

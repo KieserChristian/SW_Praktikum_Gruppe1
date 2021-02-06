@@ -24,7 +24,7 @@ class PersonMapper (Mapper):
             person.set_creation_date(creation_date)
             person.set_name(name)
             person.set_google_id(google_id)
-            person.set_role_id
+            person.set_role_id(role_id)
             result.append(person)
 
         self._cnx.commit()
