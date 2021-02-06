@@ -7,8 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
 import StudentProjectRegistration from './dialogs/StudentProjectRegistration';
 import AdminProjectDeletion from './dialogs/AdminProjectDeletion'
-
-
+import DocentView from '../components/DocentView'
+import { Link } from 'react-router-dom';
 class AdminSwitchDocentEntry extends React.Component {
 
     constructor(props) {
@@ -96,11 +96,25 @@ class AdminSwitchDocentEntry extends React.Component {
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} xs={12}>
-                            </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10}} xs={6}>
                                 <Typography className={classes.heading} >
                                     <b>{docentBOs.getName()}</b>
                                 </Typography>
+                                <Grid item style={{marginBottom: 10, marginTop: 10, position:'relative', left:'70%'}} xs={6}></Grid>
+                                <React.Fragment>
+
+                                <Link to= '/dozent'>
+                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogRegistration}>
+                                        Auswählen
+                                    </Button>
+                                    </Link>
+                            </React.Fragment>
+                            </Grid>
+
+                            
+
+
+
                         </Grid>
             </div>
         );
