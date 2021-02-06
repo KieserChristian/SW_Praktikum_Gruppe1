@@ -557,7 +557,7 @@ export default class ProjectAdminAPI {
       })
     }
 
-/*
+
     getGrading(gradingId) {
         return this.#fetchAdvanced(this.#getGradingURL(gradingId)).then((responseJSON) => {
           let responseGradingBO = GradingBO.fromJSON(responseJSON)[0];
@@ -664,14 +664,14 @@ export default class ProjectAdminAPI {
                 'Accept': 'application/json, text/plain',
                 'Content-type': 'application/json',
             },
-            body: JSON.stringify(participation)
+            body: JSON.stringify(participationId)
         }).then((responseJSON) => {
             let responseParticipation = ParticipationBO.fromJSON(responseJSON)[0];
             return new Promise(function (resolve) {
                 resolve(responseParticipation)
             })
         })
-    }; */
+    }; 
 
 
     /**getStudentById(studentId) {
