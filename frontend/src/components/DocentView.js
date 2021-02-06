@@ -107,6 +107,7 @@ class DocentView extends React.Component {
   render() {
     const { classes } = this.props;
     const { projects, projectFilter, filteredProjects } = this.state;
+    console.log(this.props.location.myProp)
     return (
         <div>
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>

@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
 import StudentProjectRegistration from './dialogs/StudentProjectRegistration';
 import AdminProjectDeletion from './dialogs/AdminProjectDeletion'
+import AdminProjectUpdate from './dialogs/AdminProjectUpdate'
 
 class AdminViewEntry extends React.Component {
 
@@ -33,6 +34,16 @@ class AdminViewEntry extends React.Component {
         this.setState({
             showDialog: false
         });
+    }
+
+    openDialogUpdate = () => {
+        this.setState({
+            openDialogUpdate: true})
+    }
+
+    closeDialogUpdate = () => {
+        this.setState({
+            openDialogUpdate: false})
     }
     
     openDialogInfo = () => {
@@ -92,7 +103,7 @@ class AdminViewEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration, openDialogDeletion} = this.state;
+        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration, openDialogDeletion, openDialogUpdate} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} xs={12}>
@@ -116,9 +127,16 @@ class AdminViewEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10, position: 'relative', left:'18%'}}>
                         <React.Fragment>
-                            <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogInfo}>
+                        <AdminProjectUpdate
+                                openUpdate={openDialogUpdate}
+                                onCloseProp={this.closeDialogUpdate}
+                                project={projectNBO}
+                                onUpdate={this.props.onUpdate}
+                            />
+                            <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogUpdate}>
                                 <EditIcon/>
                             </IconButton>
+
                             <AdminProjectDeletion
                                 openDeletion={openDialogDeletion}
                                 onCloseProp={this.closeDialogDeletion}

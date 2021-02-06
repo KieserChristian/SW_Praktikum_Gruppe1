@@ -7,13 +7,14 @@ import IconButton from '@material-ui/core/IconButton';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
 import StudentProjectRegistration from './dialogs/StudentProjectRegistration';
 import AdminProjectDeletion from './dialogs/AdminProjectDeletion'
-
+import ProjectNBO from '../api/ProjectNBO';
 
 class AdminAppliedProjectEntry extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            // currentState= "Genehmigt",
             projectNBO: props.project,
             openDialogInfo: false,
             openDialogRegistration: false,
@@ -63,6 +64,20 @@ class AdminAppliedProjectEntry extends React.Component {
         this.setState({
             openDialogDeletion: false})
     }   
+
+    updateAlert = (projectNBO) => {
+        this.updateProject(projectNBO);
+        alert("Daten erfolgreich geändert!");
+        this.onDialogClose();
+    } 
+
+    // handleChangeCurrentState = () =>{
+    //     const newCurrentState = Object.assign(new ProjectNBO(),this.state.currentState);
+    //     newCurrentState.setState("Genehmigt")
+    //     this.setState({currentState:newCurrentState})
+
+    // }
+
     getProjectTypeById = () => {
         ProjectAdminAPI.getAPI().getProjectTypeById(this.state.projectNBO.getProjectTypeId())
         .then(projectTypeNBO => {
@@ -90,7 +105,7 @@ class AdminAppliedProjectEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration, openDialogDeletion} = this.state;
+        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration, openDialogDeletion,} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} xs={12}>
@@ -122,13 +137,8 @@ class AdminAppliedProjectEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10, position:'relative', left:'70%'}} xs={6}>
                             <React.Fragment>
-                                <StudentProjectRegistration
-                                    openRegistration={openDialogRegistration}
-                                    onCloseProp={this.closeDialogRegistration}
-                                    project={projectNBO}
-                                    currentUserEmail={this.props.currentUserEmail}
-                                />
-                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogRegistration}>
+
+                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.handleChangeCurrentState}>
                                         Genehmigen
                                     </Button>
                             </React.Fragment>

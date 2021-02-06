@@ -103,7 +103,8 @@ class AdminSwitchDocentEntry extends React.Component {
                                 <Grid item style={{marginBottom: 10, marginTop: 10, position:'relative', left:'70%'}} xs={6}></Grid>
                                 <React.Fragment>
 
-                                <Link to= '/dozent'>
+                                <Link to= {{pathname:'/dozent',
+                                                myProp:{docentBOs}}}>
                                     <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogRegistration}>
                                         Auswählen
                                     </Button>
