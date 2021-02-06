@@ -16,6 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 
 
+
 /* import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -45,8 +46,8 @@ class DocentProjectCreation extends React.Component {
             projectType: "",
             module: "",
             semester: "",
-            person: "",
-/*             language: null, */
+            person: null,
+            currentUserEmail: props.currentUserEmail,
         };
         this.baseState = this.state;
     }
@@ -66,12 +67,12 @@ class DocentProjectCreation extends React.Component {
             newProject.setSpecialRoom(this.state.specialRoom)
             newProject.setProjectTypeId(this.state.projectType)
             newProject.setPersonId(this.state.person)
+            console.log(this.getDocentById())
             newProject.setModuleId(this.state.module)
             newProject.setSemesterId(this.state.semester)
-            newProject.setWeeklyFlag(this.state.weeklyFlag)     
+            //newProject.setWeeklyFlag(this.state.weeklyFlag)
 
-
-        //newProject.setProjectId();
+                    //newProject.setProjectId();
         console.log(newProject)
         ProjectAdminAPI.getAPI().addProject(newProject).then(project => {
             this.setState(this.baseState);
@@ -87,7 +88,19 @@ class DocentProjectCreation extends React.Component {
             addingError: null
         });
     }
+            
+    getDocentById = () => {
+        ProjectAdminAPI.getAPI().getPersonByGoogleId(this.props.currentUserEmail)
+        .then(docent => {
+            this.setState({
+                person: docent[0].getId()                              
+            })
+        })
+    }
 
+    componentDidMount() {
+        this.getDocentById();
+    }
 
     handleChange = (event) => {
         const value = event.target.value;
@@ -219,7 +232,7 @@ class DocentProjectCreation extends React.Component {
                                             </TableCell>
                                         </TableRow>
 
-                                        <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
+{/*                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                                 <b>Betreuende(r) ProfessorIn:</b>
                                                 <form noValidate autoComplete="off">
@@ -232,11 +245,12 @@ class DocentProjectCreation extends React.Component {
                                                         onChange={this.handleChange}
                                                         value={person}
                                                     />
+                                                        {console.log(person)}
                                                 </form>
                                             </TableCell>
                                             <TableCell>
                                             </TableCell>
-                                        </TableRow>
+                                        </TableRow> */}
 
                                         <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                             <TableCell style={{backgroundColor: '#e0e0e0'}}>
@@ -309,7 +323,7 @@ class DocentProjectCreation extends React.Component {
                                         </form>
                                     </TableCell>
                                 </TableRow>
-
+{/* 
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
                                         <input
@@ -320,7 +334,7 @@ class DocentProjectCreation extends React.Component {
                                             onChange={this.handleChange}
                                         />Wöchentliche Termine (Präsenzzeit / studentische Gruppenmeetings)
                                     </TableCell>
-                                </TableRow>
+                                </TableRow> */}
                                 
                                 <TableRow style={{minwidth: '50%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} colSpan={0} variant="contained" padding="dense" align="left">
                                     <TableCell style={{backgroundColor: '#e0e0e0'}}>
