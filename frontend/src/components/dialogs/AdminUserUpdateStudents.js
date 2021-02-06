@@ -23,15 +23,13 @@ class AdminUserUpdateStudents extends Component {
 
         this.state = {
             studentNBO: this.props.student,
-            //roleNBO: this.props.role,
             loadingInProgress: null,
             addingError: null,
             studentName: "",
             GoogleId: "",
+            MatricualtionNumber: "",
+            CourseAbbreviation: "",
         };
-        //this.handleChangePersonName = this.handleChangePersonName.bind(this),
-        //this.handleChangeGoogleId = this.handleChangeGoogleId.bind(this),
-        //this.handleChangeRole = this.handleChangeRole.bind(this)
     }
 
     onDialogClose = () => {
@@ -51,7 +49,7 @@ class AdminUserUpdateStudents extends Component {
             loadingInProgress: true,
             addingError: null
         });
-        this.props.onUpdate()
+        //this.props.onUpdate()
     }
 
     updateAlert = (studentNBO) => {
@@ -61,25 +59,29 @@ class AdminUserUpdateStudents extends Component {
     } 
 
     handleChangeStudentName = (studentName) =>{
-        //this.state.studentNBO.setName(studentName);
         const newStudent = Object.assign(new StudentNBO(),this.state.studentNBO);
         newStudent.setName(studentName)
         this.setState({studentNBO:newStudent})
     }
 
     handleChangeGoogleId = (GoogleId) =>{
-        //this.state.personNBO.setGoogleId(GoogleId);
         const newGoogleId = Object.assign(new StudentNBO(),this.state.studentNBO);
         newGoogleId.setGoogleId(GoogleId)
         this.setState({studentNBO:newGoogleId})
     }
 
-    /* handleChangeRole = (role) =>{
-        //this.state.personNBO.setRole(role);
-        const newRole = Object.assign(new RoleNBO(),this.state.roleNBO);
-        newRole.setStaticAttribute(role)
-        this.setState({roleNBO:role})
-    } */
+    handleChangeMatriculationNumber = (MatriculationNumber) =>{
+        const newMatriculationNumber = Object.assign(new StudentNBO(),this.state.studentNBO);
+        newMatriculationNumber.setMatriculationNumber(MatriculationNumber)
+        this.setState({studentNBO:newMatriculationNumber})
+    }
+
+    handleChangeCourseAbbreviation = (CourseAbbreviation) =>{
+        const newCourseAbbreviation = Object.assign(new StudentNBO(),this.state.studentNBO);
+        newCourseAbbreviation.setCourseAbbreviation(CourseAbbreviation)
+        this.setState({studentNBO:newCourseAbbreviation})
+    }
+
 
     componentDidMount() {
     
@@ -87,7 +89,7 @@ class AdminUserUpdateStudents extends Component {
     
     render() {
         const {openUpdate} = this.props;
-        const {studentNBO, studentName, GoogleId} = this.state;
+        const {studentNBO, studentName, GoogleId, MatriculationNumber, CourseAbbreviation} = this.state;
         return(
             <Dialog open={openUpdate}>
                 <DialogTitle id="alert-dialog-title">Daten ändern</DialogTitle>
@@ -119,20 +121,32 @@ class AdminUserUpdateStudents extends Component {
                             />}
                         </form>
                 </Grid>
-                <Grid style={{paddingBottom: 10, paddingTop: 10, paddingLeft: 10, paddingRight: 10, marginTop: 10, backgroundColor: '#e0e0e0'}} variant="contained" padding="dense" align="left">
+                <Grid style={{paddingBottom: 10, paddingTop: 10, paddingLeft: 10, paddingRight:10, marginTop: 10, backgroundColor: '#e0e0e0'}} variant="contained" padding="dense" align="left">
                         <form noValidate autoComplete="off">
-                            {/* {<TextField
-                                id="Role"
-                                label="Rolle"
+                            {<TextField
+                                id="MatriculationNumber"
+                                label="Matrikelnummer"
                                 variant="filled"
                                 fullWidth
                                 color="secondary"
-                                onChange={(e) => this.handleChangeRole(e.target.value)}
-                                value={this.state.roleNBO} 
-                            />} */}
+                                onChange={(e) => this.handleChangeMatriculationNumber(e.target.value)}
+                                value={this.state.studentNBO.getMatriculationNumber()}
+                            />}
                         </form>
                 </Grid>
-
+                <Grid style={{paddingBottom: 10, paddingTop: 10, paddingLeft: 10, paddingRight:10, marginTop: 10, backgroundColor: '#e0e0e0'}} variant="contained" padding="dense" align="left">
+                        <form noValidate autoComplete="off">
+                            {<TextField
+                                id="CourseAbbreviation"
+                                label="Studiengang"
+                                variant="filled"
+                                fullWidth
+                                color="secondary"
+                                onChange={(e) => this.handleChangeCourseAbbreviation(e.target.value)}
+                                value={this.state.studentNBO.getCourseAbbreviation()}
+                            />}
+                        </form>
+                </Grid>
                 <DialogContentText id="alert-dialog-description">
                 Möchten Sie die Daten des Users <b>"{studentNBO.getName()}"</b> wirklich ändern?
                 </DialogContentText>    

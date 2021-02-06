@@ -92,6 +92,9 @@ export default class ProjectAdminAPI {
     #getAllStudentsURL = () => `${this.#projectServerBaseURL}/students`;
     #addStudentURL = () => `${this.#projectServerBaseURL}/students`;
     #getStudentsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/students-by-project/${projectId}`;
+    #deleteStudentURL = (studentId) => `${this.#projectServerBaseURL}/student/${studentId}`;
+    #updateStudentURL = (studentId) => `${this.#projectServerBaseURL}/students`;
+
 
     static getAPI() {
         if (this.#api == null) {
@@ -487,6 +490,35 @@ export default class ProjectAdminAPI {
         let StudentNBOs = StudentNBO.fromJSON(responseJSON);
         return new Promise(function (resolve) {
           resolve(StudentNBOs);
+        })
+      })
+    }
+
+    deleteStudent(studentId) {
+      return this.#fetchAdvanced(this.#deleteStudentURL(studentId), {
+        method: 'DELETE', credentials: 'include'
+      }).then((responseJSON) => {
+        let responseStudent = StudentNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(responseStudent);
+        })
+      })
+    }
+
+    updateStudent(studentNBO) {
+      console.log(JSON.stringify(studentNBO))
+      return this.#fetchAdvanced(this.#updateStudentURL(studentNBO),{
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json, text',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(studentNBO) 
+      }).then((responseJSON) => {
+        let responseStudentNBO = StudentNBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(responseStudentNBO);
         })
       })
     }

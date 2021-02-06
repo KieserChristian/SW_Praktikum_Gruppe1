@@ -6,6 +6,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import CancelIcon from '@material-ui/icons/Cancel';
 import EditIcon from '@material-ui/icons/Edit';
 import AdminUserDeletion from './dialogs/AdminUserDeletion';
+import AdminUserDeletionStudents from './dialogs/AdminUserDeletionStudents';
 import AdminUserUpdate from './dialogs/AdminUserUpdate';
 import AdminUserUpdateStudents from './dialogs/AdminUserUpdateStudents';
 import roleNBO from '../api/RoleNBO';
@@ -17,7 +18,6 @@ class AdminUserEntryStudents extends React.Component {
         super(props);
         this.state = {
             studentNBO: props.student,
-            //roleNBO: [],
             openDialogUpdate: false,
             showDialog: false,
             openDialogDeletion: false
@@ -56,31 +56,6 @@ class AdminUserEntryStudents extends React.Component {
             openDialogDeletion: false})
     }
 
-    /* getRoleByPerson = (personId) => {
-        ProjectAdminAPI.getAPI().getRoleByPerson(this.state.personNBO.getId())
-        .then(roleNBO => {
-            this.setState({
-            roleNBO: roleNBO.getStaticAttribute(),
-            loadingProgress: false,
-            error: null
-          });
-        }).catch(e => {
-          this.setState({
-            role: null,
-            loadingInProgress: false,
-            error: e
-          })
-        });
-        this.setState({
-        loadingInProgress: true,
-        error: null
-        });
-    }
-
-    componentDidMount() {
-        this.getRoleByPerson();
-    } */
-
     render() {
         const { classes } = this.props;
         const { error, studentNBO, showDialog, openDialogUpdate, openDialogDeletion } = this.state;
@@ -93,9 +68,7 @@ class AdminUserEntryStudents extends React.Component {
                                 <PersonIcon/>
                             </IconButton>
                             <Typography className={classes.secondaryHeading}>
-                            {/* {roleNBO? 
-                                <b>{roleNBO}</b>
-                            :"Rolle"} */}
+                                <b>Student</b>
                             </Typography>
                         </React.Fragment>
                     </Grid>
@@ -106,22 +79,22 @@ class AdminUserEntryStudents extends React.Component {
                     </Grid>
                     <Grid>
                         <React.Fragment>
-                            {/* <AdminUserUpdate
+                            {<AdminUserUpdateStudents
                                 openUpdate={openDialogUpdate}
                                 onCloseProp={this.closeDialogUpdate}
                                 student={studentNBO}
                                 //role={roleNBO}
                                 onUpdate={this.props.onUpdate}
-                            /> */}
+                            />}
                                 <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogUpdate}>
                                     <EditIcon/>
                                 </IconButton>
-                            {/* <AdminUserDeletion
+                            {<AdminUserDeletionStudents
                                 openDeletion={openDialogDeletion}
                                 onCloseProp={this.closeDialogDeletion}
                                 student={studentNBO}
                                 onDelete={this.props.onDelete}
-                            /> */}
+                            />}
                                 <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogDeletion}>
                                     <CancelIcon/>
                                 </IconButton>
