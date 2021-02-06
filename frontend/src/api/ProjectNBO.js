@@ -3,7 +3,7 @@ import NamedBusinessObject from "./NamedBusinessObject"
 export default class ProjectNBO extends NamedBusinessObject {
 
     constructor (aState, aCapacity, aPartner, aDescription, aFlag, aBDbeforeLecture, aBDinExam, aBDinLecture, aBDpreferredInLecture, aRoom, aProjectTypeId, aModuleId, aPersonId, aSemesterId) {
-        super ();
+        super();
         this.current_state = aState;
         this.capacity = aCapacity;
         this.external_partners = aPartner;

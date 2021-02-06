@@ -26,13 +26,12 @@ class DocentView extends React.Component {
     } 
   }
 
-
-  /**getProjectsByPerson = async() => {
-    //let person = await ProjectAdminAPI.getAPI().getPersonByGoogleId(this.props.currentUserEmail)
-    //console.log(person)
-    //console.log(person[0].getId())
-    //console.log(ProjectAdminAPI.getAPI().getProjectsByPerson(person[0].getId()))
-    ProjectAdminAPI.getAPI().getProjectsByPerson(1)
+  getProjectsOfDocent = async() => {
+    let person = await ProjectAdminAPI.getAPI().getPersonByGoogleId(this.props.currentUserEmail)
+    console.log(person)
+    console.log(person[0].getId())
+    console.log(ProjectAdminAPI.getAPI().getProjectsByPerson(person[0].getId()))
+    ProjectAdminAPI.getAPI().getProjectsByPerson(person[0].getId())
     .then(projectNBOs => {
         this.setState({
         projects: projectNBOs,
@@ -52,11 +51,8 @@ class DocentView extends React.Component {
     error: null
     });
   }
-  */
-
-  
-
-  getAllProjects = () => {
+ 
+  /* getAllProjects = () => {
     ProjectAdminAPI.getAPI().getAllProjects()
     .then(projectNBOs => {
         this.setState({
@@ -76,13 +72,11 @@ class DocentView extends React.Component {
     loadingInProgress: true,
     error: null
     });
-  }
+  } */
   
-  
-
   componentDidMount = () => {
-
-    this.getAllProjects();
+    //this.getAllProjects();
+    this.getProjectsOfDocent();
 
   }
 
@@ -109,14 +103,14 @@ class DocentView extends React.Component {
     const { projects, projectFilter, filteredProjects } = this.state;
     console.log(this.props.location.myProp)
     return (
-        <div>
+      <div>
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
             <Grid container spacing={1} justify='flex-start' alignItems='center'>
                 <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">Meine Projekte</Button>
             </Grid>
             <Grid style={{paddingTop: 15}}>
               <Typography>
-                Verfügbare Projekte durchsuchen nach:
+                Meine Projekte durchsuchen nach:
               </Typography>
               <TextField 
                 autoFocus type='text' 
@@ -137,15 +131,11 @@ class DocentView extends React.Component {
               filteredProjects.map(project =>
                <DocentProjectEntry key={project.getId()} project={project}/>)
                :
-               <Typography>Sie haben keine Projekte angelegt</Typography>
+               <Typography>Sie bieten derzeit noch keine Projekte an.</Typography>
             }
-
-
             </Grid>
-
-          
         </Paper>
-        </div>
+      </div>
     );
   }
 }

@@ -182,7 +182,8 @@ class ProjectMapper (Mapper):
         cursor = self._cnx.cursor()
 
         command = "UPDATE project " + "SET creation_date=%s, name=%s, current_state=%s, capacity=%s, external_partners=%s, short_description=%s, weekly_flag=%s, bd_before_lecture_period=%s, bd_in_lecture_period=%s, bd_in_exam_period=%s, bd_preferred_in_lecture_period=%s, special_room=%s, project_type_id=%s, module_id=%s, person_id=%s, semester_id=%s WHERE project_id={}".format(project.get_id())
-        data = (project.get_creation_date(), project.get_name(), project.get_state(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room(), project.get_project_type_id(), project.get_module_id(), project.get_person_id(), project.get_semester_by_id())
+        data = (project.get_creation_date(), project.get_name(), project.get_state(), project.get_capacity(), project.get_external_partners(), project.get_short_description(), project.get_weekly_flag(), project.get_bd_before_lecture_period(), project.get_bd_in_lecture_period(), project.get_bd_in_exam_period(), project.get_bd_preferred_in_lecture_period(), project.get_special_room(), project.get_project_type_id(), project.get_module_id(), project.get_person_id(), project.get_semester_id())
+        print(data)
         cursor.execute(command, data)
 
         self._cnx.commit()

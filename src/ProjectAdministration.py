@@ -414,7 +414,6 @@ class ProjectAdministration():
     def save_project(self, project):
         """Ein Projekt speichern"""
         with ProjectMapper() as mapper:
-            print("Projadmin-date:"+project.get_creation_date())
             mapper.update(project)
     
     def delete_project(self, project):

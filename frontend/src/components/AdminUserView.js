@@ -142,7 +142,7 @@ class AdminUserView extends React.Component {
                     {/*Durchstich*/
                     persons.length > 0 ?
                         filteredPersons.map(person =>
-                    <AdminUserEntry onUpdate={() =>alert("updated")} key={person.getGoogleId()} person={person} onDelete={() => this.removePerson(person.getGoogleId())}/>)
+                    <AdminUserEntry key={person.getGoogleId()} person={person} onDelete={() => this.removePerson(person.getGoogleId())}/>)
                             :
                             null
                     }
