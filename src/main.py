@@ -68,7 +68,7 @@ module = api.inherit('Module', bo, nbo, {
 project = api.inherit('Project', bo, nbo, automat, {
     'capacity': fields.Integer(attribute='_capacity',
                                 description='Kapazität eines Projekts (maximale Teilnehmeranzahl)'),  
-    'external_partners': fields.String(attribute='_external_partner',
+    'external_partners': fields.String(attribute='_external_partners',
                                 description='Externe Partner, die am Projekt beteiligt sind'),  
     'short_description': fields.String(attribute='_short_description',
                                 description='Kurzbeschreibung des Projekts'),                           
@@ -697,12 +697,14 @@ class ProjectOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjectOperations(Resource):
     @projectTool.marshal_with(project)
-    @projectTool.expect(project, validate=True)
-    @secured
+    @projectTool.expect(project)
+    #@secured
     def put(self):
         """Update eines bestimmten Project-Objekts."""
         adm = ProjectAdministration()
         proj = Project.from_dict(api.payload)
+        print(proj)
+        print("****")
 
         if proj is not None:
             adm.save_project(proj)

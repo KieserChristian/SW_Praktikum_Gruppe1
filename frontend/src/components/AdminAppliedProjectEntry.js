@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
-import StudentProjectRegistration from './dialogs/StudentProjectRegistration';
+import AdminProjectApproval from './dialogs/AdminProjectApproval';
 import AdminProjectDeletion from './dialogs/AdminProjectDeletion'
 
 
@@ -18,7 +18,6 @@ class AdminAppliedProjectEntry extends React.Component {
             openDialogInfo: false,
             openDialogRegistration: false,
             projectType: null
-           
         };
     }    
 
@@ -39,9 +38,9 @@ class AdminAppliedProjectEntry extends React.Component {
             openDialogInfo: true})
     }
 
-    openDialogRegistration = () => {
+    openDialogApproval = () => {
         this.setState({
-            openDialogRegistration: true})
+            openDialogApproval: true})
     }
     
     closeDialogInfo = () => {
@@ -49,9 +48,9 @@ class AdminAppliedProjectEntry extends React.Component {
             openDialogInfo: false})
     }
 
-    closeDialogRegistration = () => {
+    closeDialogApproval = () => {
         this.setState({
-            openDialogRegistration: false})
+            openDialogApproval: false})
     }
 
     openDialogDeletion = () => {
@@ -90,7 +89,7 @@ class AdminAppliedProjectEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration, openDialogDeletion} = this.state;
+        const { error, projectNBO, projectType, openDialogInfo, openDialogApproval, openDialogDeletion} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} xs={12}>
@@ -122,13 +121,13 @@ class AdminAppliedProjectEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10, position:'relative', left:'70%'}} xs={6}>
                             <React.Fragment>
-                                <StudentProjectRegistration
-                                    openRegistration={openDialogRegistration}
-                                    onCloseProp={this.closeDialogRegistration}
+                                <AdminProjectApproval
+                                    openApproval={openDialogApproval}
+                                    onCloseProp={this.closeDialogApproval}
                                     project={projectNBO}
                                     currentUserEmail={this.props.currentUserEmail}
                                 />
-                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogRegistration}>
+                                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogApproval}>
                                         Genehmigen
                                     </Button>
                             </React.Fragment>

@@ -79,7 +79,7 @@ export default class ProjectAdminAPI {
     #getAvailableProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/available_projects_for_student/${studentId}`;
     #addProjectURL = () => `${this.#projectServerBaseURL}/projects`;
     #deleteProjectURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
-    #updateProjectURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
+    #updateProjectURL = () => `${this.#projectServerBaseURL}/project`;
 
     // ProjectType related
     #getProjectTypeByIdURL = (projectTypeId) => `${this.#projectServerBaseURL}/project-type/${projectTypeId}`;
@@ -294,7 +294,7 @@ export default class ProjectAdminAPI {
     }
 
     updateProject(projectNBO) {
-      return this.#fetchAdvanced(this.#updateProjectURL(projectNBO.get_Id()),{
+      return this.#fetchAdvanced(this.#updateProjectURL(),{
         method: 'PUT',
         credentials: 'include',
         headers: {

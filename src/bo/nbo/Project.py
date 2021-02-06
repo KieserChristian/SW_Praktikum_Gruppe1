@@ -137,7 +137,7 @@ class Project(Automat):
                 "Kurzbeschreibung: {}, Wöchentliche Veranstalung: {}," \
                 "Anzahl der Blocktage vor der Vorlesungszeit: {}, Anzahl der Blocktage in der Vorlesungszeit: {}," \
                 "Anzahl der Blocktage in der Prüfungszeit: {}, Präferierte Blocktage in der Vorlesungszeit: {}," \
-                "Erforderlichkeit eines besonderen Raums: {}, Projekttyp des Projekts: {}, Modul des Projekts: {}, Person des Projekts: {}, Semester des Projekts: {}".format(self.get_id(), 
+                "Erforderlichkeit eines besonderen Raums: {}, Projekttyp des Projekts: {}, Modul des Projekts: {}, Person des Projekts: {}, Semester des Projekts: {}".format( 
                                                                     self.get_name(),
                                                                     self.get_state(), 
                                                                     self.get_capacity(),
@@ -152,7 +152,7 @@ class Project(Automat):
                                                                     self.get_project_type_id(),
                                                                     self.get_module_id(),
                                                                     self.get_person_id(),
-                                                                    self.get_semester_id)
+                                                                    self.get_semester_id())
 
     @staticmethod
     def from_dict(dictionary=dict()):
