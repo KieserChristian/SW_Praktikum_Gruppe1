@@ -58,6 +58,33 @@ class PersonMapper (Mapper):
 
         return result
 
+    def find_by_role_id(self, role_id):
+        """Auslesen aller Personen anhand der Rolle.
+
+        :param  role_id
+        :return Eine Sammlung mit Person-Objekten, die sämtliche Personen
+            mit der gewünschten Rolle enthält.
+        """
+        result = []
+        cursor = self._cnx.cursor()
+        command = "SELECT * FROM person WHERE role_id='{}' ORDER BY role_id".format(role_id)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        for (id, creation_date, name, google_id, role_id) in tuples:
+            person = Person()
+            person.set_id(id)
+            person.set_creation_date(creation_date)
+            person.set_name(name)
+            person.set_google_id(google_id)
+            person.set_role_id(role_id)
+            result.append(person)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return result
+
     def find_by_name(self, name):
         """Auslesen aller Personen anhand des Namens.
 
