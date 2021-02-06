@@ -18,7 +18,7 @@ class DocentView extends React.Component {
     this.state = {
       projects: [],
       filteredProjects: [],
-      projectFilter: "",
+      projectFilter: '',
       error: null,
       loadingProgress: false,
       currentUserEmail: props.currentUserEmail
@@ -26,34 +26,12 @@ class DocentView extends React.Component {
   }
 
 
-  getProjectsByPerson = async() => {
-    let person = await ProjectAdminAPI.getAPI().getPersonByGoogleId(this.props.currentUserEmail)
-    console.log(person)
-    console.log(person[0].getId())
-    console.log(ProjectAdminAPI.getAPI().getProjectsByPerson(person[0].getId()))
-    ProjectAdminAPI.getAPI().getProjectsByPerson(person[0].getId())
-    .then(projectNBOs => {
-        this.setState({
-        projects: projectNBOs,
-        filteredProjects: [...projectNBOs],
-        loadingProgress: false,
-        error: null
-      });
-    }).catch(e => {
-      this.setState({
-        projects: [],
-        loadingInProgress: false,
-        error: e
-      })
-    });
-    this.setState({
-    loadingInProgress: true,
-    error: null
-    });
-  }
-
-  /**getAllProjects = () => {
-    ProjectAdminAPI.getAPI().getAllProjects()
+  /**getProjectsByPerson = async() => {
+    //let person = await ProjectAdminAPI.getAPI().getPersonByGoogleId(this.props.currentUserEmail)
+    //console.log(person)
+    //console.log(person[0].getId())
+    //console.log(ProjectAdminAPI.getAPI().getProjectsByPerson(person[0].getId()))
+    ProjectAdminAPI.getAPI().getProjectsByPerson(1)
     .then(projectNBOs => {
         this.setState({
         projects: projectNBOs,
@@ -74,11 +52,36 @@ class DocentView extends React.Component {
     });
   }
   */
+
+  
+
+  getAllProjects = () => {
+    ProjectAdminAPI.getAPI().getAllProjects()
+    .then(projectNBOs => {
+        this.setState({
+        projects: projectNBOs,
+        filteredProjects: [...projectNBOs],
+        loadingProgress: false,
+        error: null
+      });
+    }).catch(e => {
+      this.setState({
+        projects: [],
+        loadingInProgress: false,
+        error: e
+      })
+    });
+    this.setState({
+    loadingInProgress: true,
+    error: null
+    });
+  }
+  
   
 
   componentDidMount = () => {
 
-    this.getProjectsByPerson();
+    this.getAllProjects();
 
   }
 
@@ -130,9 +133,9 @@ class DocentView extends React.Component {
             {
              projects.length > 0 ? 
               filteredProjects.map(project =>
-               <DocentMeineProjekte currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project}/>)
+               <DocentMeineProjekte key={project.getId()} project={project}/>)
                :
-               null
+               <Typography>Sie haben keine Projekte angelegt</Typography>
             }
 
 
