@@ -19,7 +19,7 @@ class ProjectDetailsDialog extends Component {
             module: null,
             numberSws: null,
             numberEcts: null,
-            ProjectType: this.props.propProjectType,
+            projectType: this.props.propProjectType,
         }
     }
 
@@ -46,8 +46,30 @@ class ProjectDetailsDialog extends Component {
         });
     }
 
+    getProjectTypeById = () => {
+        ProjectAdminAPI.getAPI().getProjectTypeById(this.state.projectNBO.getProjectTypeId())
+        .then(projectTypeNBO => {
+            this.setState({
+            projectType: projectTypeNBO,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            projectType: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
+
     componentDidMount() {
         this.getModuleById();
+        this.getProjectTypeById();
     }
 
     onDialogClose =()=>{
@@ -56,7 +78,7 @@ class ProjectDetailsDialog extends Component {
 
     render() {
         const { openInfo } = this.props;
-        const { projectNBO, module, ProjectType} = this.state;
+        const { projectNBO, module, projectType} = this.state;
         return (
             <Dialog open={openInfo} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" style={{color: 'white', backgroundColor: '#4caf50'}}><b>{projectNBO.getName()}</b></DialogTitle>
@@ -68,8 +90,8 @@ class ProjectDetailsDialog extends Component {
                     'Modul: keine Angabe'}
                 </DialogContentText>
                 <DialogContentText>
-                { ProjectType ?
-                    <b>Projekttyp: {ProjectType.getName()}</b> 
+                { projectType ?
+                    <b>Projekttyp: {projectType.getName()}</b> 
                     :
                     'Projekttyp: keine Angabe'}
                 </DialogContentText>
@@ -80,14 +102,14 @@ class ProjectDetailsDialog extends Component {
                     'Kapazität: keine Angabe'}
                 </DialogContentText>
                 <DialogContentText>
-                { ProjectType ?
-                    <b>Anzahl ECTS: {ProjectType.getNumberEcts()}</b> 
+                { projectType ?
+                    <b>Anzahl ECTS: {projectType.getNumberEcts()}</b> 
                     :
                     'Anzahl ECTS: keine Angabe'}
                 </DialogContentText>
                 <DialogContentText>
-                { ProjectType ?
-                    <b>Anzahl SWS: {ProjectType.getNumberSws()}</b> 
+                { projectType ?
+                    <b>Anzahl SWS: {projectType.getNumberSws()}</b> 
                     :
                     'Anzahl SWS: keine Angabe'}
                 </DialogContentText>

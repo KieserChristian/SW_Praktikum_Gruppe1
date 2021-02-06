@@ -151,13 +151,21 @@ export default class ProjectAdminAPI {
       })
     }
 
-    updatePerson(personId) {
-      return this.#fetchAdvanced(this.#updatePersonURL(personId), {
-        method: 'PUT', credentials: 'include'
+
+    updatePerson(personNBO) {
+      console.log(JSON.stringify(personNBO))
+      return this.#fetchAdvanced(this.#updatePersonURL(personNBO),{
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json, text',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(personNBO) 
       }).then((responseJSON) => {
-        let responsePerson = PersonNBO.fromJSON(responseJSON)[0];
-        return new Promise(function(resolve) {
-          resolve(responsePerson);
+        let responsePersonNBO = PersonNBO.fromJSON(responseJSON)[0];
+        return new Promise(function (resolve) {
+          resolve(responsePersonNBO);
         })
       })
     }
