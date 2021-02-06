@@ -72,7 +72,7 @@ export default class ProjectAdminAPI {
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
     #getNumberEctsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-ects-by-project/${projectId}`;
     #getNumberSwsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-sws-by-project/${projectId}`;
-    #getProjectsByPersonURL = (personId) => `${this.#projectServerBaseURL}/projects-by-person/${personId}`;
+    #getProjectsByPersonURL = (personId) => `${this.#projectServerBaseURL}/projects_by_person/${personId}`;
     #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
     #getProjectsByCurrentState = (currentState) => `${this.#projectServerBaseURL}/projects_by_state/${currentState}`;
     #getRegisteredProjectsOfStudentURL = (studentId) => `${this.#projectServerBaseURL}/registered_projects_of_student/${studentId}`;
@@ -92,7 +92,7 @@ export default class ProjectAdminAPI {
     #getStudentByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/student-by-google-id/${googleId}`;
     #getAllStudentsURL = () => `${this.#projectServerBaseURL}/students`;
     #addStudentURL = () => `${this.#projectServerBaseURL}/students`;
-    #getStudentsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/students-by-project/${projectId}`;
+    #getStudentsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/students_by_project/${projectId}`;
     #deleteStudentURL = (studentId) => `${this.#projectServerBaseURL}/student/${studentId}`;
     #updateStudentURL = (studentId) => `${this.#projectServerBaseURL}/students`;
 
@@ -557,7 +557,7 @@ export default class ProjectAdminAPI {
       })
     }
 
-/*
+
     getGrading(gradingId) {
         return this.#fetchAdvanced(this.#getGradingURL(gradingId)).then((responseJSON) => {
           let responseGradingBO = GradingBO.fromJSON(responseJSON)[0];
@@ -664,14 +664,14 @@ export default class ProjectAdminAPI {
                 'Accept': 'application/json, text/plain',
                 'Content-type': 'application/json',
             },
-            body: JSON.stringify(participation)
+            body: JSON.stringify(participationId)
         }).then((responseJSON) => {
             let responseParticipation = ParticipationBO.fromJSON(responseJSON)[0];
             return new Promise(function (resolve) {
                 resolve(responseParticipation)
             })
         })
-    }; */
+    }; 
 
 
     /**getStudentById(studentId) {

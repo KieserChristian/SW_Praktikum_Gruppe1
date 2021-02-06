@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
+import DocentParticipantsList from './dialogs/DocentParticipantsList';
 
 class DocentProjectEntry extends React.Component {
 
@@ -13,7 +14,20 @@ class DocentProjectEntry extends React.Component {
         this.state = {
             projectNBO: props.project,
             openDialogInfo: false,
+            openParticipantsList: false
         };
+    }
+
+    openParticipantsList = () => {
+        this.setState({
+            openParticipantsList: true
+        });
+    }
+
+    closeParticipantsList = () => {
+        this.setState({
+            openParticipantsList: false
+        });
     }
 
     openDialogInfo = () => {
@@ -28,7 +42,7 @@ class DocentProjectEntry extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { projectNBO, showParticipantsList, openDialogInfo } = this.state;
+        const { projectNBO, openParticipantsList, openDialogInfo } = this.state;
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>  
@@ -53,9 +67,18 @@ class DocentProjectEntry extends React.Component {
                         </Typography>
                     </Grid>
                     <Grid>
-                        <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#697bdb'}}>
-                            Teilnehmerliste
-                        </Button>
+                        <React.Fragment>
+                            <DocentParticipantsList
+                            openList={openParticipantsList}
+                            onClose={this.closeParticipantsList}
+                            project={projectNBO}
+                            currentUserEmail={this.props.currentUserEmail}
+                            />
+                            <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#697bdb'}}
+                            onClick={this.openParticipantsList}>
+                                Teilnehmerliste
+                            </Button>
+                        </React.Fragment>
                     </Grid>
                 </Grid>
             </div>
