@@ -25,11 +25,11 @@ class StudentAvailableProjectsView extends React.Component {
   }
 
   getAvailableProjectsOfStudent = async() => {
-    //let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
+    let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
     //console.log(student)
     //console.log(student[0].getId())
     //console.log(ProjectAdminAPI.getAPI().getAvailableProjectsOfStudent(student[0].getId()))
-    ProjectAdminAPI.getAPI().getAvailableProjectsOfStudent(5)
+    ProjectAdminAPI.getAPI().getAvailableProjectsOfStudent(student[0].getId())
     .then(projectNBOs => {
       //console.log(projectNBOs)
         this.setState({
