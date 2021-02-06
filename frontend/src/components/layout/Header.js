@@ -17,8 +17,10 @@ class Header extends React.Component {
       <div className={classes.root}>
         <AppBar style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#3f51b5'}} position="static">
           <Toolbar>
+          <IconButton  style={{color: 'white'}} component={RouterLink} to={`/about`}>
+            <GraphicEqIcon />
+            </IconButton>
             <IconButton edge="false" color="inherit" aria-label="menu" component={RouterLink} to={`/login`}>
-              <GraphicEqIcon />
               <div>&nbsp;Promato</div>
             </IconButton>
             <Profile align='right' currentUser={currentUser}/>

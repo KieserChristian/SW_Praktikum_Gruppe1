@@ -26,9 +26,9 @@ import DocentProjectCreation from './components/DocentProjectCreation';
 import DocentProjectCreationForm from './components/DocentProjectCreationForm';
 import AdminUserView from './components/AdminUserView';
 import AdminAppliedProjectView from './components/AdminAppliedProjectView';
-import AdminSwitchView from './components/AdminSwitchView'
-import AdminSwitchDocentView from './components/AdminSwitchDocentView'
-import AdminSwitchStudentView from './components/AdminSwitchStudentView'
+import AdminSwitchView from './components/AdminSwitchView';
+import AdminSwitchDocentView from './components/AdminSwitchDocentView';
+import AdminSwitchStudentView from './components/AdminSwitchStudentView';
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
@@ -134,6 +134,9 @@ class App extends React.Component {
                 </Route>
                 <Route path='/student'>
                   <StudentNavigation/>
+                </Route>
+                <Route path='/about'>
+                  <About/>
                 </Route>
                 <Route path='/student/projektübersicht'>
                   <StudentView currentUserEmail = {currentUser.email}/>
