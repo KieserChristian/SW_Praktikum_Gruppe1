@@ -225,7 +225,7 @@ class PersonByRoleIdOperations(Resource):
 @projectTool.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PersonListOperations(Resource):
     @projectTool.marshal_list_with(person)
-    @secured
+    #@secured
     def get(self):
         """Auslesen aller Personen-Objekte"""
         adm = ProjectAdministration()
