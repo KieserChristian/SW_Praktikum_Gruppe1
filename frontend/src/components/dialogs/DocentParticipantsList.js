@@ -15,15 +15,18 @@ class DocentParticipantsList extends React.Component {
             students: [],
             project: props.project,
             error: null,
-            loadingInProgress: false
+            loadingInProgress: false,
+            onClose: props.onClose
         } 
     }
 
-    onDialogClose = () => {
-        this.props.closeParticipantsList()
+    onCloseDialog = () => {
+        this.props.onClose()
     }
 
-    /* getStudentsByProject = () => {
+    getStudentsByProject = () => {
+        console.log(this.state.project.getId())
+        console.log(ProjectAdminAPI.getAPI().getStudentsByProject(this.state.project.getId()))
         ProjectAdminAPI.getAPI().getStudentsByProject(this.state.project.getId())
         .then (studentNBOs => {
             this.setState({
@@ -42,9 +45,9 @@ class DocentParticipantsList extends React.Component {
             loadingInProgress: true,
             error: null
         });
-    } */
+    }
 
-    getAllStudents = () => {
+    /* getAllStudents = () => {
         ProjectAdminAPI.getAPI().getAllStudents().then(studentNBOs => {
             this.setState({
                 students: studentNBOs,
@@ -62,16 +65,17 @@ class DocentParticipantsList extends React.Component {
         loadingInProgress: true,
         error: null
         });
-    }
+    } */
 
     componentDidMount() {
-        this.getAllStudents();
-        //this.getStudentsByProject();
+        //this.getAllStudents();
+        this.getStudentsByProject();
     }
 
     render() {
         const { classes, openList } = this.props;
         const { error, loadingInProgress, students } = this.state;
+        console.log(students)
         return (
             <div className={classes.root}>
             <Dialog open={openList}>
@@ -88,7 +92,7 @@ class DocentParticipantsList extends React.Component {
                     </DialogContentText>    
                 </DialogContent>
                 <DialogActions>
-                    <Button style={{marginBottom: 10, marginTop: 10, color: 'white'}} onClick={this.onClose}>
+                    <Button style={{marginBottom: 10, marginTop: 10, color: '#3f51b5'}} onClick={this.onCloseDialog}>
                         Schließen
                     </Button>
                 </DialogActions>
