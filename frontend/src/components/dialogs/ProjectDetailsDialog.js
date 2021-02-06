@@ -148,7 +148,7 @@ class ProjectDetailsDialog extends Component {
                     :
                     'Kurzbeschreibung: keine Angabe'}
                 </DialogContentText>
-                <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.onDialogClose} >close</Button>        
+                <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.onDialogClose} >Schließen</Button>        
             </DialogContent>
         </Dialog>
         );
