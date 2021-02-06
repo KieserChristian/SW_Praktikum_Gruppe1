@@ -11,6 +11,8 @@ import { withStyles, Button, List, ListItem, ListItemSecondaryAction, Typography
 import { Link } from 'react-router-dom';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import AdminUserEntry from './AdminUserEntry';
+import AdminUserEntryStudents from './AdminUserEntryStudents';
+
 
 /*Klassendefinition*/
 class AdminUserView extends React.Component {
@@ -140,17 +142,17 @@ class AdminUserView extends React.Component {
                     {/*Durchstich*/
                     persons.length > 0 ?
                         filteredPersons.map(person =>
-                    <AdminUserEntry onUpdate={() =>alert("updated")} key={person.getGoogleId()} person={person} onDelete={() => this.removePerson(person.getGoogleId())}/>)
+                    <AdminUserEntry key={person.getGoogleId()} person={person} onDelete={() => this.removePerson(person.getGoogleId())}/>)
                             :
                             null
                     }
-{/*                     {
+                    {
                     students.length > 0 ?
                         filteredStudents.map(student =>
-                    <AdminUserEntry key={student.getGoogleId()} student={student} onDelete={() => this.removeStudent(student.getGoogleId())}/>)
+                    <AdminUserEntryStudents key={student.getGoogleId()} student={student} onDelete={() => this.removeStudent(student.getGoogleId())}/>)
                         :
                         null
-                    } */}
+                    }
                 </Grid>
             </Paper>
             </div>
