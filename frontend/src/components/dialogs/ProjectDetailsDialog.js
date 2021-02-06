@@ -20,6 +20,7 @@ class ProjectDetailsDialog extends Component {
             numberSws: null,
             numberEcts: null,
             projectType: this.props.propProjectType,
+            person: this.props.propPerson
         }
     }
 
@@ -67,9 +68,31 @@ class ProjectDetailsDialog extends Component {
         });
     }
 
+    getPersonById = () => {
+        ProjectAdminAPI.getAPI().getPersonById(this.state.projectNBO.getPersonId())
+        .then(personNBO => {
+            this.setState({
+            person: personNBO,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            person: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
+
     componentDidMount() {
         this.getModuleById();
         this.getProjectTypeById();
+        this.getPersonById();
     }
 
     onDialogClose =()=>{
@@ -78,7 +101,7 @@ class ProjectDetailsDialog extends Component {
 
     render() {
         const { openInfo } = this.props;
-        const { projectNBO, module, projectType} = this.state;
+        const { projectNBO, module, projectType, person} = this.state;
         return (
             <Dialog open={openInfo} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" style={{color: 'white', backgroundColor: '#4caf50'}}><b>{projectNBO.getName()}</b></DialogTitle>
@@ -88,6 +111,12 @@ class ProjectDetailsDialog extends Component {
                     <b>Modul: {module.getName()}</b> 
                     :
                     'Modul: keine Angabe'}
+                </DialogContentText>
+                <DialogContentText>
+                { person ?
+                    <b>Dozent: {person.getName()}</b> 
+                    :
+                    'Dozent: keine Angabe'}
                 </DialogContentText>
                 <DialogContentText>
                 { projectType ?

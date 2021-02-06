@@ -108,7 +108,7 @@ class StudentAvailableProjectsView extends React.Component {
               {
               projects.length > 0 ? 
                 filteredProjects.map(project =>
-                  <StudentAvailableProjectsEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project}/>)
+                  <StudentAvailableProjectsEntry key={project.getId()} project={project}/>)
                   :
                   <Typography>Es stehen keine Projekte zur Anmeldung zur Verfügung.</Typography>
               }

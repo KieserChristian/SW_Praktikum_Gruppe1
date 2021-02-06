@@ -69,13 +69,35 @@ class StudentAvailableProjectsEntry extends React.Component {
         });
     }
 
+    getPersonById = () => {
+        ProjectAdminAPI.getAPI().getPersonById(this.state.projectNBO.getPersonId())
+        .then(personNBO => {
+            this.setState({
+            person: personNBO,
+            loadingProgress: false,
+            error: null
+          });
+        }).catch(e => {
+          this.setState({
+            person: null,
+            loadingInProgress: false,
+            error: e
+          })
+        });
+        this.setState({
+        loadingInProgress: true,
+        error: null
+        });
+    }
+
     componentDidMount() {
         this.getProjectTypeById();
+        this.getPersonById();
     }
 
     render() {
         const { classes } = this.props;
-        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration} = this.state;
+        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration, person} = this.state;
         //console.log(projectNBO)
         return (
             <div className={classes.root}>
@@ -87,6 +109,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                     onCloseProp={this.closeDialogInfo}
                                     project={projectNBO}
                                     propProjectType={projectType}
+                                    propPerson={person}
                                 />
                                 <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={this.openDialogInfo}>
                                 <InfoIcon/>

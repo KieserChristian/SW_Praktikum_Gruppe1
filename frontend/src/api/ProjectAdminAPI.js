@@ -64,6 +64,7 @@ export default class ProjectAdminAPI {
     #addPersonURL = () => `${this.#projectServerBaseURL}/persons`;
     #getPersonByGoogleIdURL = (googleId) => `${this.#projectServerBaseURL}/person-by-google-id/${googleId}`;
     #getPersonsByRoleURL = (roleId) => `${this.#projectServerBaseURL}/person-by-role/${roleId}`;
+    #getPersonByIdURL = (personId) => `${this.#projectServerBaseURL}/person/${personId}`;
    
    
    
@@ -189,6 +190,15 @@ export default class ProjectAdminAPI {
         let personNBO = PersonNBO.fromJSON(responseJSON);
         return new Promise(function(resolve) {
           resolve(personNBO)
+        })
+      })
+    }
+
+    getPersonById(personId) {
+      return this.#fetchAdvanced(this.#getPersonByIdURL(personId), {credentials: 'include'}).then((responseJSON) => {
+        let PersonNBOs = PersonNBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(PersonNBOs)
         })
       })
     }

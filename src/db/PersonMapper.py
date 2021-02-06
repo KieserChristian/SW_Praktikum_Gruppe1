@@ -40,7 +40,7 @@ class PersonMapper (Mapper):
         """
         result = []
         cursor = self._cnx.cursor()
-        command = "SELECT person_id, creation_date, name, google_id, role_id FROM person WHERE person_id='{}' ORDER BY person_id".format(id)
+        command = "SELECT person_id, creation_date, name, google_id, role_id FROM person WHERE person_id={} ORDER BY person_id".format(id)
         cursor.execute(command)
         tuples = cursor.fetchall()
 
