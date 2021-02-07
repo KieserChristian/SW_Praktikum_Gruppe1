@@ -266,7 +266,7 @@ class ProjectMapper (Mapper):
         
         cursor = self._cnx.cursor()
         command = """
-        SELECT project.project_id, project.name, person.person_id
+        SELECT project.project_id, project.name, project.current_state, project.capacity, project.external_partners, project.short_description, project.weekly_flag, project.bd_before_lecture_period, project.bd_in_lecture_period, project.bd_in_exam_period, project.bd_preferred_in_lecture_period, project.special_room, project.project_type_id, project.module_id, project.person_id, project.semester_id, person.person_id
         FROM project
         INNER JOIN person
         ON project.person_id=person.person_id
@@ -277,8 +277,8 @@ class ProjectMapper (Mapper):
         tuples = cursor.fetchall()
 
         try:
-            for(project_id, name, person_id) in tuples:
-                person_json = {"id": project_id, "name": name, "person_id": person_id}
+            for(project_id, name, current_state, capacity, external_partners, short_description, weekly_flag, bd_before_lecture_period, bd_in_lecture_period, bd_in_exam_period, bd_preferred_in_lecture_period, special_room, project_type_id, module_id, person_id, semester_id, person_id) in tuples:
+                person_json = {"id": project_id, "name": name, "current_state": current_state, "capacity": capacity, "external_partners": external_partners, "short_description": short_description, "weekly_flag": weekly_flag, "bd_before_lecture_period": bd_before_lecture_period, "bd_in_lecture_period": bd_in_lecture_period, "bd_in_exam_period": bd_in_exam_period, "bd_preferred_in_lecture_period": bd_preferred_in_lecture_period, "special_room": special_room, "project_type_id": project_type_id, "module_id": module_id, "person_id": person_id, "semester_id": semester_id, "person_id": person_id}
                 result.append(person_json)
         except IndexError:
             print("There was no object with this id")
