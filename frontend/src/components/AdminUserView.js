@@ -136,7 +136,7 @@ class AdminUserView extends React.Component {
             <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
                 <Grid container spacing={1} justify='flex-start' alignItems='center'>
                     <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">
-                        Alle Nutzer
+                        Dozenten und Admins
                     </Button>
                 </Grid>
                 <Grid style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
@@ -155,7 +155,7 @@ class AdminUserView extends React.Component {
                 </Grid>
                 <Grid>
                     <Typography>
-                    Hier sehen Sie alle Nutzer und deren Rollen:
+                    Hier sehen Sie Dozenten und Admins:
                     </Typography><hr/>
                     {/*Durchstich*/
                     persons.length > 0 ?
@@ -164,6 +164,32 @@ class AdminUserView extends React.Component {
                             :
                             null
                     }
+                </Grid>
+            </Paper>
+            <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
+                <Grid container spacing={1} justify='flex-start' alignItems='center'>
+                    <Button style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}} variant="contained">
+                        Studenten
+                    </Button>
+                </Grid>
+                <Grid style={{width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10}}>
+                    <TextField 
+                        autoFocus type='text' 
+                        value={studentFilter} 
+                        onChange={this.filterStudents}
+                        InputProps={{
+                            endAdornment: <InputAdornment position='end'>
+                                <IconButton onClick={this.clearStudentFilter}>
+                                    <HighlightOffIcon/>
+                                </IconButton>
+                            </InputAdornment>
+                        }}
+                    />
+                </Grid>
+                <Grid>
+                    <Typography>
+                    Hier sehen Sie Studenten:
+                    </Typography><hr/>
                     {
                     students.length > 0 ?
                         filteredStudents.map(student =>
