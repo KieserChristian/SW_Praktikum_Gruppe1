@@ -5,7 +5,13 @@ import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
 import DocentParticipantsList from './dialogs/DocentParticipantsList';
-
+  
+/**
+* DocentProjectEntry liefert den Input für die DocentView. Dies sind die Projekt des Dozenten
+Gibt die Teilnehmerliste und die Projektinformationen (State: Neue, genehmigt und deren Namen)
+Im Projektdetails werden nähere Informationen zu den jeweiligen Projekten dargestellt.
+Dies sind angaben zum Projektnamen, Projekttyp, Anzahl ECTS, Anzahl SWS, sowie eine Kurzbeschreibung
+*/
 class DocentProjectEntry extends React.Component {
 
     constructor(props) {
@@ -18,28 +24,42 @@ class DocentProjectEntry extends React.Component {
         };
     }
 
+  /**
+   * Handling beim öffnen der ParticipansList
+   */
     openParticipantsList = () => {
         this.setState({
             openParticipantsList: true
         });
     }
-
+  /**
+   * Handling beim schließen der ParticipansList
+   */
     closeParticipantsList = () => {
         this.setState({
             openParticipantsList: false
         });
     }
-
+  /**
+   * Handlig beim öffnen des Dialogs
+   */
     openDialogInfo = () => {
         this.setState({
             openDialogInfo: true})
     }
 
+    /**
+   * Handling beim schließen des Dialogs 
+   */
     closeDialogInfo = () => {
         this.setState({
             openDialogInfo: false})
     }
 
+  /**
+   * Rendern der Componente mit den Inhalten des Projectdialogs und der DocentparticipantsList und 
+   * dem zugehörigem Button
+   */
     render() {
         const { classes } = this.props;
         const { projectNBO, openParticipantsList, openDialogInfo } = this.state;
@@ -85,7 +105,9 @@ class DocentProjectEntry extends React.Component {
         );
     }
 }
-
+/**
+* Styling der Component
+*/
 const styles = theme => ({
     root: {
         width: '100%',
