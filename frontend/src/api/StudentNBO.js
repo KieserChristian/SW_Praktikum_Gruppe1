@@ -6,7 +6,6 @@ export default class StudentNBO extends PersonNBO {
         super();
         this.matriculation_number = aMatriculationNumber;
         this.course_abbreviation = aCourseAbbreviation;
-        this.participation_id = aParticipationId;
     }
 
     setMatriculationNumber (aMatriculationNumber){
@@ -23,14 +22,6 @@ export default class StudentNBO extends PersonNBO {
 
     getCourseAbbreviation(){
         return this.course_abbreviation;
-    }
-
-    setParticipationId(aParticipationId) {
-        this.participation_id = aParticipationId;
-    }
-
-    getParticipationId() {
-        return this.participation_id;
     }
     
     static fromJSON(student) {
