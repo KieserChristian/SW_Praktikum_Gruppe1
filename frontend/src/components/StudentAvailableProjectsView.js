@@ -75,7 +75,7 @@ class StudentAvailableProjectsView extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { error, loadingInProgress, projects, projectFilter, filteredProjects } = this.state;
+    const { error, loadingInProgress, projects, projectFilter, filteredProjects, currentUserEmail } = this.state;
     return (
         <div>
         <Paper style={{paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 15, marginTop: 15}} elevation={0}>
@@ -109,7 +109,7 @@ class StudentAvailableProjectsView extends React.Component {
               {
               projects.length > 0 ? 
                 filteredProjects.map(project =>
-                  <StudentAvailableProjectsEntry key={project.getId()} project={project}/>)
+                  <StudentAvailableProjectsEntry key={project.getId()} project={project} currentUserEmail={currentUserEmail}/>)
                   :
                   <Typography>Es stehen keine Projekte zur Anmeldung zur Verfügung.</Typography>
               }

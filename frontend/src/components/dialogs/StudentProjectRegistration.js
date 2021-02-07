@@ -30,9 +30,10 @@ class StudentProjectRegistration extends Component {
     addParticipationToProject = async() => {
         let newParticipation = new ParticipationBO();
         let student = await ProjectAdminAPI.getAPI().getStudentByGoogleId(this.props.currentUserEmail)
+        //console.log(this.props.currentUserEmail)
         //console.log(student)
         newParticipation.setProjectId(this.state.projectNBO.getId());
-        //console.log(this.state.ProjectNBOs.getId())
+        //console.log(this.state.projectNBOs.getId())
         newParticipation.setStudentId(student[0].getId());
         //console.log(newParticipation);
         ProjectAdminAPI.getAPI().addParticipation(newParticipation).then(participation => {
