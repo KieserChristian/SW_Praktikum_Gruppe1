@@ -1,5 +1,7 @@
 import BusinessObject from './BusinessObject';
 
+/**Repräsentiert ein Benotung eines Projekts für einen Studenten des Systems */
+
 export default class GradingBO extends BusinessObject{
 
     constructor(aGrade) {

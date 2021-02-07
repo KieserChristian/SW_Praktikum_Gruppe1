@@ -7,6 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import StudentProjectCancellation from './dialogs/StudentProjectCancellation';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
 
+/*  StudentProjectEntry wird aus der StudentView.js aufgerufen.
+    Hier werden alle angemeldete Projekte eines Studenten angezeigt mit der Option, sich von diesen abzumelden
+    und die Projektinfos in einem Dialog aufzurufen (ProjectDetailsDialog.js).
+*/
+
 class StudentProjectEntry extends React.Component {
 
     constructor(props) {

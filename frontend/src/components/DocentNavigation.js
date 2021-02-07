@@ -5,6 +5,11 @@ import { Button, Grid, withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import {Link} from 'react-router-dom';
 
+
+/**DocentNaviagtion zeigt eine NaviagtionBar, die durch die komplette Dozentensicht leitet und oben immer 
+eine Lesitungsübersicht und "neues Projekt" anzeigt.
+*/
+
 class DocentNavigation extends React.Component {
 
     constructor(props) {

@@ -6,6 +6,10 @@ import { withStyles, Paper, Button, Typography, Grid, TextField, InputAdornment,
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import StudentProjectEntry from './StudentProjectEntry';
 
+/* StudentView ist eine Component, welche nach Klick auf den Button "Projektübersicht" in der StudentNavigation.js gerendert wird.
+   Hier werden die angemeldeten Projekte eines Studenten angezeigt, welche mithilfe der StudentProjectEntry.js befüllt werden.
+*/
+
 class StudentView extends React.Component {
 
   constructor(props) {

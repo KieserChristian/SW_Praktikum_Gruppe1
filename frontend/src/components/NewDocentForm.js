@@ -8,8 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
+import PersonNBO from '../api/PersonNBO';
 
-class NewStudentForm extends React.Component {
+class NewDocentForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -17,30 +19,45 @@ class NewStudentForm extends React.Component {
         this.state = {
             name: '',
             email: '',
-            matriculationNumber: '',
-            courseAbbreviation: '',
-            currentUserEmail: props.currentUserEmail,
-            openNewStudentForm: props.openNewStudentForm
+            currentUserEmail: props.currentUserEmail
         }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit(event) {
-        //this.addStudent();
+    addNewDocent = () => {
+        let newDocent = new PersonNBO();
+        newDocent.setName(this.state.name);
+        newDocent.setGoogleId(this.state.email);
+        newDocent.setRoleId(2)
+        console.log(newDocent)
+        ProjectAdminAPI.getAPI().addPerson(newDocent)
+        .then(docent => {
+            this.setState(this.baseState)
+        })
+    }
+
+    handleSignUpButton = () => {
+        this.addNewDocent();
         alert('Registrierung erfolgreich');
-        event.preventDefault();
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
+        const value = event.target.value;
+        let error = false;
+        if (typeof value === 'string'){
+            if (value.trim().length === 0) {
+            error = true;
+            }
+        }
         this.setState({
-            value: event.target.value
+          [event.target.id]: event.target.value
         });
     }
 
     render() {
         const { classes } = this.props;
-        const {  } = this.state;
+        const { name, email } = this.state;
+        console.log(name)
+        console.log(email)
         return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
@@ -55,14 +72,14 @@ class NewStudentForm extends React.Component {
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
-                                    name="name"
                                     variant="outlined"
                                     required
                                     fullWidth
                                     id="name"
                                     label="Name"
                                     autoFocus
-                                    value={this.state.name}
+                                    onChange={this.handleChange}
+                                    value={name}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -70,23 +87,11 @@ class NewStudentForm extends React.Component {
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    name="matriculation"
-                                    label="Matrikelnummer"
-                                    id="matriculation"
+                                    id="email"
+                                    label="E-Mail-Adresse"
                                     autoFocus
-                                    value={this.state.matriculationNumber}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="course"
-                                    label="Studiengangskürzel"
-                                    name="course"
-                                    autoFocus
-                                    value={this.state.courseAbbreviation}
+                                    onChange={this.handleChange}
+                                    value={email}
                                 />
                             </Grid>
                             <Button
@@ -95,7 +100,7 @@ class NewStudentForm extends React.Component {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
-                                onClick={this.handleSubmit}
+                                onClick={this.handleSignUpButton}
                             >SignUp
                             </Button>
                         </Grid>
@@ -118,7 +123,7 @@ const styles = makeStyles((theme) => ({
       backgroundColor: theme.palette.secondary.main,
     },
     form: {
-      width: '100%', // Fix IE 11 issue.
+      width: '100%',
       marginTop: theme.spacing(3),
     },
     submit: {
@@ -126,4 +131,4 @@ const styles = makeStyles((theme) => ({
     },
 }));
 
-export default withStyles(styles)(NewStudentForm);
+export default withStyles(styles)(NewDocentForm);

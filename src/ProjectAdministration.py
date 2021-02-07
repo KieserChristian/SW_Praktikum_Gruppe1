@@ -303,10 +303,10 @@ class ProjectAdministration():
         with ParticipationMapper() as mapper:
             return mapper.find_all()
     
-    """def get_participations_by_student(self, student):
-        Alle Teilnahmen des Studenten auslesen
+    def get_participation_by_student(self, student_id):
+        """Eine Teilnahme des Studenten auslesen"""
         with ParticipationMapper() as mapper:
-            return mapper.get_participations_by_student(student)"""
+            return mapper.get_participation_by_student(student_id)
 
     def get_project_of_participation(self, participation):
         """Ein Projekt einer Teilnahme auslesen"""

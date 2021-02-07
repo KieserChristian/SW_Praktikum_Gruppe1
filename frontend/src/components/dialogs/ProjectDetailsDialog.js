@@ -3,12 +3,12 @@ import ProjectAdminAPI from '../../api/ProjectAdminAPI';
 import Dialog from '@material-ui/core/Dialog';
 import { default as DialogContent, default as DialogContentText } from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-//import TextField from '@material-ui/core/TextField';
 import React, { Component } from 'react';
 
-/*  Dieser Dialog öffnet sich, sobald der Info-Button nebem einem Projekt aus der StudentAvailableProjectEntry.js angeklickt wird.
-    Er behinhaltet einen Infotext mit dem Projektnamen, Projekttyp, Anzahl ECTS, Anzahl SWS, sowie eine Kurzbeschreibung und 
-    lässt sich über einen Close-Button schließen.
+/*  Dieser Dialog öffnet sich, sobald der Info-Button nebem einem Projekt aus der "StudentAvailableProjectsEntry.js",
+    sowie der "StudentProjectEntry.js" angeklickt wird.
+    Er behinhaltet einen Infotext mit dem Projektnamen, , Modul, Dozent, Projekttyp, Anzahl ECTS, Anzahl SWS, 
+    Kapazität, sowie eine Kurzbeschreibung und lässt sich über einen Close-Button schließen.
 */
 
 class ProjectDetailsDialog extends Component {
