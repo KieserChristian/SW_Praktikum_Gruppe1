@@ -4,9 +4,10 @@ import BusinessObject from './BusinessObject';
 
 export default class GradingBO extends BusinessObject{
 
-    constructor(aGrade) {
+    constructor(aGrade, aParticipationId) {
         super();
             this.grade = aGrade
+            this.participation_id = aParticipationId
     }
 
     setGrade(aGrade) {
@@ -15,6 +16,14 @@ export default class GradingBO extends BusinessObject{
 
     getGrade() {
         return this.grade;
+    }
+
+    setParticipationId(aParticipationId) {
+        this.participation_id = aParticipationId;
+    }
+
+    getParticipationId() {
+        return this.participation_id;
     }
 
     static fromJSON(grading) {
