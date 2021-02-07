@@ -610,7 +610,7 @@ export default class ProjectAdminAPI {
     addGrading(gradingBO) {
       return this.#fetchAdvanced(this.#addGradingURL(), {
         method: 'POST',
-        /* credentials: 'include' */,
+        credentials: 'include',
         headers: {
           'Accept': 'application/json, text',
           'Content-type': 'application/json',
