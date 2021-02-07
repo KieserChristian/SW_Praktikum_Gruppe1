@@ -11,6 +11,10 @@ import TableRow from '@material-ui/core/TableRow';
 import TableContainer from '@material-ui/core/TableContainer';
 import StudentGradingEntry from './StudentGradingEntry';
 
+/*  Diese Component wird nach Klick auf den Button "Leistungsübersicht" aus der StudentNavigation.js gerendert.
+    Hier wird die Component StudentGradingEntry.js aufgerufen.
+*/
+
 class StudentGradingView extends React.Component {
 
   constructor(props) {

@@ -6,8 +6,9 @@ import { default as DialogContent, default as DialogContentText, } from '@materi
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ParticipationBO from '../../api/ParticipationBO';
 
-/*  Dieser Dialog öffnet sich, sobald der Anmelde-Button nebem einem Projekt aus der StudentAvailableProjectEntry.js angeklickt wird.
-    Er behinhaltet eine Abfrage, ob man sich für das angeklickte Projekt anmelden möchte und bietet einen "Anmelden"-, sowie "Abbrechen"- Button.
+/*  Dieser Dialog öffnet sich, sobald der Anmelde-Button nebem einem Projekt aus der StudentAvailableProjectsEntry.js angeklickt wird.
+    Er behinhaltet eine Abfrage, ob man sich für das ausgewählte Projekt anmelden möchte und bietet einen "Anmelden"-, sowie "Abbrechen"- Button,
+    sowie einen Alert nach erfolgreicher Anmeldung.
 */
 
 class StudentProjectRegistration extends Component {

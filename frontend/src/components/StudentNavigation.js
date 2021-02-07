@@ -5,6 +5,13 @@ import { Button, Grid, withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import {Link} from 'react-router-dom';
 
+/* StudentNavigation ist eine Component, welche nach Auswahl des Buttons "Studenten" aus der LogIn.js gerendert wird.
+   Hier wird eine Navigation angezeigt mit 2 Buttons.
+   Mit Klick auf den Button "Projektübersicht" werden die beiden Components "StudentView.js" und "StudentAvailableProjectsView.js" gerendert.
+   Mit Klick auf den Button "Leistungsübersicht" wird die Component "StudentGradingView" aufgerufen, in der die Benotung der 
+   angemeldeten Projekte angezeigt wird.
+*/
+
 class StudentNavigation extends React.Component {
 
     constructor(props) {

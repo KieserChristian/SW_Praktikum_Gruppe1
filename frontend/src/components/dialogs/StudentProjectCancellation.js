@@ -2,6 +2,11 @@ import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import ProjectAdminAPI from '../../api/ProjectAdminAPI';
 
+/*  Dieser Dialog öffnet sich, sobald der Abmelden-Button nebem einem Projekt aus der StudentProjectEntry.js angeklickt wird.
+    Er behinhaltet eine Sicherheitsabfrage, ob man sich für das ausgewählte Projekt anmelden möchte und bietet einen "Abmelden"-, sowie "Abbrechen"- Button,
+    sowie einen Alert nach erfolgreicher Abmeldung.
+*/
+
 class StudentProjectCancellation extends React.Component {
 
     constructor(props) {
