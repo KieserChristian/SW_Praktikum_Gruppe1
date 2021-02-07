@@ -2,22 +2,22 @@ import NamedBusinessObject from "./NamedBusinessObject"
 
 export default class ProjectNBO extends NamedBusinessObject {
 
-    constructor (aState, aCapacity, aPartner, aDescription, aFlag, aBDbeforeLecture, aBDinExam, aBDinLecture, aBDpreferredInLecture, aRoom, aProjectTypeId, aModuleId, aPersonId, aSemesterId) {
-        super();
-        this.current_state = aState;
-        this.capacity = aCapacity;
-        this.external_partners = aPartner;
-        this.short_description = aDescription;
-        this.weekly_flag = aFlag;
-        this.bd_before_lecture_period = aBDbeforeLecture;
-        this.bd_in_exam_period = aBDinExam;
-        this.bd_in_lecture_period = aBDinLecture;
-        this.bd_preferred_in_lecture_period = aBDpreferredInLecture;
-        this.special_room = aRoom;
-        this.project_type_id = aProjectTypeId;
-        this.person_id = aPersonId;
-        this.module_id = aModuleId;
-        this.semester_id = aSemesterId;
+    constructor () {
+        super ();
+        this.current_state = null;
+        this.capacity = null;
+        this.external_partners = null;
+        this.short_description = null;
+        this.weekly_flag = null
+        this.bd_before_lecture_period = null;
+        this.bd_in_exam_period = null;
+        this.bd_in_lecture_period = null;
+        this.bd_preferred_in_lecture_period = null;
+        this.special_room = null;
+        this.project_type_id = null;
+        this.person_id = null;
+        this.module_id = null;
+        this.semester_id = null;
     }
 
     setState(aState) {
