@@ -100,6 +100,7 @@ class StudentView extends React.Component {
           <Typography>
             Hier können Sie sich von angemeldeten Projekten abmelden:
           </Typography>
+          <hr/>
           { 
           projects.length > 0 ?
             filteredProjects.map(project =>
