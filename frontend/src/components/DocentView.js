@@ -7,8 +7,9 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import DocentProjectEntry from './DocentProjectEntry';
 
 
-/* DocentTeilnehmerliste ist eine Component, welche in der DocentView.js gerendert wird.
-   Hier werden die Studenten eines Projektes angezeigt, welche mithilfe der DocentTeilnehmerlisteGrading befüllt werden.
+/* DocentView.js wird nach der Auswahl der Projektübersicht der Componente  DocentNavigation aufgerufen.
+   Hier werden die Projekte des angemeldeten Dozenten angezeigt.Die Befüllung erfolgt über die DocentProjectEntry, welche
+   im render über eine map Funktion die projecte als Array zurückgibt.
 */
 
 class DocentView extends React.Component {
@@ -25,6 +26,15 @@ class DocentView extends React.Component {
       currentUserEmail: props.currentUserEmail
     } 
   }
+
+  
+  /**
+   * Liest die einzelnen Projekte eines Dozenten aus. Das async keyword vor der Deklaration der Funktion
+   * lässt einen Promise ausgeben und nicht direkt einen Wert (value). Das await Keyword pausiert
+   * den Code bis der Promise erfüllt wurde und gibt dann eine Wert aus. consol.log wird genutzt um bei Errors im 
+   * Browser eine Überprüfung der Übermittelten Daten durchzuführen. Über die API ProjectAdminAPI erfolgt die
+   *  Kommunikation Application und Database layer. 
+   */
 
   getProjectsOfDocent = async() => {
     let person = await ProjectAdminAPI.getAPI().getPersonByGoogleId(this.props.currentUserEmail)
@@ -73,13 +83,17 @@ class DocentView extends React.Component {
     error: null
     });
   } */
-  
+  /**Lifecycle Methode, die aufgerufen wird wenn die Komponente in den Browser eingefügt wird */
   componentDidMount = () => {
     //this.getAllProjects();
     this.getProjectsOfDocent();
 
   }
 
+  /**
+   * 
+   * Filtert die aufgelistetetn Elemente nach ihren mitgegebenen Namen
+   */
   filterProjects = event => {
     const searchterm = event.target.value.toLowerCase();
     this.setState({
@@ -90,14 +104,18 @@ class DocentView extends React.Component {
       projectFilter: searchterm
     })
   }
-
+  /**
+   * Leeren des Filters
+   */
   clearProjectFilter = () => {
     this.setState({
       filteredProjects: [...this.state.projects],
       projectFilter: ''
     })
   }
-
+    /**
+   * Rendermethode der Projektübersicht eines Dozenten und den Projektfilter
+   */
   render() {
     const { classes } = this.props;
     const { projects, projectFilter, filteredProjects } = this.state;
@@ -139,7 +157,7 @@ class DocentView extends React.Component {
     );
   }
 }
-
+/** Styling der Component*/
 const styles = theme => ({
   root: {
     width: '100%',
