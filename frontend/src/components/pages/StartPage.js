@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
+/**	Diese Component zeigt die Startpage nach dem LogIn an.
+ */
 
 class StartPage extends React.Component {
 
