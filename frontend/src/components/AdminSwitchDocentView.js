@@ -10,6 +10,14 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles, Button, List, ListItem, ListItemSecondaryAction, Typography, Input, Grid, InputAdornment } from '@material-ui/core';
 import AdminSwitchDocentEntry from './AdminSwitchDocentEntry'
 
+
+/**
+* AdminSwitchDocentView liefert den Output für die Sicht der Dozentoperationen in dem Adminreiter. 
+Dies sind alle Dozenten welche sich registriert haben und eine Rolle ausgewählt haben.
+Es gibt die Auswahlmöglichkeit eines Dozenten wieder.
+*/
+
+
 class AdminSwitchDocentView extends React.Component {
 
   constructor(props) {

@@ -12,6 +12,13 @@ import AdminUserUpdateStudents from './dialogs/AdminUserUpdateStudents';
 import roleNBO from '../api/RoleNBO';
 
 
+/**
+* AdminUserEntryStudents liefert den Input für die Nutzerübersicht der Studenten in dem Adminreiter. 
+Dies sind alle Studenten welche sich registriert haben und eine Rolle ausgewählt haben.
+Es gibt die Nutzerrolle, den Nutzernamen ,die Bearbeitungsmöglichkeit und die Löschmöglichkeit wieder.
+*/
+
+
 class AdminUserEntryStudents extends React.Component {
 
     constructor(props) {

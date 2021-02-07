@@ -11,6 +11,13 @@ import StudentProjectRegistration from './dialogs/StudentProjectRegistration';
 import AdminProjectDeletion from './dialogs/AdminProjectDeletion'
 import AdminProjectUpdate from './dialogs/AdminProjectUpdate'
 
+
+/**
+* AdminViewEntry liefert den Input für die AdminView. Dies sind alle genehmigten Projekte durch den Admin.
+Es gibt die Projektinformationen , den Projektnamen , die Löschmöglichkeit und die 
+Änderungsmöglichkeit eines Projektes wieder.
+*/
+
 class AdminViewEntry extends React.Component {
 
     constructor(props) {

@@ -17,6 +17,12 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 
+/**
+* AdminUserUpdateStudents liefert den Input für die Änderung des Studenten, beim anklicken vom Änderungs-Button 
+in einer Studentenzeile in dem Adminreiter.(Aus der Nutzerübersicht in der Liste der Studenten.)
+*/
+
+
 class AdminUserUpdateStudents extends Component {
     constructor (props) {
         super(props)

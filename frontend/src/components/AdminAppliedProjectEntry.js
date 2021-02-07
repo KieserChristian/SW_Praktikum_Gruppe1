@@ -9,6 +9,15 @@ import AdminProjectApproval from './dialogs/AdminProjectApproval';
 import AdminProjectDeletion from './dialogs/AdminProjectDeletion'
 import ProjectNBO from '../api/ProjectNBO';
 
+
+/**
+* AdminAppliedProjectEntry liefert den Input für die Projektübersicht der neuen Projekte in dem Adminreiter. 
+Dies sind alle neuen Projekte welche durch den Dozenten zur Überprüfung erstellt wurden .
+Es gibt die Projektinformationen , den Projektnamen , die ECTS Anzahl und die Kapazität,außer dem noch
+die Annahme und Absage- Möglichkeit eines Projektes wieder.
+*/
+
+
 class AdminAppliedProjectEntry extends React.Component {
 
     constructor(props) {

@@ -1,6 +1,10 @@
 import { makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 
+/*  Diese Component kennzeichnet die Urheberschaft von Promato.
+    Es werden die Namen der Ersteller angezeigt.
+*/
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',

@@ -5,6 +5,12 @@ import { Button, Grid, withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import {Link} from 'react-router-dom';
 
+
+/**
+* Eine Navigationsleiste zum wechseln zwischen der Projektübersicht und der Nutzerübersicht.
+*/
+
+
 class AdminNavigation extends React.Component {
 
     constructor(props) {

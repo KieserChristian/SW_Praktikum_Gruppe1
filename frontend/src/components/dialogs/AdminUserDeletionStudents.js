@@ -6,6 +6,13 @@ import { default as DialogContent, default as DialogContentText, } from '@materi
 import DialogTitle from '@material-ui/core/DialogTitle';
 import StudentNBO from '../../api/StudentNBO';
 
+
+/**
+* AdminUserDeletionStudent liefert den Input für die Löschung des Studenten, beim anklicken vom Delete-Button 
+in einer Studentenzeile in dem Adminreiter.(Aus der Nutzerübersicht in der Liste der Studenten.)
+*/
+
+
 class AdminUserDeletionStudents extends Component {
     constructor (props) {
         super(props)

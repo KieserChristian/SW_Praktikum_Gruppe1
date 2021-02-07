@@ -22,6 +22,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+
+/**
+* AdminProjectApproval liefert den Input für die Änderung des Status, beim anklicken vom Genehmigen-Button 
+in einer Projektzeile in dem Adminreiter.(Aus der Projektübersicht in der Liste der neuen Projekte.)
+*/
+
 class AdminProjectApproval extends Component {
     constructor (props) {
         super(props)

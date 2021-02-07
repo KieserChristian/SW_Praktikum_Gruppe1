@@ -1,6 +1,13 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 
+
+/**
+* DocentDeleteStudent liefert den Input für die Löschung eines Studenten, beim anklicken vom Delete-Button 
+in einer Teilnehmerzeile in dem Dozentreiter.
+*/
+
+
 class DocentDeleteStudent extends React.Component {
 
     constructor(props) {

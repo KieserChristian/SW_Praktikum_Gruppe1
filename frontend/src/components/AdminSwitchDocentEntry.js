@@ -9,6 +9,15 @@ import StudentProjectRegistration from './dialogs/StudentProjectRegistration';
 import AdminProjectDeletion from './dialogs/AdminProjectDeletion'
 import DocentView from '../components/DocentView'
 import { Link } from 'react-router-dom';
+
+
+/**
+* AdminSwitchDocentEntry liefert den Input für die Sicht der Dozentoperationen in dem Adminreiter. 
+Dies sind alle Dozenten welche sich registriert haben und eine Rolle ausgewählt haben.
+Es gibt die Auswahlmöglichkeit eines Dozenten wieder.
+*/
+
+
 class AdminSwitchDocentEntry extends React.Component {
 
     constructor(props) {

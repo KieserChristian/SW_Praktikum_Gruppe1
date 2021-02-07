@@ -9,6 +9,15 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import { withStyles, Button, List, ListItem, ListItemSecondaryAction, Typography, Input, Grid, InputAdornment } from '@material-ui/core';
 
+
+/**
+* AdminAppliedProjectView liefert den Output für die Projektübersicht der neuen Projekte in dem Adminreiter. 
+Dies sind alle neuen Projekte welche durch den Dozenten zur Überprüfung erstellt wurden .
+Es gibt die Projektinformationen , den Projektnamen , die ECTS Anzahl und die Kapazität,außer dem noch
+die Annahme und Absage- Möglichkeit eines Projektes wieder.
+*/
+
+
 class AdminAppliedProjectView extends React.Component {
 
   constructor(props) {

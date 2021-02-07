@@ -7,6 +7,11 @@ import ContextErrorMessage from './ContextErrorMessage';
 import LoadingProgress from './LoadingProgress';
 
 
+/**
+* ProjectDeleteDialog liefert den Input für die Löschung eines Projektes, beim anklicken vom Delete-Button 
+in einer Projektzeile in dem Studenteiter.
+*/
+
 
 class ProjectDeleteDialog extends Component {
 

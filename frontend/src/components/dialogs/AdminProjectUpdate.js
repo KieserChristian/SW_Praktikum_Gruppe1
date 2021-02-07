@@ -17,6 +17,11 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import ProjectNBO from '../../api/ProjectNBO';
 
+/**
+* AdminProjectUpdate liefert den Input für die Änderung des Projektess, beim anklicken vom Änderungs-Button 
+in einer Projektzeile in dem Adminreiter.(Aus der Projektübersicht in der Liste der genehmigten Projekte.)
+*/
+
 class AdminProjectUpdate extends Component {
     constructor (props) {
         super(props)
