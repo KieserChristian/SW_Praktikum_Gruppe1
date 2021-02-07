@@ -49,7 +49,7 @@ class AdminUserUpdateStudents extends Component {
             loadingInProgress: true,
             addingError: null
         });
-        //this.props.onUpdate()
+        this.props.onUpdate(studentNBO)
     }
 
     updateAlert = (studentNBO) => {

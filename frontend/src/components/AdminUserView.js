@@ -110,6 +110,24 @@ class AdminUserView extends React.Component {
         })
     }
 
+    updatePerson = (personNBO) => {
+        let newPersons= this.state.filteredPersons.filter(person => person.getGoogleId()!== personNBO.getGoogleId())
+        newPersons.push(personNBO)
+        console.log(personNBO)
+        this.setState({
+            filteredPersons: newPersons
+        })
+    }
+
+    updateStudent = (studentNBO) => {
+        let newStudents= this.state.filteredStudents.filter(student => student.getGoogleId()!== studentNBO.getGoogleId())
+        newStudents.push(studentNBO)
+        console.log(studentNBO)
+        this.setState({
+            filteredStudents: newStudents
+        })
+    }
+
     /*Anzeigen*/
     render(){
         const { persons, personFilter, filteredPersons, students, studentFilter, filteredStudents } = this.state;
@@ -142,14 +160,14 @@ class AdminUserView extends React.Component {
                     {/*Durchstich*/
                     persons.length > 0 ?
                         filteredPersons.map(person =>
-                    <AdminUserEntry key={person.getGoogleId()} person={person} onDelete={() => this.removePerson(person.getGoogleId())}/>)
+                    <AdminUserEntry key={person.getGoogleId()} person={person} onDelete={() => this.removePerson(person.getGoogleId())} onUpdate={this.updatePerson}/>)
                             :
                             null
                     }
                     {
                     students.length > 0 ?
                         filteredStudents.map(student =>
-                    <AdminUserEntryStudents key={student.getGoogleId()} student={student} onDelete={() => this.removeStudent(student.getGoogleId())}/>)
+                    <AdminUserEntryStudents key={student.getGoogleId()} student={student} onDelete={() => this.removeStudent(student.getGoogleId())} onUpdate={this.updateStudent}/>)
                         :
                         null
                     }

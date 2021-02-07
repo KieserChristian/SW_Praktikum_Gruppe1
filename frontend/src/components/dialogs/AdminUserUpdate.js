@@ -55,7 +55,7 @@ class AdminUserUpdate extends Component {
             loadingInProgress: true,
             addingError: null
         });
-        //this.props.onUpdate()
+        this.props.onUpdate(personNBO)
     }
 
     updateAlert = (personNBO) => {
@@ -125,16 +125,7 @@ class AdminUserUpdate extends Component {
                 </Grid>
                 <Grid style={{paddingBottom: 10, paddingTop: 10, paddingLeft: 10, paddingRight: 10, marginTop: 10, backgroundColor: '#e0e0e0'}} variant="contained" padding="dense" align="left">
                         <form noValidate autoComplete="off">
-{/*                             {<TextField
-                                id="Role"
-                                label="Rolle"
-                                variant="filled"
-                                fullWidth
-                                color="secondary"
-                                onChange={(e) => this.handleChangeRole(e.target.value)}
-                                value={this.state.roleNBO} 
-                            />} */}
-                            <FormControl>
+                            <FormControl variant="filled">
                                 <InputLabel id="Role">Rolle</InputLabel>
                                 <Select
                                     labelId="Rolle"

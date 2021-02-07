@@ -57,8 +57,8 @@ class AdminUserEntryStudents extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const { error, studentNBO, showDialog, openDialogUpdate, openDialogDeletion } = this.state;
+        const { classes, student } = this.props;
+        const { error, showDialog, openDialogUpdate, openDialogDeletion } = this.state;
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>
@@ -74,7 +74,7 @@ class AdminUserEntryStudents extends React.Component {
                     </Grid>
                     <Grid style={{marginBottom: 10, marginTop: 10}}> 
                         <Typography className={classes.heading}>
-                            <b>{studentNBO.getName()}</b>
+                            <b>{student.getName()}</b>
                         </Typography>
                     </Grid>
                     <Grid>
@@ -82,8 +82,7 @@ class AdminUserEntryStudents extends React.Component {
                             {<AdminUserUpdateStudents
                                 openUpdate={openDialogUpdate}
                                 onCloseProp={this.closeDialogUpdate}
-                                student={studentNBO}
-                                //role={roleNBO}
+                                student={student}
                                 onUpdate={this.props.onUpdate}
                             />}
                                 <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogUpdate}>
@@ -92,7 +91,7 @@ class AdminUserEntryStudents extends React.Component {
                             {<AdminUserDeletionStudents
                                 openDeletion={openDialogDeletion}
                                 onCloseProp={this.closeDialogDeletion}
-                                student={studentNBO}
+                                student={student}
                                 onDelete={this.props.onDelete}
                             />}
                                 <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogDeletion}>

@@ -56,7 +56,7 @@ class AdminUserEntry extends React.Component {
     }
 
     getRoleByPerson = (personId) => {
-        ProjectAdminAPI.getAPI().getRoleByPerson(this.state.personNBO.getId())
+        ProjectAdminAPI.getAPI().getRoleByPerson(this.props.person.getId())
         .then(roleNBO => {
             this.setState({
             roleNBO: roleNBO.getStaticAttribute(),
@@ -80,9 +80,10 @@ class AdminUserEntry extends React.Component {
         this.getRoleByPerson();
     }
 
+
     render() {
-        const { classes } = this.props;
-        const { error, personNBO, roleNBO, showDialog, openDialogUpdate, openDialogDeletion } = this.state;
+        const { classes, person } = this.props;
+        const { error, roleNBO, showDialog, openDialogUpdate, openDialogDeletion } = this.state;
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>
@@ -100,7 +101,7 @@ class AdminUserEntry extends React.Component {
                     </Grid>
                     <Grid style={{marginBottom: 10, marginTop: 10}}> 
                         <Typography className={classes.heading}>
-                            <b>{personNBO.getName()}</b>
+                            <b>{person.getName()}</b>
                         </Typography>
                     </Grid>
                     <Grid>
@@ -108,7 +109,7 @@ class AdminUserEntry extends React.Component {
                             <AdminUserUpdate
                                 openUpdate={openDialogUpdate}
                                 onCloseProp={this.closeDialogUpdate}
-                                person={personNBO}
+                                person={person}
                                 role={roleNBO}
                                 onUpdate={this.props.onUpdate}
                             />
@@ -118,7 +119,7 @@ class AdminUserEntry extends React.Component {
                             <AdminUserDeletion
                                 openDeletion={openDialogDeletion}
                                 onCloseProp={this.closeDialogDeletion}
-                                person={personNBO}
+                                person={person}
                                 onDelete={this.props.onDelete}
                             />
                                 <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogDeletion}>

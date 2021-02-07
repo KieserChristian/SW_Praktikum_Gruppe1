@@ -297,7 +297,7 @@ class AdminProjectUpdate extends Component {
                 </DialogContentText>    
             </DialogContent>
             <DialogActions>
-                <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={() => this.updateAlert(projectNBO)}>Ändern</Button>
+                <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={() => this.updateAlert(projectNBO)}>Speichern</Button>
                 <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={() => this.onDialogClose()}>Abbrechen</Button>
                 </DialogActions>
             </Dialog>
