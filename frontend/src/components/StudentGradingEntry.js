@@ -6,6 +6,11 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import LoadingProgress from './dialogs/LoadingProgress';
 
+/* Diese Component wird in der Component "StudentGradingView" gerendert.
+   Hier wird die Benotung der angemeldeten Projekte eines Studenten angezeigt incl. den dazugehörigen Projektattributen
+   Projektname, Modul, EDV-Nummer, Semester, ECTS und SWS.
+*/
+
 class StudentGradingEntry extends React.Component {
 
   constructor(props) {

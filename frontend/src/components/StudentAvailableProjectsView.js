@@ -5,8 +5,8 @@ import { withStyles, Grid, Button, Paper, Typography, InputAdornment, IconButton
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import StudentAvailableProjectsEntry from './StudentAvailableProjectsEntry';
 
-/* StudentAvailableProjectsView ist eine Component, welche in der StudentView.js gerendert wird.
-   Hier werden die Verfügbaren Projekte eines Studenten angezeigt, welche mithilfe der StudentAvailableProjectsEntry befüllt werden.
+/* StudentAvailableProjectsView ist eine Component, welche nach Klick auf den Button "Projektübersicht" in der StudentNavigation.js gerendert wird.
+   Hier werden die verfügbaren Projekte eines Studenten angezeigt, welche mithilfe der StudentAvailableProjectsEntry.js befüllt werden.
 */
 
 class StudentAvailableProjectsView extends React.Component {

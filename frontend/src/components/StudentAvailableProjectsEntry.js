@@ -1,15 +1,15 @@
 import React from 'react';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import { Button, Grid, Typography, withStyles} from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import ProjectDetailsDialog from './dialogs/ProjectDetailsDialog';
 import StudentProjectRegistration from './dialogs/StudentProjectRegistration';
 
 
-/*  StudentAvailableProjectsEntry wird aus der StudentAvailableProjectsView.js aufgerufen, um sich für das angezeigte
-    Projekt anzumelden.
+/*  StudentAvailableProjectsEntry wird aus der StudentAvailableProjectsView.js aufgerufen.
+    Hier werden alle für den Studenten verfügbaren Projekte angezeigt mit der Option, sich für sie anzumelden
+    und die Projektinfos in einem Dialog aufzurufen (ProjectDetailsDialog.js).
 */
 
 class StudentAvailableProjectsEntry extends React.Component {
