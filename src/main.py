@@ -620,9 +620,8 @@ class GradingOperations(Resource):
 
         if proposal is not None:
             """Wir verwenden Grading_id und Grade des Proposals für die Erzeugung eines Grading-Objektes."""
-            grad = adm.create_grading(proposal.get_grade())
+            grad = adm.create_grading(proposal.get_grade(), proposal.get_participation_id())
             return grad, 200
-            print(grad)
         else:
             return '', 500
 

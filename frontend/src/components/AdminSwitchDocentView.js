@@ -79,7 +79,7 @@ class AdminSwitchDocentView extends React.Component {
           <Grid style={{ width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10 }}>
             <Typography>
               Hier können Sie den Dozenten auswählen:
-            </Typography>
+            </Typography><hr/>
             {
               docents.length > 0 ?
                 filteredDocents.map(docents =>

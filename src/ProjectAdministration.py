@@ -352,9 +352,10 @@ class ProjectAdministration():
         with GradingMapper() as mapper:
             return mapper.insert(grading)
     
-    def create_grading(self, grade):
+    def create_grading(self, grade:int, participation_id:int):
         grading = Grading()
         grading.set_grade(grade)
+        grading.set_participation_id(participation_id)
 
         with GradingMapper() as mapper:
             mapper.insert(grading)

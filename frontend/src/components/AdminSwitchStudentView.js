@@ -80,7 +80,7 @@ class AdminSwitchStudentView extends React.Component {
           <Grid style={{ width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10 }}>
             <Typography>
               Hier können Sie den Studenten auswählen:
-            </Typography>
+            </Typography><hr/>
             {
               students.length > 0 ?
                 filteredStudents.map(students =>

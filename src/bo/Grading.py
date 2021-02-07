@@ -18,9 +18,9 @@ class Grading(BusinessObject):
         """Auslesen der Note"""
         return self._grade
 
-    def set_participation_id(self, participation):
+    def set_participation_id(self, participation_id):
         """Setzen eines Fremdschlüssels zur Participation"""
-        self._participation_id = participation
+        self._participation_id = participation_id
 
     def get_participation_id(self):
         """Auslesen des Fremdschlüssels zu Participation."""
