@@ -11,7 +11,8 @@ class DocentParticipantEntry extends React.Component {
 
         this.state = {
             student: props.student,
-            grade: null
+            grade: null,
+            grading: null,
         }
         this.baseState = this.state;
         console.log(this.state.student.getId())
@@ -27,7 +28,17 @@ class DocentParticipantEntry extends React.Component {
         .then(grading => {
             this.setState(this.baseState)
         })
+    }
 
+    getGradingByParticipationOfStudent = async() => {
+        let participation = await ProjectAdminAPI.getAPI().getParticipationByStudent(this.state.student.getId())
+        console.log(participation.getId())
+        ProjectAdminAPI.getAPI().getGradingByParticipation(participation.getId())
+        .then(gradingBO => {
+            this.setState({
+                grading: gradingBO
+            })
+        })
     }
 
     handleGradingButton = () => {
@@ -40,15 +51,29 @@ class DocentParticipantEntry extends React.Component {
         });
     }
 
+    componentDidMount() {
+        this.getGradingByParticipationOfStudent();
+    }
+
     render() {
         const { classes } = this.props;
-        const { student, grade } = this.state;
+        const { student, grade, grading } = this.state;
+        console.log(grading)
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} xs={12}>
                     <Grid item style={{marginBottom: 10, marginTop: 10}} xs={6}>
-                        <Typography className={classes.heading} >
+                        <Typography className={classes.heading}>
                             <b>{student.getName()}</b>
+                        </Typography>
+                    </Grid>
+                    <Grid>
+                        <Typography className={classes.heading}>
+                            { grading ?
+                            <b>Note: {grading[0].getGrade()}</b>
+                            :
+                            'noch keine Bewertung'
+                            }
                         </Typography>
                     </Grid>
                     <Grid>
