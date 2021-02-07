@@ -17,7 +17,9 @@ export default class ProjectAdminAPI {
     static #api = null;
 
     // Local Backend
-    #projectServerBaseURL = 'http://localhost:5000/project';
+    #projectServerBaseURL = 'http://backend.promato.xyz/project';
+    //#projectServerBaseURL = 'http://localhost:5000/project';
+
 
     // Grading related
     #getAllGradingsURL = () => `${this.#projectServerBaseURL}/gradings`;
@@ -33,7 +35,6 @@ export default class ProjectAdminAPI {
     #getGradingByParticipationURL = (participationId) => `${this.#projectServerBaseURL}/grading_by_participation/${participationId}`
 
     #getModuleByProjectURL = (projectId) => `${this.#projectServerBaseURL}/module-by-project/${projectId}`;
-
      // Module related
 /*     #getAllModulesURL = () => `${this.#projectServerBaseURL}/modules`;
     

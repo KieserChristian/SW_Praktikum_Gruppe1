@@ -1,10 +1,10 @@
 dispatch:
 
-    - url: "sw-praktikum-gruppe1.ew.r.appspot.com/*"
+    - url: "promato.xyz/*"
       service: frontend
   
-    - url: "backend.sw-praktikum-gruppe1.ew.r.appspot.com/*"
+    - url: "backend.promato.xyz/*"
       service: backend
 
-    - url: "default.sw-praktikum-gruppe1.ew.r.appspot.com.com/*"
+    - url: "default.promato.xyz/*"
       service: default

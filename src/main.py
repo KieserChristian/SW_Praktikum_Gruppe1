@@ -198,7 +198,7 @@ class PersonByNameOperations(Resource):
 @projectTool.param('google_id', 'Die Google-Mail der Person')
 class PersonByGoogleMailOperations(Resource):
     @projectTool.marshal_with(person)
-    @secured
+    #darf nicht @secured haben..
     def get(self, google_id):
         """Auslesen eines Student-Objekts, das durch die Google-Mail bestimmt wird.
         Das auszulesende Objekt wird durch 'google_id' in dem URI bestimmt.
