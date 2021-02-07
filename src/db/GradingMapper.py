@@ -20,7 +20,7 @@ class GradingMapper (Mapper):
             grading.set_id(id)
             grading.set_creation_date(creation_date)
             grading.set_grade(grade)
-            grading.set_participation_id(participation)
+            grading.set_participation_id(participation_id)
             result.append(grading)
 
         self._cnx.commit()
@@ -60,10 +60,19 @@ class GradingMapper (Mapper):
         tuples = cursor.fetchall()
 
         for (maxid) in tuples:
-            grading.set_id(maxid[0]+1)
+                        
+            if maxid[0] is not None:
+                """Wenn wir eine maximale ID festellen konnten, zählen wir diese
+                um 1 hoch und weisen diesen Wert als ID dem Person-Objekt zu."""
+                grading.set_id(maxid[0] + 1)
 
-        command = "INSERT INTO grading (grading_id, creation_date, grade, participation_id) VALUES (%s, CURRENT_TIMESTAMP,%s, %s)"
-        data = (grading.get_id(), grading.get_grade(), grading.get_participation_id())
+            else:
+                """Wenn wir KEINE maximale ID feststellen konnten, dann gehen wir
+                davon aus, dass die Tabelle leer ist und wir mit der ID 1 beginnen können."""
+                grading.set_id(1)
+
+        command = "INSERT INTO grading (grading_id, grade, creation_date, participation_id) VALUES (%s,%s,%s, %s)"
+        data = (grading.get_id(), grading.get_grade(), grading.get_creation_date(), grading.get_participation_id())
         cursor.execute(command, data)
         self._cnx.commit()
         cursor.close()
@@ -119,3 +128,11 @@ class GradingMapper (Mapper):
             cursor.close()
             return result
 
+if (__name__ == "__main__"):
+     grading = Grading()
+     grading.set_id(id)
+     grading.set_grade(5.67)
+     grading.set_participation_id(1)
+
+     with GradingMapper() as mapper:
+        result = mapper.insert(grading)
