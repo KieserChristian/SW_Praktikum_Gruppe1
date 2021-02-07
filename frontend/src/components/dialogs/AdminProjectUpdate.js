@@ -60,7 +60,7 @@ class AdminProjectUpdate extends Component {
             loadingInProgress: true,
             addingError: null
         });
-        // this.props.onUpdate()
+        this.props.onUpdate(projectNBO)
     }
 
     updateAlert = (projectNBO) => {

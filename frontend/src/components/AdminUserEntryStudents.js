@@ -99,7 +99,7 @@ class AdminUserEntryStudents extends React.Component {
                                 </IconButton>
                         </React.Fragment>
                     </Grid>
-                </Grid>
+                </Grid><hr/>
             </div>
         );
     }

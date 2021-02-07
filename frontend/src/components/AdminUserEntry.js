@@ -128,6 +128,7 @@ class AdminUserEntry extends React.Component {
                         </React.Fragment>
                     </Grid>
                 </Grid>
+                <hr/>
             </div>
         );
     }

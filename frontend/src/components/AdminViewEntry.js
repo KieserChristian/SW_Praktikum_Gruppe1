@@ -77,7 +77,7 @@ class AdminViewEntry extends React.Component {
     }
 
     getProjectTypeById = () => {
-        ProjectAdminAPI.getAPI().getProjectTypeById(this.state.projectNBO.getProjectTypeId())
+        ProjectAdminAPI.getAPI().getProjectTypeById(this.props.project.getProjectTypeId())
         .then(projectTypeNBO => {
             this.setState({
             projectType: projectTypeNBO,
@@ -102,8 +102,8 @@ class AdminViewEntry extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const { error, projectNBO, projectType, openDialogInfo, openDialogRegistration, openDialogDeletion, openDialogUpdate} = this.state;
+        const { classes,project } = this.props;
+        const { error, projectType, openDialogInfo, openDialogRegistration, openDialogDeletion, openDialogUpdate} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} xs={12}>
@@ -112,7 +112,7 @@ class AdminViewEntry extends React.Component {
                                 <ProjectDetailsDialog
                                     openInfo={openDialogInfo}
                                     onCloseProp={this.closeDialogInfo}
-                                    project={projectNBO}
+                                    project={project}
                                     propProjectType={projectType}
                                 />
                                 <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={this.openDialogInfo}>
@@ -122,7 +122,7 @@ class AdminViewEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10, position: 'relative', left:'10%'}} xs={6}>
                                 <Typography className={classes.heading} >
-                                    <b>Projektname: {projectNBO.getName()}</b>
+                                    <b>Projektname: {project.getName()}</b>
                                 </Typography>
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10, position: 'relative', left:'18%'}}>
@@ -130,7 +130,7 @@ class AdminViewEntry extends React.Component {
                         <AdminProjectUpdate
                                 openUpdate={openDialogUpdate}
                                 onCloseProp={this.closeDialogUpdate}
-                                project={projectNBO}
+                                project={project}
                                 onUpdate={this.props.onUpdate}
                             />
                             <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogUpdate}>
@@ -140,7 +140,7 @@ class AdminViewEntry extends React.Component {
                             <AdminProjectDeletion
                                 openDeletion={openDialogDeletion}
                                 onCloseProp={this.closeDialogDeletion}
-                                project={projectNBO}
+                                project={project}
                                 onDelete={this.props.onDelete}
                             />
                             <IconButton aria-label='expand' size='small' justify='flex-start' onClick={this.openDialogDeletion}>
@@ -149,6 +149,7 @@ class AdminViewEntry extends React.Component {
                         </React.Fragment>
                     </Grid>
                         </Grid>
+                        <hr/>
             </div>
         );
     }

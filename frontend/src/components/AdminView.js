@@ -61,6 +61,15 @@ class AdminView extends React.Component {
     })
   }
 
+  updateProject = (projectNBO) => {
+    let newProjects= this.state.filteredProjects.filter(project => project.getId()!== projectNBO.getId())
+    newProjects.push(projectNBO)
+    console.log(projectNBO)
+    this.setState({
+        filteredProjects: newProjects
+    })
+}
+
   render() {
     const { projects, projectFilter, filteredProjects } = this.state;
     return (
@@ -88,11 +97,11 @@ class AdminView extends React.Component {
           <Grid style={{ width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10 }}>
             <Typography>
               Hier können Sie alle Projekte einsehen oder bearbeiten:
-            </Typography>
+            </Typography> <hr/>
             {
               projects.length > 0 ?
                 filteredProjects.map(project =>
-                  <AdminViewEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project} onDelete={() => this.removeProject(project.getId())} />)
+                  <AdminViewEntry currentUserEmail={this.props.currentUserEmail} key={project.getId()} project={project} onDelete={() => this.removeProject(project.getId())} onUpdate={this.updateProject} />)
 
                 :
                 "Test"

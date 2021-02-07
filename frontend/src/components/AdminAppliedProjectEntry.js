@@ -78,7 +78,7 @@ class AdminAppliedProjectEntry extends React.Component {
     // }
 
     getProjectTypeById = () => {
-        ProjectAdminAPI.getAPI().getProjectTypeById(this.state.projectNBO.getProjectTypeId())
+        ProjectAdminAPI.getAPI().getProjectTypeById(this.props.project.getProjectTypeId())
         .then(projectTypeNBO => {
             this.setState({
             projectType: projectTypeNBO,
@@ -103,8 +103,8 @@ class AdminAppliedProjectEntry extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const { error, projectNBO, projectType, openDialogInfo, openDialogApproval, openDialogDeletion} = this.state;
+        const { classes, project } = this.props;
+        const { error, projectType, openDialogInfo, openDialogApproval, openDialogDeletion} = this.state;
         return (
             <div className={classes.root}>
                         <Grid className={classes.project} container spacing={1} xs={12}>
@@ -113,7 +113,7 @@ class AdminAppliedProjectEntry extends React.Component {
                                 <ProjectDetailsDialog
                                     openInfo={openDialogInfo}
                                     onCloseProp={this.closeDialogInfo}
-                                    project={projectNBO}
+                                    project={project}
                                     propProjectType={projectType}
                                 />
                                 <IconButton aria-label="expand row" size="small" justify='flex-start' onClick={this.openDialogInfo}>
@@ -123,7 +123,7 @@ class AdminAppliedProjectEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10}} xs={6}>
                                 <Typography className={classes.heading} >
-                                    <b>Projektname: {projectNBO.getName()}</b>
+                                    <b>Projektname: {project.getName()}</b>
                                 </Typography>
                                 <Typography className={classes.heading}>
                                     {projectType?
@@ -131,7 +131,7 @@ class AdminAppliedProjectEntry extends React.Component {
                                     :"Test(5ECTS)"}
                                 </Typography>
                                 <Typography className={classes.heading}>
-                                    Kapazität: {projectNBO.getCapacity()} Plätze
+                                    Kapazität: {project.getCapacity()} Plätze
                                 </Typography>
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10, position:'relative', left:'70%'}} xs={6}>
@@ -139,8 +139,9 @@ class AdminAppliedProjectEntry extends React.Component {
                                 <AdminProjectApproval
                                     openApproval={openDialogApproval}
                                     onCloseProp={this.closeDialogApproval}
-                                    project={projectNBO}
+                                    project={project}
                                     currentUserEmail={this.props.currentUserEmail}
+                                    onUpdate={this.props.onUpdate}
                                 />
                                     <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#4caf50'}} onClick={this.openDialogApproval}>
                                         Genehmigen
@@ -150,7 +151,7 @@ class AdminAppliedProjectEntry extends React.Component {
                                 <AdminProjectDeletion
                                     openDeletion={openDialogDeletion}
                                     onCloseProp={this.closeDialogDeletion}
-                                    project={projectNBO}
+                                    project={project}
                                     onDelete={this.props.onDelete}
                                 />
                                     <Button style={{marginBottom: 10, marginTop: 10, color: 'white', backgroundColor: '#ff5722'}} onClick={this.openDialogDeletion}>
@@ -159,6 +160,7 @@ class AdminAppliedProjectEntry extends React.Component {
                             </React.Fragment>
                             </Grid>
                         </Grid>
+                        <hr/>
             </div>
         );
     }

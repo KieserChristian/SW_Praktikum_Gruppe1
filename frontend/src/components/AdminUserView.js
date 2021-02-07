@@ -156,7 +156,7 @@ class AdminUserView extends React.Component {
                 <Grid>
                     <Typography>
                     Hier sehen Sie alle Nutzer und deren Rollen:
-                    </Typography>
+                    </Typography><hr/>
                     {/*Durchstich*/
                     persons.length > 0 ?
                         filteredPersons.map(person =>
