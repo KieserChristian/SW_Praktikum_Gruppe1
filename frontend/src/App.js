@@ -23,7 +23,6 @@ import AdminNavigation from './components/AdminNavigation';
 import DocentTeilnehmerliste from './components/DocentTeilnehmerliste';
 import DocentMeineProjekte from "./components/DocentMeineProjekte";
 import DocentProjectCreation from './components/DocentProjectCreation';
-import DocentProjectCreationForm from './components/DocentProjectCreationForm';
 import AdminUserView from './components/AdminUserView';
 import AdminAppliedProjectView from './components/AdminAppliedProjectView';
 import AdminSwitchView from './components/AdminSwitchView';
