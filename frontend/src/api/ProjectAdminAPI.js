@@ -22,14 +22,13 @@ export default class ProjectAdminAPI {
     // Grading related
     #getAllGradingsURL = () => `${this.#projectServerBaseURL}/gradings`;
     #getGradingURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
-    #getGradingByParticipationIdURL = (participationId) => `${this.#projectServerBaseURL}/grading-by-participation-id`;
     #getGradingByIdURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
     #createGradingURL = (grading) => `${this.#projectServerBaseURL}/gradings`;
     #createGradingForParticipationURL = () => `${this.#projectServerBaseURL}/gradings`;
     #saveGradingURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
     #deleteGradingURL = (gradingId) => `${this.#projectServerBaseURL}/gradings`;
     #updateGradingURL = (gradingBO) => `${this.#projectServerBaseURL}/gradings`;
-    #addGradingToParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
+    #addGradingURL = () => `${this.#projectServerBaseURL}/grading`;
     #removeGradingFromParticipationURL = (gradingId, participationId) => `${this.#projectServerBaseURL}/gradings`;
     #getGradingByParticipationURL = (participationId) => `${this.#projectServerBaseURL}/grading_by_participation/${participationId}`
 
@@ -48,13 +47,10 @@ export default class ProjectAdminAPI {
        
     // Participation related
     #getAllParticipationsURL = () => `${this.#projectServerBaseURL}/participations`;
-    #getParticipationByIdURL = (participationId) => `${this.#projectServerBaseURL}/participation/{participation}`;
     #getParticipationsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/participations_by_project/${projectId}`
-    #getParticipationsOfStudentURL = (participationId) => `${this.#projectServerBaseURL}/participation-of-student/${participationId}`;
-    #getParticipationsByStudentURL = (studentId) => `${this.#projectServerBaseURL}/participation_by_student/${studentId}`;
-    #addParticipationToProjectURL = (projectId) => `${this.#projectServerBaseURL}/project_of_participation/${projectId}`;
     #addParticipationURL = () => `${this.#projectServerBaseURL}/participation`;
     #deleteParticipationURL = (participationId) => `${this.#projectServerBaseURL}/participation/${participationId}`
+    #getParticipationByStudentURL = (studentId) => `${this.#projectServerBaseURL}/participation_by_student/${studentId}`
 
     // Person related
     #getAllPersonsURL = () => `${this.#projectServerBaseURL}/persons`;
@@ -70,8 +66,6 @@ export default class ProjectAdminAPI {
    
     // Project related
     #getAllProjectsURL = () => `${this.#projectServerBaseURL}/projects`;
-    #getNumberEctsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-ects-by-project/${projectId}`;
-    #getNumberSwsByProjectURL = (projectId) => `${this.#projectServerBaseURL}/number-sws-by-project/${projectId}`;
     #getProjectsByPersonURL = (personId) => `${this.#projectServerBaseURL}/projects_by_person/${personId}`;
     #getProjectByIdURL = (projectId) => `${this.#projectServerBaseURL}/project/${projectId}`;
     #getProjectsByCurrentState = (currentState) => `${this.#projectServerBaseURL}/projects_by_state/${currentState}`;
@@ -395,32 +389,12 @@ export default class ProjectAdminAPI {
       })
     }
 
-    getParticipationsByStudent(studentId) {
-      return this.#fetchAdvanced(this.#getParticipationsByStudentURL(studentId), {credentials: 'include'})
+    getParticipationByStudent(studentId) {
+      return this.#fetchAdvanced(this.#getParticipationByStudentURL(studentId), {credentials: 'include'})
       .then((responseJSON) => {
-        let responseParticipation = ParticipationBO.fromJSON(responseJSON);
+        let responseParticipation = ParticipationBO.fromJSON(responseJSON)[0];
         return new Promise(function(resolve) {
           resolve(responseParticipation);
-        })
-      })
-    }
-
-    getParticipationById(participationId) {
-      return this.#fetchAdvanced(this.#getParticipationByIdURL(participationId), {credentials: 'include'})
-      .then((responseJSON) => {
-        let responseParticipationBO = ParticipationBO.fromJSON(responseJSON)[0];
-        return new Promise(function (resolve) {
-          resolve(responseParticipationBO);
-        })
-      })
-    }
-
-    getParticipationsOfStudent(studentId) {
-      return this.#fetchAdvanced(this.#getParticipationsOfStudentURL(studentId), {credentials: 'include'})
-      .then((responseJSON) => {
-        let responseParticipationsOfStudent = ParticipationBO.fromJSON(responseJSON)[0];
-        return new Promise(function (resolve) {
-          resolve(responseParticipationsOfStudent);
         })
       })
     }
@@ -568,15 +542,6 @@ export default class ProjectAdminAPI {
         })
       }
 
-    getGradingByParticipationId(participationId) {
-        return this.#fetchAdvanced(this.#getGradingByParticipationIdURL(participationId)).then((responseJSON) => {
-            let responseGrading = GradingBO.fromJSON(responseJSON);
-            return new Promise(function (resolve) {
-                resolve(responseGrading)
-            })
-        })
-    };
-
     getGradingById(gradingId) {
         return this.#fetchAdvanced(this.#getGradingByIdURL(gradingId)).then((responseJSON) => {
             let responseGrading = GradingBO.fromJSON(responseJSON)[0];
@@ -642,19 +607,22 @@ export default class ProjectAdminAPI {
         })
       }
 
-    addGradingToParticipation(gradingId, participationId) {
-        return this.#fetchAdvanced(this.#addGradingToParticipationURL(gradingId, participationId), {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json, text/plain'
-            },
-        }).then((responseJSON) => {
-            let responseParticipation = ParticipationBO.fromJSON(responseJSON)[0];
-            return new Promise(function (resolve) {
-                resolve(responseParticipation)
-            })
+    addGrading(gradingBO) {
+      return this.#fetchAdvanced(this.#addGradingURL(), {
+        method: 'POST',
+        /* credentials: 'include' */,
+        headers: {
+          'Accept': 'application/json, text',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(gradingBO)
+      }).then((responseJSON) => {
+        let gradingBO = GradingBO.fromJSON(responseJSON)[0];
+        return new Promise(function(resolve) {
+          resolve(gradingBO);
         })
-    };
+      })
+    }
 
     removeGradingFromParticipation(gradingId, participationId) {
         return this.#fetchAdvanced(this.#removeGradingFromParticipationURL(gradingId, participationId.getId()), {

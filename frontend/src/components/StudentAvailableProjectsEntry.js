@@ -118,7 +118,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                             </Grid>
                             <Grid item style={{marginBottom: 10, marginTop: 10}} xs={6}>
                                 <Typography className={classes.heading} >
-                                    <b>Projektname: {projectNBO.getName()}</b>
+                                    <b>{projectNBO.getName()}</b>
                                 </Typography>
                                 <Typography className={classes.heading}>
                                     {projectType?
