@@ -105,6 +105,7 @@ class StudentAvailableProjectsView extends React.Component {
               <Typography>
                 Hier können Sie sich für Projekte anmelden:
               </Typography>
+              <hr/>
               {
               projects.length > 0 ? 
                 filteredProjects.map(project =>

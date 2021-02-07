@@ -142,7 +142,7 @@ class StudentAvailableProjectsEntry extends React.Component {
                                     </Button>
                             </React.Fragment>
                             </Grid>
-                        </Grid>
+                        </Grid> <hr/>
             </div>
         );
     }
