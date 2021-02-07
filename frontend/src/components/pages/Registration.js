@@ -3,6 +3,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 
+/* Hier wird die Registrierung für den Studenten und Dozenten realisiert.
+Anmerkung:  Aus Sicherheitsgründen ist für die Rolle Admin keine Registrierung möglich.
+            Eine Person kann sich als Dozent registrieren und ein anderer Admin kann diesem dann die Rolle Admin zuteilen.*/
+
 class Registration extends React.Component {
 
     constructor(props) {
@@ -30,14 +34,6 @@ class Registration extends React.Component {
                         variant="contained"
                         color="primary">
                         Dozent
-                    </Button>
-                </Link>
-                <Link to='/neueradmin'>
-                    <Button
-                        size= "large"
-                        variant="contained"
-                        color="primary">
-                        Admin
                     </Button>
                 </Link>
             </center>        

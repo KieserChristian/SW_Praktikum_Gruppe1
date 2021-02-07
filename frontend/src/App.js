@@ -32,7 +32,6 @@ import StartPage from './components/pages/StartPage';
 import Registration from './components/pages/Registration';
 import NewStudentForm from './components/NewStudentForm';
 import NewDocentForm from './components/NewDocentForm';
-import NewAdminForm from './components/NewAdminForm';
 
 
 /*
@@ -141,13 +140,10 @@ class App extends React.Component {
                   <Registration/>
                 </Route>
                 <Route exact path='/neuerstudent'>
-                  <NewStudentForm/>
+                  <NewStudentForm currentUserEmail = {currentUser.email}/>
                 </Route>
                 <Route exact path='/neuerdozent'>
-                  <NewDocentForm/>
-                </Route>
-                <Route exact path='/neueradmin'>
-                  <NewAdminForm/>
+                  <NewDocentForm currentUserEmail = {currentUser.email}/>
                 </Route>
                 <Route exact path='/login'>
                   <LogIn/>
