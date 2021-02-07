@@ -102,7 +102,7 @@ class StudentProjectEntry extends React.Component {
         return (
             <div className={classes.root}>
                 <Grid container spacing={1} justify='space-between' alignItems='center'>
-                    <Grid>
+                    <Grid xs={3}>
                         <React.Fragment>
                             <ProjectDetailsDialog
                             openInfo={openDialogInfo}
@@ -116,7 +116,7 @@ class StudentProjectEntry extends React.Component {
                             </IconButton>
                         </React.Fragment>
                     </Grid>   
-                    <Grid style={{marginBottom: 10, marginTop: 10}}> 
+                    <Grid item style={{marginBottom: 10, marginTop: 10}} xs={6}> 
                         <Typography className={classes.heading}>
                             <b>{projectNBO.getName()}</b>
                             {console.log(projectNBO)}
@@ -133,7 +133,7 @@ class StudentProjectEntry extends React.Component {
                             {console.log(projectNBO.getCapacity())}
                         </Typography>
                     </Grid>
-                    <Grid>
+                    <Grid item xs={3}>
                         <React.Fragment>
                             <StudentProjectCancellation 
                             show={showDialog} 
@@ -145,7 +145,7 @@ class StudentProjectEntry extends React.Component {
                             </Button>
                         </React.Fragment>
                     </Grid>
-                </Grid>
+                </Grid> <hr/>
             </div>
         );
     }

@@ -214,6 +214,14 @@ class DocentProjectCreation extends React.Component {
                                                     <MenuItem value={1}>DataScience</MenuItem>
                                                     <MenuItem value={2}>Strategien digitaler Medien</MenuItem>
                                                     <MenuItem value={3}>Business Intelligence</MenuItem>
+                                                    <MenuItem value={4}>Marketing</MenuItem>
+                                                    <MenuItem value={5}>Software Praktikum</MenuItem>
+                                                    <MenuItem value={6}>Digitale Ökonomie</MenuItem>
+                                                    <MenuItem value={7}>Rechnungswesen</MenuItem>
+                                                    <MenuItem value={8}>Geschäftsprozesse</MenuItem>
+                                                    <MenuItem value={9}>User Experience Design</MenuItem>
+                                                    <MenuItem value={10}>Web Technologie</MenuItem>
+                                                    <MenuItem value={11}>SW-Praktikum</MenuItem>
                                                     </Select>
                                             </FormControl>
                                             </TableCell>
