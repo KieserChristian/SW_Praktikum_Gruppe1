@@ -117,6 +117,7 @@ class AdminSwitchDocentEntry extends React.Component {
 
 
                         </Grid>
+                        <hr/>
             </div>
         );
     }
