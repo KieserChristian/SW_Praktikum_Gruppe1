@@ -1,5 +1,7 @@
 import PersonNBO from './PersonNBO';
 
+/**Repräsentiert einen Student des Systems */
+
 export default class StudentNBO extends PersonNBO {
 
     constructor(aMatriculationNumber, aCourseAbbreviation, aParticipationId){

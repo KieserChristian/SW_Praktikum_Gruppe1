@@ -25,7 +25,11 @@ import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder' */
 import TextField from '@material-ui/core/TextField';
 
-
+/**Wird geöffnet, wenn man oben in der Dozenten Navigation auf "Neues Projekt klickt".
+Erzeugt eine Seite, auf der es verschiedene Auswwahlfenster oder Eingabefelder gibt, 
+die man mit den richtigen Werten ausfüllen muss, um am Ende ein Projekt zu erstellen
+und dieses dann einem Admin zur Freigabe schickt.
+*/
 
 class DocentProjectCreation extends React.Component {
 
@@ -52,7 +56,9 @@ class DocentProjectCreation extends React.Component {
         this.baseState = this.state;
     }
 
-
+/**addProject ist in der DocentProjectCreation von nöten, da damit die einzelnen "set" Funktionen gesetzt werden,
+ * um am Ende ein Projekt mit den jeweiligen Werten zu befüllen.
+ */
     addProject = async() => {
         let newProject = await new ProjectNBO();
             newProject.setName(this.state.projectName)
@@ -88,7 +94,10 @@ class DocentProjectCreation extends React.Component {
             addingError: null
         });
     }
-            
+
+/**getDocentById gibt hier zuerst die aktuelle GoogleId (Google-Account Email) des aktuellen Users aus.
+ * Damit kann dann der Docent über diese Id ausgelesen werden.
+ */
     getDocentById = () => {
         ProjectAdminAPI.getAPI().getPersonByGoogleId(this.props.currentUserEmail)
         .then(docent => {
@@ -97,11 +106,14 @@ class DocentProjectCreation extends React.Component {
             })
         })
     }
-
+/**Lifecycle-Methode, die aufgerufen wird, wenn die Komponente in den Browser eingefügt wird.
+*/
     componentDidMount() {
         this.getDocentById();
     }
-
+/**Übermittelt den Wert, den man eingibt weiter an die Datenbank.
+ * HandleCahnge st über this.state von oben bei addProject verbunden
+ */
     handleChange = (event) => {
         const value = event.target.value;
     

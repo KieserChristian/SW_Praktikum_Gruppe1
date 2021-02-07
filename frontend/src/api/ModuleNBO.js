@@ -1,5 +1,6 @@
 import NamedBusinessObject from './NamedBusinessObject';
 
+/**Repräsentiert ein Modul (EDV-Nummer) eines Projekts des Systems */
 export default class ModuleNBO extends NamedBusinessObject {
 
     constructor(anEdvNumber) {

@@ -1,5 +1,7 @@
 import BusinessObject from './BusinessObject';
 
+/**Repräsentiert Die Teilnahme eines Projekts des Systems */
+
 export default class ParticipationBO extends BusinessObject{
 
     constructor(aStudentId, aProjectId) {

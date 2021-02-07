@@ -1,5 +1,7 @@
 import NamedBusinessObject from "./NamedBusinessObject"
 
+/**Repräsentiert ein Projekt des Systems */
+
 export default class ProjectNBO extends NamedBusinessObject {
 
     constructor () {
