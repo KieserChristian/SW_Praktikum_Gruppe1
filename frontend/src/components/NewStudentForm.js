@@ -8,6 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ProjectAdminAPI from '../api/ProjectAdminAPI';
+import StudentNBO from '../api/StudentNBO';
+
 
 class NewStudentForm extends React.Component {
 
@@ -16,31 +19,53 @@ class NewStudentForm extends React.Component {
 
         this.state = {
             name: '',
-            email: '',
             matriculationNumber: '',
             courseAbbreviation: '',
-            currentUserEmail: props.currentUserEmail,
-            openNewStudentForm: props.openNewStudentForm
+            email: '',
+            currentUserEmail: props.currentUserEmail
         }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.baseState = this.state;
     }
 
-    handleSubmit(event) {
-        //this.addStudent();
+    addNewStudent = () => {
+        let newStudent = new StudentNBO();
+        newStudent.setName(this.state.name);
+        newStudent.setMatriculationNumber(this.state.matriculationNumber);
+        newStudent.setCourseAbbreviation(this.state.courseAbbreviation);
+        newStudent.setGoogleId(this.state.email);
+        newStudent.setRoleId(1)
+        console.log(newStudent)
+        ProjectAdminAPI.getAPI().addStudent(newStudent)
+        .then(student => {
+            this.setState(this.baseState)
+        })
+    }
+
+    handleSignUpButton = () => {
+        this.addNewStudent();
         alert('Registrierung erfolgreich');
-        event.preventDefault();
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
+        const value = event.target.value;
+        let error = false;
+        if (typeof value === 'string'){
+            if (value.trim().length === 0) {
+            error = true;
+            }
+        }
         this.setState({
-            value: event.target.value
+          [event.target.id]: event.target.value
         });
     }
 
     render() {
         const { classes } = this.props;
-        const {  } = this.state;
+        const { name, matriculationNumber, courseAbbreviation, email } = this.state;
+        console.log(name)
+        console.log(matriculationNumber)
+        console.log(courseAbbreviation)
+        console.log(email)
         return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
@@ -51,18 +76,18 @@ class NewStudentForm extends React.Component {
                     <Typography>
                         <b>Registrieren</b>
                     </Typography>
-                    <form className={classes.form} noValidate>
+                    <form className={classes.form} noValidate autoComplete='off'>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
-                                    name="name"
                                     variant="outlined"
                                     required
                                     fullWidth
                                     id="name"
                                     label="Name"
                                     autoFocus
-                                    value={this.state.name}
+                                    onChange={this.handleChange}
+                                    value={name}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -70,11 +95,11 @@ class NewStudentForm extends React.Component {
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    name="matriculation"
                                     label="Matrikelnummer"
-                                    id="matriculation"
+                                    id="matriculationNumber"
                                     autoFocus
-                                    value={this.state.matriculationNumber}
+                                    onChange={this.handleChange}
+                                    value={matriculationNumber}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -82,11 +107,23 @@ class NewStudentForm extends React.Component {
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="course"
+                                    id="courseAbbreviation"
                                     label="Studiengangskürzel"
-                                    name="course"
                                     autoFocus
-                                    value={this.state.courseAbbreviation}
+                                    onChange={this.handleChange}
+                                    value={courseAbbreviation}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="E-Mail-Adresse"
+                                    autoFocus
+                                    onChange={this.handleChange}
+                                    value={email}
                                 />
                             </Grid>
                             <Button
@@ -95,7 +132,7 @@ class NewStudentForm extends React.Component {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
-                                onClick={this.handleSubmit}
+                                onClick={this.handleSignUpButton}
                             >SignUp
                             </Button>
                         </Grid>
@@ -118,7 +155,7 @@ const styles = makeStyles((theme) => ({
       backgroundColor: theme.palette.secondary.main,
     },
     form: {
-      width: '100%', // Fix IE 11 issue.
+      width: '100%', 
       marginTop: theme.spacing(3),
     },
     submit: {

@@ -28,6 +28,12 @@ import AdminAppliedProjectView from './components/AdminAppliedProjectView';
 import AdminSwitchView from './components/AdminSwitchView';
 import AdminSwitchDocentView from './components/AdminSwitchDocentView';
 import AdminSwitchStudentView from './components/AdminSwitchStudentView';
+import StartPage from './components/pages/StartPage';
+import Registration from './components/pages/Registration';
+import NewStudentForm from './components/NewStudentForm';
+import NewDocentForm from './components/NewDocentForm';
+import NewAdminForm from './components/NewAdminForm';
+
 
 /*
 Die Haupt-Projektverwaltungs-App. Wir benutzen Google Firebase zum Login.
@@ -127,7 +133,22 @@ class App extends React.Component {
 							// Is a user signed in?
 							currentUser ?
 								<>
-                <Redirect from='/' to='login'/>
+                <Redirect from='/' to='startpage'/>
+                <Route exact path='/startpage'>
+                  <StartPage/>
+                </Route>
+                <Route exact path='/registrierung'>
+                  <Registration/>
+                </Route>
+                <Route exact path='/neuerstudent'>
+                  <NewStudentForm/>
+                </Route>
+                <Route exact path='/neuerdozent'>
+                  <NewDocentForm/>
+                </Route>
+                <Route exact path='/neueradmin'>
+                  <NewAdminForm/>
+                </Route>
                 <Route exact path='/login'>
                   <LogIn/>
                 </Route>
