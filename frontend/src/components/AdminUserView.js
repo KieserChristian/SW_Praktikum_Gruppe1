@@ -14,6 +14,13 @@ import AdminUserEntry from './AdminUserEntry';
 import AdminUserEntryStudents from './AdminUserEntryStudents';
 
 
+/**
+* AdminUserView liefert den Output für die Nutzerübersicht der Studenten, Dozenten und Admins in dem Adminreiter. 
+Dies sind alle Studenten,Admins und Dozenten welche sich registriert haben und eine Rolle ausgewählt haben.
+Es gibt die Nutzerrolle, den Nutzernamen ,die Bearbeitungsmöglichkeit und die Löschmöglichkeit wieder.
+*/
+
+
 /*Klassendefinition*/
 class AdminUserView extends React.Component {
 

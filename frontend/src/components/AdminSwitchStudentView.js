@@ -11,6 +11,14 @@ import { withStyles, Button, List, ListItem, ListItemSecondaryAction, Typography
 import AdminSwitchDocentEntry from './AdminSwitchDocentEntry'
 import AdminSwitchStudentEntry from './AdminSwitchStudentEntry'
 
+
+/**
+* AdminSwitchStudentView liefert den Output für die Sicht der Studentenoperationen in dem Adminreiter. 
+Dies sind alle Studenten welche sich registriert haben und eine Rolle ausgewählt haben.
+Es gibt die Auswahlmöglichkeit eines Studenten wieder.
+*/
+
+
 class AdminSwitchStudentView extends React.Component {
 
   constructor(props) {

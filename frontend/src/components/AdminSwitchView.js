@@ -7,6 +7,12 @@ import { Link } from 'react-router-dom';
 import AccountBoxOutlinedIcon from '@material-ui/icons/AccountBoxOutlined';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 
+
+/**
+* AdminSwitchView stellt eine Navigationsleiste dar wo man zwischen Studentenoperationen und Dozentenoperationen auswählen kann.
+*/
+
+
 class AdminSwitchView extends React.Component {
 
     constructor(props) {

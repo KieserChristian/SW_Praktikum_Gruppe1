@@ -10,6 +10,13 @@ import AdminUserUpdate from './dialogs/AdminUserUpdate';
 import roleNBO from '../api/RoleNBO';
 
 
+/**
+* AdminUserEntry liefert den Input für die Nutzerübersicht der Dozenten und Admins in dem Adminreiter. 
+Dies sind alle Dozenten und Admins welche sich registriert haben und eine Rolle ausgewählt haben.
+Es gibt die Nutzerrolle, den Nutzernamen ,die Bearbeitungsmöglichkeit und die Löschmöglichkeit wieder.
+*/
+
+
 class AdminUserEntry extends React.Component {
 
     constructor(props) {

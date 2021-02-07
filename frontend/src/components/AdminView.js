@@ -9,6 +9,14 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import { withStyles, Button, List, ListItem, ListItemSecondaryAction, Typography, Input, Grid, InputAdornment } from '@material-ui/core';
 
+
+/**
+* AdminView liefert den Output für die Projektübersicht der genehmigten Projekte in dem Adminreiter. 
+Dies sind alle genehmigten Projekte durch den Admin.Es gibt die Projektinformationen , den Projektnamen , 
+die Löschmöglichkeit und die Änderungsmöglichkeit eines Projektes wieder.
+*/
+
+
 class AdminView extends React.Component {
 
   constructor(props) {
@@ -96,7 +104,7 @@ class AdminView extends React.Component {
           </Grid>
           <Grid style={{ width: '100%', paddingBottom: 10, paddingLeft: 10, marginTop: 10 }}>
             <Typography>
-              Hier können Sie alle Projekte einsehen oder bearbeiten:
+              Hier können Sie alle genehmigten Projekte einsehen oder bearbeiten:
             </Typography> <hr/>
             {
               projects.length > 0 ?
