@@ -6,6 +6,11 @@ import { default as DialogContent, default as DialogContentText, } from '@materi
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PersonNBO from '../../api/PersonNBO';
 
+/**
+* AdminUserDeletion liefert den Input für die Löschung des Nutzers, beim anklicken vom Delete-Button 
+in einer Nutzerzeile in dem Adminreiter.(Aus der Nutzerübersicht in der Liste der Nutzer.)
+*/
+
 class AdminUserDeletion extends Component {
     constructor (props) {
         super(props)

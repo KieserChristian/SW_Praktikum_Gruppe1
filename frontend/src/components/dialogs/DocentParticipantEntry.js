@@ -1,6 +1,13 @@
 import React from 'react';
 import { withStyles, Grid, Typography, Button } from '@material-ui/core';
 
+
+/**
+* DocentParticipationEntry liefert den Input für die Bewertung eines Studenten, beim anklicken vom Bewerten-Button 
+in einer Teilnehmerzeile in dem Dozentreiter.
+*/
+
+
 class DocentParticipantEntry extends React.Component {
 
     constructor(props) {

@@ -6,6 +6,12 @@ import { default as DialogContent, default as DialogContentText, } from '@materi
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ProjectNBO from '../../api/PersonNBO';
 
+/**
+* AdminProjectDeletion liefert den Input für die Löschung eines Projektes, beim anklicken vom Delete-Button 
+oder beim anklicken des Ablehnen-Buttons in einer Projektzeile in dem Adminreiter.(Aus der Projektübersicht 
+in der Liste der genehmigten Projekte. Oder aus der Projektübersicht in der Liste der neuen Projekte, das Ablehnen Button.)
+*/
+
 class AdminProjectDeletion extends Component {
     constructor (props) {
         super(props)

@@ -6,6 +6,13 @@ import { withStyles, Button } from '@material-ui/core';
 import DocentParticipantEntry from './DocentParticipantEntry';
 import { Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText } from '@material-ui/core';
 
+
+/**
+* DocentParticiation liefert den Input für die Teilnehmerliste eines Projektes, beim anklicken vom Teilnehmer-Button 
+in einer Projektzeile in dem Dozentreiter.
+*/
+
+
 class DocentParticipantsList extends React.Component {
 
     constructor(props) {

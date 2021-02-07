@@ -21,6 +21,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+/**
+* AdminUserUpdate liefert den Input für die Änderung der Dozenten und Admins, beim anklicken vom Änderungs-Button 
+in einer Personzeile in dem Adminreiter.(Aus der Nutzerübersicht in der Liste der Dozenten und Admins.)
+*/
+
+
 class AdminUserUpdate extends Component {
     constructor (props) {
         super(props)
