@@ -2,7 +2,6 @@ import React from 'react';
 import ProjectAdminAPI from '../api/ProjectAdminAPI';
 import { withRouter } from 'react-router-dom';
 import { withStyles, Grid, Button, Paper, Typography, InputAdornment, IconButton, TextField} from '@material-ui/core';
-import DocentMeineProjekte from './DocentMeineProjekte';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import DocentProjectEntry from './DocentProjectEntry';
 
