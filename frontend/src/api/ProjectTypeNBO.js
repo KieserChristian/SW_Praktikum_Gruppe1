@@ -1,5 +1,7 @@
 import NamedBusinessObject from './NamedBusinessObject';
 
+/**Repräsentiert ein Projekttyp eines Projektes des Systems */
+
 export default class ProjectTypeNBO extends NamedBusinessObject {
 
     constructor (aNumberEcts, aNumberSws) {

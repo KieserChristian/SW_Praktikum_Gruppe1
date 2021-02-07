@@ -1,5 +1,7 @@
 import NamedBusinessObject from './NamedBusinessObject';
 
+/**Repräsentiert einSemester eines Projekts des Systems */
+
 export default class SemesterNBO extends NamedBusinessObject {
 
     constructor() {
